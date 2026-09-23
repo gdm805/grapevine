@@ -1,0 +1,63 @@
+/* Grapevine checkout and payment-confirmation pages. */
+
+.checkout-wrap { padding-block: clamp(40px, 6vw, 80px) clamp(64px, 8vw, 112px); }
+.checkout-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
+.checkout-main h1 { font-size: clamp(32px, 4.2vw, 46px); line-height: 1.08; margin-block: 10px 12px; }
+.checkout-main .lead { max-width: 54ch; margin-bottom: 24px; }
+
+.household-label { font: 700 11.5px/1.2 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px; }
+.household-switch { margin-bottom: 18px; }
+.plan-switch { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.switch-pill { display: inline-flex; align-items: baseline; gap: 6px; padding: 10px 16px; border-radius: var(--r-pill); border: 1.5px solid var(--field-line); background: var(--white); color: var(--ink); font: 600 14.5px/1 var(--sans); text-decoration: none; transition: background 0.15s, border-color 0.15s, color 0.15s; }
+.switch-pill span { font-weight: 500; color: var(--ink-mute); }
+.switch-pill:hover { background: var(--grape-tint); }
+.switch-pill.on { background: var(--grape); border-color: var(--grape); color: #fff; }
+.switch-pill.on span { color: var(--lavender); }
+
+.order-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); box-shadow: var(--shadow-card); padding: clamp(24px, 3.4vw, 38px); display: grid; gap: 6px; max-width: 520px; }
+.order-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.order-head h2 { font-size: 28px; }
+.order-card .plan-lead { margin-top: 6px; }
+.order-card .includes { margin-bottom: 22px; }
+.order-card .btn { width: 100%; margin-top: 4px; }
+
+.pay-off { background: var(--sand); border: 1px dashed var(--field-line); border-radius: var(--r-md); padding: 16px 18px; margin-top: 4px; }
+.pay-off p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
+.pay-off code { font: 500 12.5px/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: var(--white); padding: 2px 6px; border-radius: 4px; }
+
+.secure-note { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 13.5px; color: var(--ink-mute); }
+.secure-note .ico { width: 15px; height: 15px; flex: none; color: var(--leaf-deep); }
+
+.keep-drafting { margin-top: 22px; font-size: 15px; color: var(--ink-soft); max-width: 52ch; }
+
+.checkout-side { background: var(--sand); border-radius: var(--r-xl); padding: clamp(24px, 3vw, 32px); display: grid; gap: 20px; align-content: start; }
+.checkout-side h2 { font-size: 22px; }
+.checkout-side .every { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.checkout-side .every .ico { width: 24px; height: 24px; padding: 5px; }
+.checkout-side .every strong { font-size: 17px; }
+.checkout-side .every li > span { font-size: 14.5px; }
+.side-legal { font-size: 13px; line-height: 1.55; color: var(--ink-mute); padding-top: 16px; border-top: 1px solid var(--line); }
+.side-legal strong { color: var(--ink-soft); }
+
+@media (max-width: 860px) {
+  .checkout-grid { grid-template-columns: minmax(0, 1fr); }
+  .checkout-side { order: 2; }
+}
+
+/* the payment-confirmation page (paid.html) */
+.paid-wrap { padding-block: clamp(56px, 8vw, 108px); }
+.paid-card { max-width: 620px; margin-inline: auto; text-align: center; display: grid; gap: 16px; justify-items: center; }
+.paid-badge { width: 64px; height: 64px; border-radius: 50%; background: var(--leaf-tint); color: var(--leaf-deep); display: grid; place-items: center; }
+.paid-badge .ico { width: 30px; height: 30px; stroke-width: 2.6; }
+.paid-card h1 { font-size: clamp(30px, 4vw, 42px); }
+.paid-card .lead { max-width: 48ch; }
+.paid-summary { width: 100%; max-width: 420px; background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px 24px; display: grid; gap: 8px; text-align: left; margin-top: 8px; }
+/* same .sum-row pattern as the builder's review step (css/will.css), repeated here since paid.html doesn't
+   load that stylesheet */
+.paid-summary .sum-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.paid-summary .sum-row:last-child { border-bottom: 0; }
+.paid-summary .sum-l { display: block; font: 700 11.5px/1.2 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 3px; }
+.paid-summary .sum-v { display: block; font-size: 15.5px; line-height: 1.4; }
+.paid-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 12px; }
+.paid-note { max-width: 52ch; font-size: 14.5px; color: var(--ink-mute); margin-top: 8px; }
+.paid-error { max-width: 52ch; }

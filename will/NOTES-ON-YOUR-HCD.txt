@@ -1,0 +1,86 @@
+NOTES ON YOUR ADVANCE HEALTH CARE DIRECTIVE (51 state documents)
+==================================================================
+
+WHERE THE WORDS CAME FROM
+Your "04_AHCD/FINAL DOCUMENT FOR CODER" folder has a national baseline plus one controlled document per
+state (the "V1/V2/V3 Audited" files; where both a V2 and a V3 exist for a state, I used the V3 -- the two
+are nearly identical, V3 is the newer revision). I also found an existing prototype at
+"CODER/LAST WILL PACKAGE/Grapevine_Last_Will_and_Testament_Package_V27/powers_engine/hcd_templates.js"
+that already had all 51 of those documents converted into paragraph-by-paragraph data, along with the
+county lists used for the dropdown (see below). I checked that data against your source .docx files for
+several states (Alabama, California, Texas, New York, Florida, Ohio) word for word -- it matched almost
+exactly, so I used it as the starting point instead of re-typing 51 documents by hand, the way I did for
+the power of attorney. Every state's full text, including every statutory notice, is preserved.
+
+WHY THIS ONE STAYS IN THIRD PERSON ("the Principal"), UNLIKE YOUR OTHER DOCUMENTS
+Your will, power of attorney, and dementia directive all speak as "I." I kept this document as your source
+documents wrote it -- "the Principal" -- rather than converting it, because much of this text is not just
+Grapevine's own drafting: it reproduces state-required statutory notices and, in some states (California,
+Texas, and others), the state's own official form language word for word. Changing the pronouns on text
+that is meant to match a statutory form is a bigger judgment call than the will or the dementia directive,
+so I left it as your documents have it. Say the word if you'd like it converted to "I" for consistency, and
+I'll do it the same careful way, sentence by sentence.
+
+A DROPDOWN FOR STATE AND COUNTY, AS YOU ASKED
+The county list (all 3,143 counties and county-equivalents -- parishes in Louisiana, boroughs in Alaska,
+independent cities in Virginia, and so on) is in will/counties.js. Picking a state fills the county dropdown
+from that state's real counties. This also let me improve on how your documents were drafted: about 22 of
+the 51 states have a "County of ____________________" blank in their notary or acknowledgment section. I
+filled that blank in from the person's answer instead of leaving it blank -- something your source
+documents didn't do (they just left it as a line to fill in by hand). The other ~29 states either don't
+need a county in the signing section, or ask for it in a longer sentence I left as a blank to be safe rather
+than risk filling in the wrong spot.
+
+TWO PROBLEMS I FOUND AND FIXED IN YOUR SOURCE DOCUMENTS
+1. Alabama's Article Seven (Artificial Nutrition and Hydration) had a duplicated, partly-rewritten clause --
+   two nearly-identical paragraphs both starting "[[IF: ...WITHHOLD_WITHDRAW]]" back to back, immediately
+   followed by a third, properly-structured version of the same choice. I checked this against your actual
+   .docx file (Grapevine_HCD_Alabama_V3_Audited_Notices.docx) and the duplication is there in the source,
+   not just in the converted data. I kept the properly-structured version and removed the two duplicates,
+   keeping every sentence's wording exactly as your document had it.
+2. Two states have a small grammar slip, the same slip in the same two sentences: Texas says "a Agent"
+   (should be "an Agent") and the District of Columbia says "a Attorney" (should be "an Attorney") --
+   both states use "Agent"/"Attorney in Fact" instead of "Health Care Agent" as their defined term, and it
+   looks like whatever process substituted that term in missed fixing "a" to "an" in two spots. I fixed
+   just the article ("a" to "an"), nothing else, in both states.
+
+WHAT THE QUESTIONS COVER
+Every token in your controlled documents is asked about: the health care agent and backups, life-sustaining
+treatment, artificial nutrition, artificial hydration, anatomical gifts, and three optional pieces of
+guidance (values, limits on your agent, anything else). Nothing was shortened here the way the power of
+attorney and the dementia directive were -- you asked this one to reflect each state's requirements, so it
+asks everything your documents call for. That includes state-specific questions that appear ONLY for the
+state where they matter:
+  California   -- currently a patient or resident in a skilled nursing facility (adds a required witness
+                  statement from a patient advocate or ombudsman)
+  Connecticut  -- resident of a DMHAS facility; resident of a DDS facility; what happens if pregnant
+                  (three-way choice, with room to write your own instructions)
+  Arizona      -- physically unable to sign your own name; authority for inpatient psychiatric admission;
+                  authority to arrange funeral and disposition
+  Nebraska     -- require a second physician to confirm incapacity
+  Ohio         -- Ohio's own express, separate authorization for withdrawing nutrition/hydration if
+                  permanently unconscious (Ohio law requires this to be asked separately from the general
+                  choice, with the Principal's initials)
+South Carolina's document includes an optional notary section that the document itself says is "not
+required to create a valid health care power of attorney" -- I always include it rather than asking a
+question, since your own document treats it as freely available, not conditional on a preference.
+
+SIGNING METHOD
+16 of your 51 states offer more than one way to sign (two witnesses, or a notary, or in a few states a
+justice of the peace or a specific acknowledgment format); the builder asks which one only in those states,
+and uses your document's own witness or notary wording for whichever is chosen. The other states have one
+method built into their document, so nothing is asked.
+
+WHAT I DID NOT DO
+I did not attempt the standalone "no AHCD" scenario for the dementia directive's own 51 state execution
+routes -- see will/NOTES-ON-YOUR-DEMENTIA.txt, which already flagged that the real per-state wording for
+those routes appears to live in this project, not in the dementia-directive files. Now that this Health
+Care Directive builder exists with real per-state execution text, that connection could be made -- ask if
+you'd like that done.
+
+HOW TO EDIT
+Folder: will/hcd/          the full text of each state's directive, one file per state
+File:   will/hcd-template.js   the "sample" watermark switch (there's no shared body text to edit here)
+File:   will/hcd-signing.js    the signing steps
+File:   will/counties.js       the state and county lists used for the dropdowns
+The notes at the top of each state file explain the codes used ([[if x]], [[elif y=VALUE]], [[each successors]]).

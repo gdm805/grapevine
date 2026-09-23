@@ -1,0 +1,53 @@
+NOTES ON YOUR GENERAL ASSIGNMENT OF PERSONAL PROPERTY TO TRUST
+================================================================
+
+WHAT THIS IS
+A trust only controls property that's actually been retitled into its name. Real estate, cars, and
+financial accounts get retitled one at a time, directly with the county, DMV, or institution. But
+plenty of what a person owns -- furniture, jewelry, tools, family keepsakes -- has no title or
+account to change at all. This Assignment is the backstop: one signed document that moves the
+Assignor's interest in that everyday personal property into the trust, without a separate deed or
+form for each item.
+
+WHY NO PER-STATE VERSION (unlike your DPOA, HCD, HIPAA authorization, trust, Certification, and
+Affidavit of Trustee, which all vary what's required state to state)
+Your source file included a state-by-state table covering all 50 states and DC -- 51 rows -- each
+resolving an "execution requirement" token. I checked every single row: all 51 resolve to the same
+answer, SIGNATURE_ONLY. No state requires a witness, notary, or sworn oath for this particular
+document; a plain signature is enough everywhere. Your own file's "Global Token Resolution" and
+"Coder Validation Rules" sections say the same thing directly, and flag that generation should stop
+and go back to legal review if any state ever resolves to something else. Because there's no actual
+state-to-state difference to encode, this document is a single, state-agnostic page -- there's no
+will/assignment-state-text.js the way the other trust-support documents have one.
+
+THE OPTIONAL NOTARY PAGE
+Nothing in your source material requires notarization here, but a specific bank, brokerage, or
+title company might still ask for a notarized signature before they'll rely on it, or someone might
+simply want the extra formality. Because that step is optional everywhere rather than a real
+statutory requirement varying state to state, this version offers one generic acknowledgment block
+(state, blank county/parish line, blank date and signer lines) rather than 51 state-specific ones --
+there was no per-state statute to draw each state's exact wording from the way there was for the
+Certification of Trust's notary blocks. If a specific recipient wants their own jurisdiction's exact
+acknowledgment language, that's worth a quick check with them or an attorney before relying on the
+generic version.
+
+WHAT'S LEFT OUT FROM YOUR SOURCE FILE
+Your source document included a long "CODER IMPLEMENTATION CONTROLS" section and the 51-row state
+table mentioned above -- both written for whoever builds the document, not for the person signing
+it, so neither appears in the output. Everything a signer actually reads made it into this version:
+the general assignment itself, what it does and doesn't cover (Article Three's exclusions -- real
+property, titled vehicles, financial and retirement accounts, beneficiary designations, business
+interests, digital assets, and anything else nonassignable), the joint-trust ownership-character
+rules, and the execution page.
+
+WHAT THE QUESTIONS COVER
+Your state (for the header and execution line only -- it doesn't change any wording), whether the
+trust is single-trustmaker or joint, the trust's name and date (plus whether it's been restated),
+the Trustmaker(s)' names, whether the trust is currently revocable, any specific items you want
+called out by name in addition to the general assignment, whether to add the optional notary page,
+and where and when you'll sign.
+
+HOW TO EDIT
+File: will/assignment-template.js   the Assignment document itself (settings + the full text)
+File: will/assignment-signing.js    the signing steps shown after review
+The notes at the top of each file explain the codes used ([[if x]], [[each property]], and so on).

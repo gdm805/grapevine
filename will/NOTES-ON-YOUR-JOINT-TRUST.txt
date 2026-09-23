@@ -1,0 +1,127 @@
+NOTES ON YOUR JOINT REVOCABLE LIVING TRUST (married couple / domestic partners)
+================================================================================
+
+WHAT THIS IS
+This is the joint route from your file
+Grapevine_Coder_Ready_V12_Joint_RLT_All_Section_Numbers_Fully_Corrected.docx -- for two people
+(a married couple or registered domestic partners) creating one trust together. It reuses the
+same architecture as your single-trustmaker trust (will/trust-template.js): one shared,
+state-agnostic document, plus the same state-by-state signing page.
+
+HOW THIS DOCUMENT IS BUILT
+Same pattern as the single trust: one shared document file (will/trust-joint-template.js) plus
+the same state-by-state signing page used by both trusts (will/trust-state-text.js), spliced in
+with [[include trust_execution]]. Florida and Delaware need two witnesses in addition to a
+notary; every other state and DC need a notary only. The Florida and Delaware witness wording
+says "the Trustmaker" (singular) in your source file, since it's shared with the single trust --
+for the joint trust it now says "the Trustmakers" (plural), switched automatically based on
+which builder is running.
+
+YOU ASKED FOR 30 PAGES OR LESS -- WHAT'S IN, AND WHAT'S LEFT OUT
+Same four features cut as the single trust, for the same reasons (each is either advanced,
+rarely used, or belongs to a bigger project than this pass):
+  - The Companion Animal Trust (a dedicated sub-trust just for a pet).
+  - The Charitable Gifts sub-section (special handling when a named charity no longer exists).
+  - The Beneficiary Trust option for "everything else" -- everyone named for the remainder of
+    your trust receives their share outright, the way your will already works.
+  - The "Independent Trustee" definition, which only mattered for the Beneficiary Trust option
+    above -- cut along with it so no defined term is left referring to a feature that isn't here.
+Two more simplifications specific to the joint trust:
+  - The Family Trust's power of appointment: your source document offers the surviving spouse or
+    partner a choice between a "Fixed Descendant Distribution" (the Family Trust goes to fixed,
+    named beneficiaries) and a "Limited Power of Appointment" (the survivor can redirect it among
+    a group at their death). This version keeps the Fixed Descendant Distribution only -- your
+    named beneficiaries for the Family Trust are fixed and can't be changed by the survivor.
+  - First-death funding: your document offers a choice between funding the Family Trust directly
+    or funding it through a disclaimer (letting the survivor decide, after the first death,
+    whether to disclaim property into it for tax reasons). This version uses direct funding only.
+Say the word if you'd like the Limited Power of Appointment or disclaimer funding added back in.
+
+CHILDREN ARE SIMPLIFIED TO ONE COMBINED LIST
+Your source document separately models joint children, children of only one of you, and blended
+families, with different distribution language for each combination. This version asks for one
+combined list of children and treats all of them the same way under the trust. If you have a
+blended family and want children treated differently depending on which of you is their parent,
+tell us and we'll build that out as a real option.
+
+SPECIFIC GIFTS ARE ONE COMBINED LIST PER DEATH, NOT SPLIT BY WHO DIES FIRST
+Your source document asks for a separate list of specific gifts depending on which of you dies
+first (since either of you could be first). This version asks for one list of "gifts when the
+first of you dies" and one list of "gifts after both of you have died" -- whichever of you dies
+first, the same first-death gifts apply. The "Specific Gifts" article itself only appears in your
+document at all if you actually add a gift to one of these two lists; otherwise it's left out
+entirely, the same way any other unused section is.
+
+RESIDUARY BENEFICIARIES ARE ONE SHARED LIST
+Your source document lets you name different final beneficiaries for the Survivor's Trust versus
+the Family Trust. This version uses one shared beneficiary list for both, on the view that most
+couples want the same people to ultimately receive everything. Tell us if you'd like the two
+distributions to name different people or percentages.
+
+THE SURVIVOR'S TRUST AND FAMILY TRUST SHARE ONE FINAL-DISTRIBUTION SECTION
+Because both trusts already distribute to the same beneficiary list above, your source document's
+separate Distribution / Survivorship / Failure-of-Distribution / Termination sections for each
+trust were nearly word-for-word duplicates of each other. This version states that rule once --
+at the surviving Trustmaker's death, the Trustee combines what's left in both trusts and
+distributes the combined balance to your named beneficiaries -- instead of describing the same
+split twice. The outcome for your beneficiaries is identical either way; this only removes the
+repetition. This one section lives under "Death of Second Trustmaker," right after "Completion
+and Distribution." (This was part of an effort to bring the joint trust closer to your 30-page
+target -- even after this change it still runs longer than that; see the conversation for the
+exact page count and what else would need to change to get under 30.)
+
+SCHEDULE A (your trust's property list) MATCHES YOUR SOURCE DOCUMENT'S OWN COLUMNS
+Unlike the single trust (which trimmed Schedule A down from thirteen categories to five), your
+joint trust's own Schedule A already only lists five categories with three columns each. This
+version asks the same five: real estate, bank and credit union accounts, investment and
+brokerage accounts, business interests, and general household items, plus the same catch-all
+"additional property" section. The real estate "Description" column (a deed or legal-description
+reference) isn't collected as a separate question and shows as a bracketed placeholder to fill in
+by hand, the same way a few little-used fields work in the single trust.
+
+THREE PROBLEMS FOUND AND FIXED
+1. Six sentences had a cross-reference to another Section or Article that resolved to the
+   generic words "this Trust Agreement" instead of an actual reference -- readable in isolation,
+   but grammatically broken where the sentence already said "Section" or "Article" right before
+   it (e.g. "...as a child of that Trustmaker in Section this Trust Agreement"). Fixed by pointing
+   each one at the actual section or article, so it now reads correctly (e.g. "...under this
+   Article" for a same-article reference, or "...under Section 5.03" for a cross-article one).
+2. The entire "Specific Gifts" article was wired to never appear, regardless of whether you
+   actually added any specific gifts -- a leftover from working out how the two gift lists (first
+   death / second death) should nest inside it. Fixed so the article appears only when you've
+   actually added a gift to one of the two lists, and each of the two sections inside it
+   (first-death gifts, second-death gifts) appears independently, matching whichever list you
+   used.
+3. Two definitions ("Beneficiary Trust" and "Companion Animal Trust") and one sentence
+   mentioning a continuing "Beneficiary Trust" were left over from before those features were cut
+   -- defining or mentioning something that no longer appears anywhere else in the document. All
+   three are removed. (Also found again, and fixed the same way as before: a text-extraction
+   regex bug that can mistake a tab character or an unrelated formatting tag for the start of
+   real paragraph text. It showed up once in this document, in a heading that read "Section
+   15.01Severability" with no space -- fixed, and rechecked against every other document already
+   on this site to confirm nothing else was affected.)
+
+WHAT THE QUESTIONS COVER
+Whether this is a new trust or a restatement of one you already signed, both Trustmakers' names,
+your marital status, children, anyone intentionally excluded, your successor trustee(s) (one at a
+time, or together as Co-Trustees), specific gifts at the first and second death, who gets
+everything else and in what percentages, and the Schedule A property categories above.
+Definitions, trustee powers, and the administration articles are the same for everyone and aren't
+asked about. There's no power-of-attorney-agent question here (unlike the single trust) --
+nothing in your source document lets an agent under a power of attorney amend this trust, so
+there was nothing to ask about.
+
+YOUR TRUST FUNDING GUIDE
+The signing-instructions screen now also includes a full Trust Funding Guide -- one section per
+common asset type, each with the typical process for moving it into the trust and a blank tracker
+to fill in by hand. It's shared with the single trust (see will/NOTES-ON-YOUR-TRUST.txt for the
+full explanation, including a simplification worth knowing about) and shows the same way here.
+
+HOW TO EDIT
+File: will/trust-joint-template.js  the joint trust document itself (settings + the full text)
+File: will/trust-state-text.js      the shared state-by-state signing page (also used by the
+                                     single trust; the is_joint flag switches "Trustmaker" wording
+                                     to "Trustmakers" for Florida and Delaware's witness pages)
+File: will/trust-signing.js         the signing steps shown after review, plus the Trust Funding
+                                     Guide (shared with the single trust)
+The notes at the top of each file explain the codes used ([[if x]], [[each residuary]], and so on).

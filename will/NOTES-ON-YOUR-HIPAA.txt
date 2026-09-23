@@ -1,0 +1,59 @@
+NOTES ON YOUR HIPAA AUTHORIZATION (51 state documents)
+==========================================================
+
+WHERE THE WORDS CAME FROM
+Your "05_HIPAA/FINAL DOCUMENT FOR CODER" folder has a national baseline plus one controlled document per
+state. As with the health care directive, I also found an existing prototype at
+"CODER/LAST WILL PACKAGE/Grapevine_Last_Will_and_Testament_Package_V27/powers_engine/hipaa_templates.js"
+that already had all 51 documents converted into paragraph-by-paragraph data. I checked it against your
+actual .docx files for every single state, paragraph by paragraph (not just a sample this time, since the
+documents are short enough to check all 51 in full) -- 30 of the 51 matched word for word. The other 21
+matched everywhere except one paragraph: the section naming who can receive your information. For those 21
+states, the prototype had a generic version of that paragraph; your actual controlled documents tie it
+specifically to your health care agent (with an address, phone/email, and up to two backups), so I used
+your real document's wording instead of the prototype's for that one paragraph, in all 21 states. Every
+other word, in every state, is exactly what your controlled documents have.
+
+TWO DIFFERENT DOCUMENT STYLES -- NOT AN ERROR, JUST HOW YOUR DOCUMENTS WERE DRAFTED
+Your 51 states actually use two different document designs:
+  30 states (the "Roman-numeral" style, like Alabama) -- closely follows your national baseline's own
+             structure and section numbering (I. AUTHORIZATION, II. ..., and so on), lets someone list any
+             number of named recipients or classes of recipients, and separately asks about psychotherapy
+             notes and substance-use-disorder records (42 C.F.R. Part 2) the way the baseline does.
+  21 states (the "plain-language" style, like Texas) -- a shorter, more plainly worded document that ties
+             disclosure to your health care agent by name, address and phone/email (plus up to two backup
+             agents), asks your date of birth and address directly, and ends with a citation to that
+             state's specific statutes.
+The questionnaire adjusts itself automatically to whichever style your state uses -- you don't see a
+question about which style it is, you just see the right questions for your state.
+
+NO STATE REQUIRES A WITNESS OR NOTARY
+I checked the closing lines of all 51 documents specifically for this. Every one of them either says so
+directly (like Alabama: "Alabama law does not impose a separate witness or notarization requirement...")
+or simply has no witness/notary section at all. Federal HIPAA law doesn't require one, and apparently none
+of your 51 state documents add one either. Signing instructions reflect this: sign and date it, no witness
+or notary needed, anywhere.
+
+WHAT THE QUESTIONS COVER
+Every state asks: your name, who can receive your information (a list of recipients, or your health care
+agent and backups, depending on your state's style), and whether someone will sign on your behalf as your
+legally authorized representative. The 30 "Roman-numeral" states also ask about two federally-protected
+record types (psychotherapy notes, and substance-use-disorder records under 42 C.F.R. Part 2, including
+Part 2's own separate question about SUD counseling notes) and how long the authorization should last
+(a specific date, a specific event, or for your lifetime and however long is needed to settle your
+affairs). The 21 "plain-language" states instead ask for an optional free-text list of limitations and an
+optional expiration date or event, since their documents are written to leave that open-ended.
+A handful of states ask one extra question because their own document does:
+  California, Connecticut, Delaware, and 19 other "Roman-numeral" states -- whether to include HIV/STI
+             information, and/or mental-health records, whichever your specific state's document asks about
+             (not every one of the 30 asks about both -- it depends on that state's own document).
+  Delaware -- also asks about genetic information specifically, with a place to describe it.
+  Maine and Massachusetts -- each have their own separate, additionally-worded HIV authorization with its
+             own recipient and purpose fields, asked only when you say yes to including HIV/STI information.
+
+HOW TO EDIT
+Folder: will/hipaa/            the full text of each state's authorization, one file per state
+File:   will/hipaa-template.js the "sample" watermark switch (there's no shared body text to edit here --
+                                every state's document is different from the first line)
+File:   will/hipaa-signing.js  the signing steps (the same for every state: no witness or notary needed)
+The notes at the top of each state file explain the codes used ([[if x]], [[each recipients]], and so on).

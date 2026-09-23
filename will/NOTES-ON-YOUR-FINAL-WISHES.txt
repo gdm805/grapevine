@@ -1,0 +1,71 @@
+NOTES ON YOUR FINAL WISHES
+==========================
+
+WHAT THIS IS
+Final Wishes states what someone wants done with their body and any funeral, memorial, or
+personal arrangements, and -- to the extent their state allows it -- names who's authorized to
+carry those wishes out. It doesn't distribute property and doesn't replace a will or trust.
+
+WHY THIS ONE HAS FULL 51-STATE TEXT (unlike your Certification of Trust, Affidavit of Trustee, and
+Assignment of Personal Property, which all use one shared body with only a notary block or nothing
+varying by state)
+This document is genuinely different state to state, not just in formality but in substance. I
+read your national baseline plus all 51 of your controlled Final_Wishes_<State>.docx files.
+Articles One through Five -- the actual wishes and preferences -- are word-for-word identical
+across every state file, so those are one shared body. But how a state lets someone name a person
+to control disposition, and what it takes to sign that appointment, varies for real:
+  - Some states need nothing beyond a signature (Wyoming, North Dakota, District of Columbia).
+  - Some need one witness (Maryland, Washington) or two (Arkansas, Connecticut, North Carolina,
+    Oklahoma, New York).
+  - Some need a notary instead (most other states), and a few let you choose between a witness or
+    a notary -- your own controlled files already picked the notary route in every case where a
+    choice existed, so this site follows that same choice rather than introducing a new one.
+  - A few states need real combinations: New Jersey wants two witnesses AND a notary on its own
+    board-approved form; Kentucky wants two witnesses AND a notary; Texas and Rhode Island add a
+    separate signed acceptance from the person you name; Montana genuinely needs two different
+    execution blocks at once (a notarized designation plus two witnesses for the written
+    directions) because it treats those as two different things under its own law.
+  - Indiana, Iowa, and Kentucky don't just need different formalities -- their own law wants a
+    second, separate declaration. Those three render a full second document (its own heading,
+    its own signature line, its own witnesses/notary) right inside the same page, exactly as your
+    own controlled files for those states do it.
+  - Georgia, Idaho, Kansas, Missouri, Tennessee, Vermont, and West Virginia route the actual
+    *authority* to decide through a health care agent or advance directive appointed elsewhere
+    (an existing Grapevine document) rather than through this one. Georgia's file only adds its
+    own separate notarized affidavit if you name someone different from your health care agent --
+    this site reproduces that same conditional, keyed off whether you named anyone here.
+So, taken word for word from each state's own controlled file: will/finalwishes-state-text.js.
+
+TWO STATES AREN'T OFFERED
+Your own source material -- not my judgment call -- flags Mississippi and South Carolina as
+needing a specific state-prescribed form or route ("HARD_STOP" in your coder notes) that isn't
+included in what you sent. Rather than guess at wording for those two, this site simply doesn't
+offer Final Wishes there yet: choosing either state on the first step shows an explanation and
+blocks moving forward, without affecting any other document on the site (will, DPOA, and the rest
+are unaffected -- this exclusion lives only in the Final Wishes builder). If you get the missing
+state form/route material, say the word and I'll add both states properly.
+
+WHAT'S SIMPLIFIED
+  - Texas, Wisconsin, and New York's statutory forms allow an unlimited chain of successor agents
+    with individual acceptance signatures for each. This version offers one backup person (an
+    "alternate"), matching how every other document on this site handles successors, rather than
+    an open-ended list. Say the word if you want a repeating list instead.
+  - The big 51-row token-resolution table in your national baseline was cross-checked against your
+    controlled state files to confirm which execution route each state actually uses, then
+    dropped from the output -- it's coder-only reference material, not customer-facing text.
+
+WHAT THE QUESTIONS COVER
+Your state, your name, your disposition preference (burial, cremation, green/natural burial, body
+donation, something else, or no preference) plus an optional place and any additional
+instructions, your funeral/memorial/celebration preference plus optional details, optional
+personal requests, optional prearranged-or-prepaid-arrangement details and where records are kept,
+whether you want to name someone to control disposition (plus an optional backup), and your
+signing date.
+
+HOW TO EDIT
+File: will/finalwishes-template.js    the shared body (Articles One through Five) plus the
+                                      Article Six/Seven wrapper
+File: will/finalwishes-state-text.js  the state-specific routing note and execution formalities,
+                                      taken word for word from each state's own controlled file
+File: will/finalwishes-signing.js     the signing steps shown after review
+The notes at the top of each file explain the codes used ([[if x]], [[include]], and so on).

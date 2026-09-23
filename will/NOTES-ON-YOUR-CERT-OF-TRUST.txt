@@ -1,0 +1,75 @@
+NOTES ON YOUR CERTIFICATION OF TRUST
+=====================================
+
+WHAT THIS IS
+A Certification of Trust proves a trust exists and shows the Trustee's authority, without handing
+over the whole trust document (which usually says who gets what -- private information a bank
+doesn't need). Almost every state has a statute that lets a Trustee use one instead of the full
+trust when opening an account or retitling property.
+
+WHY THIS ONE SHARED DOCUMENT, NOT 51 SEPARATE ONES (like your DPOA, HCD, and HIPAA authorization)
+You sent a national baseline plus 51 of your own state-specific Certification of Trust files. I
+read all 51. They are NOT the same document with a name swapped in, the way your DPOA and HCD
+files are -- each state's file phrases things differently, splits sections differently, and even
+uses different token names for the same underlying fact. Converting all 51 as fully separate
+documents would have been a much bigger build, on the order of the DPOA build or larger.
+
+What the 51 files DO have in common: every one of them is certifying the same handful of core
+facts -- practically all of them trace back to the Uniform Trust Code's own model certification
+provision (UTC section 1013), which is why "the same fact, worded differently" is the pattern
+across states rather than genuinely different requirements. And every state only requires a
+notary -- I checked all 51, and not one requires witnesses for this particular document.
+
+So this document uses one shared body -- covering the facts every state's statute actually asks
+for (trust name and date, who created the trust, the current Trustee(s) and their authority,
+whether the trust is revocable, the Trustee's powers, and how title is typically taken) -- with
+your state's own statutory citation and your state's own notary acknowledgment wording spliced in
+at the end, taken word for word from your controlled Cert_of_Trust_<State>.docx files. This is the
+same approach used for your revocable living trusts (single and joint): one shared body, a
+per-state execution page.
+
+WHAT'S SIMPLIFIED COMPARED TO YOUR SOURCE FILES
+Your source files include several features this version doesn't ask about, because they're
+uncommon or add complexity most people creating their own trust online won't need:
+  - Transaction-specific certifications (naming a particular pending sale or transfer and the
+    specific powers needed for it). This version is a general-purpose certification instead.
+  - A trust director / power of direction (a separate person who directs the Trustee on certain
+    decisions). Uncommon outside of larger or more customized trusts.
+  - The more granular Trustee-action rules some states offer (action authority that varies by
+    transaction type, or a fully custom rule quoted from the trust). This version offers the three
+    common rules: any one Trustee may act, all must act together, or a majority may act.
+  - Per-Trustee "capacity" labels (original Trustee vs. successor Trustee, etc.) and a description
+    of how a successor Trustee came into office. Every currently acting Trustee is just listed as
+    "Trustee."
+  - The power to revoke a revocable trust is automatically the Trustmaker(s) themselves, matching
+    how Grapevine's own trust builders work, instead of asking a separate question.
+Say the word if you'd like any of these added as an option.
+
+THE NOTARY BLOCK: SAME CONVENTION AS YOUR OTHER DOCUMENTS
+Every state's notary acknowledgment blanks (county, date, the signer's name as the notary will
+verify it) are left blank for the notary to fill in by hand at the signing appointment -- a notary
+won't accept a pre-filled acknowledgment anyway. The one thing that IS filled in automatically is
+the trust's name, since that's already known and isn't something the notary verifies. Louisiana's
+block keeps its own civil-law wording (a notarial "Extract of Trust," a Parish instead of a
+county) rather than being forced into the same shape as the other 50 states.
+
+STATUTORY CITATIONS
+Every state's citation came from your own controlled file, except a handful where your file didn't
+state one explicitly (California, Kansas, Kentucky, Louisiana, Michigan, South Dakota, Vermont,
+Washington, West Virginia) -- for those, I looked up and filled in the state's actual
+certification-of-trust statute. New York and Rhode Island genuinely have no dedicated
+certification-of-trust statute; their citations say so and point to the general trust code instead.
+As with every other document on this site, these are unverified drafts -- have an attorney confirm
+the citation and the requirements before this is used for anything real.
+
+WHAT THE QUESTIONS COVER
+Your trust's name and date (plus whether it's been restated or amended), the Trustmaker(s), the
+current Trustee(s) and their addresses, how multiple Trustees act together (if there's more than
+one), whether the trust is revocable, any limitation on the Trustee's authority (optional), and how
+title is typically taken in the trust's name.
+
+HOW TO EDIT
+File: will/cert-template.js     the Certification document itself (settings + the full text)
+File: will/cert-state-text.js   the state-by-state statutory citation and notary block
+File: will/cert-signing.js      the signing steps shown after review
+The notes at the top of each file explain the codes used ([[if x]], [[each trustmakers]], and so on).

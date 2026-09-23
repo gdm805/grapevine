@@ -1,0 +1,72 @@
+NOTES ON YOUR DURABLE POWER OF ATTORNEY  (51 state documents)
+=============================================================
+
+WHAT CHANGED
+The builder no longer uses the national baseline. Each state now loads its own controlled document from
+will/dpoa/ (alabama.js ... wyoming.js), taken word for word from your files Grapevine_DPOA_<State>.docx in
+the state_documents folder. That is where each state's notices, witness lines, notary wording and agent
+information come from. I wrote none of the state-specific wording.
+
+Source of truth: the "..._V2_4_2_Shared_Incapacity" folder (not the copy named "... 2"; the only difference
+between the two is the California file, and its text is identical).
+
+HOW I CHECKED IT
+For all 51 states, three ways (right away / only on incapacity with two backups / care-facility "yes") = 153
+documents, I rebuilt each one with your own builder's rules (state_templates.js, the special-power suppression,
+the shared incapacity language) and compared it word by word with what this site produces. All 153 match.
+The only differences are formatting: blank lines are underscores, a colon after "Date", and the state-name
+line under the title (for example "TEXAS STATE DPOA") is dropped because the title already names the state.
+I also checked that no heading is left with nothing under it and no code is left in the text.
+
+HOW IT FOLLOWS YOUR V2.4 / V2.4.2 RULES
+- The governing state's document is loaded; nothing is substituted from another state.
+- Residence state, governing state and signing state are separate. The person picks where they live and, if they
+  want, a different state's form. The signing county and date are blank lines filled in at the signing.
+- Standard DPOA: no special-power questions. Article Seven is kept in each file but switched off, and the
+  numbering closes the gap around it: Digital Assets is now Article Seven, and the rest move up to match
+  (Third-Party Reliance is Eight, Conservatorship is Nine, General Provisions is Ten). If a state's document
+  is ever changed to turn Article Seven back on, the numbering shifts back automatically.
+  (This replaces the five "extra power" questions I had added earlier. They are gone.)
+- Sections 3.02 and 3.03 appear only for "only on incapacity". Your shared Incapacity and Restoration of Capacity
+  paragraphs (in will/dpoa-template.js) come first, then the state's own wording. Florida offers only "right away",
+  as your Florida document says, so it skips that question.
+- Extra questions appear only where your documents need them: California asks who decides incapacity (only for
+  "on incapacity"; blank means the agent); Nevada and Utah ask about a care facility.
+- A heading with nothing under it is dropped, like your builder does.
+
+WHAT YOUR DOCUMENTS SAY ABOUT SIGNING (so you can check them, I did not judge the law)
+- Witness lines appear in 13 states: Arizona, California, Connecticut, Delaware, Florida, Georgia, Illinois,
+  Louisiana, Maryland, New York, Pennsylvania, South Carolina, Washington. Arizona, Delaware, Georgia and
+  Illinois show one witness line; the other nine show two. (Washington and California show them as one of two ways to sign.)
+- California, Minnesota, New York, Tennessee, Vermont, Virginia, Washington, Wisconsin and Wyoming give a choice
+  or an optional acknowledgment. The "How to sign" box tells the person to use the way that applies.
+- Oregon has no notary or witness section at all. Every other state has a notary acknowledgment.
+- The "How to sign" box under the document says whether the state's document has a notary section, witness
+  lines or a choice. It reads that from the document, so it stays right if you edit a state file.
+
+THINGS I NOTICED IN YOUR DOCUMENTS (please look at these)
+1. Alabama is the only document that makes Execution an Article ("Article Twelve, Execution" with sections 12.01
+   and 12.02). The other 50 use an unnumbered EXECUTION heading. Alabama also has "[EXECUTION FOLLOWS ON NEXT
+   PAGE]", which I kept and turned into a page break.
+2. The venue line "DISTRICT OF COLUMBIA" in the D.C. notary block: your builder hides it (it drops
+   any line equal to the state name). This site keeps it.
+3. Some notices in the documents are in all capitals and are kept as bold paragraphs. Statutory notices are shown
+   as printed in your documents. Please confirm type-size or boldface requirements state by state; the PDF and
+   Word files use one size for the notices.
+4. The agent-information notices ("Important information for agent") appear in your documents but have no agent
+   signature line in most states, so the agent never signs. Only some states include an agent acknowledgment.
+5. Every document says "of ____ County, <State>" using the person's residence county. Louisiana (parish), Alaska
+   (borough) and D.C. have no counties.
+
+FIXED: THE ARTICLE SEVEN GAP
+Section 6.03 "Reserved Trust Powers" in all 51 documents said trust powers are "governed by the express-power
+provisions of Article Seven," even though Article Seven is switched off. That sentence now reads "...is governed
+by the express-power provisions of this Power of Attorney" instead of naming an article that doesn't appear. The
+numbering also no longer skips a number: Digital Assets is Article Seven, Third-Party Reliance is Eight,
+Conservatorship is Nine, and General Provisions is Ten (checked in the on-screen document, the PDF and the Word
+file for several states). Your own builder still shows the old gap (Six to Eight); this site no longer matches
+it on that one point, by request.
+
+HOW TO EDIT
+Change one state: edit will/dpoa/<state>.js. Change the shared incapacity words: edit will/dpoa-template.js.
+The notes at the top of each state file explain the codes ([[if x]], [[elif y]], [[each successors]], [[include x]]).

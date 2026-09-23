@@ -1,0 +1,121 @@
+window.HIPAA_STATES = window.HIPAA_STATES || {};
+window.HIPAA_STATES["Virginia"] = String.raw`
+// ==========================================================================
+//  GRAPEVINE  |  HIPAA AUTHORIZATION  |  VIRGINIA
+//  Converted word for word from your controlled state document. Same rules as
+//  will/hipaa-template.js. To change this state, edit this file only.
+// ==========================================================================
+@set format = B
+@set recipient_law_qualifier = yes
+
+@center **VIRGINIA HIPAA AUTHORIZATION**
+
+This authorization is intended to satisfy the authorization requirements of the Health Insurance Portability and Accountability Act of 1996 (HIPAA) and applicable state law. State-specific provisions below control if they impose a more specific requirement.
+
+#! Authorization To Use And Disclose Protected Health Information
+
+I authorize any physician, hospital, clinic, pharmacy, laboratory, health plan, insurer, nursing facility, assisted living facility, mental-health professional, counselor, therapist, social worker, health care provider, health care facility, government health program, electronic health-record system, health-information exchange, or other person or entity that has protected health information about me to use and disclose that information as provided in this authorization.
+
+#! Person Whose Information May Be Disclosed
+
+@line Name: {{name}}
+@line Date of Birth: {{dob}}
+@line Address: {{address}}
+
+#! Persons Authorized To Receive Information
+
+I authorize disclosure to the following person or persons:
+
+@line Primary recipient/health care agent: {{agent_name}}
+@line Address: {{agent_address}}
+@line Telephone/Email: {{agent_contact}}
+
+[[if has_alt1]]
+
+@line Alternate recipient/agent: {{alt1_name}}
+
+[[end]]
+[[if has_alt2]]
+
+@line Second alternate recipient/agent: {{alt2_name}}
+
+[[end]]
+I also authorize disclosure to any person or entity reasonably selected by an authorized recipient when necessary to assist that recipient in carrying out health care, benefits, insurance, claims, care-management, placement, or other responsibilities for me, but only to the extent permitted by applicable law.
+
+#! Information Covered
+
+Unless I limit this authorization below, it covers all protected health information and medical records relating to my past, present, or future physical or mental health or condition; health care provided to me; prescriptions and pharmacy records; diagnostic and laboratory information; billing and payment information; insurance and benefit information; imaging; care plans; admission and discharge information; and other information maintained by a covered entity or business associate. Specially protected categories are included only to the extent expressly authorized below and permitted by applicable law.
+
+#! Purpose
+
+The purpose of this authorization is to permit the authorized recipient to obtain information needed to assist me, communicate with health care providers and health plans, make or support health care decisions when authorized to do so, arrange care or placement, address insurance and benefit matters, and carry out responsibilities under my estate-planning and health-care documents.
+
+#! Authority Of Recipient
+
+An authorized recipient may request, inspect, obtain, copy, transmit, and receive protected health information in paper, electronic, oral, or other available form. The recipient may sign provider-specific releases or acknowledgments that are reasonably required to obtain information, provided they are consistent with this authorization and applicable law.
+
+#! Effective Date And Duration
+
+This authorization is effective immediately upon signing unless a state-specific provision below states otherwise. It remains effective until the earliest of: (a) my written revocation to the extent effective under applicable law; (b) any expiration date or event stated below; or (c) any state-law termination rule that cannot lawfully be waived.
+
+@line Optional expiration date/event: {{expiration_text}}
+
+#! Right To Revoke
+
+I may revoke this authorization by written notice to a person or entity relying on it. A revocation does not affect a use or disclosure already made in reliance on this authorization before the revocation was received, or any other reliance protected by law.
+
+#! No Improper Conditioning
+
+I understand that signing this authorization is voluntary and that, except as permitted by law, a provider or health plan generally may not condition treatment, payment, enrollment, or eligibility for benefits on my signing this authorization.
+
+#! Redisclosure
+
+I understand that information disclosed under this authorization may, in some circumstances, be redisclosed by the recipient and may no longer be protected by HIPAA. Information protected by a state confidentiality law or another federal law may remain subject to restrictions on redisclosure.
+
+#! Limitations
+
+The following limitations apply, if any: {{limitations}}
+
+If no limitation is stated, the authorization is intended to be as broad as legally permitted, subject to the specific-consent rules stated in this document.
+
+#! Virginia State-Specific Provisions
+
+The following provisions are incorporated into this authorization and apply in addition to the general authorization above.
+
+#! Virginia Authorization Elements
+
+This authorization is intended to substantially include the elements required by Virginia law: identification of the individual; the health care entity or class of entities authorized to disclose; the person or entity to receive the information; the information to be disclosed; the purpose of disclosure or indication that disclosure is at my request; my right to revoke; the possibility of redisclosure; an expiration date or event; and, if signed by a representative, the representative’s relationship or authority.
+
+#! Psychotherapy Notes
+
+I specifically authorize disclosure of psychotherapy notes only to the extent such disclosure may lawfully be authorized by me. I understand that Virginia law requires written authorization for disclosure of psychotherapy notes except in limited circumstances specified by law, and that access rights may differ from rights applicable to other health records.
+
+#! Mental Health And Substance Use Information
+
+I specifically authorize disclosure of mental-health and substance use disorder information to the extent permitted by Virginia and federal law, subject to any additional consent requirement that cannot be satisfied by this authorization.
+
+#! Signature
+
+I acknowledge that I have read and understand this authorization and intend it to be legally effective to the fullest extent permitted by applicable law.
+
+@line Signature of Principal: ________________________________________________
+
+@line Printed Name: {{name}}
+
+@line Date: ______
+
+[[if signed_by_rep]]
+
+@line If signed by a legally authorized representative, name and authority: {{rep_name}}, {{rep_authority}}
+
+[[else]]
+
+@line If signed by a legally authorized representative, name and authority: ________________________________
+
+[[end]]
+
+#! Authority
+
+Va. Code § 32.1-127.1:03; 45 C.F.R. Parts 160 and 164; 42 C.F.R. Part 2.
+
+`;

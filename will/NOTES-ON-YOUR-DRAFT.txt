@@ -1,0 +1,76 @@
+NOTES ON YOUR DRAFT WILL  (what I kept, changed and noticed)
+=============================================================
+
+The will text in will/will-template.js is your own draft ("last will - unformatted"), word for word,
+with names and choices turned into blanks and options. I compared the generated will against your
+original paragraph by paragraph. These are the only differences:
+
+CHANGED
+1. Section 6.03, last sentence. Your draft says the share is "distributed under Article Six", which is
+   the article the sentence is already in. I pointed it to the Remote Contingent Distribution section
+   (Section 6.04 in a will like yours). Please confirm that is what you meant.
+2. Section 4.07 (Order of Distribution). Your draft mentions "Specific Gifts", but your will has none.
+   The phrase now appears only when the person has made a specific gift.
+3. Section 8.02. Your draft breaks one sentence across two paragraphs. I joined them.
+4. Section 8.03, last paragraph (community property). It now appears only when the person is married AND lives
+   in a community property state (Arizona, California, Idaho, Louisiana, Nevada, New Mexico, Texas, Washington,
+   Wisconsin, per your list). California says "community or quasi-community property"; the others say
+   "community property". The list is in will/states.js. Your draft showed it to every married person.
+5. Execution. Your draft has the date (2026-09-10) and county typed in, and the county differs from
+   the county of residence. Those are now blank lines the person fills in by hand when signing.
+   "We were both present" becomes "all present" in a state that needs three witnesses (Vermont).
+6. A stray line "Last Will and Testament of ... Page 12 of 14" was sitting inside Section 8.06.
+   I removed it. A running footer with page numbers is added when the will is printed.
+7. Section numbers are automatic. Your draft skipped 1.06, 6.04 and 7.10 because optional sections
+   were left out. They now close up on their own, and cross-references such as "Article Six" follow.
+
+ADDED (your draft did not have them)
+8. Guardian of Minor Children. Shown when the person has a child under 18. Replace my wording
+   with yours. If this is what your missing Section 1.06 was, send me the language.
+9. Specific Gifts article. Shown when the person adds a gift. Replace my wording with yours.
+   (If your missing Section 6.04 was something else, such as a trust for young beneficiaries,
+   tell me what it is.)
+   Because your Section 5.13 already lets the Personal Representative handle property for a minor,
+   I removed my earlier "young beneficiaries" question.
+
+THINGS I NOTICED, LEFT AS YOU WROTE THEM
+10. Defined but never used: "Routine Administrative Acts" (Section 7.09) and "Surviving Spouse"
+    (Section 7.11). "Heirs" is defined, but Section 6.05 uses lowercase "heirs". You may have
+    intended a co-representative clause that uses Routine Administrative Acts.
+11. Section 1.07 (After-Born and Later-Adopted Children) says a later child is not treated as a
+    Child unless the will is updated. It is shown only when the person has children. For a do-it-yourself
+    audience, that is a decision worth confirming, including how it interacts with the state's rules
+    on omitted children.
+12. Section 8.02 does not name a state's law. That is your choice, and I kept it.
+13. The attestation has no statements about capacity or duress, and there is no notary page. I set
+    every state to "no self-proving affidavit". The affidavit page is still in the template if you need it.
+
+THE QUESTIONS
+- "Personal Representative" is used throughout, and the question explains that some states say executor.
+- Residuary: a person can start from "all to my spouse", "equally to my children" (shares add up to
+  exactly 100%, with any extra cent going to the first child), or "specific people", then adjust.
+  For each one they pick what happens if that person does not survive them, using your options
+  (descendants, a named person, a charity, or the others share it). Your Section 6.05 covers the rest.
+
+ALL 50 STATES PLUS DC
+The will now works in all 51. The parts that change by state are the same ones as in the pour-over will, and they come
+from the same file, will/state-text.js (one section per state, taken from your Will_Pour_Over_<State>.docx files):
+  1. The execution, witness and notary text at the end. The signing formalities are the same for a will with a trust
+     and a will without one, so I used your state documents. Each state's ending is exactly as you wrote it.
+     (For California this replaces the "Witness One / Witness Two" layout of your regular will with the two "Witness"
+     lines used in your California pour-over will, so the two wills match.)
+  2. The community property sentence (Section 8.03), for Arizona, California, Idaho, Louisiana, Nevada, New Mexico,
+     Texas, Washington and Wisconsin only, and only for married people.
+  3. Florida: a homestead sentence, and no No-Contest Provision (Section 8.06), as in your Florida pour-over will.
+Everything else in your will is identical in every state.
+Louisiana is now offered, using your Louisiana notarial execution text. Your regular will's body was written for
+common-law states, so please look at how it reads for Louisiana.
+I generated the will for all 51 states in three situations (including an unmarried person) and confirmed that every fixed
+line of each state's ending appears, the numbering is right, and nothing from another state leaks in.
+
+KEPT CONSISTENT WITH THE POUR-OVER WILL
+- Both wills use the same state file, so a state's signing steps and endings always match.
+- Both ask the same "About you" questions in the same words (county, and "married or in a registered domestic
+  partnership?"). The regular will no longer asks for a city, which it did not use.
+- Same title block in ALL CAPS, same numbering, same headings style, same PDF and Word downloads with page numbers.
+- All the "Notes on your pour-over wills" about Colorado, Wisconsin and the word "County" apply here too.

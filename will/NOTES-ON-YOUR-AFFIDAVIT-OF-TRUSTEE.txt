@@ -1,0 +1,61 @@
+NOTES ON YOUR AFFIDAVIT OF TRUSTEE
+====================================
+
+WHAT THIS IS
+An Affidavit of Trustee is a sworn statement -- stronger than a Certification of Trust's simple
+notarized acknowledgment -- confirming a Trustee's identity, status, and authority. It's useful for
+a specific pending transaction, or when a recipient wants more than a Certification of Trust
+provides. Unlike a Certification, it needs a JURAT: the Trustee swears or affirms the statements
+are true in front of a notary, rather than the notary simply confirming who signed.
+
+HOW THIS DOCUMENT IS BUILT
+Same architecture as your Certification of Trust and both living trusts: one shared, state-agnostic
+body, with only the state-specific execution page swapped in. Here that's justified even more
+strongly than for the Certification -- your 51 state files for this document are, with rare
+exceptions, word-for-word identical to your national baseline. The ONLY thing that genuinely varies
+by state is the jurat itself (the sworn-oath wording, and whether the state calls the local
+subdivision a "county" or, in Louisiana's case, a "Parish"). That per-state jurat is in
+will/affidavit-state-text.js, taken word for word from each state's own controlled file.
+
+THIS DOCUMENT COVERS BOTH YOUR SINGLE AND JOINT TRUST
+Your source document is written to work with either a single-trustmaker trust or a joint one, so
+this builder asks up front which kind of trust the Affidavit concerns, then adjusts the questions:
+  - Single trust: whether the Trustmaker is living or deceased.
+  - Joint trust: whether both Trustmakers are living, one has died (and if so, whether this
+    Affidavit concerns the Survivor's Trust, the Family Trust, or something else), or both have died.
+
+WHAT'S SIMPLIFIED COMPARED TO YOUR SOURCE FILE
+Your baseline document includes an "Article Seven -- State-Specific Routing" section instructing
+the preparer to STOP and use a different, Michigan- or Nebraska-specific statutory certificate
+instead of this national Affidavit, when the purpose is simply to establish the trust's existence
+or the Trustee's authority. I checked: Michigan's and Nebraska's own actual delivered state files
+don't implement that alternate route -- they use the same national Affidavit body as every other
+state, just with their own jurat. This version does the same, and leaves that routing note out
+entirely (it was coder-only guidance, never rendered).
+Also left out: the per-Trustee "capacity" label seen in your Certification of Trust (whether
+someone is an original vs. successor Trustee) -- every currently acting Trustee is just listed as
+"Trustee" here too, for the same reason (keeps the question list short; it's the Affiant's own
+successor status, asked separately, that actually matters to this document).
+
+THE JURAT: SAME CONVENTION AS YOUR OTHER DOCUMENTS, WITH ONE DIFFERENCE
+The execution statement and signature line (the first few lines of each state's block -- "Executed
+in [city], [county] County, [state], on [date]," then the signature) are filled in from your
+answers, the same as every document's own signature block. Everything in the jurat itself that the
+notary has to witness in person (county, date, the Affiant's name as the notary verifies it) is left
+blank for hand-fill at the signing appointment -- a notary won't accept a pre-filled jurat. Florida's
+checkbox-style physical-presence/personally-known options are rendered the same way as your
+Certification of Trust's Florida block. Louisiana keeps its own civil-law terminology (Parish, not
+County) throughout, matching the rest of the site's treatment of Louisiana.
+
+WHAT THE QUESTIONS COVER
+Whether the trust is single or joint, the trust's name and dates, the Trustmaker(s) and their
+living/deceased status (or, for a joint trust after the first death, which trust or share this
+Affidavit concerns), the Affiant (you) and whether you're a successor Trustee, the currently acting
+Trustee(s) and how they act together if there's more than one, an optional specific transaction and
+any restriction on it, and where you'll sign.
+
+HOW TO EDIT
+File: will/affidavit-template.js    the Affidavit itself (settings + the full text)
+File: will/affidavit-state-text.js  the state-by-state jurat (execution statement + sworn oath)
+File: will/affidavit-signing.js     the signing steps shown after review
+The notes at the top of each file explain the codes used ([[if x]], [[each trustees]], and so on).

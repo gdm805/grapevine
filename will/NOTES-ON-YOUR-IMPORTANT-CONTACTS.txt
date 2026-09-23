@@ -1,0 +1,36 @@
+NOTES ON YOUR IMPORTANT CONTACTS LIST
+======================================
+
+WHAT THIS IS
+There was no source document for this one -- you asked for a simple contacts list (Name,
+Relationship, Telephone, Email) and said to come up with the rest. It's a plain printable
+reference: the people someone might need to call while handling your affairs. It isn't a legal
+document, so there's nothing to sign, no state question, and no "SAMPLE - NOT FOR SIGNING"
+watermark like every other document on this site -- the watermark exists to flag unverified legal
+language, and there's no legal language here to flag.
+
+WHAT THE QUESTIONS COVER
+Who the list is prepared for, then as many contacts as you want to add -- each with a name
+(the only required field), relationship, phone, and email. The "Add another contact" placeholders
+cycle through a few commonly forgotten roles (estate attorney, executor, primary doctor, a family
+member, financial advisor) just as prompts -- they don't have to be used and nothing is pre-filled.
+The signing-instructions panel on the review screen also lists roles people often forget to
+include: your executor, successor trustee, and any agents named in your power of attorney or
+health care directive; your accountant, insurance agent; your doctor and any specialists.
+
+A REAL BUG THIS CAUGHT
+Building a 4-field row (the first time this site needed more than two inputs per row) surfaced a
+genuine bug in the shared input-sync code in js/will.js: the listener that copies what someone
+types into the answers object only recognized `input[type="text"]`, `input[type="date"]`, and a
+couple of others -- it didn't recognize `type="tel"` or `type="email"`, so anything typed into a
+phone or email field displayed on screen but was silently never saved. Fixed by adding both types
+to that listener's selector list. This was a live bug the whole time, just never triggered before
+because no other document on the site used those input types -- now that it's fixed, any future
+phone or email field anywhere on the site will work correctly too.
+
+HOW TO EDIT
+File: will/contacts-template.js   the document itself (settings + the full text)
+File: will/contacts-signing.js    the "what to do with this list" panel shown after review
+File: css/will.css                the new ".rowitem.grid4" rule (a 2x2 layout for the 4-field
+                                  contact rows) lives here, added alongside the existing row styles
+The notes at the top of each file explain the codes used ([[if x]], [[each contacts]], and so on).

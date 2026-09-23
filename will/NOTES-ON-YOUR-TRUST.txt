@@ -1,0 +1,93 @@
+NOTES ON YOUR REVOCABLE LIVING TRUST (single trustmaker)
+============================================================
+
+WHAT THIS IS
+This is the single-trustmaker route from your file
+Grapevine_Coder_Ready_V12_Single_Trustmaker_RLT_Married_Partner_Family_Trust.docx -- for one person
+creating a trust on their own, married or not. You said the joint trust (for a married couple
+creating one trust together) comes next; this covers only the single-trustmaker version.
+
+HOW THIS DOCUMENT IS BUILT, DIFFERENT FROM YOUR OTHER DOCUMENTS
+Your will, power of attorney, health care directive, and HIPAA authorization each need real
+state-by-state differences in the body of the document itself, so those use one full file per
+state. Your trust document isn't like that: the trust itself reads the same everywhere ("Governed
+by the laws of ___"), and the only thing that actually changes by state is the very last page --
+how it gets signed. So the trust uses one shared file for the document
+(will/trust-template.js) plus one file listing every state's signing page (will/trust-state-text.js),
+taken word for word from your NATIONAL EXECUTION LIBRARY folder. Florida and Delaware need two
+witnesses in addition to a notary; every other state and DC need a notary only.
+
+YOU ASKED FOR 25 PAGES OR LESS -- WHAT'S IN, AND WHAT'S LEFT OUT
+Your source document runs long because it includes several advanced, optional features that a
+lot of trusts never use. To keep this to a reasonable length, this first version includes the
+core trust -- trust creation, family, successor trustee, trustee powers, what happens if you
+become incapacitated, specific gifts, who gets everything else, and a Schedule A property list --
+and leaves out four advanced pieces entirely, so they take up no pages unless you ask for them
+back:
+  - The Family Trust article (for splitting a married couple's combined trust into a protected
+    share at the first spouse's death). Your document itself says this only applies "in the
+    applicable Trust architecture" -- it's really a joint-trust feature, so it belongs in the
+    joint trust more than here.
+  - The Companion Animal Trust (a dedicated sub-trust just for a pet).
+  - The Charitable Gifts sub-section (special handling when a named charity no longer exists).
+  - The Beneficiary Trust option for "everything else" -- holding a beneficiary's share in trust
+    with staggered ages instead of paying it outright. Right now, everyone named for the rest of
+    your trust receives their share outright, the way your will already works.
+Everything else from your document is here, in full -- nothing else was shortened or summarized.
+Say the word if you'd like any of these four added back in, either for everyone or as an optional
+question the way your health care directive handles its state-specific extras.
+
+SCHEDULE A (your trust's property list) IS ALSO SIMPLIFIED FOR NOW
+Your source document's Schedule A has thirteen possible categories of property. This version asks
+about the five most common ones -- real estate, bank and credit union accounts, investment and
+brokerage accounts, business interests, and general household items -- plus a catch-all
+"additional property" section every version keeps. Left out for now: promissory notes, intellectual
+property, digital property, titled personal property (like vehicles), an explicit exclusions list,
+and beneficiary-designation property (retirement accounts, life insurance, and the like, which your
+document is careful to say aren't moved into a trust just by being listed anyway). Add any of these
+back in the same way as the ones already there.
+
+YOUR MASTER PACKAGE SPEC DESCRIBES MORE THAN JUST THIS DOCUMENT
+Grapevine_Trust_Package_Master_Coder_Spec.docx describes a much bigger package around the trust
+itself -- a dynamic funding guide, a funding checklist, and generated transfer letters for banks,
+brokerages, and other institutions. None of that is built yet. This pass is the trust document
+itself (plus its property schedule); the funding-guide ecosystem is a separate, later project.
+
+TWO PROBLEMS FOUND AND FIXED
+1. Delaware's notary acknowledgment, in your National Execution Library, reads "State of State of
+   Delaware" -- a duplicated "State of." I removed the duplicate; the rest of the wording is
+   exactly as your file has it.
+2. California's notary acknowledgment file had a formatting quirk from how it was created (a
+   paragraph-border element that read as stray text in the underlying file, and a county/date
+   written as [[County]] / [[Signing_Date]] fields instead of blanks like every other state).
+   The stray text is removed, and since California's own file marks the county and date as fields
+   rather than blanks, those two now fill in from your answers -- every other state's notary or
+   witness blanks are still left blank for the notary or witnesses to fill in by hand, same as
+   your other documents.
+
+WHAT THE QUESTIONS COVER
+Whether this is a new trust or a restatement of one you already signed, your marital status,
+children, anyone intentionally excluded, your successor trustee(s) (one at a time, or together as
+Co-Trustees), whether a power-of-attorney agent should also be able to amend or revoke your trust
+while you're incapacitated (most people say no), specific gifts, who gets everything else and in
+what percentages, and the Schedule A property categories above. Definitions, trustee powers, and
+the administration articles are the same for everyone and aren't asked about.
+
+YOUR TRUST FUNDING GUIDE
+The signing-instructions screen now also includes a Trust Funding Guide -- one section per common
+asset type (real estate, bank accounts, investments, retirement accounts, life insurance, business
+interests, vehicles, personal property, digital assets, and everything else), each explaining the
+typical process for moving that kind of asset into the trust, plus a small blank tracker to fill in
+by hand. Your source document for this was written to auto-populate those trackers from a full
+funding questionnaire (asking about each real estate parcel, each account, and so on) and to hide
+whole sections you didn't need -- that questionnaire doesn't exist on this site, and adding one
+would be a significant new intake flow of its own. So every section always shows, and each tracker
+is a blank fill-in-by-hand table instead, matching how notary and witness blanks already work
+everywhere else on this site. Say the word if you'd like that fuller, answer-driven version built
+out later. It always shows for every trust, whether you sign the single or joint version.
+
+HOW TO EDIT
+File: will/trust-template.js     the trust document itself (settings + the full text)
+File: will/trust-state-text.js   the state-by-state signing page (notary, and witnesses for FL/DE)
+File: will/trust-signing.js      the signing steps shown after review, plus the Trust Funding Guide
+The notes at the top of each file explain the codes used ([[if x]], [[each residuary]], and so on).

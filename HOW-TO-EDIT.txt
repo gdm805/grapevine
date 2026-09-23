@@ -1,0 +1,327 @@
+HOW TO EDIT YOUR WEBSITE  (no coding needed)
+===========================================
+
+You can change the important things by editing plain text files with any text editor
+(TextEdit on a Mac in "Plain Text" mode, or Notepad on Windows). Do not use Word.
+After you edit a file, save it and refresh the page in your browser.
+
+Never delete the lines at the very top and bottom of these files. They begin with
+"window." and end with a backtick and a semicolon. Everything between them is yours.
+Never type the backtick key ( on the same key as ~ ) inside the text.
+
+
+1. THE WILL
+-----------
+File: will/will-template.js
+This is the full text of the will. Change the words like you would in a document.
+The notes at the top of the file explain the few special codes, such as:
+
+   {{name}}                                  a blank that fills in from the person's answers
+   [[if has_children]] ... [[else]] ... [[end]]   text that appears only in some cases
+   # Title                                   an Article (ARTICLE ONE, TWO...) - numbers are automatic
+   ## Title                                  a Section (Section 1.01, 1.02...) - numbers are automatic
+   [[ref residuary]]                         writes the number of a heading you labelled {#residuary},
+                                             like "Article Six", and stays correct if numbers move
+
+TO REMOVE THE "SAMPLE - NOT FOR SIGNING" WATERMARK AND THE GREEN NOTICE BAR:
+   near the top of will/will-template.js, change   draft_watermark = yes   to   no
+The will text now uses the wording from your own will (last will - unformatted). Where I added
+or changed anything, a note in the file says ADDED or CHANGED, and will/NOTES-ON-YOUR-DRAFT.txt
+lists everything. Do not switch the watermark off until you are satisfied with every word.
+
+File: will/signing-instructions.js   the "How to sign your will" steps shown at the end.
+File: will/state-text.js             the parts that change by state, for BOTH wills: the execution, witness and
+                                     notary text, community property, and Florida's differences.
+File: will/states.js                 the list of states, with witness count and notary flag (used in the signing steps)
+
+The questions themselves (what is asked, in what order) live in js/will.js. Ask me to change
+those and I will.
+
+
+1b. THE POUR-OVER WILL (for people with a trust)
+------------------------------------------------
+File: will/pour-over-template.js      the text that is the same in every state (from your California document)
+File: will/state-text.js    the parts that change by state: one section per state, all 51 taken from your
+                                      Will_Pour_Over_<State>.docx files (execution, witnesses, notary, and two switches)
+File: will/pour-over-signing.js       the signing steps, plus a reminder to fund the trust
+File: will/states.js        which states are offered, and their witness count and notary flag
+These work exactly like the will files above. To change one state, edit its section in state-text.js and
+refresh. That change applies to both wills. To stop offering a state, change "yes" to "no" in the fourth column of states.js.
+Notes about your documents, including two problems in the Colorado one, are in will/NOTES-ON-YOUR-POUR-OVER.txt.
+
+
+1c. THE DURABLE POWER OF ATTORNEY
+---------------------------------
+Folder: will/dpoa/                the full text of each state's power of attorney, one file per state
+                                  (alabama.js, alaska.js ...), word for word from your state documents
+File:   will/dpoa-template.js     the shared incapacity and restoration paragraphs, and the "sample" watermark switch
+File:   will/dpoa-signing.js      the signing steps
+To change one state, edit that state's file. The page loads only the state the person chooses.
+Article Seven (special powers) is in each file but switched off. Notes are in will/NOTES-ON-YOUR-DPOA.txt.
+
+
+1d. DEMENTIA AND COGNITIVE DECLINE CARE PREFERENCES
+----------------------------------------------------
+File: will/dementia-template.js   the words of the document, from your national baseline
+File: will/dementia-signing.js    the signing steps
+This is the same for every state (it attaches to a health-care directive rather than being signed and
+witnessed on its own -- see will/NOTES-ON-YOUR-DEMENTIA.txt for why). It also has fewer questions than your
+baseline's own questionnaire calls for; that file explains exactly what was combined or left out and why.
+
+
+1e. HEALTH CARE DIRECTIVE
+--------------------------
+Folder: will/hcd/                the full text of each state's directive, one file per state
+                                 (alabama.js, alaska.js ...), word for word from your controlled state documents
+File:   will/hcd-template.js     just the "sample" watermark switch -- there's no shared body text, every
+                                 state's document is different from the first line
+File:   will/hcd-signing.js      the signing steps
+File:   will/counties.js         the state and county lists behind the state and county dropdowns
+This one asks everything your documents call for, state by state, including the extra questions that only
+some states need (California, Connecticut, Arizona, Nebraska, Ohio). Notes, and two small fixes I made to
+your source documents, are in will/NOTES-ON-YOUR-HCD.txt.
+
+
+1f. HIPAA AUTHORIZATION
+------------------------
+Folder: will/hipaa/               the full text of each state's authorization, one file per state
+                                  (alabama.js, alaska.js ...), word for word from your controlled state documents
+File:   will/hipaa-template.js    just the "sample" watermark switch -- there's no shared body text, every
+                                  state's document is different from the first line
+File:   will/hipaa-signing.js     the signing steps (no witness or notary is needed in any state)
+Your 51 states actually use two different document designs, and the questions adjust themselves to match
+whichever one your state uses -- see will/NOTES-ON-YOUR-HIPAA.txt for exactly what that means and how it
+was checked, state by state.
+
+
+1g. REVOCABLE LIVING TRUST (single trustmaker)
+------------------------------------------------
+File: will/trust-template.js     the trust document itself -- the same words in every state, taken word
+                                 for word from your controlled document, with a few advanced, optional
+                                 articles left out for now to keep the document to a reasonable length
+File: will/trust-state-text.js   the one part that IS state-specific: the signing page. Florida and
+                                 Delaware need witnesses and a notary; every other state and DC need a
+                                 notary only. Taken from your NATIONAL EXECUTION LIBRARY folder.
+File: will/trust-signing.js      the signing steps shown after review, PLUS a full Trust Funding Guide
+                                 (how to actually retitle each kind of asset -- real estate, accounts,
+                                 vehicles, and so on -- into the trust) that now appears right after it
+This is the single-trustmaker version, for one person creating a trust on their own. What was left out,
+two small fixes I made to your National Execution Library files, and what the questions cover are all in
+will/NOTES-ON-YOUR-TRUST.txt.
+
+
+1h. REVOCABLE LIVING TRUST (joint -- married couple or domestic partners)
+---------------------------------------------------------------------------
+File: will/trust-joint-template.js  the joint trust document itself, taken word for word from your
+                                    controlled document, with a few advanced, optional articles left
+                                    out for now, matching the single trust
+File: will/trust-state-text.js      the same state-by-state signing page used by the single trust (see
+                                    1g above) -- shared by both trusts via [[include trust_execution]]
+File: will/trust-signing.js         the signing steps shown after review (also shared with the single
+                                    trust)
+This is the joint version, for two people (married, or registered domestic partners) creating one
+trust together. What was left out or simplified, three fixes I made while converting your document,
+and what the questions cover are all in will/NOTES-ON-YOUR-JOINT-TRUST.txt.
+
+
+1i. CERTIFICATION OF TRUST
+------------------------------
+File: will/cert-template.js     the Certification itself -- one shared body covering the facts every
+                                state's statute asks for, drafted from your national baseline
+File: will/cert-state-text.js   the state-specific part: your statutory citation and notary
+                                acknowledgment, taken word for word from each of your 51 controlled
+                                Cert_of_Trust_<State>.docx files. Every state needs only a notary.
+File: will/cert-signing.js      the signing steps shown after review
+Unlike your DPOA, HCD, and HIPAA authorization, your 51 state files for this document were NOT the
+same document with the state name swapped in -- each genuinely differs in wording and structure. Full
+per-state fidelity would have been a much bigger build, so this uses the same "shared body + per-state
+execution page" approach as your living trusts instead. What was simplified and why, and where each
+state's statutory citation came from, are all in will/NOTES-ON-YOUR-CERT-OF-TRUST.txt.
+
+
+1j. AFFIDAVIT OF TRUSTEE
+------------------------------
+File: will/affidavit-template.js    the Affidavit itself -- one shared body, drafted from your
+                                    national baseline, which is nearly word-for-word identical
+                                    across all 51 of your state files
+File: will/affidavit-state-text.js  the state-specific part: the jurat (a sworn-oath execution,
+                                    stricter than a notary acknowledgment), taken word for word
+                                    from each of your 51 controlled state files
+File: will/affidavit-signing.js     the signing steps shown after review
+This one covers both your single-trustmaker and joint trust builders -- it asks up front which kind
+of trust it's for. What was left out (a Michigan/Nebraska routing note your own state files don't
+actually use) and what the questions cover are all in will/NOTES-ON-YOUR-AFFIDAVIT-OF-TRUSTEE.txt.
+
+
+1k. GENERAL ASSIGNMENT OF PERSONAL PROPERTY TO TRUST
+------------------------------
+File: will/assignment-template.js   the Assignment itself -- one shared body, no per-state text at
+                                    all, drafted from your national baseline
+File: will/assignment-signing.js    the signing steps shown after review
+Unlike your other trust-support documents, this one has no will/assignment-state-text.js -- I checked
+your source file's full 51-jurisdiction table and every state resolves to the same "signature only"
+requirement, so there's no real per-state difference to encode. It also covers both your
+single-trustmaker and joint trust builders, asked up front. What that table showed, why the optional
+notary page is one generic block instead of 51 state-specific ones, and what the questions cover are
+all in will/NOTES-ON-YOUR-ASSIGNMENT-OF-PERSONAL-PROPERTY.txt.
+
+
+1l. FINAL WISHES
+------------------------------
+File: will/finalwishes-template.js   the shared body (your actual wishes and preferences, word for
+                                     word identical across all 51 of your state files) plus a short
+                                     state-routing wrapper
+File: will/finalwishes-state-text.js the state-specific part: how that state lets someone be named
+                                     to control disposition, and exactly what it takes to sign that
+                                     -- taken word for word from each of your 51 controlled
+                                     Final_Wishes_<State>.docx files. Unlike your other trust-support
+                                     documents, this one genuinely needs real per-state text: witness
+                                     counts run 0/1/2, some states want a notary instead or as well,
+                                     and Indiana/Iowa/Kentucky embed a whole second declaration.
+File: will/finalwishes-signing.js    the signing steps shown after review
+Mississippi and South Carolina aren't offered -- your own source material flags both as needing a
+state form/route that wasn't included in what you sent, so the first step blocks those two with an
+explanation rather than guessing at wording. Everything -- what varies by state and why, the two
+excluded states, and what the questions cover -- is in will/NOTES-ON-YOUR-FINAL-WISHES.txt.
+
+
+1m. IMPORTANT CONTACTS
+------------------------------
+File: will/contacts-template.js   the document itself -- Name, Relationship, Phone, Email for as
+                                  many people as you add, no source document, built from scratch
+File: will/contacts-signing.js    the "what to do with this list" panel shown after review
+Not a legal document -- nothing to sign, no state question, no watermark. Building its 4-field
+rows surfaced a real bug in the shared code that saves what someone types (phone and email fields
+were silently not saving) -- now fixed for every document on the site, not just this one. Full
+story in will/NOTES-ON-YOUR-IMPORTANT-CONTACTS.txt.
+
+
+2. THE LEARN SECTION (articles)
+-------------------------------
+File: learn/articles.js
+Each article is a block starting with a line like   === my-article-address
+Copy an existing block, paste it below the last one, and change the words. The notes at the
+top of the file show exactly how. Category buttons and the article order (newest date first)
+happen automatically. There are six starter articles for you to review.
+
+
+3. PRICES
+---------
+File: js/plans.js  (the numbers at the very top, under "prices"). Every plan now has TWO prices --
+"single" (one person) and "couple" (a married couple or domestic partners completing their
+documents together, who generally need two of most documents, hence the higher price) -- for
+example: will: { single: 119, couple: 199 }. Both the pricing page and the checkout page read this
+file, so a change here shows up in both places automatically. If you change what a plan includes,
+also update the matching <ul class="includes"> list in pricing.html (inside each plan's collapsible
+"What's included" section) so the wording matches -- these are written out in full there and in
+js/plans.js, on purpose: no plan's list should ever end in "...and more."
+
+THE SINGLE/COUPLE TOGGLE: pricing.html has one toggle near the top of the plan cards ("Just me" /
+"Me and my spouse or partner") that updates all three prices at once. The choice is remembered in
+the visitor's browser for that session (sessionStorage, not a permanent cookie) and carried into
+checkout.html and paid.html automatically, so the price stays consistent through the whole flow
+even though it's never written into the URL by hand. Read a price anywhere in the code with
+GV_PLANS.priceFor('essentials', 'couple') rather than reaching into .prices directly.
+
+
+3b. PAYMENT (checkout.html and paid.html)
+------------------------------------------
+People can answer every question and preview their document for free. Paying happens only when
+they try to download, print, or go to checkout directly from the pricing page. This is set up so
+you can turn on real payment yourself, with no coding:
+
+File: js/checkout.js   the one place to paste your Stripe Payment Links (a Stripe Payment Link is
+                       a ready-made, Stripe-hosted payment page). Because every plan now has a
+                       single and a couple price, you need SIX Payment Links, not three -- one per
+                       plan per household size, each at the matching price in js/plans.js. The
+                       instructions for exactly what to paste, and where in Stripe to set the
+                       "after payment" redirect (which now needs to carry &household=single or
+                       &household=couple, in addition to the plan), are in the notes at the top of
+                       that file.
+File: js/entitlements.js   remembers, in the visitor's own browser, which plan they paid for and
+                       which documents that unlocks. This is a browser check, not an account
+                       system - good enough to stop casual downloading without paying, but not
+                       something a technical visitor couldn't get around. A real lock that nobody
+                       can bypass needs a small server, which is a later stage for this project.
+                       Entitlements aren't split by household size -- paying for a plan unlocks
+                       the same documents whether you paid the single or couple price.
+File: checkout.html    the payment page itself (order summary, "Continue to secure payment").
+File: paid.html        the page Stripe sends someone back to right after they pay. It unlocks the
+                       plan in their browser and sends them on to their document.
+
+TO TEST WITHOUT SETTING UP STRIPE: open paid.html?plan=will in your browser (or essentials, or
+complete; add &household=couple to test that price instead of single). It unlocks that plan in
+your browser exactly like a real payment would, so you can see how the Download and Print buttons
+behave once someone has paid. Clear it again with your browser's "clear site data," or open the
+page in a private window.
+
+WHICH PLAN UNLOCKS WHICH DOCUMENT: also set in js/plans.js, under "unlocks." Right now: Will
+unlocks the will, Important Contacts and Final Wishes; Essentials adds the power of attorney,
+health care directive, dementia care preferences and HIPAA authorization; Complete adds the
+pour-over will, the plain will, the living trust (single or joint), the Certification of Trust,
+Affidavit of Trustee, and the General Assignment of Personal Property to Trust. Change these lists
+as you add more documents. This list is independent of household size -- it doesn't change based
+on whether someone paid the single or couple price.
+
+
+3c. THE ESSENTIALS/COMPLETE PACKAGE FLOW
+------------------------------------------
+Essentials and Complete are more than one document. Someone who clicks "Start with Essentials" or
+"Start with Complete" now answers every document in that plan back to back, instead of having to
+find each builder on their own: finish the will (or, for Complete, the pour-over will) and a
+"Continue to your Power of Attorney" button appears in place of the usual download buttons; finish
+that and it continues to the Health Care Directive, then Dementia Care Preferences, then the HIPAA
+Authorization. A small track at the top of the questions ("Essentials package -- document 2 of 5")
+shows where they are, and every document name in it is a link, so they can jump back to review or
+change an earlier one at any time. Downloading and printing stay locked, the same as always, until
+they pay -- but now that only happens once, at the LAST document, where a "Your package is
+complete" screen lists every document with a link to open it. Pay once there and every document in
+the plan unlocks together.
+
+File: js/flow.js   the only file this feature needs. FLOWS near the top lists, for each plan, which
+                   documents it walks through and in what order -- right now Essentials is
+                   Will, Power of Attorney, Health Care Directive, Dementia Care Preferences, HIPAA
+                   Authorization, and Complete is the same with the Pour-Over Will in place of the
+                   Will. The trust, final wishes and important contacts are listed on the pricing
+                   page but don't have builders yet, so they aren't part of this walk-through --
+                   add them to FLOWS once they do.
+The rest of the feature lives inside js/will.js (the package track, the "Continue to your..."
+button, and the final "package is complete" screen) and needs no editing. Someone who opens a
+single builder directly -- typing dpoa.html, or using the "Or start with your..." links on the
+pricing page -- still gets that one document on its own, exactly as before; nothing changes unless
+they came from a "Start with Essentials/Complete" button.
+
+
+4. EVERYTHING ELSE
+------------------
+index.html      the home page words
+pricing.html    the pricing page words
+css/styles.css  colors and fonts (the color list is at the very top)
+
+
+5. DOWNLOADS (PDF and Word)
+---------------------------
+The "Download PDF" and "Download for Word" buttons build the files inside the visitor's browser. Both put
+"Page X of Y" at the bottom of every page, and the running footer reads "Last Will and Testament of NAME"
+or "Pour-Over Will For NAME". While the sample watermark is on, both files carry it too.
+The Word file is a real .docx that you can edit. The footer's page numbers are Word fields, so they stay
+correct as you edit. Nothing about these files needs editing. The code is in js/will-export.js, and js/vendor/
+holds two libraries it uses (see js/vendor/README.txt).
+
+
+6. SEE YOUR CHANGES
+-------------------
+Double-click a page such as will.html or index.html to open it in your browser. It works
+straight from your computer. To put it on the internet, upload the whole folder to a website host.
+Keep the folders exactly as they are.
+
+
+7. WHAT HAPPENS TO PEOPLE'S ANSWERS, AND TO PAYMENT?
+-----------------------------------------------------
+Answers are saved only in the visitor's own web browser. Nothing is sent to you or to any server.
+Payment (once you turn it on - see section 3b) is handled entirely by Stripe on Stripe's own page;
+you never see or store card details, and neither does this site. Whether someone has paid is also
+remembered only in their own browser, not in any account, so there's no "my purchases" page yet,
+and someone who switches devices or clears their browser needs their email receipt if they want
+you to unlock it for them by hand. A real account system - so payment, answers and documents all
+follow the person instead of the browser - needs a small server, which is a later stage.

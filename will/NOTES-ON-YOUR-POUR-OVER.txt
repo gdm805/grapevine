@@ -1,0 +1,53 @@
+NOTES ON YOUR POUR-OVER WILLS  (Will_Pour_Over_<State>.docx, all 51)
+====================================================================
+
+HOW THE 51 STATES WERE HANDLED
+I compared every state's document with California. Apart from capitalization, the body of the will is
+identical in all 51. Only these things change from state to state, and each is now a setting or a section in
+will/state-text.js (one section per state, which you can edit like a Word document):
+  1. The community property sentence in Section 6.02.
+  2. Florida only: a homestead sentence instead, and no No-Contest Provision.
+  3. The execution, witness and notary text at the end. It has 36 different versions across the 51 states.
+I checked the result by generating the will for all 51 states in three different situations and confirming
+that every fixed line of that state's own document appears in the output. Nothing was missing.
+
+CHANGED (the differences from your documents)
+1. Community property. You told me the community property states are Arizona, California, Idaho, Louisiana,
+   Nevada, New Mexico, Texas, Washington and Wisconsin. Your documents had the sentence only for California
+   ("community or quasi-community property") and Arizona and Idaho ("community property"). I added it for
+   the other six, using "community property". Wisconsin's law calls it "marital property", so please check that
+   wording. In all nine states I show the sentence only when the person has a spouse or domestic partner.
+2. Section headings. 27 of your documents capitalize "And", "Of", "Or" and "In" in headings, and 21 use
+   lowercase ("Declaration, Identification, and Capacity"). I made all 51 use lowercase.
+3. Sections that print empty in your California draft (Co-Personal Representatives, and the whole Guardian article
+   when no child is under 18) now appear only when they apply, so the numbering closes up. References such as
+   "Section 5.04" follow the numbers automatically.
+4. Definitions run together in one paragraph in your drafts. Same words, one per line.
+5. Signing date and county are blank lines to fill in by hand. Everything else in each state's execution
+   text is exactly as you wrote it.
+6. The printed footer reads "Pour-Over Will For NAME | Page X of Y", like your Word footer.
+
+PROBLEMS IN YOUR SOURCE DOCUMENTS (please look at these)
+A. COLORADO. Under "Witness Attestation" there is no attestation text, only signature lines, and the document
+   ends with a "Self-Proving Affidavit" heading with nothing under it. I left the empty heading out of the will
+   (a note in the Colorado section says so). Colorado is switched on, but please add the missing text.
+B. Illinois and Indiana. After each witness's Address line there is an extra "Signature" line. I left it as written.
+C. Indiana ends with "No notary is required for this traditional self-proving clause." I kept it. Because of it,
+   the signing steps do not tell Indiana people to use a notary.
+D. Bracketed placeholders such as "[OFFICIAL SEAL]" and "[Florida certificate fields / seal as applicable]" print
+   as plain text under the notary line. Tell me if you want them removed or shown differently.
+E. "County" is used everywhere, including Louisiana (parishes), Alaska (boroughs) and the District of Columbia
+   (no counties; your document says "County, the District of Columbia"). The county question and Section 1.01
+   say "County" for all. I can switch the word per state if you want.
+F. All 51 documents use two witnesses. (I had guessed three for Vermont earlier. That was wrong, and I have
+   corrected it. Your Vermont document uses two.)
+
+SIGNING STEPS
+Each state is marked with whether its document has a notary section, and the "How to sign" steps tell the person
+to complete it in front of a notary when it does. 44 states have one. California, Colorado, the District of
+Columbia, Illinois, Indiana, Maryland and Ohio do not.
+
+WHAT I KEPT FROM BEFORE
+- Guardian: "any Child of mine" or the child's name. Up to two backups per guardian (one per child when they differ).
+- Property fiduciary: one backup.
+- The trust name and date are typed by the person. The question tells them to copy them exactly.

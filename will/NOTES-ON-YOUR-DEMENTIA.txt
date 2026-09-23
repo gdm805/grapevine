@@ -1,0 +1,82 @@
+NOTES ON YOUR DEMENTIA AND COGNITIVE DECLINE CARE PREFERENCES
+================================================================
+(from "Grapevine_National_Dementia_Cognitive_Decline_Care_Preferences_V1_Coder_Ready.docx")
+
+WHAT I DID
+Articles One through Seven are your baseline's words, checked sentence by sentence. The one change I made
+throughout: your baseline speaks of "the Principal" in the third person ("the Principal prefers..."), while
+every other Grapevine document speaks as "I" ("I prefer..."). I converted the whole document to "I/my" for
+consistency with the will, the pour-over will, and the power of attorney. Nothing else about the sentences
+changed. (Your own baseline was already inconsistent about this -- its very last sentence, the signature line,
+already says "I sign these Care Preferences..." in first person, so this conversion also fixes that mismatch.)
+
+ARTICLE EIGHT (EXECUTION) IS NOT VERBATIM -- HERE'S WHY
+Your baseline gives two routes:
+- "Preferred Integrated Route" (Section 8.01): attach this to the person's Advance Health Care Directive,
+  and explicitly do NOT add a second signature, witness or notary block for this supplement.
+- "Standalone Supplemental Route" (Section 8.02): a separate document with its own state-by-state execution
+  rules -- but your baseline only points at a token, [[STATE_EXECUTION:DEMENTIA_CARE_PREFERENCES]], not at
+  real words, and includes [[HARD_STOP:UNRESOLVED_STATE_EXECUTION_RULE]]. Your own Section 10.04 guardrail
+  says "Never substitute a generic notary, witness, or jurat block for a state-authorized execution block."
+
+Grapevine doesn't have an Advance Health Care Directive builder yet, so neither route can be offered exactly
+as written. I used the Integrated route's rule regardless of state: sign, date, and attach it to the
+person's health-care directive, with no witness or notary section of its own. The "How to sign" panel tells
+them plainly that some states may still want it witnessed or notarized alongside that directive, and points
+them to that directive's own instructions or a local attorney. I did not build the standalone,
+state-by-state execution route -- that would need real per-state wording, which your baseline doesn't supply
+for this document (see "STATE DOCUMENTS YOU ALREADY HAVE" below).
+
+SHORTENED QUESTIONS
+Your baseline's Article Nine lists 11 questions (Q-DCP-001 through Q-DCP-011), onto 7 screens here:
+- Q-DCP-001 ("would you like to add this?") isn't asked again -- starting this builder already answers it.
+- Q-DCP-003, 004, and 005 (three near-identical "goal of care" questions, one per stage) became ONE
+  "overall approach" question with three choices -- treat everything, balance treatment with comfort as it
+  worsens, or comfort first from the start -- each of which sets all three stages at once. A "set this
+  separately" toggle reveals the original three questions for anyone who wants that level of detail.
+- Q-DCP-002 (values), 006 (hospital transfer), 007 (infections), 008 (feeding-tube guidance), 009 (care
+  setting), 010 (routines/people), and 011 (POLST) are all still here, grouped onto fewer screens by topic.
+- Section 5.04 (surgery/intensive care/other burdensome treatment) has body text in your baseline but NO
+  numbered question anywhere in Article Nine -- it seems to have been left out of your questionnaire by
+  oversight. I added a short optional question for it, next to the similar feeding-tube question, so that
+  section has a way to be filled in rather than always being empty.
+
+ONE MORE THING I ADDED: A NON-BLOCKING CAPACITY CHECK
+Your Section 10.03 guardrail says: if someone indicates current substantial cognitive impairment or
+uncertainty about capacity to sign, show neutral guidance to see a clinician or lawyer -- but don't block
+them just for their age or a diagnosis. I added exactly that: a question asking whether they can currently
+understand this document and communicate their own wishes, with "Yes" or "I'm not sure." Choosing "I'm not
+sure" shows a gentle note suggesting they talk to a doctor or lawyer first, but does not stop them from
+continuing, matching your guardrail.
+
+WHAT THIS BUILDER DOESN'T ASK (BY DESIGN, PER YOUR OWN GUARDRAILS)
+- No health-care agent is named here. Section 10.02 says this supplement should inherit the agent's name
+  from the Advance Health Care Directive, not collect it separately or let someone appoint a different
+  agent here. Since there's no AHCD builder yet, the document just refers to "my health-care agent"
+  generically -- nothing here names anyone.
+- No diagnosis, clinical stage, or capacity determination is asked for, per Section 10.03.
+- County isn't asked. Unlike the will and the power of attorney, nothing in this document's text uses a
+  county, so I left that question out.
+
+STATE DOCUMENTS YOU ALREADY HAVE (NOT YET USED HERE)
+Your "06_DIMENTIA DIRECTIVE/Final Docs for Coder" folder has a Dementia_Directive_<State>.docx for all 51
+states. I opened two of them (California and a few others) to understand the design: Articles One through
+Seven in every one of those files are identical to the baseline, word for word -- only the EXECUTION section
+differs, and even there, most of them just reference a token (like [[STATE_EXECUTION:TX_HCD_WITNESS_ATTESTATION]])
+rather than spelling out real witness or notary wording. That real wording appears to live with your
+Advance Health Care Directive project (the "04_AHCD" folder, with its own national baseline and per-state
+audited documents) and your "NATIONAL EXECUTION LIBRARY" folder, not in the dementia-directive files
+themselves. Making this document state-compliant the way the will, the pour-over will, and the power of
+attorney are would mean cross-referencing those two other projects to resolve each state's token into real
+text -- a real research task, not something to guess at. I did not attempt it. Say the word and I'll take it
+on the way I did for the power of attorney's 51 states.
+
+HOW THIS FITS THE PRICING PLANS
+I added this builder's unlock to the Essentials and Complete plans in js/plans.js (alongside the Health Care
+Directive it supplements), but I did not add a bullet for it to the pricing page's plan cards -- that's a
+wording and positioning decision for you to make, not one I should make silently.
+
+HOW TO EDIT
+File: will/dementia-template.js   the words of the document, plus the notes explaining every code used.
+File: will/dementia-signing.js    the "How to sign" steps.
+The questions themselves live in js/will.js, same as the other builders.
