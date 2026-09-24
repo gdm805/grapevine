@@ -405,7 +405,10 @@
   var tpl = parseTemplate(window[GLOBALS[1]]);
   var sign = parseTemplate(window[GLOBALS[2]]);
   var stateText = parseStateText(window.WILL_STATE_TEXT);
-  var draft = window.GV_SAMPLE_WATERMARK !== false && /^y/i.test(tpl.settings.draft_watermark || 'yes');
+  /* the watermark: GV_SAMPLE_WATERMARK in js/plans.js -- 'unpaid' means only until this document is paid for */
+  var wmSetting = window.GV_SAMPLE_WATERMARK;
+  var wmOn = wmSetting === 'unpaid' ? !(window.GVPay && window.GVPay.hasPaid(kindKey)) : wmSetting !== false;
+  var draft = wmOn && /^y/i.test(tpl.settings.draft_watermark || 'yes');
   var draftLabel = tpl.settings.draft_label || 'SAMPLE - NOT FOR SIGNING';
 
   var stepEl = document.getElementById('will-step');

@@ -20,10 +20,12 @@
    the one seam the preview-builder needs to patch, instead of chasing every href by hand. */
 window.GVUrl = function (path) { return path; };
 
-/* THE SAMPLE WATERMARK: while this is true, every document carries "SAMPLE - NOT FOR SIGNING" (in the preview,
-   the PDF, and Word) and the "sample version" notices. Set it to false, and only when you have reviewed the
-   legal text, to remove them from every document at once. */
-window.GV_SAMPLE_WATERMARK = true;
+/* THE SAMPLE WATERMARK: "SAMPLE - NOT FOR SIGNING" across a document (in the preview, the PDF, and Word) plus the
+   "sample version" notices. Three settings:
+     'unpaid'  the free preview is watermarked; once someone has paid for a document, it comes out clean (current)
+     true      every document is watermarked, paid or not (use while the legal text is still being reviewed)
+     false     no watermark anywhere, not even on the free preview */
+window.GV_SAMPLE_WATERMARK = 'unpaid';
 
 /* THE PAYMENT CHECK: the web address of your Cloudflare payment-check program (cloudflare/payment-check.js;
    setup steps are in HOW-TO-EDIT.txt section 3d). Once it is filled in, paid.html asks Stripe, through that

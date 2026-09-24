@@ -23,11 +23,12 @@ The notes at the top of the file explain the few special codes, such as:
    [[ref residuary]]                         writes the number of a heading you labelled {#residuary},
                                              like "Article Six", and stays correct if numbers move
 
-TO REMOVE THE "SAMPLE - NOT FOR SIGNING" WATERMARK AND THE GREEN NOTICE BAR:
-   near the top of will/will-template.js, change   draft_watermark = yes   to   no
+THE "SAMPLE - NOT FOR SIGNING" WATERMARK AND THE GREEN NOTICE BAR: controlled for every document by
+   GV_SAMPLE_WATERMARK in js/plans.js (see "THE SAMPLE WATERMARK" further down). Right now paid documents
+   come out clean and the free preview is marked SAMPLE.
 The will text now uses the wording from your own will (last will - unformatted). Where I added
 or changed anything, a note in the file says ADDED or CHANGED, and will/NOTES-ON-YOUR-DRAFT.txt
-lists everything. Do not switch the watermark off until you are satisfied with every word.
+lists everything.
 
 File: will/signing-instructions.js   the "How to sign your will" steps shown at the end.
 File: will/state-text.js             the parts that change by state, for BOTH wills: the execution, witness and
@@ -396,5 +397,9 @@ files. Claude does this with each update; if you edit a script yourself, ask Cla
 THE "SAMPLE - NOT FOR SIGNING" WATERMARK
 ================================================================
 One switch controls it for every document (preview, PDF, Word) and for the "sample version" notices:
-in js/plans.js, near the top, window.GV_SAMPLE_WATERMARK = true;  Change true to false to remove them
-everywhere. Do this only once you have reviewed the legal text.
+in js/plans.js, near the top, window.GV_SAMPLE_WATERMARK. It has three settings:
+   'unpaid'  (current, chosen 24 Sep 2026) the free preview says SAMPLE; once someone has paid for a
+             document, its preview, PDF, Word and print all come out clean, ready to sign
+   true      every document says SAMPLE, even after paying (use this to pull everything back to "sample"
+             while you revise the legal text)
+   false     no watermark anywhere, not even on the free preview
