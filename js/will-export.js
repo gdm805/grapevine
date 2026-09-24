@@ -48,10 +48,14 @@
     var pbo = pb ? { pb: true } : {};
     function o(x) { return Object.assign({}, x, pbo); }
     switch (b.k) {
-      case 'center':
-        return P(rXml(unbold(b.t), { b: true, sz: 32, sp: 20 }), o(prevWasCenter
-          ? { jc: 'center', after: 360, bdr: '<w:pBdr><w:bottom w:val="double" w:sz="6" w:space="10" w:color="000000"/></w:pBdr>' }
-          : { jc: 'center', after: 80, keepNext: true }));
+      case 'center': {
+        var dbl = function (side) { return '<w:' + side + ' w:val="double" w:sz="6" w:space="9" w:color="000000"/>'; };
+        var isLastC = nextK !== 'center';
+        return P(rXml(unbold(b.t), { b: true, sz: 32, sp: 20 }), o({
+          jc: 'center', keepNext: true, after: isLastC ? 480 : 0,
+          bdr: '<w:pBdr>' + (isLastC ? dbl('bottom') : '') + '</w:pBdr>'
+        }));
+      }
       case 'article':
         return P(rXml(b.n, { b: true, sz: 20, sp: 40 }) + '<w:r><w:br/></w:r>' + rXml(plain(b.t), { b: true, sz: 26, sp: 20 }),
           o({ jc: 'center', keepNext: true, keepLines: true, before: 480, after: 200 }));
@@ -273,11 +277,20 @@
       var prevCenter = false;
       blocks.forEach(function (b, bi) {
         switch (b.k) {
-          case 'center':
+          case 'center': {
+            /* double rule below the title, GAP below the capitals:
+               a 16pt line is drawn with its baseline 14.4pt down and capitals ~10.6pt tall, so capitals
+               start 3.8pt below the line's top; GAP is the visible space from each rule to the capitals */
+            var GAP = 12, CAPTOP = 3.8, BASE = 14.4;
+            if (!prevCenter) space(70);
             wrapCentered(unbold(b.t), 16, true, 1.4);
-            if (prevCenter) { y += 2; doc.setLineWidth(0.8); doc.line(M, y, M + W, y); doc.line(M, y + 3, M + W, y + 3); y += 24; }
-            else y += 2;
+            if (!(blocks[bi + 1] && blocks[bi + 1].k === 'center')) {
+              var lineH = 16 * 1.3, capBottom = y - lineH + BASE, ry = capBottom + GAP;
+              doc.setLineWidth(0.8); doc.line(M, ry, M + W, ry); doc.line(M, ry + 3, M + W, ry + 3);
+              y = ry + 3 + 24;
+            }
             break;
+          }
           case 'article':
             y += 24; space(170);
             centered(b.n, 9, true, 2.4, 70); y += 14;

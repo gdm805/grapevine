@@ -91,15 +91,26 @@
     while (a[listKey].length <= idx) a[listKey].push(clone((kind.rows || {})[listKey] || {}));
     if (!a[listKey][idx][field]) a[listKey][idx][field] = value;
   }
+  /* the second person's copy of a document reads and writes the profile's second-person name
+     (name2), not the first person's name -- and never their date of birth or phone number */
+  function profileMapFor(kind) {
+    var m = PROFILE_MAP[kind.key]; if (!m || !SPOUSE2) return m;
+    var out = {};
+    Object.keys(m).forEach(function (f) {
+      if (f === 'name') out.name2 = m[f];
+      else if (f === 'county' || f === 'address') out[f] = m[f];
+    });
+    return out;
+  }
   function applyProfile(a, kind) {
-    var map = PROFILE_MAP[kind.key]; if (!map) return;
+    var map = profileMapFor(kind); if (!map) return;
     var p = readProfile();
     Object.keys(map).forEach(function (profileField) {
       if (p[profileField]) profileTargetSet(a, kind, map[profileField], p[profileField]);
     });
   }
   function saveProfile(a, kind) {
-    var map = PROFILE_MAP[kind.key]; if (!map) return;
+    var map = profileMapFor(kind); if (!map) return;
     var patch = {};
     Object.keys(map).forEach(function (profileField) {
       var v = profileTargetGet(a, map[profileField]);
@@ -382,6 +393,9 @@
   if (!root) return;
 
   var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts' }[root.getAttribute('data-kind')] || 'will';
+  var SPOUSE2 = false;
+  try { SPOUSE2 = new URLSearchParams(location.search).get('spouse') === '2' && ['will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'].indexOf(kindKey) > -1; } catch (e) { /* first-person copy */ }
+  var docId = kindKey + (SPOUSE2 ? ':2' : '');
   var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'] }[kindKey];
   var states = parseStates(window[GLOBALS[0]]);
   var tpl = parseTemplate(window[GLOBALS[1]]);
@@ -2869,7 +2883,7 @@
       empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts }
   };
   KIND = KINDS[kindKey];
-  buildVars = KIND.buildVars; LS_KEY = KIND.ls;
+  buildVars = KIND.buildVars; LS_KEY = KIND.ls + (SPOUSE2 ? '.s2' : '');
 
   var answers = clone(KIND.empty), stepId = 'start', errors = [], restored = false;
   try {
@@ -2895,8 +2909,8 @@
       if (answers.state && !HIPAA_CACHE[answers.state] && !HIPAA_FAIL[answers.state] && !HIPAA_PENDING[answers.state]) hipaaLoad(answers.state, function () { draw(focusSel); });
     }
     var flow = window.GVFlow && window.GVFlow.current();
-    var inFlow = !!(flow && flow.docs.indexOf(kindKey) > -1);
-    var flowIdx = inFlow ? flow.docs.indexOf(kindKey) : -1;
+    var inFlow = !!(flow && flow.docs.indexOf(docId) > -1);
+    var flowIdx = inFlow ? flow.docs.indexOf(docId) : -1;
     var isLastInFlow = inFlow && flowIdx === flow.docs.length - 1;
     var nextKind = inFlow && !isLastInFlow ? flow.docs[flowIdx + 1] : null;
 
@@ -2914,10 +2928,10 @@
     var nav = stepId === 'review' ? '<div class="nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button></div>' :
       '<div class="nav-row">' + (idx > 0 ? '<button type="button" class="btn btn-secondary" data-back>Back</button>' : '<span></span>') +
       '<button type="button" class="btn btn-primary" data-next>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>';
-    stepEl.innerHTML = note + err + unsupported + KIND.render[stepId]() + nav;
+    stepEl.innerHTML = note + err + (SPOUSE2 && stepId === 'start' ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
     if (stepId === 'review') {
       if (inFlow) {
-        window.GVFlow.markDone(kindKey);
+        window.GVFlow.markDone(docId);
         if (isLastInFlow) {
           var actionsEl = stepEl.querySelector('.actions');
           if (actionsEl) insertHtmlBefore(renderPkgComplete(flow, kindKey), actionsEl);
@@ -2939,12 +2953,65 @@
     renderDoc(); save();
   }
 
+  /* ---------- "mirror image": the second person's copy of a document can start as a copy of the first
+     person's, with the two people swapped -- wherever the first person named the second person
+     (as agent, executor, trustee...), the copy names the first person instead. Anyone else (children,
+     a sister as backup agent) stays exactly as entered. Date of birth, phone, and the "I am an adult /
+     signing freely" confirmations are cleared so the second person answers those for themselves. ---------- */
+  var mirrorOpen = false;
+  function firstPersonAnswers() {
+    try { var sv = JSON.parse(localStorage.getItem(KIND.ls) || 'null'); return sv && sv.answers && clean(sv.answers.name) ? sv.answers : null; } catch (e) { return null; }
+  }
+  function swapNames(v, n1, n2) {
+    if (typeof v === 'string') {
+      var t = v.trim().toLowerCase();
+      if (t === n2.toLowerCase()) return n1;
+      if (t === n1.toLowerCase()) return n2;
+      return v;
+    }
+    if (Array.isArray(v)) return v.map(function (x) { return swapNames(x, n1, n2); });
+    if (v && typeof v === 'object') { var o = {}; Object.keys(v).forEach(function (k) { o[k] = swapNames(v[k], n1, n2); }); return o; }
+    return v;
+  }
+  function mirrorBox() {
+    if (answers._mirroredFrom) {
+      return '<div class="mirror-box mirror-done"><p><strong>Mirrored from ' + esc(answers._mirroredFrom) + '\u2019s document.</strong> Everything is filled in with the two of you swapped. Step through and change anything that should be different.</p></div>';
+    }
+    var first = firstPersonAnswers();
+    if (!first) {
+      return '<div class="mirror-box"><p><strong>Want this to mirror the first person\u2019s document?</strong> Answer the first person\u2019s ' + esc(KIND.file.replace(/-/g, ' ')) + ' first (it comes right before this one), then come back here.</p></div>';
+    }
+    var n1 = clean(first.name), guess = clean(answers.name) || clean(readProfile().name2) || '';
+    return '<div class="mirror-box">' +
+      '<label class="mirror-check"><input type="checkbox" id="mirror-on"' + (mirrorOpen ? ' checked' : '') + '> <span><strong>Mirror image of ' + esc(n1) + '\u2019s document</strong><br>' +
+      'Copy ' + esc(n1) + '\u2019s answers and flip the roles, so whoever ' + esc(n1) + ' named as agent or executor is swapped with the other spouse or partner.</span></label>' +
+      '<div class="mirror-panel" id="mirror-panel"' + (mirrorOpen ? '' : ' hidden') + '>' +
+      '<label class="mirror-name" for="mirror-name">This copy is for (full legal name, exactly as ' + esc(n1) + ' typed it in their document)</label>' +
+      '<input class="input" type="text" id="mirror-name" value="' + val(guess) + '" autocomplete="off">' +
+      '<button type="button" class="btn btn-secondary" data-mirror-apply>Copy and flip</button></div></div>';
+  }
+  function applyMirror() {
+    var first = firstPersonAnswers(), input = document.getElementById('mirror-name');
+    var n2 = input ? clean(input.value) : '';
+    if (!first || n2.length < 2) { errors = ['Type the name this copy is for, then choose Copy and flip.']; mirrorOpen = true; draw(); return; }
+    var n1 = clean(first.name);
+    var src = swapNames(clone(first), n1, n2);
+    src.name = n2;
+    if ('spouse' in src && !clean(src.spouse)) src.spouse = n1;
+    ['dob', 'phone'].forEach(function (k) { if (k in src) src[k] = ''; });
+    ['ageOk', 'freeOk', 'trustOk'].forEach(function (k) { if (k in src) src[k] = false; });
+    answers = Object.assign(clone(KIND.empty), src);
+    answers._mirroredFrom = n1;
+    errors = []; mirrorOpen = false;
+    go('start', { quiet: true });
+  }
+
   /* ---------- payment: downloading and printing unlock when the visitor has paid (see js/checkout.js
      and js/entitlements.js). The document itself previews for free at every step, including this one. */
   function paidUp() { return !window.GVPay || window.GVPay.hasPaid(kindKey); }
   function checkoutHref() {
     var f = window.GVFlow && window.GVFlow.current();
-    var plan = (f && f.docs.indexOf(kindKey) > -1) ? f.plan : (window.GVPay ? window.GVPay.planForDoc(kindKey) : 'essentials');
+    var plan = (f && f.docs.indexOf(docId) > -1) ? f.plan : (window.GVPay ? window.GVPay.planForDoc(kindKey) : 'essentials');
     /* "return" must stay this document's plain filename (not GVUrl-resolved) -- checkout.js looks
        it up by that exact filename in its own RETURN_LABELS/RETURN_DOC tables and only resolves it
        to a real link at the point it's rendered. GVFlow.pageFor always returns the plain filename
@@ -2957,18 +3024,23 @@
 
   /* ---------- package flow: Essentials/Complete answer every document back to back (js/flow.js
      tracks which plan and which documents; this just draws it). ---------- */
+  function pageUrl(id) {
+    var p = window.GVFlow.pageFor(id), q = '', i = p.indexOf('?');
+    if (i > -1) { q = p.slice(i); p = p.slice(0, i); }
+    return window.GVUrl(p) + q;
+  }
   function pkgName(f) { return f.plan.charAt(0).toUpperCase() + f.plan.slice(1); }
   function renderPkgTrack(f, idx) {
     var steps = f.docs.map(function (k, i) {
       var cls = i < idx ? 'pkg-done' : (i === idx ? 'pkg-current' : 'pkg-upcoming');
       var label = (i < idx ? '✓ ' : '') + esc(window.GVFlow.labelFor(k));
-      return '<a class="pkg-step ' + cls + '" href="' + esc(window.GVUrl(window.GVFlow.pageFor(k))) + '">' + label + '</a>';
+      return '<a class="pkg-step ' + cls + '" href="' + esc(pageUrl(k)) + '">' + label + '</a>';
     }).join('<span class="pkg-sep">→</span>');
     return '<div class="pkg-track"><span class="pkg-label">' + esc(pkgName(f)) + ' package — document ' + (idx + 1) + ' of ' + f.docs.length + '</span>' +
       '<div class="pkg-steps">' + steps + '</div></div>';
   }
   function renderPkgContinue(nextKind) {
-    var label = window.GVFlow.labelFor(nextKind), page = window.GVUrl(window.GVFlow.pageFor(nextKind));
+    var label = window.GVFlow.labelFor(nextKind), page = pageUrl(nextKind);
     return '<div class="actions pkg-continue">' +
       '<p class="pkg-continue-note">This document is answered. Next is your ' + esc(label) + '.</p>' +
       '<a class="btn btn-primary btn-lg" href="' + esc(page) + '">Continue to your ' + esc(label) + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
@@ -2979,7 +3051,7 @@
     var rows = f.docs.map(function (k) {
       var label = window.GVFlow.labelFor(k);
       if (k === thisKind) return '<div class="pkg-done-row pkg-current-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><span class="pkg-here">You’re here</span></div>';
-      return '<div class="pkg-done-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><a class="link" href="' + esc(window.GVUrl(window.GVFlow.pageFor(k))) + '">' + (paid ? 'Open &amp; download' : 'Open') + '</a></div>';
+      return '<div class="pkg-done-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><a class="link" href="' + esc(pageUrl(k)) + '">' + (paid ? 'Open &amp; download' : 'Open') + '</a></div>';
     }).join('');
     var lede = paid ? 'Every document below is ready. Open each one to download or print it, or get the whole package in one PDF below.' :
       'Every document below is answered and ready. Downloading and printing unlock together, right after you pay.';
@@ -3033,6 +3105,11 @@
   root.addEventListener('change', function (e) {
     var t = e.target;
     if (!t.matches('input, select')) return;
+    if (t.id === 'mirror-on') {
+      mirrorOpen = t.checked;
+      var mp = document.getElementById('mirror-panel'); if (mp) mp.hidden = !t.checked;
+      return;
+    }
     if (t.type === 'checkbox') {
       if (t.hasAttribute('data-k')) answers[t.getAttribute('data-k')] = t.checked;
       else if (t.hasAttribute('data-list')) answers[t.getAttribute('data-list')][+t.getAttribute('data-i')][t.getAttribute('data-f')] = t.checked;
@@ -3053,7 +3130,8 @@
   var resetArmed = false;
   root.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;
-    if (b.hasAttribute('data-next')) next();
+    if (b.hasAttribute('data-mirror-apply')) applyMirror();
+    else if (b.hasAttribute('data-next')) next();
     else if (b.hasAttribute('data-back')) back();
     else if (b.hasAttribute('data-goto')) go(b.getAttribute('data-goto'));
     else if (b.hasAttribute('data-add')) {
@@ -3161,14 +3239,14 @@
           setTimeout(poll, 100);
         })();
       });
-      iframe.src = window.GVUrl(window.GVFlow.pageFor(kind));
+      iframe.src = pageUrl(kind);
       document.body.appendChild(iframe);
     });
   }
   function downloadPackagePdf(f) {
     if (!window.GVExport) { status('The export tools did not load. Try downloading each document instead.', true); return; }
     status('Preparing your package PDF... this can take a moment for a longer package.');
-    Promise.all(f.docs.map(function (k) { return k === KIND.key ? Promise.resolve(toBlocks(docText())) : loadKindBlocks(k); }))
+    Promise.all(f.docs.map(function (k) { return k === docId ? Promise.resolve(toBlocks(docText())) : loadKindBlocks(k); }))
       .then(function (allBlocks) {
         var combined = [];
         allBlocks.forEach(function (blocks, i) { if (i > 0) combined.push({ k: 'break' }); combined.push.apply(combined, blocks); });

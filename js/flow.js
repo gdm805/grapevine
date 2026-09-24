@@ -29,6 +29,13 @@ window.GVFlow = (function () {
     finalwishes: 'Final Wishes', contacts: 'Important Contacts'
   };
 
+  /* Documents each person signs for themselves. For a couple, each of these is answered TWICE in a row
+     (first person, then the second person, id "dpoa:2"), and the second copy can be a "mirror image"
+     of the first (see the mirror box in js/will.js). Trust-side documents and Important Contacts
+     are shared by the household, so they appear once. */
+  var PER_PERSON = ['will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'];
+  function baseOf(id) { return String(id).split(':')[0]; }
+
   function household() {
     try { return sessionStorage.getItem('gv.household') === 'couple' ? 'couple' : 'single'; } catch (e) { return 'single'; }
   }
@@ -43,7 +50,13 @@ window.GVFlow = (function () {
     if (plan === 'complete' && household() === 'couple') {
       docs = docs.map(function (k) { return k === 'trust' ? 'trustjoint' : k; });
     }
-    var f = { plan: plan, docs: docs, done: [] };
+    var couple = plan !== null && household() === 'couple';
+    if (couple) {
+      var doubled = [];
+      docs.forEach(function (k) { doubled.push(k); if (PER_PERSON.indexOf(k) > -1) doubled.push(k + ':2'); });
+      docs = doubled;
+    }
+    var f = { plan: plan, docs: docs, done: [], couple: couple };
     write(f);
     return f;
   }
@@ -53,8 +66,15 @@ window.GVFlow = (function () {
     if (f.done.indexOf(kind) === -1) { f.done.push(kind); write(f); }
   }
   function clear() { try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ } }
-  function pageFor(kind) { return PAGES[kind] || '#'; }
-  function labelFor(kind) { return LABELS[kind] || kind; }
+  function pageFor(id) { var p = PAGES[baseOf(id)] || '#'; return /:2$/.test(id) ? p + '?spouse=2' : p; }
+  function readProfileNames() { try { return JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { return {}; } }
+  function labelFor(id) {
+    var base = baseOf(id), label = LABELS[base] || base;
+    var f = read();
+    if (PER_PERSON.indexOf(base) === -1 || !(f && f.couple)) return label;
+    var pr = readProfileNames();
+    return label + ' \u2014 ' + (/:2$/.test(id) ? (pr.name2 || 'second person') : (pr.name || 'first person'));
+  }
 
   /* Start (or clear) a flow the moment someone clicks a plan's "Start" button, before the browser
      follows the link. */
@@ -65,5 +85,5 @@ window.GVFlow = (function () {
     if (FLOWS[plan]) start(plan); else clear();
   });
 
-  return { start: start, current: current, markDone: markDone, clear: clear, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
+  return { start: start, current: current, markDone: markDone, clear: clear, baseOf: baseOf, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
 })();
