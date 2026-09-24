@@ -2918,6 +2918,7 @@
     if (!vis.some(function (s) { return s.id === stepId; })) stepId = vis[0].id;
     var idx = vis.map(function (s) { return s.id; }).indexOf(stepId);
     var pct = Math.round((idx / (vis.length - 1)) * 100);
+    if (inFlow) paintPkgHero(flow, flowIdx);
     progEl.innerHTML = (inFlow ? renderPkgTrack(flow, flowIdx) : '') +
       '<div class="p-top"><span>' + esc(vis[idx].label) + '</span><span>Step ' + (idx + 1) + ' of ' + vis.length + '</span></div>' +
       '<div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + Math.max(pct, 6) + '%"></i></div>';
@@ -3028,6 +3029,17 @@
     var p = window.GVFlow.pageFor(id), q = '', i = p.indexOf('?');
     if (i > -1) { q = p.slice(i); p = p.slice(0, i); }
     return window.GVUrl(p) + q;
+  }
+  /* Inside a package, the page's own heading ("Let's write your pour-over will", "Don't have a trust yet?
+     write a regular will instead") would contradict what the person is doing, so it's replaced with
+     package wording and the alternative-document links are hidden. */
+  function paintPkgHero(f, idx) {
+    var hero = document.querySelector('.will-hero'); if (!hero) return;
+    var over = hero.querySelector('.overline'), h1 = hero.querySelector('h1'), lead = hero.querySelector('.lead'), sw = hero.querySelector('.kind-switch');
+    if (over) over.textContent = 'Document ' + (idx + 1) + ' of ' + f.docs.length + ' \u00b7 ' + window.GVFlow.labelFor(docId);
+    if (h1) h1.textContent = 'Let\u2019s write your ' + pkgName(f) + ' package';
+    if (lead) lead.textContent = 'You\u2019ll answer a few plain questions for each of the ' + f.docs.length + ' documents, one after another, and watch each take shape. Names and details you\u2019ve already given carry over, so you only type them once. Your answers stay in this browser.';
+    if (sw) sw.hidden = true;
   }
   function pkgName(f) { return f.plan.charAt(0).toUpperCase() + f.plan.slice(1); }
   function renderPkgTrack(f, idx) {
