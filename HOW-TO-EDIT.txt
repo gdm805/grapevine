@@ -313,6 +313,13 @@ whenever you edit them. The checkout page shows the same numbered sections in a 
 "Continue to secure payment" (loaded from terms.html, so there's only one copy to edit), and every
 page's footer links to them. Turning on Stripe's "I agree" checkbox is on LAUNCH-CHECKLIST.txt.
 
+3f. THE BETA TEST (js/plans.js, GV_BETA)
+------------------------------------------
+While GV_BETA's "on" is true, people who arrive through the invitation link (any page address ending in
+?beta=1) must complete the Tally feedback survey at checkout before the payment button unlocks; Stripe
+then applies the 100%-off promotion code (GV_BETA's "code") automatically. Everyone else checks out
+normally. Set "on" to false at public launch. Steps are in LAUNCH-CHECKLIST.txt, item 4.
+
 3c. THE ESSENTIALS/COMPLETE PACKAGE FLOW
 ------------------------------------------
 Essentials and Complete are more than one document. Someone who clicks "Start with Essentials" or

@@ -107,6 +107,8 @@
     var link = ((PAYMENT_LINKS[plan] || {})[payHousehold] || '').trim();
     var payHref = '#';
     if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold + (plan === 'doc' && docKey ? '_' + docKey : '')); }
+    /* beta testers: Stripe applies the 100%-off code for them (see GV_BETA in js/plans.js) */
+    if (link && betaTester()) payHref += '&prefilled_promo_code=' + encodeURIComponent(window.GV_BETA.code);
 
     root.innerHTML =
       '<p class="overline">Checkout</p>' +
@@ -123,12 +125,48 @@
         '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' +
         '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
         (link
-          ? termsFold() + '<a class="btn btn-primary btn-lg" href="' + payHref + '">Continue to secure payment <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>'
+          ? betaSurvey() + termsFold() + (betaTester() && !surveyDone()
+            ? '<button class="btn btn-primary btn-lg" type="button" disabled>Complete the survey above to continue</button>'
+            : '<a class="btn btn-primary btn-lg" href="' + payHref + '">' + (betaTester() ? 'Continue to get your free documents' : 'Continue to secure payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>')
           : '<div class="pay-off"><p><strong>Payments aren’t turned on yet.</strong> Add a Stripe Payment Link for the ' + esc(p.name) + ' plan (' + household + ') in <code>js/checkout.js</code>, or open <code>paid.html?plan=' + plan + '&household=' + household + '</code> to try the unlocked view.</p></div>') +
         '<p class="secure-note"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Handled by Stripe on their own secure page. We never see or store your card details.</p>' +
       '</div>' +
       '<p class="keep-drafting">Not ready to pay? <a href="' + window.GVUrl(validReturn || p.goesTo) + '">Keep drafting for free</a> — your answers stay saved in this browser, and you can come back to pay whenever you like.</p>';
   }
+
+  /* ---------- the beta test (GV_BETA in js/plans.js) ----------
+     A beta tester is someone who arrived through the ?beta=1 invitation link while the beta is on. Before paying,
+     they complete the feedback survey (a Tally form embedded here); Tally tells this page when it has been
+     submitted, which unlocks the payment button, and Stripe then applies the 100%-off code. Remembered in this
+     browser, so a tester who buys more than once takes the survey once. */
+  function betaTester() {
+    var b = window.GV_BETA;
+    if (!b || !b.on || !b.code || !b.survey) return false;
+    /* one free checkout per tester: after it (paid.js sets grapevine.beta.used), checkout is back to normal */
+    try { return localStorage.getItem('grapevine.beta') === '1' && localStorage.getItem('grapevine.beta.used') !== '1'; } catch (e) { return false; }
+  }
+  function surveyDone() { try { return localStorage.getItem('grapevine.beta.survey') === '1'; } catch (e) { return false; } }
+  function betaSurvey() {
+    if (!betaTester()) return '';
+    if (surveyDone()) return '<div class="beta-box done"><p><strong>Thank you for your feedback.</strong> As a beta tester your documents are free: the discount is applied for you on the payment page, so the total shows $0.00.</p></div>';
+    var src = 'https://tally.so/embed/' + encodeURIComponent(window.GV_BETA.survey) + '?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1';
+    return '<div class="beta-box"><p class="beta-kicker">Beta tester</p>' +
+      '<h3>One step before your free documents</h3>' +
+      '<p>Please answer our short feedback survey (about 5 minutes). When you submit it, the button below unlocks and your documents are free.</p>' +
+      '<iframe class="beta-survey" data-tally-src="' + src + '" src="' + src + '" loading="lazy" width="100%" height="700" frameborder="0" title="Grapevine beta tester survey"></iframe></div>';
+  }
+  window.addEventListener('message', function (e) {
+    if (!betaTester() || !/^https:\/\/tally\.so$/.test(e.origin)) return;
+    var d = e.data;
+    if (typeof d === 'string' && d.indexOf('Tally.FormSubmitted') > -1) {
+      try { localStorage.setItem('grapevine.beta.survey', '1'); } catch (x) {}
+      render();
+      window.scrollTo(0, 0);
+    } else if (typeof d === 'string') {
+      /* Tally also reports the survey's height, so the frame grows with it instead of scrolling inside */
+      try { var m = JSON.parse(d); if (m && m.payload && m.payload.height) { var f = root.querySelector('.beta-survey'); if (f) f.style.height = m.payload.height + 'px'; } } catch (x) {}
+    }
+  });
 
   /* the Terms and Conditions, readable right here before paying. The text itself lives only in terms.html
      (its <div class="prose">) and is loaded into this fold-down the first time it's opened, so there is one

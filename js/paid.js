@@ -67,6 +67,8 @@
       /* Stripe's answer, not the link, decides what gets unlocked */
       plan = ans.plan;
       household = ans.household === 'couple' ? 'couple' : 'single';
+      /* a beta tester's free checkout: one per tester, so retire the beta discount in this browser */
+      if (ans.free) { try { localStorage.setItem('grapevine.beta.used', '1'); } catch (x) {} }
       finish(true, ans.doc || '');
     })
     .catch(function () { problem('We couldn’t reach the payment check. Check your internet connection and try again.' + ASK_EMAIL, true); });

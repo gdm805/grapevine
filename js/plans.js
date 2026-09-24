@@ -34,6 +34,22 @@ window.GV_SAMPLE_WATERMARK = 'unpaid';
    check. It looks like: 'https://grapevine-payment-check.YOURNAME.workers.dev' */
 window.GV_PAYMENT_CHECK_URL = 'https://grapevine-payment-check.gdm805.workers.dev';
 
+/* THE BETA TEST: while on is true, anyone who arrives through the beta invitation link (any page address
+   ending in ?beta=1, for example https://gdm805.github.io/grapevine/pricing.html?beta=1) is a beta tester in
+   that browser. At checkout a beta tester must complete the feedback survey (the Tally form below); when they
+   submit it, "Continue to secure payment" unlocks and takes them to Stripe with the 100%-off promotion code
+   already applied, so they pay $0 and get their documents. Everyone else checks out normally.
+     on      true during the beta; set to false at public launch (turns all of this off)
+     code    the Stripe PROMOTION CODE (the customer-facing code, e.g. BETA2026), 100% off; in Stripe give
+             it a maximum number of redemptions and an expiry date
+     survey  the Tally form's ID (the part after tally.so/r/ in its share link) */
+window.GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' };
+(function () {
+  try {
+    if (window.GV_BETA && window.GV_BETA.on && /[?&]beta=1\b/.test(location.search)) localStorage.setItem('grapevine.beta', '1');
+  } catch (e) { /* storage blocked: not a beta tester in this browser */ }
+})();
+
 window.GV_PLANS = {
   order: ['will', 'essentials', 'complete'],
   prices: {

@@ -89,6 +89,7 @@ export default {
       if (SINGLE_DOCS.indexOf(parts[2]) > -1) doc = parts[2];
     }
 
-    return reply({ ok: true, plan: sold.plan, household: sold.household, doc: doc, session: session });
+    /* free = paid $0 with a 100%-off code (beta testers); the site then retires that browser's beta discount */
+    return reply({ ok: true, plan: sold.plan, household: sold.household, doc: doc, session: session, free: s.amount_total === 0 });
   }
 };

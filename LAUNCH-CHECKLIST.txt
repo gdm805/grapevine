@@ -30,22 +30,25 @@ A. BEFORE BETA TESTERS START
           Deploy (it now refuses payments where the terms box wasn't ticked -- REQUIRE_TERMS = true).
        d. Test purchase with card 4242 4242 4242 4242: the checkbox appears, and documents unlock.
 
-[ ] 4. Beta testers: free documents (100%-off promotion code) in exchange for completing a feedback
-       survey (decided 24 Sep).
-       a. In LIVE Stripe: Product catalog > Coupons > New: 100% off, "once". Then add promotion codes:
-          ONE PER TESTER (e.g., BETA-SMITH), each limited to 1 redemption, with an expiry date.
-       b. On each live Payment Link: switch on "Allow promotion codes".
-       c. The payment check already accepts $0 purchases (cloudflare/payment-check.js, pasted in step 3c).
-       d. Build the survey (a free form tool such as Google Forms or Tally; Claude can draft the questions).
-       e. Ask for HONEST feedback; free documents never depend on the answers being positive.
-       f. If you later quote survey answers on the site as testimonials: say the person was a beta tester
-          who received free documents, and don't pick only the positive ones (FTC endorsement guides /
-          consumer review rule). Don't post beta feedback as Google or Yelp reviews (both ban
-          incentivized reviews).
-       g. Tell testers the documents are a beta: read them carefully before signing, and report anything
-          that looks wrong.
-       NOTE: promotion codes live in your LIVE Stripe account, so part B steps 7-9 (live key and live
-       links) must be done BEFORE beta starts.
+[ ] 4. Beta testers: free documents in exchange for the feedback survey, fully automatic (built 24 Sep).
+       How it works: testers use the invitation link  https://gdm805.github.io/grapevine/pricing.html?beta=1
+       (any page + ?beta=1). At checkout the Tally survey (form 445AKO) appears and the payment button stays
+       locked until they submit it; then Stripe opens with the 100%-off code already applied ($0).
+       Switch: js/plans.js  GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' }
+       a. Publish the Tally survey (form "Grapevine Beta Tester Survey").
+       b. In Stripe (sandbox now to test, and again in LIVE for the beta): Product catalog > Coupons > New:
+          100% off, "Once". Add a promotion code to it named exactly BETA2026, with a maximum number of
+          redemptions = the number of testers, and an expiry date. (Stripe counts uses across everyone;
+          the website itself allows each tester ONE free checkout, which can be a whole package.)
+       c. On each Payment Link: switch on "Allow promotion codes".
+       d. The payment check already accepts $0 purchases (cloudflare/payment-check.js, pasted in step 3c).
+       e. Test: private window > pricing.html?beta=1 > make a document > checkout > survey > $0 > download.
+       f. Send ONE invitation email to all testers with the ?beta=1 link. Tell them it's a beta: read every
+          document carefully before signing and report anything that looks wrong.
+       g. If you quote survey answers later: say the person was a beta tester who got free documents, and
+          don't pick only the positive ones (FTC). Don't post beta feedback on Google or Yelp.
+       h. AT PUBLIC LAUNCH: set GV_BETA on: false in js/plans.js, and deactivate BETA2026 in Stripe.
+       NOTE: the beta runs on the LIVE Stripe links, so part B steps 7-9 come before beta starts.
 
 [ ] 5. Decide the couples pricing question: trust documents (Schedule A, Certification, Affidavit,
        Assignment) currently cost a couple $49, the same as one person (one trust). Other single
