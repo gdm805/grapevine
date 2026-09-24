@@ -346,7 +346,7 @@ paid.html unlocks just that one. Schedule A is its own document now (schedulea.h
 WHY EVERY SCRIPT AND STYLE LINK ENDS IN ?v=...
 ================================================================
 Browsers keep old copies of scripts and styles, so after an update a visitor could see a mix of new and old.
-Every <script src> and stylesheet link in the .html pages ends in "?v=20260924h". That text is a version stamp:
+Every <script src> and stylesheet link in the .html pages ends in "?v=20260924i". That text is a version stamp:
 when a page is updated, change the stamp (for example to ?v=20260925a) in every page and browsers fetch the new
 files. Claude does this with each update; if you edit a script yourself, ask Claude to bump the stamp.
 

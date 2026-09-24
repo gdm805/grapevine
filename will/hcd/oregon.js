@@ -134,11 +134,21 @@ A Successor Health Care Representative shall have the same authority as the orig
 
 [[end]]
 
+[[if has_co_agents]]
+
+## Simultaneous Authority
+
+Except for the co-agents named above, only one person shall serve as my Health Care Representative at a time. The appointment of successors does not grant concurrent authority to more than one successor at a time, and a successor serves only if no co-agent is able to serve.
+
+[[else]]
+
 ## No Simultaneous Authority
 
 Only one Health Care Representative shall serve at a time.
 
 The appointment of Successor Health Care Representatives does not grant concurrent authority to more than one person.
+
+[[end]]
 
 ## Eligibility to Serve
 

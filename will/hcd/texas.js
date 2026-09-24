@@ -180,11 +180,21 @@ A Successor Agent shall have the same authority as the originally appointed Agen
 
 [[end]]
 
+[[if has_co_agents]]
+
+## Simultaneous Authority
+
+Except for the co-agents named above, only one person shall serve as my Agent at a time. The appointment of successors does not grant concurrent authority to more than one successor at a time, and a successor serves only if no co-agent is able to serve.
+
+[[else]]
+
 ## No Simultaneous Authority
 
 Only one Agent shall serve at a time.
 
 The appointment of Successor Agents does not grant concurrent authority to more than one person.
+
+[[end]]
 
 ## Eligibility to Serve
 
