@@ -3156,7 +3156,7 @@
       var k2 = b.getAttribute('data-remove'); answers[k2].splice(+b.getAttribute('data-i'), 1); draw();
     } else if (b.hasAttribute('data-print') || b.hasAttribute('data-word') || b.hasAttribute('data-pdf')) {
       if (!paidUp()) { location.href = checkoutHref(); return; }
-      if (b.hasAttribute('data-print')) { setFooter(); setPane('p'); setTimeout(function () { window.print(); }, 50); }
+      if (b.hasAttribute('data-print')) printViaPdf();
       else if (b.hasAttribute('data-word')) runExport('docx');
       else runExport('pdf');
     }
@@ -3207,6 +3207,25 @@
   function exportOptions() {
     var info = exportInfo();
     return { footer: info.footer, draftLabel: draft ? draftLabel : '', title: info.footer, base: info.base };
+  }
+  /* Print opens the finished PDF (footer, "Page X of Y" and all) instead of printing the web page: browsers
+     like Safari and DuckDuckGo ignore the page-footer instructions the web page's own print mode relies on,
+     so a printout straight from the page came out with no footer. The PDF always has it. */
+  function printViaPdf() {
+    function pageFallback() { setFooter(); setPane('p'); setTimeout(function () { window.print(); }, 50); }
+    if (!window.GVExport) { pageFallback(); return; }
+    var w = null;
+    try { w = window.open('', '_blank'); } catch (e) { w = null; }
+    var opts = exportOptions();
+    status('Preparing your printable PDF...');
+    window.GVExport.pdf(toBlocks(docText()), opts).then(function (blob) {
+      if (w && !w.closed) {
+        w.location.href = URL.createObjectURL(blob);
+        status('Your PDF opened in a new tab. Choose Print there.');
+        return null;
+      }
+      return deliver(blob, opts.base + '.pdf').then(function () { status('Your PDF was saved. Open it and choose Print.'); });
+    }).catch(function () { if (w && !w.closed) w.close(); status('', false); pageFallback(); });
   }
   function runExport(kind) {
     if (!window.GVExport) { status('The export tools did not load. Try Print instead.', true); return; }
