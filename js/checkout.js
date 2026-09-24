@@ -22,8 +22,12 @@
      Until a plan/household's link is filled in, its "Continue to secure payment" button is replaced
      with a plain notice, so the page never looks broken while you're getting Stripe set up.
 
-     TO TEST WITHOUT STRIPE: open paid.html?plan=will in your browser. It marks the Will plan as paid in
-     this browser, the same way a real payment would, so you can see how the unlocked builder behaves.
+     TO TEST: once the payment check is set up (GV_PAYMENT_CHECK_URL in js/plans.js, HOW-TO-EDIT.txt 3d),
+     pay through a test link with Stripe's fake card 4242 4242 4242 4242. Typing paid.html?plan=will only
+     unlocks anything while GV_PAYMENT_CHECK_URL is still empty.
+
+     IMPORTANT: every link below must also be listed in PAYMENT_LINKS in cloudflare/payment-check.js, or
+     payments through it can't be confirmed.
      ------------------------------------------------------------------ */
   /* TEST-MODE links (Stripe sandbox): these take fake cards only, such as 4242 4242 4242 4242. When you
      go live, replace each with the matching link from your live Stripe account. */
@@ -102,7 +106,7 @@
     var includes = (plan === 'doc' && docKey && window.GVFlow) ? [window.GVFlow.baseLabel(docKey)] : p.includes;
     var link = ((PAYMENT_LINKS[plan] || {})[payHousehold] || '').trim();
     var payHref = '#';
-    if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold); }
+    if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold + (plan === 'doc' && docKey ? '_' + docKey : '')); }
 
     root.innerHTML =
       '<p class="overline">Checkout</p>' +

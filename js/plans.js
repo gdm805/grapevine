@@ -25,6 +25,13 @@ window.GVUrl = function (path) { return path; };
    legal text, to remove them from every document at once. */
 window.GV_SAMPLE_WATERMARK = true;
 
+/* THE PAYMENT CHECK: the web address of your Cloudflare payment-check program (cloudflare/payment-check.js;
+   setup steps are in HOW-TO-EDIT.txt section 3d). Once it is filled in, paid.html asks Stripe, through that
+   program, whether each payment is real before unlocking anything, so typing paid.html?plan=... into a
+   browser no longer works. Leave it empty ('') only while setting up; empty means the old, easy-to-bypass
+   check. It looks like: 'https://grapevine-payment-check.YOURNAME.workers.dev' */
+window.GV_PAYMENT_CHECK_URL = '';
+
 window.GV_PLANS = {
   order: ['will', 'essentials', 'complete'],
   prices: {

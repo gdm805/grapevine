@@ -33,6 +33,7 @@ js/plans.js       Plan names, prices and what each includes. ALL PRICES LIVE AT 
 js/pricing.js     Pricing page. Reads its numbers from js/plans.js.
 js/checkout.js    Checkout page. PASTE YOUR STRIPE PAYMENT LINKS AT THE TOP OF THIS FILE to take real payment.
 js/entitlements.js Remembers, in the visitor's browser, which plan they paid for.
+cloudflare/payment-check.js  The payment check that runs on Cloudflare, not on GitHub (HOW-TO-EDIT.txt 3d).
 js/paid.js        The payment-received page's logic.
 js/flow.js        For Essentials/Complete: the order of documents in the "answer them all back to back" walk-through.
 js/will.js        The will builder engine (the questions). Also gates Download/Print until paid. Rarely needs changing.

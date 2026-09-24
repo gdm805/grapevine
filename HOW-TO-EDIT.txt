@@ -239,21 +239,19 @@ File: js/checkout.js   the one place to paste your Stripe Payment Links (a Strip
                        &household=couple, in addition to the plan), are in the notes at the top of
                        that file.
 File: js/entitlements.js   remembers, in the visitor's own browser, which plan they paid for and
-                       which documents that unlocks. This is a browser check, not an account
-                       system - good enough to stop casual downloading without paying, but not
-                       something a technical visitor couldn't get around. A real lock that nobody
-                       can bypass needs a small server, which is a later stage for this project.
+                       which documents that unlocks. Once the payment check (section 3d) is on,
+                       it only counts purchases that Stripe confirmed.
                        Entitlements aren't split by household size -- paying for a plan unlocks
                        the same documents whether you paid the single or couple price.
 File: checkout.html    the payment page itself (order summary, "Continue to secure payment").
-File: paid.html        the page Stripe sends someone back to right after they pay. It unlocks the
-                       plan in their browser and sends them on to their document.
+File: paid.html        the page Stripe sends someone back to right after they pay. It asks Stripe
+                       (through the payment check, section 3d) what was really paid for, unlocks
+                       that in their browser, and sends them on to their document.
 
-TO TEST WITHOUT SETTING UP STRIPE: open paid.html?plan=will in your browser (or essentials, or
-complete; add &household=couple to test that price instead of single). It unlocks that plan in
-your browser exactly like a real payment would, so you can see how the Download and Print buttons
-behave once someone has paid. Clear it again with your browser's "clear site data," or open the
-page in a private window.
+TO TEST: pay through one of your TEST-mode Stripe links with Stripe's fake card 4242 4242 4242 4242
+(any future date, any 3-digit code, any ZIP). Clear the unlock again with your browser's "clear site
+data," or use a private window. (Typing paid.html?plan=will only works while the payment check in
+section 3d is switched off -- that was the loophole it closes.)
 
 WHICH PLAN UNLOCKS WHICH DOCUMENT: also set in js/plans.js, under "unlocks." Right now: Will
 unlocks the will, Important Contacts and Final Wishes; Essentials adds the power of attorney,
@@ -263,6 +261,49 @@ Affidavit of Trustee, and the General Assignment of Personal Property to Trust. 
 as you add more documents. This list is independent of household size -- it doesn't change based
 on whether someone paid the single or couple price.
 
+
+3d. THE PAYMENT CHECK (Cloudflare) -- what stops people typing paid.html to unlock for free
+------------------------------------------------------------------------------------------
+Stripe adds a receipt number (session_id) to the link it sends people back to. paid.html sends that
+number to a small program on Cloudflare, which asks Stripe, using your secret Stripe key, whether it
+is a real, fully paid payment and which Payment Link it went through. Only then is anything unlocked,
+and what gets unlocked is what Stripe says was bought, not what the link says.
+
+File: cloudflare/payment-check.js   the program. You paste it into Cloudflare; it doesn't run on
+                       GitHub. Its PAYMENT_LINKS list must match js/checkout.js. When you add or
+                       change a Stripe link, change it in BOTH files, then paste the program into
+                       Cloudflare again and click Deploy.
+File: js/plans.js      GV_PAYMENT_CHECK_URL -- the program's web address. Empty = check switched off.
+
+SETTING IT UP (about 20 minutes, one time):
+ A. Stripe key (read-only). In Stripe (Test mode on, top right): Developers > API keys > "Create
+    restricted key". Name it "Grapevine payment check". Set "Checkout Sessions" to Read and
+    "Payment Links" to Read; leave everything else None. Create, then copy the key (rk_test_...).
+ B. Check each Stripe Payment Link. Payment Links > open each one > Edit > After payment >
+    "Redirect customers to your website" must end in  &session_id={CHECKOUT_SESSION_ID}
+    typed exactly like that, for example:
+    https://gdm805.github.io/grapevine/paid.html?plan=will&household=single&session_id={CHECKOUT_SESSION_ID}
+ C. Cloudflare. Go to dash.cloudflare.com and sign up (free plan). In the left menu: Workers & Pages
+    (under "Compute") > Create > "Start with Hello World!" (Create Worker). Name it
+    grapevine-payment-check and click Deploy.
+ D. Click "Edit code". Click inside the code, press Cmd+A then Delete. Open
+    cloudflare/payment-check.js in TextEdit, press Cmd+A, Cmd+C, go back to Cloudflare, Cmd+V.
+    Click Deploy (top right).
+ E. Go back to the Worker's page > Settings > Variables and Secrets > Add. Type: Secret.
+    Name: STRIPE_SECRET_KEY   Value: the rk_test_... key from step A. Click Deploy.
+ F. On the Worker's page, copy its address (ends in .workers.dev). Open it in a browser tab: seeing
+    {"ok":false,"reason":"bad_session"} means it's working.
+ G. Paste that address into js/plans.js between the quotes of GV_PAYMENT_CHECK_URL, upload the site
+    as usual, then make a test purchase with card 4242 4242 4242 4242.
+
+GOING LIVE later: make a live restricted key (step A with Test mode off) and put it in the
+STRIPE_SECRET_KEY secret instead; add your live Payment Links to PAYMENT_LINKS in both files.
+
+WHAT IT DOESN'T COVER: the documents are still built inside the visitor's browser, so a programmer who
+rewrites the page's code in their browser's developer tools could still get around the lock. Stopping
+that would mean building the documents on a server, a much bigger project. Someone could also share their
+own paid.html link (with its receipt number) with a friend; that unlocks only what they themselves paid
+for, and only if the friend uses it.
 
 3c. THE ESSENTIALS/COMPLETE PACKAGE FLOW
 ------------------------------------------
@@ -320,8 +361,8 @@ Keep the folders exactly as they are.
 -----------------------------------------------------
 Answers are saved only in the visitor's own web browser. Nothing is sent to you or to any server.
 Payment (once you turn it on - see section 3b) is handled entirely by Stripe on Stripe's own page;
-you never see or store card details, and neither does this site. Whether someone has paid is also
-remembered only in their own browser, not in any account, so there's no "my purchases" page yet,
+you never see or store card details, and neither does this site. Whether someone has paid is confirmed with
+Stripe once, right after payment (section 3d), and then remembered only in their own browser, not in any account, so there's no "my purchases" page yet,
 and someone who switches devices or clears their browser needs their email receipt if they want
 you to unlock it for them by hand. A real account system - so payment, answers and documents all
 follow the person instead of the browser - needs a small server, which is a later stage.
