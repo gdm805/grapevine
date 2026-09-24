@@ -6,7 +6,7 @@
 .pane-tabs button { appearance: none; border: 0; background: none; font: 600 15px/1 var(--sans); color: var(--ink-soft); padding: 12px 20px; border-radius: var(--r-pill); cursor: pointer; }
 .pane-tabs button[aria-pressed="true"] { background: var(--grape); color: #fff; }
 .will-layout { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
-.wizard { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); padding: clamp(22px, 3vw, 36px); display: grid; gap: 22px; }
+.wizard { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); padding: clamp(22px, 3vw, 36px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
 .progress { display: grid; gap: 8px; }
 .p-top { display: flex; justify-content: space-between; font: 500 13px/1 var(--sans); color: var(--ink-mute); }
 .pbar { height: 6px; border-radius: var(--r-pill); background: var(--sand); overflow: hidden; }
@@ -16,7 +16,7 @@
 .pkg-track { margin-bottom: 14px; }
 .pkg-label { display: block; font: 700 11.5px/1.2 var(--sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--grape-deep); margin-bottom: 8px; }
 .pkg-steps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.pkg-step { font: 600 12.5px/1 var(--sans); padding: 7px 12px; border-radius: var(--r-pill); background: var(--sand); color: var(--ink-mute); white-space: nowrap; text-decoration: none; display: inline-block; }
+.pkg-step { font: 600 12.5px/1.25 var(--sans); padding: 7px 12px; max-width: 100%; min-width: 0; overflow-wrap: anywhere; border-radius: var(--r-pill); background: var(--sand); color: var(--ink-mute); white-space: normal; text-decoration: none; display: inline-block; }
 .pkg-step:hover { background: var(--grape-tint); color: var(--grape-deep); }
 .pkg-step.pkg-done { background: var(--leaf-tint); color: var(--leaf-deep); }
 .pkg-step.pkg-current { background: var(--grape); color: #fff; }
@@ -200,3 +200,7 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .mirror-panel[hidden] { display: none; }
 .mirror-name { font-weight: 600; }
 .mirror-done { border-color: #6b9a4b; }
+
+/* long button labels (a person's name in "Continue to your ... — Lisa L. Merrill") wrap instead of pushing the questions box wider than its column */
+.wizard .btn { max-width: 100%; white-space: normal; text-align: center; }
+.wizard .actions .btn, .pkg-continue .btn { white-space: normal; }
