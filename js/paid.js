@@ -59,6 +59,7 @@
       if (!ans || !ans.ok || !GV.plans[ans.plan]) {
         var why = ans && ans.reason;
         if (why === 'not_paid') problem('Stripe says this payment hasn’t gone through. If you just paid, wait a minute and try again.', true);
+        else if (why === 'no_terms') problem('This payment didn’t record your agreement to our Terms and Conditions, so we can’t unlock your documents automatically.' + ASK_EMAIL);
         else if (why === 'stripe_error' || why === 'setup' || why === 'bad_reply') problem('We couldn’t reach Stripe just now. Please try again in a minute.' + ASK_EMAIL, true);
         else problem('Stripe doesn’t recognize this payment.' + ASK_EMAIL);
         return;

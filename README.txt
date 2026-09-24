@@ -22,6 +22,8 @@ finalwishes.html  The Final Wishes builder (disposition/funeral preferences, ful
 contacts.html     The Important Contacts builder (Name/Relationship/Phone/Email; not a legal document)
 checkout.html     The payment page (order summary, "Continue to secure payment")
 paid.html         The page Stripe sends someone back to right after they pay
+terms.html        Terms and Conditions (Grapevine Docs, Inc.; Nevada law). Edit the wording here only.
+LAUNCH-CHECKLIST.txt  What's left before the beta and before taking real money.
 learn.html        The Learn section (articles)
 HOW-TO-EDIT.txt   START HERE: plain-English guide to editing the will text, articles, prices and payment
 will/             The will and pour-over will text, signing steps, state rules, and notes on your drafts

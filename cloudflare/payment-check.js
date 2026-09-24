@@ -37,6 +37,11 @@ var PAYMENT_LINKS = {
    for testing. Add your own domain here if you move the site to one. */
 var ALLOWED_SITES = ['https://gdm805.github.io', 'http://localhost:8000', 'http://127.0.0.1:8000'];
 
+/* true = only unlock payments where the customer ticked Stripe's "I agree to the Terms of Service" box. That box
+   appears only on Payment Links with "Require customers to accept your terms of service" switched on, so switch
+   it on for EVERY link before setting this to true, or payments through a link without it won't unlock. */
+var REQUIRE_TERMS = true;
+
 /* the documents that can be bought one at a time (must match "singles" in js/plans.js) */
 var SINGLE_DOCS = ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'schedulea', 'cert', 'affidavit', 'assignment'];
 
@@ -69,6 +74,7 @@ export default {
     var s = await res.json();
 
     if (s.status !== 'complete' || s.payment_status !== 'paid') return reply({ ok: false, reason: 'not_paid' }, 402);
+    if (REQUIRE_TERMS && !(s.consent && s.consent.terms_of_service === 'accepted')) return reply({ ok: false, reason: 'no_terms' }, 403);
 
     var link = s.payment_link && typeof s.payment_link === 'object' ? s.payment_link.url : '';
     var sold = PAYMENT_LINKS[link];

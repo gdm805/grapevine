@@ -123,12 +123,38 @@
         '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' +
         '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
         (link
-          ? '<a class="btn btn-primary btn-lg" href="' + payHref + '">Continue to secure payment <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>'
+          ? termsFold() + '<a class="btn btn-primary btn-lg" href="' + payHref + '">Continue to secure payment <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>'
           : '<div class="pay-off"><p><strong>Payments aren’t turned on yet.</strong> Add a Stripe Payment Link for the ' + esc(p.name) + ' plan (' + household + ') in <code>js/checkout.js</code>, or open <code>paid.html?plan=' + plan + '&household=' + household + '</code> to try the unlocked view.</p></div>') +
         '<p class="secure-note"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Handled by Stripe on their own secure page. We never see or store your card details.</p>' +
       '</div>' +
       '<p class="keep-drafting">Not ready to pay? <a href="' + window.GVUrl(validReturn || p.goesTo) + '">Keep drafting for free</a> — your answers stay saved in this browser, and you can come back to pay whenever you like.</p>';
   }
+
+  /* the Terms and Conditions, readable right here before paying. The text itself lives only in terms.html
+     (its <div class="prose">) and is loaded into this fold-down the first time it's opened, so there is one
+     copy to edit. Agreeing happens on Stripe's page: each Payment Link has "require customers to accept your
+     terms of service" switched on, and the Cloudflare payment check refuses payments without that consent. */
+  function termsFold() {
+    var url = window.GVUrl('terms.html');
+    return '<p class="terms-note">By continuing to payment, you agree to our <a href="' + url + '" target="_blank" rel="noopener">Terms and Conditions</a>.</p>' +
+      '<details class="terms-fold"><summary>Read the Terms and Conditions</summary>' +
+      '<div class="terms-box" data-terms tabindex="0">Loading…</div>' +
+      '<p class="terms-open"><a href="' + url + '" target="_blank" rel="noopener">Open the terms in a new tab</a></p></details>';
+  }
+  root.addEventListener('toggle', function (e) {
+    var d = e.target;
+    if (!d.classList || !d.classList.contains('terms-fold') || !d.open) return;
+    var box = d.querySelector('[data-terms]');
+    if (!box || box.getAttribute('data-loaded')) return;
+    fetch(window.GVUrl('terms.html')).then(function (r) { return r.text(); }).then(function (html) {
+      var prose = new DOMParser().parseFromString(html, 'text/html').querySelector('.prose');
+      if (!prose) throw new Error('no terms');
+      box.innerHTML = prose.innerHTML;
+      box.setAttribute('data-loaded', '1');
+    }).catch(function () {
+      box.innerHTML = '<p>The terms couldn’t load here. <a href="' + window.GVUrl('terms.html') + '" target="_blank" rel="noopener">Open them in a new tab</a>.</p>';
+    });
+  }, true);
 
   render();
 })();

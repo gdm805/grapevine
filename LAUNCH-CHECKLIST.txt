@@ -1,0 +1,72 @@
+GRAPEVINE LAUNCH CHECKLIST
+Started September 24, 2026. Target: beta / soft launch about two weeks out (around October 8, 2026).
+Tick items off as they're done ( [ ] -> [x] ). Ask Claude for step-by-step help with any of them.
+
+
+================================================================
+A. BEFORE BETA TESTERS START
+================================================================
+
+[ ] 1. Review the legal text that is still unreviewed. Paid documents now come out WITHOUT the SAMPLE
+       watermark, so this is what customers will sign:
+         - Louisiana / Alaska / DC wording (parish, borough, and DC's "county")
+         - Wisconsin "marital property" wording
+         - the bracketed seal placeholders
+         - how the regular will reads in Louisiana
+         - the six Learn articles (Claude's drafts)
+       To put SAMPLE back on everything while revising: js/plans.js, GV_SAMPLE_WATERMARK = true
+
+[ ] 2. Decide the web address. Keep gdm805.github.io/grapevine, or move to grapevinedocs.com?
+       Do this BEFORE step 3, because every step below uses the address. Moving means: GitHub Pages
+       custom domain + DNS at your domain registrar, then updating the 12 Stripe redirect addresses,
+       the Terms URL in Stripe, and ALLOWED_SITES in cloudflare/payment-check.js.
+
+[ ] 3. Turn on the Terms and Conditions checkbox at Stripe (do these in this order):
+       a. Stripe > Settings > Business > Public details > Terms of service URL:
+          https://gdm805.github.io/grapevine/terms.html   (or the grapevinedocs.com address)
+       b. On EACH of the 12 Payment Links: Edit > switch on "Require customers to accept your
+          terms of service". Save.
+       c. Only after a and b: paste the updated cloudflare/payment-check.js into Cloudflare again and
+          Deploy (it now refuses payments where the terms box wasn't ticked -- REQUIRE_TERMS = true).
+       d. Test purchase with card 4242 4242 4242 4242: the checkbox appears, and documents unlock.
+
+[ ] 4. Decide how beta testers pay:
+         - free, in Stripe's sandbox with the 4242 test card (no real money), or
+         - real payments with a discount code (Payment Links can allow promotion codes).
+
+[ ] 5. Decide the couples pricing question: trust documents (Schedule A, Certification, Affidavit,
+       Assignment) currently cost a couple $49, the same as one person (one trust). Other single
+       documents cost a couple $79. Confirm or change.
+
+[ ] 6. Check the email addresses work: support@grapevinedocs.com appears in the Terms.
+
+
+================================================================
+B. GOING LIVE (taking real money)
+================================================================
+
+[ ] 7. Stripe LIVE key for the payment check: switch Stripe out of the sandbox, then
+       Developers > API keys > Create secret key > "Building your own integration" > Custom permissions:
+       Checkout Sessions = Read, Payment Links = Read, everything else None.
+       Put it in Cloudflare: Worker > Settings > Variables and Secrets > STRIPE_SECRET_KEY (replace the test one).
+[ ] 8. Create the 12 LIVE Payment Links (same products and prices). On each one:
+         - After payment / Confirmation page: redirect to
+           .../paid.html?plan=PLAN&household=HOUSEHOLD&session_id={CHECKOUT_SESSION_ID}
+         - "Require customers to accept your terms of service": on
+[ ] 9. Send Claude the 12 live links. Claude puts them in js/checkout.js AND cloudflare/payment-check.js;
+       you paste the program into Cloudflare again and Deploy, then commit and push the site.
+[ ] 10. Make one real purchase with your own card, check the documents unlock, then refund yourself
+        in Stripe.
+[ ] 11. Final look: open the site in a private window on a phone and a computer; buy, download, print.
+
+
+================================================================
+C. AFTER BETA (bigger projects)
+================================================================
+
+[ ] 12. Customer accounts: log in from anywhere to see purchases and documents.
+[ ] 13. The "vault" upsell (secure document storage for customers; likely a paid plan).
+[ ] 14. Privacy Policy (needed once accounts store customers' answers and documents on a server).
+[ ] 15. Update the Terms for accounts and the vault: section 6 (delivery; the "remembered only in that
+        browser" wording goes away), section 8 (your information), and auto-renewal / cancellation
+        terms if the vault is a subscription.

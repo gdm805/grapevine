@@ -306,6 +306,13 @@ that would mean building the documents on a server, a much bigger project. Someo
 own paid.html link (with its receipt number) with a friend; that unlocks only what they themselves paid
 for, and only if the friend uses it.
 
+3e. TERMS AND CONDITIONS (terms.html)
+------------------------------------------
+The full terms live in terms.html, as plain text between the tags. Change the "Last updated" date
+whenever you edit them. The checkout page shows the same numbered sections in a fold-down above
+"Continue to secure payment" (loaded from terms.html, so there's only one copy to edit), and every
+page's footer links to them. Turning on Stripe's "I agree" checkbox is on LAUNCH-CHECKLIST.txt.
+
 3c. THE ESSENTIALS/COMPLETE PACKAGE FLOW
 ------------------------------------------
 Essentials and Complete are more than one document. Someone who clicks "Start with Essentials" or
