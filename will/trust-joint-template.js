@@ -1144,7 +1144,9 @@ The Trustmakers assign, transfer, and deliver to the Trustee the property descri
 [[each real_property]]
 
 @row Property|{{real_property_address}}
+[[if real_property_reference]]
 @row Description|{{real_property_reference}}
+[[end]]
 @row Ownership / Character|{{real_property_ownership}}
 
 [[end]]
