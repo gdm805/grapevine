@@ -22,7 +22,7 @@ window.HCD_STATES["Oklahoma"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**HEALTH CARE POWER OF ATTORNEY AND ADVANCE DIRECTIVE**
+@center **HEALTH CARE POWER OF ATTORNEY AND ADVANCE DIRECTIVE**
 
 # Declaration and Purpose
 

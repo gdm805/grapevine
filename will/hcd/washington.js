@@ -22,9 +22,9 @@ window.HCD_STATES["Washington"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**Grapevine Washington**
+@center **WASHINGTON**
 
-**Health Care Power of Attorney and Health Care Directive**
+@center **HEALTH CARE POWER OF ATTORNEY AND HEALTH CARE DIRECTIVE**
 
 # Declaration and Purpose
 

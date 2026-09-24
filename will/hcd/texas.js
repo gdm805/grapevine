@@ -22,7 +22,7 @@ window.HCD_STATES["Texas"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**MEDICAL POWER OF ATTORNEY AND DIRECTIVE TO PHYSICIANS**
+@center **MEDICAL POWER OF ATTORNEY AND DIRECTIVE TO PHYSICIANS**
 
 **DISCLOSURE STATEMENT**
 

@@ -340,3 +340,20 @@ documents (one per person, the second can be a "mirror image" of the first); tru
 Stripe links: js/checkout.js, PAYMENT_LINKS, entries doc / health / trustpaper (single and couple).
 Every single document shares the "doc" link; the checkout page remembers which document was chosen and
 paid.html unlocks just that one. Schedule A is its own document now (schedulea.html, will/schedulea-*.js).
+
+
+================================================================
+WHY EVERY SCRIPT AND STYLE LINK ENDS IN ?v=...
+================================================================
+Browsers keep old copies of scripts and styles, so after an update a visitor could see a mix of new and old.
+Every <script src> and stylesheet link in the .html pages ends in "?v=20260924f". That text is a version stamp:
+when a page is updated, change the stamp (for example to ?v=20260925a) in every page and browsers fetch the new
+files. Claude does this with each update; if you edit a script yourself, ask Claude to bump the stamp.
+
+
+================================================================
+THE "SAMPLE - NOT FOR SIGNING" WATERMARK
+================================================================
+One switch controls it for every document (preview, PDF, Word) and for the "sample version" notices:
+in js/plans.js, near the top, window.GV_SAMPLE_WATERMARK = true;  Change true to false to remove them
+everywhere. Do this only once you have reviewed the legal text.

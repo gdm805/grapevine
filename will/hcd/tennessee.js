@@ -22,9 +22,9 @@ window.HCD_STATES["Tennessee"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**TENNESSEE**
+@center **TENNESSEE**
 
-**ADVANCE DIRECTIVE FOR HEALTH CARE**
+@center **ADVANCE DIRECTIVE FOR HEALTH CARE**
 
 **ADVANCE DIRECTIVE FOR HEALTH CARE — INFORMATION**
 

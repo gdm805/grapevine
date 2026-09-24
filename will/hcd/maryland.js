@@ -22,7 +22,7 @@ window.HCD_STATES["Maryland"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**ADVANCE DIRECTIVE**
+@center **ADVANCE DIRECTIVE**
 
 # Declaration and Purpose
 

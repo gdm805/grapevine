@@ -22,9 +22,11 @@ window.HCD_STATES["Alabama"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**ALABAMA HEALTH CARE DIRECTIVE
-ADVANCE DIRECTIVE FOR HEALTH CARE
-LIVING WILL AND HEALTH CARE PROXY**
+@center **ALABAMA HEALTH CARE DIRECTIVE**
+
+@center **ADVANCE DIRECTIVE FOR HEALTH CARE**
+
+@center **LIVING WILL AND HEALTH CARE PROXY**
 
 # Declaration and Purpose
 

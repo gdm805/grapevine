@@ -22,7 +22,7 @@ window.HCD_STATES["Georgia"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**ADVANCE DIRECTIVE FOR HEALTH CARE**
+@center **ADVANCE DIRECTIVE FOR HEALTH CARE**
 
 **This advance directive for health care has four parts:**
 

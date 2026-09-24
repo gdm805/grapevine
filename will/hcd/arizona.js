@@ -22,7 +22,7 @@ window.HCD_STATES["Arizona"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**HEALTH CARE POWER OF ATTORNEY WITH ATTACHED LIVING WILL**
+@center **HEALTH CARE POWER OF ATTORNEY WITH ATTACHED LIVING WILL**
 
 # Declaration and Purpose
 

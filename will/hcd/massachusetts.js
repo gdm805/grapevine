@@ -22,7 +22,7 @@ window.HCD_STATES["Massachusetts"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**HEALTH CARE PROXY WITH HEALTH CARE INSTRUCTIONS**
+@center **HEALTH CARE PROXY WITH HEALTH CARE INSTRUCTIONS**
 
 # Declaration and Purpose
 

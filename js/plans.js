@@ -20,6 +20,11 @@
    the one seam the preview-builder needs to patch, instead of chasing every href by hand. */
 window.GVUrl = function (path) { return path; };
 
+/* THE SAMPLE WATERMARK: while this is true, every document carries "SAMPLE - NOT FOR SIGNING" (in the preview,
+   the PDF, and Word) and the "sample version" notices. Set it to false, and only when you have reviewed the
+   legal text, to remove them from every document at once. */
+window.GV_SAMPLE_WATERMARK = true;
+
 window.GV_PLANS = {
   order: ['will', 'essentials', 'complete'],
   prices: {

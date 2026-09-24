@@ -22,7 +22,7 @@ window.HCD_STATES["Montana"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**HEALTH CARE POWER AND DECLARATION CONCERNING LIFE-SUSTAINING TREATMENT**
+@center **HEALTH CARE POWER AND DECLARATION CONCERNING LIFE-SUSTAINING TREATMENT**
 
 # Declaration and Purpose
 

@@ -22,7 +22,7 @@ window.HCD_STATES["Delaware"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**ADVANCE HEALTH-CARE DIRECTIVE**
+@center **ADVANCE HEALTH-CARE DIRECTIVE**
 
 **HOW YOU CAN USE THIS FORM**
 

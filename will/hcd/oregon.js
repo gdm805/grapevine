@@ -22,7 +22,7 @@ window.HCD_STATES["Oregon"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**ADVANCE DIRECTIVE FOR HEALTH CARE**
+@center **ADVANCE DIRECTIVE FOR HEALTH CARE**
 
 **OREGON ADVANCE DIRECTIVE — IMPORTANT INFORMATION**
 

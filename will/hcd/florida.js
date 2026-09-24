@@ -22,7 +22,7 @@ window.HCD_STATES["Florida"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**DESIGNATION OF HEALTH CARE SURROGATE WITH LIVING WILL**
+@center **DESIGNATION OF HEALTH CARE SURROGATE WITH LIVING WILL**
 
 # Declaration and Purpose
 

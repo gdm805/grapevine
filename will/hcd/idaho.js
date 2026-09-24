@@ -22,7 +22,7 @@ window.HCD_STATES["Idaho"] = String.raw`
 @set has_witness = no
 @set has_notary = no
 
-**ADVANCE CARE PLANNING DOCUMENT**
+@center **ADVANCE CARE PLANNING DOCUMENT**
 
 # Declaration and Purpose
 

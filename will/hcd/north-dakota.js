@@ -22,7 +22,7 @@ window.HCD_STATES["North Dakota"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**HEALTH CARE DIRECTIVE**
+@center **HEALTH CARE DIRECTIVE**
 
 **HEALTH CARE DIRECTIVE — INFORMATION**
 

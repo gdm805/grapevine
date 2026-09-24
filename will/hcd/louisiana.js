@@ -22,7 +22,7 @@ window.HCD_STATES["Louisiana"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**HEALTH CARE MANDATE AND DECLARATION CONCERNING LIFE-SUSTAINING PROCEDURES**
+@center **HEALTH CARE MANDATE AND DECLARATION CONCERNING LIFE-SUSTAINING PROCEDURES**
 
 # Declaration and Purpose
 

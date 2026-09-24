@@ -22,7 +22,7 @@ window.HCD_STATES["New Mexico"] = String.raw`
 @set has_witness = no
 @set has_notary = no
 
-**ADVANCE HEALTH-CARE DIRECTIVE**
+@center **ADVANCE HEALTH-CARE DIRECTIVE**
 
 **EXPLANATION**
 

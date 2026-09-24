@@ -405,7 +405,7 @@
   var tpl = parseTemplate(window[GLOBALS[1]]);
   var sign = parseTemplate(window[GLOBALS[2]]);
   var stateText = parseStateText(window.WILL_STATE_TEXT);
-  var draft = /^y/i.test(tpl.settings.draft_watermark || 'yes');
+  var draft = window.GV_SAMPLE_WATERMARK !== false && /^y/i.test(tpl.settings.draft_watermark || 'yes');
   var draftLabel = tpl.settings.draft_label || 'SAMPLE - NOT FOR SIGNING';
 
   var stepEl = document.getElementById('will-step');
@@ -3074,6 +3074,10 @@
       '<div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + Math.max(pct, 6) + '%"></i></div>';
     var err = errors.length ? '<div class="errs" role="alert"><strong>Almost there.</strong><ul>' + errors.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>' : '';
     var note = (restored && stepId !== 'start') ? '<p class="restored">Welcome back. We restored your answers from this browser.</p>' : '';
+    if (skipNote) {
+      note = '<p class="restored">We used the name from your earlier answers: ' + esc(skipNote.name) + '. <button type="button" class="link" data-goto="' + esc(skipNote.id) + '">Change</button></p>';
+      skipNote = null;
+    }
     var st = states.map[answers.state];
     var unsupported = stepId === 'start' && st && !st.supported ? '<div class="errs"><strong>' + esc(st.name) + '</strong><p>' + esc(st.note || 'We can\u2019t offer a will in this state yet.') + '</p></div>' : '';
     var nav = stepId === 'review' ? '<div class="nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button></div>' :
@@ -3113,11 +3117,25 @@
   function firstPersonAnswers() {
     try { var sv = JSON.parse(localStorage.getItem(KIND.ls) || 'null'); return sv && sv.answers && clean(sv.answers.name) ? sv.answers : null; } catch (e) { return null; }
   }
+  /* Two spellings count as the same person when the first and last names match, ignoring capitals,
+     punctuation, and middle names or initials -- "Lisa Merrill", "lisa l. merrill" and "Lisa L. Merrill" are
+     one person, but "Allyson Merrill" is not. A single word only matches the same single word. */
+  function nameTokens(x) {
+    return String(x || '').toLowerCase().replace(/[^a-z0-9\s'-]/g, ' ').split(/\s+/).filter(Boolean);
+  }
+  function sameName(a, b) {
+    var x = nameTokens(a), y = nameTokens(b);
+    if (!x.length || !y.length) return false;
+    if (x.length === 1 || y.length === 1) return x.join(' ') === y.join(' ');
+    /* drop single-letter middle initials, then compare first and last */
+    var xi = x.filter(function (t, i) { return t.length > 1 || i === 0 || i === x.length - 1; });
+    var yi = y.filter(function (t, i) { return t.length > 1 || i === 0 || i === y.length - 1; });
+    return xi[0] === yi[0] && xi[xi.length - 1] === yi[yi.length - 1];
+  }
   function swapNames(v, n1, n2) {
     if (typeof v === 'string') {
-      var t = v.trim().toLowerCase();
-      if (t === n2.toLowerCase()) return n1;
-      if (t === n1.toLowerCase()) return n2;
+      if (sameName(v, n2)) return n1;
+      if (sameName(v, n1)) return n2;
       return v;
     }
     if (Array.isArray(v)) return v.map(function (x) { return swapNames(x, n1, n2); });
@@ -3132,13 +3150,24 @@
     if (!first) {
       return '<div class="mirror-box"><p><strong>Want this to mirror the first person\u2019s document?</strong> Answer the first person\u2019s ' + esc(KIND.file.replace(/-/g, ' ')) + ' first (it comes right before this one), then come back here.</p></div>';
     }
-    var n1 = clean(first.name), guess = clean(answers.name) || clean(readProfile().name2) || '';
+    var n1 = clean(first.name);
+    /* the second person's name, worked out for the user: what's already known about them (typed earlier, or
+       named as spouse), else the person the first document names as its main agent or representative --
+       shown as a guess to confirm, since that person is usually, but not always, the spouse */
+    function notFirst(x) { x = clean(x); return x && !sameName(x, n1) ? x : ''; }
+    var known = notFirst(answers.name) || notFirst(readProfile().name2) || notFirst(first.spouse) || notFirst(first.otherTrustmaker);
+    var fromAgent = notFirst(first.agent) || notFirst(first.agentName) || notFirst(first.executor);
+    var guess = known || fromAgent;
+    var guessNote = !guess ? '' : (known
+      ? '<p class="hint">We filled this in from your earlier answers. Change it if it isn’t right.</p>'
+      : '<p class="hint">We guessed this from who ' + esc(n1) + ' named as their agent. Change it if that person isn’t the spouse or partner.</p>');
     return '<div class="mirror-box">' +
       '<label class="mirror-check"><input type="checkbox" id="mirror-on"' + (mirrorOpen ? ' checked' : '') + '> <span><strong>Mirror image of ' + esc(n1) + '\u2019s document</strong><br>' +
       'Copy ' + esc(n1) + '\u2019s answers and flip the roles, so whoever ' + esc(n1) + ' named as agent or executor is swapped with the other spouse or partner.</span></label>' +
       '<div class="mirror-panel" id="mirror-panel"' + (mirrorOpen ? '' : ' hidden') + '>' +
       '<label class="mirror-name" for="mirror-name">This copy is for (full legal name, exactly as ' + esc(n1) + ' typed it in their document)</label>' +
       '<input class="input" type="text" id="mirror-name" value="' + val(guess) + '" autocomplete="off">' +
+      guessNote +
       '<button type="button" class="btn btn-secondary" data-mirror-apply>Copy and flip</button></div></div>';
   }
   function applyMirror() {
@@ -3246,11 +3275,23 @@
     draw(opts && opts.focus);
     if (!(opts && opts.quiet)) { var r = stepEl.getBoundingClientRect(); if (r.top < 0) window.scrollTo(0, window.scrollY + r.top - 100); }
   }
+  /* "About you" (or "You") steps that only ask what is already answered -- typically the name, carried over
+     from an earlier document -- are skipped on the way forward, with a note and a Change link on the next
+     screen, so a name is never asked twice. A step with anything still unanswered (a spouse, a date of
+     birth) is shown as usual. */
+  var skipNote = null;
+  var SKIPPABLE = ['about', 'you'];
   function next() {
     errors = KIND.validate(stepId);
     if (errors.length) { draw(); return; }
     var vis = visibleSteps(answers), i = vis.map(function (s) { return s.id; }).indexOf(stepId);
-    go(vis[Math.min(i + 1, vis.length - 1)].id);
+    var j = Math.min(i + 1, vis.length - 1), skipped = null;
+    while (j < vis.length - 1 && SKIPPABLE.indexOf(vis[j].id) > -1 && !clean(KIND.validate(vis[j].id).join('')) && clean(answers.name || answers.name1 || answers.tm1Name)) {
+      skipped = { id: vis[j].id, name: clean(answers.name || answers.name1 || answers.tm1Name) };
+      j++;
+    }
+    skipNote = skipped;
+    go(vis[j].id);
   }
   function back() {
     var vis = visibleSteps(answers), i = vis.map(function (s) { return s.id; }).indexOf(stepId);

@@ -22,7 +22,7 @@ window.HCD_STATES["Illinois"] = String.raw`
 @set has_witness = no
 @set has_notary = no
 
-**POWER OF ATTORNEY FOR HEALTH CARE WITH HEALTH CARE INSTRUCTIONS**
+@center **POWER OF ATTORNEY FOR HEALTH CARE WITH HEALTH CARE INSTRUCTIONS**
 
 # Declaration and Purpose
 

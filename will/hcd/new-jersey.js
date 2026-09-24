@@ -22,7 +22,7 @@ window.HCD_STATES["New Jersey"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**ADVANCE DIRECTIVE FOR HEALTH CARE — PROXY AND INSTRUCTION DIRECTIVE**
+@center **ADVANCE DIRECTIVE FOR HEALTH CARE — PROXY AND INSTRUCTION DIRECTIVE**
 
 # Declaration and Purpose
 

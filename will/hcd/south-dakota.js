@@ -22,7 +22,7 @@ window.HCD_STATES["South Dakota"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**DURABLE POWER OF ATTORNEY FOR HEALTH CARE AND LIVING WILL**
+@center **DURABLE POWER OF ATTORNEY FOR HEALTH CARE AND LIVING WILL**
 
 # Declaration and Purpose
 

@@ -22,7 +22,7 @@ window.HCD_STATES["Arkansas"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**ADVANCE HEALTH CARE DIRECTIVE — HEALTH CARE AGENT AND TREATMENT INSTRUCTIONS**
+@center **ADVANCE HEALTH CARE DIRECTIVE — HEALTH CARE AGENT AND TREATMENT INSTRUCTIONS**
 
 Instructions
 

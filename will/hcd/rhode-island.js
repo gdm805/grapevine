@@ -22,7 +22,7 @@ window.HCD_STATES["Rhode Island"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**DURABLE POWER OF ATTORNEY FOR HEALTH CARE**
+@center **DURABLE POWER OF ATTORNEY FOR HEALTH CARE**
 
 **WARNING TO PERSON EXECUTING THIS DOCUMENT**
 

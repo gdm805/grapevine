@@ -22,9 +22,9 @@ window.HCD_STATES["West Virginia"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**WEST VIRGINIA**
+@center **WEST VIRGINIA**
 
-**COMBINED MEDICAL POWER OF ATTORNEY AND LIVING WILL**
+@center **COMBINED MEDICAL POWER OF ATTORNEY AND LIVING WILL**
 
 # Declaration and Purpose
 

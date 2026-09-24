@@ -22,7 +22,7 @@ window.HCD_STATES["Kentucky"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**LIVING WILL DIRECTIVE AND DESIGNATION OF HEALTH CARE SURROGATE**
+@center **LIVING WILL DIRECTIVE AND DESIGNATION OF HEALTH CARE SURROGATE**
 
 # Declaration and Purpose
 

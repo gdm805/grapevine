@@ -22,7 +22,7 @@ window.HCD_STATES["Connecticut"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**ADVANCE HEALTH CARE DIRECTIVE AND APPOINTMENT OF HEALTH CARE REPRESENTATIVE**
+@center **ADVANCE HEALTH CARE DIRECTIVE AND APPOINTMENT OF HEALTH CARE REPRESENTATIVE**
 
 # Declaration and Purpose
 

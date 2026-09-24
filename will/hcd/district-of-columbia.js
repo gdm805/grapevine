@@ -22,7 +22,7 @@ window.HCD_STATES["District of Columbia"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**DURABLE POWER OF ATTORNEY FOR HEALTH CARE AND DIRECTIVE**
+@center **DURABLE POWER OF ATTORNEY FOR HEALTH CARE AND DIRECTIVE**
 
 **INFORMATION ABOUT THIS DOCUMENT**
 

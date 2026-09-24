@@ -22,7 +22,7 @@ window.HCD_STATES["Missouri"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**DURABLE POWER OF ATTORNEY FOR HEALTH CARE WITH DECLARATION**
+@center **DURABLE POWER OF ATTORNEY FOR HEALTH CARE WITH DECLARATION**
 
 # Declaration and Purpose
 

@@ -22,7 +22,7 @@ window.HCD_STATES["Vermont"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**ADVANCE DIRECTIVE FOR HEALTH CARE**
+@center **ADVANCE DIRECTIVE FOR HEALTH CARE**
 
 # Declaration and Purpose
 

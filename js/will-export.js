@@ -51,7 +51,7 @@
       case 'center': {
         var dbl = function (side) { return '<w:' + side + ' w:val="double" w:sz="6" w:space="9" w:color="000000"/>'; };
         var isLastC = nextK !== 'center';
-        return P(rXml(unbold(b.t), { b: true, sz: 32, sp: 20 }), o({
+        return P(rXml(unbold(b.t).toUpperCase(), { b: true, sz: 32, sp: 20 }), o({
           jc: 'center', keepNext: true, after: isLastC ? 480 : 0,
           bdr: '<w:pBdr>' + (isLastC ? dbl('bottom') : '') + '</w:pBdr>'
         }));
@@ -286,7 +286,7 @@
                start 3.8pt below the line's top; GAP is the visible space from each rule to the capitals */
             var GAP = 12, CAPTOP = 3.8, BASE = 14.4;
             if (!prevCenter) space(70);
-            wrapCentered(unbold(b.t), 16, true, 1.4);
+            wrapCentered(unbold(b.t).toUpperCase(), 16, true, 1.4);
             if (!(blocks[bi + 1] && blocks[bi + 1].k === 'center')) {
               var lineH = 16 * 1.3, capBottom = y - lineH + BASE, ry = capBottom + GAP;
               doc.setLineWidth(0.8); doc.line(M, ry, M + W, ry); doc.line(M, ry + 3, M + W, ry + 3);

@@ -22,7 +22,7 @@ window.HCD_STATES["Wisconsin"] = String.raw`
 @set has_witness = yes
 @set has_notary = no
 
-**POWER OF ATTORNEY FOR HEALTH CARE**
+@center **POWER OF ATTORNEY FOR HEALTH CARE**
 
 **NOTICE TO PERSON MAKING THIS DOCUMENT**
 

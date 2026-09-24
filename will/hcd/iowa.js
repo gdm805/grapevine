@@ -22,7 +22,7 @@ window.HCD_STATES["Iowa"] = String.raw`
 @set has_witness = yes
 @set has_notary = yes
 
-**DURABLE POWER OF ATTORNEY FOR HEALTH CARE WITH TREATMENT INSTRUCTIONS**
+@center **DURABLE POWER OF ATTORNEY FOR HEALTH CARE WITH TREATMENT INSTRUCTIONS**
 
 # Declaration and Purpose
 

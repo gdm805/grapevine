@@ -22,7 +22,7 @@ window.HCD_STATES["Colorado"] = String.raw`
 @set has_witness = no
 @set has_notary = no
 
-**MEDICAL DURABLE POWER OF ATTORNEY WITH HEALTH CARE INSTRUCTIONS**
+@center **MEDICAL DURABLE POWER OF ATTORNEY WITH HEALTH CARE INSTRUCTIONS**
 
 # Declaration and Purpose
 
