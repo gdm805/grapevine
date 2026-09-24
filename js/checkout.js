@@ -98,8 +98,10 @@
       (docLabel
         ? '<p class="lead">Your answers are already saved in this browser. Pay once for the ' + esc(p.name) + ' plan and you can download and print ' + esc(docLabel) + ' right away.</p>'
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
-      '<p class="household-label">Pricing for</p>' + householdToggle() +
-      switcher() +
+      (docLabel
+        /* arrived from a document with a plan already chosen: show what they're buying, not the pickers */
+        ? '<p class="household-label">' + (household === 'couple' ? 'Pricing for you and your spouse or partner' : 'Pricing for one person') + ' &middot; <a href="' + window.GVUrl('pricing.html') + '?household=' + household + '">Choose a different plan</a></p>'
+        : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
       '<div class="order-card">' +
         '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (household === 'couple' ? ', for a couple' : '') + '</span></p></div>' +
         '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' +
