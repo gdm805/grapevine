@@ -53,33 +53,49 @@
     btn.addEventListener('click', function () { setHousehold(btn.getAttribute('data-household')); });
   });
 
-  /* Which plan fits */
+  /* Which plan fits: the same six questions as the home page's finder. Real estate, wanting to skip
+     probate, and owning property in more than one state are the usual reasons a trust is worth adding
+     to a will -- any one of them points at Complete. Otherwise wanting help with money or medical
+     decisions points at Essentials; a plain will covers the rest. */
   var form = document.getElementById('picker');
   var out = document.getElementById('pick-result');
+  function ans(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value === 'y' : false;
+  }
   function render() {
     if (!form || !out) return;
-    var el = form.querySelector('input[name="need"]:checked');
-    var key = el ? el.value : 'essentials';
+    var kids = ans('kids'), home = ans('home'), probate = ans('probate'), multistate = ans('multistate'), money = ans('money'), care = ans('care');
+    var wantsTrust = home || probate || multistate;
+    var key = wantsTrust ? 'complete' : (money || care ? 'essentials' : 'will');
     var p = PLANS[key];
+    var docs = [kids ? 'Last Will and Testament, with a guardian for your children' : 'Last Will and Testament'];
+    if (wantsTrust) docs.push('Revocable Living Trust, so your property passes privately');
+    if (money) docs.push('Durable Power of Attorney, for someone to handle your money');
+    if (care) docs.push('Health Care Directive, for someone to make medical decisions');
+    var why = wantsTrust
+      ? 'Owning real estate, wanting to avoid probate, or owning property in more than one state are the usual reasons a trust is worth adding to a will.'
+      : (money || care
+        ? 'On top of a will, this adds the paperwork that lets someone act for you, with your money and your medical care, while you’re alive.'
+        : 'A will covers naming a guardian for your children and saying who receives what you own.');
     out.innerHTML =
-      '<p class="pick-kicker">We suggest</p>' +
-      '<div class="pick-line"><h3>' + p.name + '</h3><p class="pick-price"><span>' + money(GV.priceFor(key, household)) + '</span> one-time' + (household === 'couple' ? ', for a couple' : '') + '</p></div>' +
-      '<p class="pick-why">' + p.why + '</p>' +
+      '<p class="pick-kicker">Based on your answers, we suggest</p>' +
+      '<div class="pick-line"><h3>' + p.name + '</h3><p class="pick-price"><span>' + money_(GV.priceFor(key, household)) + '</span> one-time' + (household === 'couple' ? ', for a couple' : '') + '</p></div>' +
+      '<p class="pick-why">' + why + '</p>' +
+      '<ul class="pick-docs">' + docs.map(function (d) { return '<li>' + d + '</li>'; }).join('') + '</ul>' +
       '<a class="btn btn-primary" href="' + window.GVUrl(p.goesTo) + '?household=' + household + '" data-cta data-plan="' + key + '">' + p.cta + '</a>';
   }
+  function money_(n) { return money(n); }
   if (form) form.addEventListener('change', render);
 
-  /* the home page's "answer a few quick questions" finder sends its recommendation here as
-     ?need=will|essentials|complete -- pre-select that plan in the picker below and scroll to it,
-     so someone doesn't have to answer the same question about themselves twice. */
+  /* the home page's finder sends its recommendation here as ?need=will|essentials|complete -- set the
+     matching answers below and scroll to them, so someone doesn't answer the same questions twice. */
   try {
     var needed = new URLSearchParams(location.search).get('need');
-    if (form && needed) {
-      var radio = form.querySelector('input[name="need"][value="' + needed + '"]');
-      if (radio) {
-        radio.checked = true;
-        setTimeout(function () { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 50);
-      }
+    if (form && needed && PLANS[needed]) {
+      var set = { will: { home: 'n', probate: 'n', multistate: 'n', money: 'n', care: 'n' }, essentials: { home: 'n', probate: 'n', multistate: 'n', money: 'y', care: 'y' }, complete: { home: 'y', probate: 'n', multistate: 'n', money: 'y', care: 'y' } }[needed];
+      Object.keys(set).forEach(function (n) { var r = form.querySelector('input[name="' + n + '"][value="' + set[n] + '"]'); if (r) r.checked = true; });
+      setTimeout(function () { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 50);
     }
   } catch (e) {}
 

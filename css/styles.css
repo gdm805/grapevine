@@ -320,3 +320,8 @@ a { color: var(--grape); }
 .compare tfoot tr > * { border-bottom: 0; }
 .table-note { margin-top: 14px; font-size: 14.5px; color: var(--ink-mute); }
 .doc-more { margin-top: 24px; color: var(--ink-soft); font-size: 16px; max-width: 62ch; }
+
+/* the pricing page's "which plan fits" quiz reuses the home page finder; its result card sits inside the form */
+.picker.finder { gap: 4px; }
+.picker .pick-result { margin-top: 12px; }
+.pick-docs { margin: 4px 0 0; padding-left: 20px; color: var(--ink-soft); font-size: 15px; line-height: 1.5; }
