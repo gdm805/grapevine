@@ -66,7 +66,11 @@ The Principal appoints the following person to serve as Health Care Agent:
 
 {{agent}}
 
+[[if agent_contact]]
+
 {{agent_contact}}
+
+[[end]]
 
 The Health Care Agent shall have the authority provided by this Directive when that authority becomes effective under Article Three.
 
@@ -80,7 +84,11 @@ If the Health Care Agent named in Section 2.01 dies, resigns, declines to serve,
 
 {{successor}}
 
+[[if successor_contact]]
+
 {{successor_contact}}
+
+[[end]]
 
 [[end]]
 

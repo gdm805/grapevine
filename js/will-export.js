@@ -126,7 +126,7 @@
       '<w:pgSz w:w="12240" w:h="15840"/><w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="720" w:footer="720" w:gutter="0"/></w:sectPr>';
     var head = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
     var fld = function (instr) { return '<w:fldSimple w:instr=" ' + instr + ' "><w:r><w:rPr><w:sz w:val="18"/><w:szCs w:val="18"/></w:rPr><w:t>1</w:t></w:r></w:fldSimple>'; };
-    var footer = head + '<w:ftr ' + NS + '><w:p><w:pPr><w:jc w:val="center"/></w:pPr>' + rXml(o.footer + ' | Page ', { sz: 18 }) + fld('PAGE') + rXml(' of ', { sz: 18 }) + fld('NUMPAGES') + '</w:p></w:ftr>';
+    var footer = head + '<w:ftr ' + NS + '><w:p><w:pPr><w:pBdr><w:top w:val="single" w:sz="4" w:space="4" w:color="BEBEBE"/></w:pBdr><w:jc w:val="center"/></w:pPr>' + rXml(o.footer + ' | Page ', { sz: 18 }) + fld('PAGE') + rXml(' of ', { sz: 18 }) + fld('NUMPAGES') + '</w:p></w:ftr>';
     var header = draft ? head + '<w:hdr ' + NS + '><w:p><w:pPr><w:jc w:val="center"/></w:pPr>' + rXml(o.draftLabel, { b: true, sz: 20, color: 'C00000' }) + '</w:p></w:hdr>' : '';
     var files = [
       { name: '[Content_Types].xml', data: head + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>' +
@@ -361,13 +361,13 @@
           doc.text(o.draftLabel, PW / 2 - (wl / 2) * Math.cos(ang), PH / 2 + (wl / 2) * Math.sin(ang), { angle: 35 });
           doc.restoreGraphicsState(); doc.setTextColor(0, 0, 0);
         }
-        doc.setDrawColor(190, 190, 190); doc.setLineWidth(0.5); doc.line(M, PH - 54, PW - M, PH - 54); doc.setDrawColor(0, 0, 0);
+        doc.setDrawColor(190, 190, 190); doc.setLineWidth(0.5); doc.line(M, PH - 47, PW - M, PH - 47); doc.setDrawColor(0, 0, 0);
         font(false, 9); doc.setTextColor(70, 70, 70);
         var si = 0;
         for (var q = 0; q < sections.length; q++) if (sections[q].start <= i) si = q;
         var sec = sections[si], secEnd = sections[si + 1] ? sections[si + 1].start - 1 : n;
         var label = sec.footer + ' | Page ' + (i - sec.start + 1) + ' of ' + (secEnd - sec.start + 1);
-        doc.text(label, PW / 2 - doc.getTextWidth(label) / 2, PH - 40);
+        doc.text(label, PW / 2 - doc.getTextWidth(label) / 2, PH - 36);
         doc.setTextColor(0, 0, 0);
       }
       return doc.output('blob');

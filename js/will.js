@@ -1202,7 +1202,7 @@
     state: '', ageOk: false, freeOk: false,
     name: '', dob: '', phone: '', address: '',
     agent: '', agentPhone: '', agentEmail: '',
-    successors: [{ name: '' }],
+    successors: [{ name: '', phone: '', email: '' }],
     lifeSupport: '', nutrition: '', hydration: '',
     anatomicalGift: '', anatomicalGiftText: '',
     valuesYes: '', valuesText: '', limitationsYes: '', limitationsText: '', additionalYes: '', additionalText: '',
@@ -1210,7 +1210,7 @@
     azUnableToSign: '', azPsychAdmission: '', azFuneralAuthority: '', neSecondPhysician: '', ohUnconsciousAnh: '',
     signingCounty: '', signingDate: '', execRoute: ''
   };
-  var ROWS_HCD = { successors: { name: '' } };
+  var ROWS_HCD = { successors: { name: '', phone: '', email: '' } };
   var HCD_CACHE = {}, HCD_FAIL = {}, HCD_PENDING = {};
   function hcdSlug(n) { return String(n).toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, ''); }
   function hcdLoad(name, done) {
@@ -1266,7 +1266,9 @@
     v.county = clean(a.signingCounty).replace(/\s+county$/i, '');
     v.agent = clean(a.agent);
     v.agent_contact = [clean(a.agentPhone), clean(a.agentEmail)].filter(Boolean).join(' | ');
-    v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name), successor_contact: '' }; }).filter(function (x) { return x.successor; });
+    v.successors = (a.successors || []).map(function (x) {
+      return { successor: clean(x.name), successor_contact: [clean(x.phone), clean(x.email)].filter(Boolean).join(' | ') };
+    }).filter(function (x) { return x.successor; });
     v.has_successors = v.successors.length > 0;
     v.life_support = a.lifeSupport; v.nutrition = a.nutrition; v.hydration = a.hydration;
     v.anatomical_gift = a.anatomicalGift; v.anatomical_gift_text = clean(a.anatomicalGiftText);
@@ -1314,7 +1316,12 @@
     },
     successor: function () {
       return stepHead('Backup agents', 'If your first choice can’t serve, the first backup takes over, then the next. This is optional but recommended.') +
-        field('Backups', nameRows('successors', 'Backup', 0) + addBtn('successors', '+ Add another backup'));
+        field('Backups', '<div class="rowset">' + answers.successors.map(function (b, i) {
+          return '<div class="ben"><input class="input" data-list="successors" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Backup ' + (i + 1) + ' full name" aria-label="Backup ' + (i + 1) + ' full name">' +
+            '<input class="input" type="tel" data-list="successors" data-i="' + i + '" data-f="phone" value="' + val(b.phone) + '" placeholder="Phone" aria-label="Backup ' + (i + 1) + ' phone">' +
+            '<input class="input" type="email" data-list="successors" data-i="' + i + '" data-f="email" value="' + val(b.email) + '" placeholder="Email (optional)" aria-label="Backup ' + (i + 1) + ' email">' +
+            rm('successors', i, 'backup ' + (i + 1), answers.successors.length > 0) + '</div>';
+        }).join('') + '</div>' + addBtn('successors', '+ Add another backup'));
     },
     treatment: function () {
       return stepHead('If you had a condition your directive covers, what should happen with life-sustaining treatment?', 'This is the central choice in your directive. “Life-sustaining treatment” means medical care that would sustain or prolong life, such as a ventilator, CPR, or dialysis.') +
@@ -1423,6 +1430,12 @@
       if (!clean(a.agent)) e.push('Enter the name of your health care agent.');
       if (clean(a.agentPhone) && !isCompletePhone(a.agentPhone)) e.push('Your agent’s phone number looks incomplete.');
       if (clean(a.agentEmail) && !isCompleteEmail(a.agentEmail)) e.push('Your agent’s email address looks incomplete.');
+    } else if (id === 'successor') {
+      (a.successors || []).forEach(function (b, i) {
+        var who = clean(b.name) || 'backup ' + (i + 1);
+        if (clean(b.phone) && !isCompletePhone(b.phone)) e.push('The phone number for ' + who + ' looks incomplete.');
+        if (clean(b.email) && !isCompleteEmail(b.email)) e.push('The email address for ' + who + ' looks incomplete.');
+      });
     } else if (id === 'treatment') {
       if (!a.lifeSupport) e.push('Choose your life-sustaining treatment preference.');
     } else if (id === 'nutrition') {

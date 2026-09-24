@@ -74,7 +74,11 @@ The Principal appoints the following person to serve as Health Care Representati
 
 {{agent}}
 
+[[if agent_contact]]
+
 {{agent_contact}}
+
+[[end]]
 
 The Health Care Representative shall have the authority provided by this Directive when that authority becomes effective under Article Three.
 
@@ -88,7 +92,11 @@ If the Health Care Representative named in Section 2.01 dies, resigns, declines 
 
 {{successor}}
 
+[[if successor_contact]]
+
 {{successor_contact}}
+
+[[end]]
 
 [[end]]
 

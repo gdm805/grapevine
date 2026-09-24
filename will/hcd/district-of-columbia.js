@@ -82,7 +82,11 @@ The Principal appoints the following person to serve as Attorney in Fact:
 
 {{agent}}
 
+[[if agent_contact]]
+
 {{agent_contact}}
+
+[[end]]
 
 The Attorney in Fact shall have the authority provided by this Directive when that authority becomes effective under Article Three.
 
@@ -96,7 +100,11 @@ If the Attorney in Fact named in Section 2.01 dies, resigns, declines to serve, 
 
 {{successor}}
 
+[[if successor_contact]]
+
 {{successor_contact}}
+
+[[end]]
 
 [[end]]
 
