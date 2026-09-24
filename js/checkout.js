@@ -25,10 +25,12 @@
      TO TEST WITHOUT STRIPE: open paid.html?plan=will in your browser. It marks the Will plan as paid in
      this browser, the same way a real payment would, so you can see how the unlocked builder behaves.
      ------------------------------------------------------------------ */
+  /* TEST-MODE links (Stripe sandbox): these take fake cards only, such as 4242 4242 4242 4242. When you
+     go live, replace each with the matching link from your live Stripe account. */
   var PAYMENT_LINKS = {
-    will: { single: '', couple: '' },
-    essentials: { single: '', couple: '' },
-    complete: { single: '', couple: '' }
+    will: { single: 'https://buy.stripe.com/test_9B6fZh6SW3gz4aB0AJ5EY00', couple: 'https://buy.stripe.com/test_00wbJ17X07wPbD36Z75EY01' },
+    essentials: { single: 'https://buy.stripe.com/test_5kQ3cv4KO3gzePfcjr5EY02', couple: 'https://buy.stripe.com/test_5kQ8wPa582cvcH7dnv5EY03' },
+    complete: { single: 'https://buy.stripe.com/test_3cI3cv7X0eZhcH7cjr5EY04', couple: 'https://buy.stripe.com/test_6oUaEX9149EXcH783b5EY05' }
   };
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
