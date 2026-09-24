@@ -57,6 +57,30 @@ This Power of Attorney is intended to operate consistently with my trust, Will, 
 
 I appoint {{agent}} to serve as my Agent.
 
+[[if has_co_agents]]
+
+I also appoint the following persons to serve at the same time as {{agent}}. Each person named in this paragraph is my Agent, and all of them together are my "co-Agents":
+
+[[each co_agents]]
+
+{{co_agent}}
+
+[[end]]
+
+[[if co_separate]]
+
+Each co-Agent may act alone and independently, without the consent or joinder of any other co-Agent, and any person dealing with a co-Agent may rely on the signature and authority of that one co-Agent.
+
+[[else]]
+
+My co-Agents shall act together. Any power exercised under this Power of Attorney requires the joint action of all co-Agents then serving, and any person dealing with my co-Agents may require the signatures of all of them.
+
+[[end]]
+
+If a co-Agent dies, resigns, becomes incapacitated, or is unable or unwilling to serve, the remaining co-Agents shall continue to serve. A successor Agent named in this Power of Attorney serves, in the order listed, only if no co-Agent is able to serve.
+
+[[end]]
+
 If that Agent dies, resigns, becomes incapacitated, is unwilling or unable to serve, or is otherwise ineligible, I appoint the following persons to serve successively in the order listed:
 
 [[each successors]]

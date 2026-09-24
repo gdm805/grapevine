@@ -106,6 +106,36 @@ The Principal appoints the following person to serve as Health Care Agent:
 
 [[end]]
 
+[[if has_co_agents]]
+
+In addition to the Health Care Agent named above, I appoint the following persons to serve at the same time. Each person named in this paragraph is my Health Care Agent, and all of them together are my "co-agents":
+
+[[each co_agents]]
+
+{{co_agent}}
+
+[[if co_agent_contact]]
+
+{{co_agent_contact}}
+
+[[end]]
+
+[[end]]
+
+[[if co_separate]]
+
+Each co-agent may make health care decisions alone and independently, without the consent of any other co-agent, and a health care provider or other person may rely on the decision of any one co-agent.
+
+[[else]]
+
+My co-agents shall make health care decisions together. A decision requires the agreement of all co-agents then serving. If a decision cannot safely wait until all of them can be reached, any one of them may make that decision.
+
+[[end]]
+
+If a co-agent dies, resigns, or is unable or unwilling to serve, the remaining co-agents shall continue to serve. A successor named in this document serves, in the order listed, only if no co-agent is able to serve.
+
+[[end]]
+
 The Health Care Agent shall have the authority provided by this Directive when that authority becomes effective under Article Three.
 
 [[if has_successors]]

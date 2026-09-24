@@ -877,13 +877,55 @@
   /* ================= DURABLE POWER OF ATTORNEY =================
      Each state has its own file (will/dpoa/alabama.js and so on) with your state document word for word.
      The page loads only the file for the state that was chosen. */
+
+  /* ---------- MORE THAN ONE AGENT AT A TIME (Power of Attorney and Health Care Directive) ----------
+     agentMode: 'single' (one agent, backups in order -- the default), 'separate' (co-agents, any one of
+     whom may act alone), or 'together' (co-agents who must act together). The wording each choice adds
+     lives in the state files (will/dpoa/*.js, will/hcd/*.js) under [[if has_co_agents]]. */
+  function coAgentVars(a, v) {
+    var mode = a.agentMode === 'separate' || a.agentMode === 'together' ? a.agentMode : 'single';
+    var list = mode === 'single' ? [] : (a.coAgents || []).map(function (x) {
+      return { co_agent: clean(x.name), co_agent_contact: [clean(x.phone), clean(x.email)].filter(Boolean).join(' | ') };
+    }).filter(function (x) { return x.co_agent; });
+    v.co_agents = list;
+    v.has_co_agents = list.length > 0;
+    v.co_separate = mode === 'separate';
+  }
+  function coAgentFields(withContact) {
+    var h = field('Will more than one person serve as your agent at the same time?', pills('agentMode', [
+      ['single', 'No — one agent, with backups if needed'],
+      ['separate', 'Yes — any one of them may act alone'],
+      ['together', 'Yes — they must act together']
+    ], true), 'Backups, listed below, only step in if the person before them can’t serve, in the order you list them.');
+    if (answers.agentMode === 'separate' || answers.agentMode === 'together') {
+      h += field('Your other agent(s)', '<div class="rowset">' + answers.coAgents.map(function (b, i) {
+        return '<div class="ben"><input class="input" data-list="coAgents" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Agent ' + (i + 2) + ' full name" aria-label="Agent ' + (i + 2) + ' full name">' +
+          (withContact ? '<input class="input" type="tel" data-list="coAgents" data-i="' + i + '" data-f="phone" value="' + val(b.phone) + '" placeholder="Phone" aria-label="Agent ' + (i + 2) + ' phone">' +
+            '<input class="input" type="email" data-list="coAgents" data-i="' + i + '" data-f="email" value="' + val(b.email) + '" placeholder="Email (optional)" aria-label="Agent ' + (i + 2) + ' email">' : '') +
+          rm('coAgents', i, 'agent ' + (i + 2), answers.coAgents.length > 1) + '</div>';
+      }).join('') + '</div>' + addBtn('coAgents', '+ Add another agent'));
+    }
+    return h;
+  }
+  function coAgentErrors(a, e, withContact) {
+    if (a.agentMode === 'separate' || a.agentMode === 'together') {
+      if (!(a.coAgents || []).some(function (b) { return clean(b.name); })) e.push('Enter the name of the other agent, or choose that one person will serve.');
+      if (withContact) (a.coAgents || []).forEach(function (b, i) {
+        var who = clean(b.name) || 'agent ' + (i + 2);
+        if (clean(b.phone) && !isCompletePhone(b.phone)) e.push('The phone number for ' + who + ' looks incomplete.');
+        if (clean(b.email) && !isCompleteEmail(b.email)) e.push('The email address for ' + who + ' looks incomplete.');
+      });
+    }
+  }
+
   var EMPTY_DP = {
     state: '', govState: '', ageOk: false, freeOk: false,
     name: '', county: '',
     agent: '', successors: [{ name: '' }],
+    agentMode: 'single', coAgents: [{ name: '' }],
     effective: '', determiner: '', facility: ''
   };
-  var ROWS_DP = { successors: { name: '' } };
+  var ROWS_DP = { successors: { name: '' }, coAgents: { name: '' } };
   var DP_CACHE = {}, DP_FAIL = {}, DP_PENDING = {};
   function dpGov(a) { return a.govState || a.state || ''; }
   function dpSlug(n) { return String(n).toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, ''); }
@@ -921,6 +963,7 @@
     v.agent = clean(a.agent);
     v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
     v.has_successors = v.successors.length > 0;
+    coAgentVars(a, v);
     var choice = dpSet(a, 'effective_choice') !== 'no';
     v.upon_incapacity = choice && a.effective === 'incapacity'; v.effective_immediately = !v.upon_incapacity;
     v.determiner = clean(a.determiner) || v.agent;
@@ -954,6 +997,7 @@
     agent: function () {
       return stepHead('Who should act for you?', 'Your agent handles your money and property if you can’t, or if you ask them to. Choose someone you trust completely. Your document calls this person your Agent.') +
         field('Your agent’s full name', text('agent', '')) +
+        coAgentFields(false) +
         field('Backups <em>(optional)</em>', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can’t serve, the first backup takes over, then the next.');
     },
     effective: function () {
@@ -979,7 +1023,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      var agent = esc(v.agent) + (v.has_successors ? '. Backups: ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
+      var agent = esc(v.agent) + (v.has_co_agents ? ' and ' + esc(v.co_agents.map(function (x) { return x.co_agent; }).join(', ')) + (v.co_separate ? ' (each may act alone)' : ' (must act together)') : '') + (v.has_successors ? '. Backups: ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
       var starts = dpSet(answers, 'effective_choice') === 'no' ? 'Right away (the only option in ' + esc(v.governing_state) + ')' : (answers.effective === 'incapacity' ? 'Only if I become incapacitated' : (answers.effective === 'now' ? 'Right away' : ''));
       return stepHead('Your power of attorney is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
         '<div class="sum">' +
@@ -1012,6 +1056,8 @@
       if (!clean(a.county)) e.push('Enter your county.');
     } else if (id === 'agent') {
       if (!clean(a.agent)) e.push('Enter the name of your agent.');
+      if (!a.agentMode) e.push('Answer whether more than one person will serve as your agent.');
+      coAgentErrors(a, e, false);
     } else if (id === 'effective') {
       if (!a.effective) e.push('Choose when your agent’s power should start.');
     } else if (id === 'more') {
@@ -1202,6 +1248,7 @@
     state: '', ageOk: false, freeOk: false,
     name: '', dob: '', phone: '', address: '',
     agent: '', agentPhone: '', agentEmail: '',
+    agentMode: 'single', coAgents: [{ name: '', phone: '', email: '' }],
     successors: [{ name: '', phone: '', email: '' }],
     lifeSupport: '', nutrition: '', hydration: '',
     anatomicalGift: '', anatomicalGiftText: '',
@@ -1210,7 +1257,7 @@
     azUnableToSign: '', azPsychAdmission: '', azFuneralAuthority: '', neSecondPhysician: '', ohUnconsciousAnh: '',
     signingCounty: '', signingDate: '', execRoute: ''
   };
-  var ROWS_HCD = { successors: { name: '', phone: '', email: '' } };
+  var ROWS_HCD = { successors: { name: '', phone: '', email: '' }, coAgents: { name: '', phone: '', email: '' } };
   var HCD_CACHE = {}, HCD_FAIL = {}, HCD_PENDING = {};
   function hcdSlug(n) { return String(n).toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, ''); }
   function hcdLoad(name, done) {
@@ -1270,6 +1317,7 @@
       return { successor: clean(x.name), successor_contact: [clean(x.phone), clean(x.email)].filter(Boolean).join(' | ') };
     }).filter(function (x) { return x.successor; });
     v.has_successors = v.successors.length > 0;
+    coAgentVars(a, v);
     v.life_support = a.lifeSupport; v.nutrition = a.nutrition; v.hydration = a.hydration;
     v.anatomical_gift = a.anatomicalGift; v.anatomical_gift_text = clean(a.anatomicalGiftText);
     v.values_instructions = (a.valuesYes === 'yes' && clean(a.valuesText)) ? 'YES' : 'NO'; v.values_instructions_text = clean(a.valuesText);
@@ -1312,7 +1360,8 @@
       return stepHead('Who should make health care decisions for you?', 'Your health care agent can see your medical information and make treatment decisions if you’re unable to. Choose someone you trust completely.') +
         field('Your agent’s full name', text('agent', '')) +
         field('Agent’s phone', text('agentPhone', '', { auto: 'tel' })) +
-        field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' }));
+        field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' })) +
+        coAgentFields(true);
     },
     successor: function () {
       return stepHead('Backup agents', 'If your first choice can’t serve, the first backup takes over, then the next. This is optional but recommended.') +
@@ -1403,7 +1452,7 @@
         '<div class="sum">' +
         row('State', esc(v.state), 'start') +
         row('Name', esc(v.name), 'about') +
-        row('Health care agent', esc(v.agent), 'agent') +
+        row('Health care agent', esc(v.agent) + (v.has_co_agents ? ' and ' + esc(v.co_agents.map(function (x) { return x.co_agent; }).join(', ')) + (v.co_separate ? ' (each may act alone)' : ' (must act together)') : ''), 'agent') +
         row('Life-sustaining treatment', { DO_NOT_PROLONG: 'Let me go naturally', PROLONG: 'Prolong my life', AGENT_DECIDES: 'Let my agent decide' }[answers.lifeSupport] || '', 'treatment') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
@@ -1430,6 +1479,8 @@
       if (!clean(a.agent)) e.push('Enter the name of your health care agent.');
       if (clean(a.agentPhone) && !isCompletePhone(a.agentPhone)) e.push('Your agent’s phone number looks incomplete.');
       if (clean(a.agentEmail) && !isCompleteEmail(a.agentEmail)) e.push('Your agent’s email address looks incomplete.');
+      if (!a.agentMode) e.push('Answer whether more than one person will serve as your health care agent.');
+      coAgentErrors(a, e, true);
     } else if (id === 'successor') {
       (a.successors || []).forEach(function (b, i) {
         var who = clean(b.name) || 'backup ' + (i + 1);
