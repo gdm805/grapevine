@@ -417,6 +417,12 @@
   var layout = document.getElementById('will-layout');
   var draftBar = document.getElementById('draft-bar');
   if (draftBar) draftBar.hidden = !draft;
+  /* "watermark until paid": the preview is a sample, the paid download isn't -- say so, instead of the
+     page's built-in "starter text, can't be signed" notice (which is right only when every copy is a sample) */
+  if (draftBar && draft && wmSetting === 'unpaid') {
+    var barBox = draftBar.querySelector('.container') || draftBar;
+    barBox.innerHTML = '<strong>Sample preview:</strong> this preview is marked SAMPLE and isn\u2019t for signing. Once you pay for this document, your download and print copies come out clean, ready to sign.';
+  }
 
   /* ---------- the document ---------- */
   function docText() {
@@ -1896,18 +1902,19 @@
         var h = field(label, pills(flagKey, [['yes', 'Yes'], ['no', 'No']], true));
         if (answers[flagKey] === 'yes') {
           h += '<div class="rowset">' + answers[listKey].map(function (row, i) {
-            return '<div class="rowitem two">' + cols.map(function (c) {
-              return '<input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + c.f + '" value="' + val(row[c.f]) + '" placeholder="' + c.ph + '">';
+            /* one labeled box per line, so each answer stays identifiable after the example text disappears */
+            return '<div class="rowitem fields">' + cols.map(function (c) {
+              return '<label class="af"><span>' + c.lab + '</span><input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + c.f + '" value="' + val(row[c.f]) + '" placeholder="' + c.ph + '"></label>';
             }).join('') + rm(listKey, i, label.toLowerCase() + ' ' + (i + 1), answers[listKey].length > 1) + '</div>';
           }).join('') + '</div>' + addBtn(listKey, '+ Add another');
         }
         return h;
       }
       return stepHead('What are you funding your trust with?', 'This becomes Schedule A, your trust’s property list. You can also transfer property to your trust later — listing it here doesn’t replace a deed or account-retitling.') +
-        assetBlock('assetRealProperty', 'Real estate', 'realProperty', [{ f: 'address', ph: 'Address' }, { f: 'ownership', ph: 'Ownership (e.g., sole owner)' }]) +
-        assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
-        assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
-        assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', ph: 'Business name' }, { f: 'interest', ph: 'Your interest (e.g., 50% member)' }]) +
+        assetBlock('assetRealProperty', 'Real estate', 'realProperty', [{ f: 'address', lab: 'Property address', ph: '' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }, { f: 'countyState', lab: 'County and state', ph: 'e.g., Maricopa County, Arizona' }, { f: 'deedReference', lab: 'Deed or parcel number (optional)', ph: 'from your deed or property tax bill' }]) +
+        assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., checking or savings' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
+        assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., individual brokerage' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
+        assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', lab: 'Business name', ph: '' }, { f: 'interest', lab: 'Your interest', ph: 'e.g., 50% member' }, { f: 'state', lab: 'State where it was formed', ph: '' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
         field('Household goods and other tangible personal property', pills('assetTangible', [['yes', 'Yes'], ['no', 'No']], true), 'Furniture, jewelry, art, and similar belongings, as a group.');
     },
     signing: function () {
@@ -1981,10 +1988,10 @@
     firstDeathGifts: [{ description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' }],
     survivorDeathGifts: [{ description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' }],
     residuary: [{ name: '', pct: '' }],
-    assetRealProperty: '', realProperty: [{ address: '', ownership: '' }],
-    assetBank: '', bankAccounts: [{ institution: '', last4: '' }],
-    assetBrokerage: '', brokerageAccounts: [{ institution: '', last4: '' }],
-    assetBusiness: '', businessInterests: [{ name: '', interest: '' }],
+    assetRealProperty: '', realProperty: [{ address: '', ownership: '', reference: '' }],
+    assetBank: '', bankAccounts: [{ institution: '', type: '', last4: '', ownership: '' }],
+    assetBrokerage: '', brokerageAccounts: [{ institution: '', type: '', last4: '', ownership: '' }],
+    assetBusiness: '', businessInterests: [{ name: '', interest: '', ownership: '' }],
     assetTangible: '',
     signingCounty: '', signingDate: ''
   };
@@ -1994,10 +2001,10 @@
     firstDeathGifts: { description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' },
     survivorDeathGifts: { description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' },
     residuary: { name: '', pct: '' },
-    realProperty: { address: '', ownership: '' },
-    bankAccounts: { institution: '', last4: '' },
-    brokerageAccounts: { institution: '', last4: '' },
-    businessInterests: { name: '', interest: '' }
+    realProperty: { address: '', ownership: '', reference: '' },
+    bankAccounts: { institution: '', type: '', last4: '', ownership: '' },
+    brokerageAccounts: { institution: '', type: '', last4: '', ownership: '' },
+    businessInterests: { name: '', interest: '', ownership: '' }
   };
   var STEPS_TRUST_JOINT = [
     { id: 'start', label: 'Where you live' },
@@ -2130,18 +2137,19 @@
         var h = field(label, pills(flagKey, [['yes', 'Yes'], ['no', 'No']], true));
         if (answers[flagKey] === 'yes') {
           h += '<div class="rowset">' + answers[listKey].map(function (row, i) {
-            return '<div class="rowitem two">' + cols.map(function (c) {
-              return '<input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + c.f + '" value="' + val(row[c.f]) + '" placeholder="' + c.ph + '">';
+            /* one labeled box per line, so each answer stays identifiable after the example text disappears */
+            return '<div class="rowitem fields">' + cols.map(function (c) {
+              return '<label class="af"><span>' + c.lab + '</span><input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + c.f + '" value="' + val(row[c.f]) + '" placeholder="' + c.ph + '"></label>';
             }).join('') + rm(listKey, i, label.toLowerCase() + ' ' + (i + 1), answers[listKey].length > 1) + '</div>';
           }).join('') + '</div>' + addBtn(listKey, '+ Add another');
         }
         return h;
       }
       return stepHead('What are you funding your trust with?', 'This becomes Schedule A, your trust’s property list. You can also transfer property to your trust later — listing it here doesn’t replace a deed or account-retitling.') +
-        assetBlock('assetRealProperty', 'Real estate', 'realProperty', [{ f: 'address', ph: 'Address' }, { f: 'ownership', ph: 'Ownership (e.g., joint tenants)' }]) +
-        assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
-        assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
-        assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', ph: 'Business name' }, { f: 'interest', ph: 'Your interest (e.g., 50% member)' }]) +
+        assetBlock('assetRealProperty', 'Real estate', 'realProperty', [{ f: 'address', lab: 'Property address', ph: '' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., joint tenants, or community property' }, { f: 'reference', lab: 'Parcel number or legal description (optional)', ph: 'from your deed or property tax bill' }]) +
+        assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., checking or savings' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., joint, or community property' }]) +
+        assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., individual brokerage' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., joint, or community property' }]) +
+        assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', lab: 'Business name', ph: '' }, { f: 'interest', lab: 'Your interest', ph: 'e.g., 50% member' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., joint, or community property' }]) +
         field('Household goods and other tangible personal property', pills('assetTangible', [['yes', 'Yes'], ['no', 'No']], true), 'Furniture, jewelry, art, and similar belongings, as a group.');
     },
     signing: function () {
@@ -3000,18 +3008,19 @@
         var h = field(label, pills(flagKey, [['yes', 'Yes'], ['no', 'No']], true));
         if (answers[flagKey] === 'yes') {
           h += '<div class="rowset">' + answers[listKey].map(function (row, i) {
-            return '<div class="rowitem two">' + cols.map(function (c) {
-              return '<input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + c.f + '" value="' + val(row[c.f]) + '" placeholder="' + c.ph + '">';
+            /* one labeled box per line, so each answer stays identifiable after the example text disappears */
+            return '<div class="rowitem fields">' + cols.map(function (c) {
+              return '<label class="af"><span>' + c.lab + '</span><input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + c.f + '" value="' + val(row[c.f]) + '" placeholder="' + c.ph + '"></label>';
             }).join('') + rm(listKey, i, label.toLowerCase() + ' ' + (i + 1), answers[listKey].length > 1) + '</div>';
           }).join('') + '</div>' + addBtn(listKey, '+ Add another');
         }
         return h;
       }
       return stepHead('What is in your trust?', 'List what you have placed in the trust, or plan to. Listing something here doesn’t replace a deed or an account change. Never enter a full account number.') +
-        assetBlock('assetRealProperty', 'Real estate', 'realProperty', [{ f: 'address', ph: 'Address' }, { f: 'ownership', ph: 'Ownership (e.g., sole owner)' }]) +
-        assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
-        assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
-        assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', ph: 'Business name' }, { f: 'interest', ph: 'Your interest (e.g., 50% member)' }]) +
+        assetBlock('assetRealProperty', 'Real estate', 'realProperty', [{ f: 'address', lab: 'Property address', ph: '' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }, { f: 'countyState', lab: 'County and state', ph: 'e.g., Maricopa County, Arizona' }, { f: 'deedReference', lab: 'Deed or parcel number (optional)', ph: 'from your deed or property tax bill' }]) +
+        assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., checking or savings' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
+        assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., individual brokerage' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
+        assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', lab: 'Business name', ph: '' }, { f: 'interest', lab: 'Your interest', ph: 'e.g., 50% member' }, { f: 'state', lab: 'State where it was formed', ph: '' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
         field('Household goods and other tangible personal property', pills('assetTangible', [['yes', 'Yes'], ['no', 'No']], true), 'Furniture, jewelry, art, and similar belongings, as a group.');
     },
     review: function () {

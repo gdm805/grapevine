@@ -206,3 +206,7 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 /* long button labels (a person's name in "Continue to your ... — Lisa L. Merrill") wrap instead of pushing the questions box wider than its column */
 .wizard .btn { max-width: 100%; white-space: normal; text-align: center; }
 .wizard .actions .btn, .pkg-continue .btn { white-space: normal; }
+/* property lists (trust, joint trust, Schedule A): one labeled box per line, grouped per item */
+.rowitem.fields { display: grid; grid-template-columns: minmax(0, 1fr) 40px; gap: 10px; padding: 12px; border: 1.5px solid var(--field-line); border-radius: var(--r-md); }
+.rowitem.fields .af { grid-column: 1; display: grid; gap: 4px; font: 500 13.5px/1.3 var(--sans); color: var(--ink-soft); }
+.rowitem.fields .rm { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
