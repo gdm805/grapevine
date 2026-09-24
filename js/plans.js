@@ -30,7 +30,7 @@ window.GV_SAMPLE_WATERMARK = true;
    program, whether each payment is real before unlocking anything, so typing paid.html?plan=... into a
    browser no longer works. Leave it empty ('') only while setting up; empty means the old, easy-to-bypass
    check. It looks like: 'https://grapevine-payment-check.YOURNAME.workers.dev' */
-window.GV_PAYMENT_CHECK_URL = '';
+window.GV_PAYMENT_CHECK_URL = 'https://grapevine-payment-check.gdm805.workers.dev';
 
 window.GV_PLANS = {
   order: ['will', 'essentials', 'complete'],
