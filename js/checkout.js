@@ -30,7 +30,14 @@
   var PAYMENT_LINKS = {
     will: { single: 'https://buy.stripe.com/test_9B6fZh6SW3gz4aB0AJ5EY00', couple: 'https://buy.stripe.com/test_00wbJ17X07wPbD36Z75EY01' },
     essentials: { single: 'https://buy.stripe.com/test_5kQ3cv4KO3gzePfcjr5EY02', couple: 'https://buy.stripe.com/test_5kQ8wPa582cvcH7dnv5EY03' },
-    complete: { single: 'https://buy.stripe.com/test_3cI3cv7X0eZhcH7cjr5EY04', couple: 'https://buy.stripe.com/test_6oUaEX9149EXcH783b5EY05' }
+    complete: { single: 'https://buy.stripe.com/test_3cI3cv7X0eZhcH7cjr5EY04', couple: 'https://buy.stripe.com/test_6oUaEX9149EXcH783b5EY05' },
+    /* the smaller offers from "Just need one document?" -- paste each Stripe link between the quotes.
+       "doc" is used for every single document (they all cost the same); the checkout page remembers which
+       document was chosen and paid.html unlocks that one. Until a link is filled in, the checkout page
+       shows the "Payments aren't turned on yet" notice for that offer. */
+    doc: { single: '', couple: '' },
+    health: { single: '', couple: '' },
+    trustpaper: { single: '', couple: '' }
   };
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
@@ -38,8 +45,8 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   var GV = window.GV_PLANS || { order: [], prices: {}, plans: {} };
-  var RETURN_LABELS = { 'will.html': 'your will', 'pour-over.html': 'your pour-over will', 'dpoa.html': 'your power of attorney', 'dementia.html': 'your care preferences', 'hcd.html': 'your health care directive', 'hipaa.html': 'your HIPAA authorization', 'trust.html': 'your living trust', 'trust-joint.html': 'your joint living trust', 'cert.html': 'your certification of trust', 'affidavit.html': 'your affidavit of trustee', 'assignment.html': 'your assignment of personal property', 'finalwishes.html': 'your final wishes', 'contacts.html': 'your important contacts' };
-  var RETURN_DOC = { 'will.html': 'will', 'pour-over.html': 'pourover', 'dpoa.html': 'dpoa', 'dementia.html': 'dementia', 'hcd.html': 'hcd', 'hipaa.html': 'hipaa', 'trust.html': 'trust', 'trust-joint.html': 'trustjoint', 'cert.html': 'cert', 'affidavit.html': 'affidavit', 'assignment.html': 'assignment', 'finalwishes.html': 'finalwishes', 'contacts.html': 'contacts' };
+  var RETURN_LABELS = { 'will.html': 'your will', 'pour-over.html': 'your pour-over will', 'dpoa.html': 'your power of attorney', 'dementia.html': 'your care preferences', 'hcd.html': 'your health care directive', 'hipaa.html': 'your HIPAA authorization', 'trust.html': 'your living trust', 'trust-joint.html': 'your joint living trust', 'cert.html': 'your certification of trust', 'affidavit.html': 'your affidavit of trustee', 'assignment.html': 'your assignment of personal property', 'finalwishes.html': 'your final wishes', 'contacts.html': 'your important contacts', 'schedulea.html': 'your Schedule A' };
+  var RETURN_DOC = { 'will.html': 'will', 'pour-over.html': 'pourover', 'dpoa.html': 'dpoa', 'dementia.html': 'dementia', 'hcd.html': 'hcd', 'hipaa.html': 'hipaa', 'trust.html': 'trust', 'trust-joint.html': 'trustjoint', 'cert.html': 'cert', 'affidavit.html': 'affidavit', 'assignment.html': 'assignment', 'finalwishes.html': 'finalwishes', 'contacts.html': 'contacts', 'schedulea.html': 'schedulea' };
 
   var root = document.getElementById('checkout');
   if (!root) return;
@@ -75,9 +82,11 @@
   }
 
   function render() {
-    var p = GV.plans[plan], price = GV.priceFor(plan, household);
     var docLabel = RETURN_LABELS[validReturn];
     var docKey = RETURN_DOC[validReturn];
+    /* one document per trust: a couple pays the same $49 as one person for these, using the single link */
+    var payHousehold = (plan === 'doc' && docKey && (GV.trustSide || []).indexOf(docKey) > -1) ? 'single' : household;
+    var p = GV.plans[plan], price = GV.priceFor(plan, payHousehold);
 
     if (docKey && window.GVPay && window.GVPay.hasPaid(docKey)) {
       root.innerHTML =
@@ -88,24 +97,27 @@
       return;
     }
 
-    var link = ((PAYMENT_LINKS[plan] || {})[household] || '').trim();
+    /* a single-document purchase: remember which document, so paid.html can unlock exactly that one */
+    if (plan === 'doc' && docKey) { try { localStorage.setItem('grapevine.pending.doc', docKey); } catch (e) {} }
+    var includes = (plan === 'doc' && docKey && window.GVFlow) ? [window.GVFlow.baseLabel(docKey)] : p.includes;
+    var link = ((PAYMENT_LINKS[plan] || {})[payHousehold] || '').trim();
     var payHref = '#';
-    if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + household); }
+    if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold); }
 
     root.innerHTML =
       '<p class="overline">Checkout</p>' +
       '<h1>' + (docLabel ? 'Unlock ' + esc(docLabel) : 'Choose your plan') + '</h1>' +
       (docLabel
-        ? '<p class="lead">Your answers are already saved in this browser. Pay once for the ' + esc(p.name) + ' plan and you can download and print ' + esc(docLabel) + ' right away.</p>'
+        ? '<p class="lead">Your answers are already saved in this browser. Pay once for ' + (plan === 'doc' ? 'this document' : 'the ' + esc(p.name) + ' plan') + ' and you can download and print ' + esc(docLabel) + ' right away.</p>'
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
       (docLabel
         /* arrived from a document with a plan already chosen: show what they're buying, not the pickers */
         ? '<p class="household-label">' + (household === 'couple' ? 'Pricing for you and your spouse or partner' : 'Pricing for one person') + ' &middot; <a href="' + window.GVUrl('pricing.html') + '?household=' + household + '">Choose a different plan</a></p>'
         : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
       '<div class="order-card">' +
-        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (household === 'couple' ? ', for a couple' : '') + '</span></p></div>' +
+        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : '') + '</span></p></div>' +
         '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' +
-        '<ul class="includes">' + p.includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+        '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
         (link
           ? '<a class="btn btn-primary btn-lg" href="' + payHref + '">Continue to secure payment <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>'
           : '<div class="pay-off"><p><strong>Payments aren’t turned on yet.</strong> Add a Stripe Payment Link for the ' + esc(p.name) + ' plan (' + household + ') in <code>js/checkout.js</code>, or open <code>paid.html?plan=' + plan + '&household=' + household + '</code> to try the unlocked view.</p></div>') +

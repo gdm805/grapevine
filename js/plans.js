@@ -25,8 +25,22 @@ window.GV_PLANS = {
   prices: {
     will: { single: 119, couple: 199 },
     essentials: { single: 249, couple: 399 },
-    complete: { single: 499, couple: 649 }
+    complete: { single: 499, couple: 649 },
+    /* the smaller offers: any one document, and two short packages (see also `extra` below) */
+    doc: { single: 49, couple: 79 },
+    /* trust-side single documents (Schedule A, Certification, Affidavit, Assignment) are one document per
+       trust, so they cost the same for a couple. Display only: they are bought through the "doc" plan. */
+    doctrust: { single: 49, couple: 49 },
+    health: { single: 129, couple: 199 },
+    trustpaper: { single: 129, couple: 129 }
   },
+  /* plans that are sold from the "Just need one document?" part of the pricing page rather than as one of
+     the three main plans. They are looked up like any plan (prices, checkout, unlocking) but stay out of
+     `order`, which is the list the checkout page offers as "choose a different plan". */
+  extra: ['doc', 'health', 'trustpaper'],
+  /* the documents that can be bought one at a time, in the order the pricing page lists them */
+  trustSide: ['schedulea', 'cert', 'affidavit', 'assignment'],
+  singles: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'schedulea', 'cert', 'affidavit', 'assignment'],
   priceFor: function (planKey, household) {
     var p = this.prices[planKey];
     if (!p) return 0;
@@ -68,6 +82,37 @@ window.GV_PLANS = {
          wanting the plain one, so the top plan unlocks every builder that exists today. */
       unlocks: ['will', 'pourover', 'dpoa', 'dementia', 'hcd', 'hipaa', 'trust', 'trustjoint', 'cert', 'affidavit', 'assignment', 'finalwishes', 'contacts'],
       goesTo: 'pour-over.html'
+    },
+    doc: {
+      name: 'Single document',
+      tag: 'Any one document, on its own.',
+      lead: 'The document you chose',
+      includes: [],
+      cta: 'Start this document',
+      why: 'Just the one document you need.',
+      /* filled in from what was bought -- see js/entitlements.js, which remembers which document(s) */
+      unlocks: [],
+      goesTo: 'hcd.html'
+    },
+    health: {
+      name: 'Health Care Package',
+      tag: 'The documents for medical decisions and final wishes.',
+      lead: 'Everything for your health care wishes',
+      includes: ['Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes'],
+      cta: 'Start the Health Care Package',
+      why: 'For someone who needs their medical decisions and final wishes in writing.',
+      unlocks: ['hcd', 'dementia', 'hipaa', 'finalwishes'],
+      goesTo: 'hcd.html'
+    },
+    trustpaper: {
+      name: 'Trust Paperwork',
+      tag: 'The supporting documents for a trust you already have.',
+      lead: 'The paperwork that goes with a trust',
+      includes: ['Schedule A (Trust Property)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust'],
+      cta: 'Start Trust Paperwork',
+      why: 'For someone who already has a trust and needs the documents that go with it.',
+      unlocks: ['schedulea', 'cert', 'affidavit', 'assignment'],
+      goesTo: 'schedulea.html'
     }
   }
 };

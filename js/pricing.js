@@ -26,7 +26,7 @@
       document.querySelectorAll('[data-price="' + k + '"]').forEach(function (el) {
         el.textContent = amt;
         var per = el.parentElement && el.parentElement.querySelector('.per');
-        if (per) per.textContent = household === 'couple' ? 'one-time, for a couple' : 'one-time';
+        if (per) per.textContent = (household === 'couple' && GV.prices[k].single !== GV.prices[k].couple) ? 'one-time, for a couple' : 'one-time';
       });
     });
     /* the toggle's own pressed state */

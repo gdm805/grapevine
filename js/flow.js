@@ -16,17 +16,20 @@ window.GVFlow = (function () {
   var FLOWS = {
     will: ['will', 'finalwishes', 'contacts'],
     essentials: ['will', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
-    complete: ['pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'trust', 'cert', 'affidavit', 'assignment', 'finalwishes', 'contacts']
+    complete: ['pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'trust', 'cert', 'affidavit', 'assignment', 'finalwishes', 'contacts'],
+    /* the two short packages sold from "Just need one document?" on the pricing page */
+    health: ['hcd', 'dementia', 'hipaa', 'finalwishes'],
+    trustpaper: ['schedulea', 'cert', 'affidavit', 'assignment']
   };
   var PAGES = {
     will: 'will.html', pourover: 'pour-over.html', dpoa: 'dpoa.html', hcd: 'hcd.html', dementia: 'dementia.html', hipaa: 'hipaa.html',
     trust: 'trust.html', trustjoint: 'trust-joint.html', cert: 'cert.html', affidavit: 'affidavit.html', assignment: 'assignment.html',
-    finalwishes: 'finalwishes.html', contacts: 'contacts.html'
+    finalwishes: 'finalwishes.html', contacts: 'contacts.html', schedulea: 'schedulea.html'
   };
   var LABELS = {
     will: 'Will', pourover: 'Pour-Over Will', dpoa: 'Power of Attorney', hcd: 'Health Care Directive', dementia: 'Dementia Care Preferences', hipaa: 'HIPAA Authorization',
     trust: 'Living Trust', trustjoint: 'Living Trust', cert: 'Certification of Trust', affidavit: 'Affidavit of Trustee', assignment: 'Assignment of Property',
-    finalwishes: 'Final Wishes', contacts: 'Important Contacts'
+    finalwishes: 'Final Wishes', contacts: 'Important Contacts', schedulea: 'Schedule A (Trust Property)'
   };
 
   /* Documents each person signs for themselves. For a couple, each of these is answered TWICE in a row
@@ -44,8 +47,11 @@ window.GVFlow = (function () {
   }
   function write(f) { try { localStorage.setItem(KEY, JSON.stringify(f)); } catch (e) { /* ignore */ } }
 
-  function start(plan) {
-    var docs = FLOWS[plan];
+  /* start(plan) begins one of the packages above. start('doc', 'dpoa') begins a single document, bought on
+     its own -- for a couple, the personal documents still come twice (one per person), the trust-side
+     ones once. */
+  function start(plan, oneDoc) {
+    var docs = plan === 'doc' && PAGES[oneDoc] ? [oneDoc] : FLOWS[plan];
     if (!docs) { clear(); return null; }
     if (plan === 'complete' && household() === 'couple') {
       docs = docs.map(function (k) { return k === 'trust' ? 'trustjoint' : k; });
@@ -82,8 +88,9 @@ window.GVFlow = (function () {
     var a = e.target.closest('[data-plan]');
     if (!a) return;
     var plan = a.getAttribute('data-plan');
-    if (FLOWS[plan]) start(plan); else clear();
+    if (plan === 'doc') start('doc', a.getAttribute('data-doc'));
+    else if (FLOWS[plan]) start(plan); else clear();
   });
 
-  return { start: start, current: current, markDone: markDone, clear: clear, baseOf: baseOf, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
+  return { start: start, current: current, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
 })();

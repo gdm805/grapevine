@@ -66,6 +66,7 @@
     affidavit: { name: 'tm1Name', name2: 'tm2Name' },
     assignment: { name: 'tm1Name', name2: 'tm2Name' },
     finalwishes: { name: 'name' },
+    schedulea: { name: 'tm1Name', name2: 'tm2Name' },
     contacts: { name: 'name' }
   };
   function readProfile() {
@@ -395,11 +396,11 @@
   var root = document.getElementById('will-app');
   if (!root) return;
 
-  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts' }[root.getAttribute('data-kind')] || 'will';
+  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts', schedulea: 'schedulea' }[root.getAttribute('data-kind')] || 'will';
   var SPOUSE2 = false;
   try { SPOUSE2 = new URLSearchParams(location.search).get('spouse') === '2' && ['will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'].indexOf(kindKey) > -1; } catch (e) { /* first-person copy */ }
   var docId = kindKey + (SPOUSE2 ? ':2' : '');
-  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'] }[kindKey];
+  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'], schedulea: ['WILL_STATES', 'SCHEDULEA_TEMPLATE', 'SCHEDULEA_SIGNING'] }[kindKey];
   var states = parseStates(window[GLOBALS[0]]);
   var tpl = parseTemplate(window[GLOBALS[1]]);
   var sign = parseTemplate(window[GLOBALS[2]]);
@@ -455,7 +456,7 @@
     if (KIND.key === 'trustjoint') return [clean(answers.name1), clean(answers.name2)].filter(Boolean).join(' and ').replace(/["\\]/g, '');
     if (KIND.key === 'cert') return clean(answers.trustName).replace(/["\\]/g, '');
     if (KIND.key === 'affidavit') return clean(answers.affiantName).replace(/["\\]/g, '');
-    if (KIND.key === 'assignment') return clean(answers.trustName).replace(/["\\]/g, '');
+    if (KIND.key === 'assignment' || KIND.key === 'schedulea') return clean(answers.trustName).replace(/["\\]/g, '');
     return clean(answers.name).replace(/["\\]/g, '');
   }
 
@@ -2856,6 +2857,150 @@
     return e;
   }
 
+
+  /* ---------- SCHEDULE A (TRUST PROPERTY), as its own document ---------- */
+  var EMPTY_SCHEDA = {
+    trustType: 'SINGLE',
+    trustName: '', origTrustDate: '', trustRestated: '', restatementDate: '',
+    tm1Name: '', tm2Name: '',
+    assetRealProperty: '', realProperty: [{ address: '', ownership: '', countyState: '', deedReference: '' }],
+    assetBank: '', bankAccounts: [{ institution: '', type: '', last4: '', ownership: '' }],
+    assetBrokerage: '', brokerageAccounts: [{ institution: '', type: '', last4: '', ownership: '' }],
+    assetBusiness: '', businessInterests: [{ name: '', interest: '', state: '', ownership: '' }],
+    assetTangible: ''
+  };
+  var ROWS_SCHEDA = {
+    realProperty: { address: '', ownership: '', countyState: '', deedReference: '' },
+    bankAccounts: { institution: '', type: '', last4: '', ownership: '' },
+    brokerageAccounts: { institution: '', type: '', last4: '', ownership: '' },
+    businessInterests: { name: '', interest: '', state: '', ownership: '' }
+  };
+  var STEPS_SCHEDA = [
+    { id: 'start', label: 'Your trust' },
+    { id: 'trustmakers', label: 'Trustmakers' },
+    { id: 'assets', label: 'Trust property' },
+    { id: 'review', label: 'Review and sign' }
+  ];
+  function buildVarsScheduleA(a, states, settings) {
+    var v = {};
+    v.trust_type = a.trustType === 'JOINT' ? 'JOINT' : 'SINGLE';
+    v.trust_name = clean(a.trustName);
+    v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
+    v.trust_restated = a.trustRestated === 'yes';
+    v.restatement_date = a.restatementDate ? longDate(a.restatementDate) : '';
+    v.tm1_name = clean(a.tm1Name);
+    v.tm2_name = clean(a.tm2Name);
+    v.asset_real_property = a.assetRealProperty === 'yes';
+    v.real_property = (a.realProperty || []).map(function (p) {
+      return { real_property_address: clean(p.address), real_property_ownership: clean(p.ownership), real_property_county_state: clean(p.countyState), real_property_deed_reference: clean(p.deedReference) };
+    }).filter(function (p) { return p.real_property_address; });
+    v.asset_bank = a.assetBank === 'yes';
+    v.bank_accounts = (a.bankAccounts || []).map(function (p) {
+      return { bank_institution: clean(p.institution), bank_type: clean(p.type), bank_last4: clean(p.last4), bank_ownership: clean(p.ownership) };
+    }).filter(function (p) { return p.bank_institution; });
+    v.asset_brokerage = a.assetBrokerage === 'yes';
+    v.brokerage_accounts = (a.brokerageAccounts || []).map(function (p) {
+      return { brokerage_institution: clean(p.institution), brokerage_type: clean(p.type), brokerage_last4: clean(p.last4), brokerage_ownership: clean(p.ownership) };
+    }).filter(function (p) { return p.brokerage_institution; });
+    v.asset_business = a.assetBusiness === 'yes';
+    v.business_interests = (a.businessInterests || []).map(function (p) {
+      return { business_name: clean(p.name), business_interest: clean(p.interest), business_state: clean(p.state), business_ownership: clean(p.ownership) };
+    }).filter(function (p) { return p.business_name; });
+    v.asset_tangible = a.assetTangible === 'yes';
+    return v;
+  }
+  var RENDER_SCHEDA = {
+    start: function () {
+      return stepHead('First, tell us about your trust', 'Schedule A belongs to a trust you already have, so we need its name and date to identify it.') +
+        field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
+        field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
+        field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
+        field('Has the trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
+        (answers.trustRestated === 'yes' ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
+    },
+    trustmakers: function () {
+      var h = stepHead('Trustmakers', '');
+      if (answers.trustType === 'JOINT') {
+        h += field('First Trustmaker’s full legal name', text('tm1Name', ''));
+        h += field('Second Trustmaker’s full legal name', text('tm2Name', ''));
+      } else {
+        h += field('Trustmaker’s full legal name', text('tm1Name', ''));
+      }
+      return h;
+    },
+    assets: function () {
+      function assetBlock(flagKey, label, listKey, cols) {
+        var h = field(label, pills(flagKey, [['yes', 'Yes'], ['no', 'No']], true));
+        if (answers[flagKey] === 'yes') {
+          h += '<div class="rowset">' + answers[listKey].map(function (row, i) {
+            return '<div class="rowitem two">' + cols.map(function (c) {
+              return '<input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + c.f + '" value="' + val(row[c.f]) + '" placeholder="' + c.ph + '">';
+            }).join('') + rm(listKey, i, label.toLowerCase() + ' ' + (i + 1), answers[listKey].length > 1) + '</div>';
+          }).join('') + '</div>' + addBtn(listKey, '+ Add another');
+        }
+        return h;
+      }
+      return stepHead('What is in your trust?', 'List what you have placed in the trust, or plan to. Listing something here doesn’t replace a deed or an account change. Never enter a full account number.') +
+        assetBlock('assetRealProperty', 'Real estate', 'realProperty', [{ f: 'address', ph: 'Address' }, { f: 'ownership', ph: 'Ownership (e.g., sole owner)' }]) +
+        assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
+        assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', ph: 'Institution' }, { f: 'last4', ph: 'Last 4 digits' }]) +
+        assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', ph: 'Business name' }, { f: 'interest', ph: 'Your interest (e.g., 50% member)' }]) +
+        field('Household goods and other tangible personal property', pills('assetTangible', [['yes', 'Yes'], ['no', 'No']], true), 'Furniture, jewelry, art, and similar belongings, as a group.');
+    },
+    review: function () {
+      var v = buildVarsScheduleA(answers, states, tpl.settings);
+      var instr = toHtml(renderNodes(sign.nodes, v), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>');
+      function row(label, value, goto) {
+        return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
+      }
+      var counts = [];
+      if (v.asset_real_property) counts.push(v.real_property.length + ' real estate');
+      if (v.asset_bank) counts.push(v.bank_accounts.length + ' bank');
+      if (v.asset_brokerage) counts.push(v.brokerage_accounts.length + ' investment');
+      if (v.asset_business) counts.push(v.business_interests.length + ' business');
+      if (v.asset_tangible) counts.push('household goods');
+      return stepHead('Your Schedule A is ready to review', 'Read every word, then print it and sign. No witness or notary is required.') +
+        '<div class="sum">' +
+        row('Trust name', esc(v.trust_name), 'start') +
+        row('Trustmaker(s)', [v.tm1_name, v.tm2_name].filter(Boolean).map(esc).join(' and '), 'trustmakers') +
+        row('Property listed', esc(counts.join(', ')), 'assets') + '</div>' +
+        '<div class="actions">' +
+        '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
+        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
+        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
+        '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
+        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
+        '<div class="instr">' + instr + '</div>' +
+        '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
+    }
+  };
+  function validateScheduleA(id) {
+    var a = answers, e = [];
+    if (id === 'start') {
+      if (!clean(a.trustName)) e.push('Name the trust.');
+      if (!a.origTrustDate) e.push('Enter the date the trust was originally signed.');
+      if (!a.trustRestated) e.push('Answer whether the trust has been restated.');
+      if (a.trustRestated === 'yes' && !a.restatementDate) e.push('Enter the date of the most recent restatement.');
+    } else if (id === 'trustmakers') {
+      if (!clean(a.tm1Name)) e.push(a.trustType === 'JOINT' ? 'Enter the first Trustmaker’s full legal name.' : 'Enter the Trustmaker’s full legal name.');
+      if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
+    } else if (id === 'assets') {
+      var groups = [['assetRealProperty', 'realProperty', 'address', 'real estate'], ['assetBank', 'bankAccounts', 'institution', 'bank account'], ['assetBrokerage', 'brokerageAccounts', 'institution', 'investment account'], ['assetBusiness', 'businessInterests', 'name', 'business']];
+      var any = a.assetTangible === 'yes';
+      groups.forEach(function (g) {
+        if (a[g[0]] === 'yes') {
+          any = true;
+          if (!(a[g[1]] || []).some(function (r) { return clean(r[g[2]]); })) e.push('Add at least one ' + g[3] + ', or answer No.');
+        }
+        if (!a[g[0]]) e.push('Answer whether you have a ' + g[3] + ' to list.');
+      });
+      if (!a.assetTangible) e.push('Answer whether to include household goods.');
+      if (!any && !e.length) e.push('Choose at least one kind of property to list.');
+    }
+    return e;
+  }
+
   /* ---------- put the chosen kind together ---------- */
   var KINDS = {
     will: { key: 'will', ls: 'grapevine.will.v2', file: 'Last-Will-and-Testament', footer: function (n) { return 'Last Will and Testament of ' + n; },
@@ -2882,6 +3027,8 @@
       empty: EMPTY_ASSIGNMENT, rows: ROWS_ASSIGNMENT, steps: STEPS_ASSIGNMENT, render: RENDER_ASSIGNMENT, validate: validateAssignment, buildVars: buildVarsAssignment },
     finalwishes: { key: 'finalwishes', ls: 'grapevine.finalwishes.v1', file: 'Final-Wishes', footer: function (n) { return 'Final Wishes of ' + n; },
       empty: EMPTY_FINALWISHES, rows: ROWS_FINALWISHES, steps: STEPS_FINALWISHES, render: RENDER_FINALWISHES, validate: validateFinalWishes, buildVars: buildVarsFinalWishes },
+    schedulea: { key: 'schedulea', ls: 'grapevine.schedulea.v1', file: 'Schedule-A-Trust-Property', footer: function (n) { return 'Schedule A to ' + n; },
+      empty: EMPTY_SCHEDA, rows: ROWS_SCHEDA, steps: STEPS_SCHEDA, render: RENDER_SCHEDA, validate: validateScheduleA, buildVars: buildVarsScheduleA },
     contacts: { key: 'contacts', ls: 'grapevine.contacts.v1', file: 'Important-Contacts', footer: function (n) { return 'Important Contacts for ' + n; },
       empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts }
   };
@@ -2912,7 +3059,7 @@
       if (answers.state && !HIPAA_CACHE[answers.state] && !HIPAA_FAIL[answers.state] && !HIPAA_PENDING[answers.state]) hipaaLoad(answers.state, function () { draw(focusSel); });
     }
     var flow = window.GVFlow && window.GVFlow.current();
-    var inFlow = !!(flow && flow.docs.indexOf(docId) > -1);
+    var inFlow = !!(flow && flow.docs.indexOf(docId) > -1 && !(flow.plan === 'doc' && flow.docs.length === 1));
     var flowIdx = inFlow ? flow.docs.indexOf(docId) : -1;
     var isLastInFlow = inFlow && flowIdx === flow.docs.length - 1;
     var nextKind = inFlow && !isLastInFlow ? flow.docs[flowIdx + 1] : null;
@@ -3037,21 +3184,25 @@
      write a regular will instead") would contradict what the person is doing, so it's replaced with
      package wording and the alternative-document links are hidden. */
   function paintPkgHero(f, idx) {
-    var hero = document.querySelector('.will-hero'); if (!hero) return;
+    var hero = document.querySelector('.will-hero'); if (!hero || f.plan === 'doc') return;
     var over = hero.querySelector('.overline'), h1 = hero.querySelector('h1'), lead = hero.querySelector('.lead'), sw = hero.querySelector('.kind-switch');
     if (over) over.textContent = 'Document ' + (idx + 1) + ' of ' + f.docs.length + ' \u00b7 ' + window.GVFlow.labelFor(docId);
     if (h1) h1.textContent = 'Let\u2019s write your ' + pkgName(f) + ' package';
     if (lead) lead.textContent = 'You\u2019ll answer a few plain questions for each of the ' + f.docs.length + ' documents, one after another, and watch each take shape. Names and details you\u2019ve already given carry over, so you only type them once. Your answers stay in this browser.';
     if (sw) sw.hidden = true;
   }
-  function pkgName(f) { return f.plan.charAt(0).toUpperCase() + f.plan.slice(1); }
+  function pkgName(f) {
+    var short = { health: 'Health Care', trustpaper: 'Trust Paperwork', doc: 'Document' };
+    return short[f.plan] || (f.plan.charAt(0).toUpperCase() + f.plan.slice(1));
+  }
   function renderPkgTrack(f, idx) {
     var steps = f.docs.map(function (k, i) {
       var cls = i < idx ? 'pkg-done' : (i === idx ? 'pkg-current' : 'pkg-upcoming');
       var label = (i < idx ? '✓ ' : '') + esc(window.GVFlow.labelFor(k));
       return '<a class="pkg-step ' + cls + '" href="' + esc(pageUrl(k)) + '">' + label + '</a>';
     }).join('<span class="pkg-sep">→</span>');
-    return '<div class="pkg-track"><span class="pkg-label">' + esc(pkgName(f)) + ' package — document ' + (idx + 1) + ' of ' + f.docs.length + '</span>' +
+    var trackLabel = f.plan === 'doc' ? 'One document for each of you — ' + (idx + 1) + ' of ' + f.docs.length : pkgName(f) + ' package — document ' + (idx + 1) + ' of ' + f.docs.length;
+    return '<div class="pkg-track"><span class="pkg-label">' + esc(trackLabel) + '</span>' +
       '<div class="pkg-steps">' + steps + '</div></div>';
   }
   function renderPkgContinue(nextKind) {
@@ -3071,7 +3222,7 @@
     var lede = paid ? 'Every document below is ready. Open each one to download or print it, or get the whole package in one PDF below.' :
       'Every document below is answered and ready. Downloading and printing unlock together, right after you pay.';
     var allPdfBtn = paid && f.docs.length > 1 ? '<button type="button" class="btn btn-primary" data-pkg-pdf>Download all ' + f.docs.length + ' documents as one PDF</button>' : '';
-    return '<div class="pkg-complete"><h3>Your ' + esc(pkgName(f)) + ' package is complete</h3>' +
+    return '<div class="pkg-complete"><h3>' + (f.plan === 'doc' ? 'Your documents are complete' : 'Your ' + esc(pkgName(f)) + ' package is complete') + '</h3>' +
       '<p>' + lede + '</p><div class="pkg-done-list">' + rows + '</div>' + allPdfBtn + '</div>';
   }
   function insertHtmlBefore(html, ref) {

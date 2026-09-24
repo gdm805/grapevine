@@ -325,3 +325,18 @@ remembered only in their own browser, not in any account, so there's no "my purc
 and someone who switches devices or clears their browser needs their email receipt if they want
 you to unlock it for them by hand. A real account system - so payment, answers and documents all
 follow the person instead of the browser - needs a small server, which is a later stage.
+
+
+================================================================
+SINGLE DOCUMENTS AND SHORT PACKAGES ("Just need one document?")
+================================================================
+The pricing page has a section (id="single") that sells two short packages and nine single documents:
+  - Health Care Package: Health Care Directive, Dementia Care Preferences, HIPAA, Final Wishes
+  - Trust Paperwork: Schedule A, Certification of Trust, Affidavit of Trustee, Assignment of Property
+  - Any single document: Power of Attorney, Health Care Directive, Dementia, HIPAA, Final Wishes,
+    Schedule A, Certification, Affidavit, Assignment.
+Prices live in js/plans.js (prices: doc, health, trustpaper). A couple gets two copies of the personal
+documents (one per person, the second can be a "mirror image" of the first); trust documents are one per trust.
+Stripe links: js/checkout.js, PAYMENT_LINKS, entries doc / health / trustpaper (single and couple).
+Every single document shares the "doc" link; the checkout page remembers which document was chosen and
+paid.html unlocks just that one. Schedule A is its own document now (schedulea.html, will/schedulea-*.js).
