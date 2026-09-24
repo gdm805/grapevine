@@ -73,7 +73,8 @@ export default {
     if (!res.ok) return reply({ ok: false, reason: 'stripe_error', status: res.status }, 502);
     var s = await res.json();
 
-    if (s.status !== 'complete' || s.payment_status !== 'paid') return reply({ ok: false, reason: 'not_paid' }, 402);
+    /* 'no_payment_required' = a 100%-off promotion code (beta testers) brought the total to $0 */
+    if (s.status !== 'complete' || (s.payment_status !== 'paid' && s.payment_status !== 'no_payment_required')) return reply({ ok: false, reason: 'not_paid' }, 402);
     if (REQUIRE_TERMS && !(s.consent && s.consent.terms_of_service === 'accepted')) return reply({ ok: false, reason: 'no_terms' }, 403);
 
     var link = s.payment_link && typeof s.payment_link === 'object' ? s.payment_link.url : '';
