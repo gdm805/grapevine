@@ -35,9 +35,9 @@
        "doc" is used for every single document (they all cost the same); the checkout page remembers which
        document was chosen and paid.html unlocks that one. Until a link is filled in, the checkout page
        shows the "Payments aren't turned on yet" notice for that offer. */
-    doc: { single: '', couple: '' },
-    health: { single: '', couple: '' },
-    trustpaper: { single: '', couple: '' }
+    doc: { single: 'https://buy.stripe.com/test_28E9ATelo4kD36x0AJ5EY06', couple: 'https://buy.stripe.com/test_dRm14n5OS3gzcH76Z75EY07' },
+    health: { single: 'https://buy.stripe.com/test_fZu8wPelo7wP0Yp3MV5EY08', couple: 'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09' },
+    trustpaper: { single: 'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a', couple: 'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b' }
   };
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
