@@ -441,7 +441,7 @@
     docEl.innerHTML = (draft ? '<div class="wm-print" aria-hidden="true">' + esc(draftLabel) + '</div>' : '') + toHtml(docText(), 'screen');
     docEl.classList.toggle('draft', draft);
     if (draft) {
-      var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='460' height='300'><text x='230' y='150' text-anchor='middle' transform='rotate(-28 230 150)' font-family='Arial,sans-serif' font-weight='700' font-size='24' fill='%23583785' fill-opacity='0.10'>" + esc(draftLabel) + "</text></svg>";
+      var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='460' height='300'><text x='230' y='150' text-anchor='middle' transform='rotate(-28 230 150)' font-family='Arial,sans-serif' font-weight='700' font-size='24' fill='%23583785' fill-opacity='0.24'>" + esc(draftLabel) + "</text></svg>";
       docEl.style.setProperty('--wm', 'url("data:image/svg+xml,' + encodeURIComponent(svg).replace(/'/g, '%27') + '")');
     }
   }
