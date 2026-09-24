@@ -35,7 +35,7 @@ A. BEFORE BETA TESTERS START
        (any page + ?beta=1). At checkout the Tally survey (form 445AKO) appears and the payment button stays
        locked until they submit it; then Stripe opens with the 100%-off code already applied ($0).
        Switch: js/plans.js  GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' }
-       a. Publish the Tally survey (form "Grapevine Beta Tester Survey").
+       a. [x] Tally survey published 24 Sep: https://tally.so/r/445AKO (15 questions; old 10/10b removed).
        b. In Stripe (sandbox now to test, and again in LIVE for the beta): Product catalog > Coupons > New:
           100% off, "Once". Add a promotion code to it named exactly BETA2026, with a maximum number of
           redemptions = the number of testers, and an expiry date. (Stripe counts uses across everyone;

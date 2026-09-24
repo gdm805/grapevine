@@ -153,7 +153,20 @@
     return '<div class="beta-box"><p class="beta-kicker">Beta tester</p>' +
       '<h3>One step before your free documents</h3>' +
       '<p>Please answer our short feedback survey (about 5 minutes). When you submit it, the button below unlocks and your documents are free.</p>' +
-      '<iframe class="beta-survey" data-tally-src="' + src + '" src="' + src + '" loading="lazy" width="100%" height="700" frameborder="0" title="Grapevine beta tester survey"></iframe></div>';
+      '<iframe class="beta-survey" data-tally-src="' + src + '" loading="lazy" width="100%" height="700" frameborder="0" title="Grapevine beta tester survey"></iframe></div>';
+  }
+  /* Tally's own embed script sizes the survey to its full height (no scrolling inside the box). If it can't
+     load, the survey still shows, just at a fixed height. */
+  function loadSurvey() {
+    var f = root.querySelector('.beta-survey');
+    if (!f) return;
+    function fallback() { if (!f.getAttribute('src')) f.setAttribute('src', f.getAttribute('data-tally-src')); }
+    if (window.Tally && window.Tally.loadEmbeds) { window.Tally.loadEmbeds(); setTimeout(fallback, 3000); return; }
+    var sc = document.createElement('script');
+    sc.src = 'https://tally.so/widgets/embed.js';
+    sc.onload = function () { if (window.Tally && window.Tally.loadEmbeds) window.Tally.loadEmbeds(); setTimeout(fallback, 3000); };
+    sc.onerror = fallback;
+    document.head.appendChild(sc);
   }
   window.addEventListener('message', function (e) {
     if (!betaTester() || !/^https:\/\/tally\.so$/.test(e.origin)) return;
@@ -162,9 +175,6 @@
       try { localStorage.setItem('grapevine.beta.survey', '1'); } catch (x) {}
       render();
       window.scrollTo(0, 0);
-    } else if (typeof d === 'string') {
-      /* Tally also reports the survey's height, so the frame grows with it instead of scrolling inside */
-      try { var m = JSON.parse(d); if (m && m.payload && m.payload.height) { var f = root.querySelector('.beta-survey'); if (f) f.style.height = m.payload.height + 'px'; } } catch (x) {}
     }
   });
 
@@ -195,4 +205,5 @@
   }, true);
 
   render();
+  loadSurvey();
 })();
