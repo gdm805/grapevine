@@ -3086,6 +3086,9 @@
     banner.innerHTML = '<p><strong>Your document is ready.</strong> Downloading and printing unlock once you choose a plan. Previewing and changing your answers stay free.</p>' +
       '<a class="btn btn-primary" href="' + checkoutHref() + '">See plans and continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>';
     actions.parentNode.insertBefore(banner, actions);
+    /* not paid yet: the download buttons stay out of sight (they would only bounce to checkout) so the
+       banner is the one clear next step; "View your document" and the answers stay available */
+    stepEl.querySelectorAll('[data-print], [data-word], [data-pdf], [data-pkg-pdf], .export-status').forEach(function (el) { el.hidden = true; el.style.display = 'none'; });
   }
   function go(id, opts) {
     stepId = id; errors = [];
