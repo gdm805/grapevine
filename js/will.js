@@ -105,11 +105,14 @@
   function applyProfile(a, kind) {
     var map = profileMapFor(kind); if (!map) return;
     var p = readProfile();
+    /* Important Contacts is a household list: for a couple it starts as "First & Second" */
+    if (kind.key === 'contacts' && p.name2 && p.name && !a.name) { a.name = p.name + ' & ' + p.name2; return; }
     Object.keys(map).forEach(function (profileField) {
       if (p[profileField]) profileTargetSet(a, kind, map[profileField], p[profileField]);
     });
   }
   function saveProfile(a, kind) {
+    if (kind.key === 'contacts') return; /* a household list must never overwrite one person's own name */
     var map = profileMapFor(kind); if (!map) return;
     var patch = {};
     Object.keys(map).forEach(function (profileField) {
