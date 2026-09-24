@@ -30,17 +30,22 @@ A. BEFORE BETA TESTERS START
           Deploy (it now refuses payments where the terms box wasn't ticked -- REQUIRE_TERMS = true).
        d. Test purchase with card 4242 4242 4242 4242: the checkbox appears, and documents unlock.
 
-[ ] 4. Beta testers: 100%-off promotion codes, in exchange for honest online feedback (decided 24 Sep).
+[ ] 4. Beta testers: free documents (100%-off promotion code) in exchange for completing a feedback
+       survey (decided 24 Sep).
        a. In LIVE Stripe: Product catalog > Coupons > New: 100% off, "once". Then add promotion codes:
-          one per tester (e.g., BETA-SMITH), each limited to 1 redemption, with an expiry date.
+          ONE PER TESTER (e.g., BETA-SMITH), each limited to 1 redemption, with an expiry date.
        b. On each live Payment Link: switch on "Allow promotion codes".
        c. The payment check already accepts $0 purchases (cloudflare/payment-check.js, pasted in step 3c).
-       d. Feedback rules (FTC endorsement guides / consumer review rule): ask for HONEST reviews, never
-          require positive ones; reviewers disclose that they got their documents free; don't hide or
-          cherry-pick negative reviews on your own site. Google and Yelp ban incentivized reviews
-          entirely, so collect beta feedback on your own site or a survey, not on those platforms.
-       e. Tell testers the documents are a beta: read them carefully before signing, and report anything
+       d. Build the survey (a free form tool such as Google Forms or Tally; Claude can draft the questions).
+       e. Ask for HONEST feedback; free documents never depend on the answers being positive.
+       f. If you later quote survey answers on the site as testimonials: say the person was a beta tester
+          who received free documents, and don't pick only the positive ones (FTC endorsement guides /
+          consumer review rule). Don't post beta feedback as Google or Yelp reviews (both ban
+          incentivized reviews).
+       g. Tell testers the documents are a beta: read them carefully before signing, and report anything
           that looks wrong.
+       NOTE: promotion codes live in your LIVE Stripe account, so part B steps 7-9 (live key and live
+       links) must be done BEFORE beta starts.
 
 [ ] 5. Decide the couples pricing question: trust documents (Schedule A, Certification, Affidavit,
        Assignment) currently cost a couple $49, the same as one person (one trust). Other single
