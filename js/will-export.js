@@ -275,6 +275,9 @@
       }
 
       var prevCenter = false;
+      /* a combined package PDF marks where each document starts ({k:'break', footer:...}), so every
+         document gets its own footer and its own "Page X of Y" */
+      var sections = [{ start: 1, footer: o.footer }];
       blocks.forEach(function (b, bi) {
         switch (b.k) {
           case 'center': {
@@ -338,7 +341,7 @@
           case 'ul':
             b.items.forEach(function (it) { space(30); font(false, 12); doc.text('•', M + 12, base(12)); para(it, { left: 36, justify: false, after: 5 }); });
             y += 3; break;
-          case 'break': newPage(); break;
+          case 'break': newPage(); sections.push({ start: doc.getNumberOfPages(), footer: b.footer || o.footer }); break;
           default: {
             var nk = blocks[bi + 1] && blocks[bi + 1].k;
             para(b.t, { keep: (nk === 'sign' || nk === 'line') ? 80 : 0, justify: !/_{4}/.test(b.t) });
@@ -360,7 +363,10 @@
         }
         doc.setDrawColor(190, 190, 190); doc.setLineWidth(0.5); doc.line(M, PH - 54, PW - M, PH - 54); doc.setDrawColor(0, 0, 0);
         font(false, 9); doc.setTextColor(70, 70, 70);
-        var label = o.footer + ' | Page ' + i + ' of ' + n;
+        var si = 0;
+        for (var q = 0; q < sections.length; q++) if (sections[q].start <= i) si = q;
+        var sec = sections[si], secEnd = sections[si + 1] ? sections[si + 1].start - 1 : n;
+        var label = sec.footer + ' | Page ' + (i - sec.start + 1) + ' of ' + (secEnd - sec.start + 1);
         doc.text(label, PW / 2 - doc.getTextWidth(label) / 2, PH - 40);
         doc.setTextColor(0, 0, 0);
       }
