@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Nunito+Sans:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
-<link rel="stylesheet" href="css/styles.css?v=20260924y">
+<link rel="stylesheet" href="css/styles.css?v=20260925a">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -100,30 +100,30 @@
     <form class="finder" id="finder-form" onsubmit="return false">
       <fieldset class="q">
         <legend>Do you have children under 18?</legend>
-        <div class="yn"><input type="radio" name="kids" id="kids-y" value="y" checked><label for="kids-y">Yes</label><input type="radio" name="kids" id="kids-n" value="n"><label for="kids-n">No</label></div>
+        <div class="yn"><input type="radio" name="kids" id="kids-y" value="y"><label for="kids-y">Yes</label><input type="radio" name="kids" id="kids-n" value="n"><label for="kids-n">No</label></div>
       </fieldset>
       <fieldset class="q">
         <legend>Do you own a home, land, or other real estate?</legend>
-        <div class="yn"><input type="radio" name="home" id="home-y" value="y"><label for="home-y">Yes</label><input type="radio" name="home" id="home-n" value="n" checked><label for="home-n">No</label></div>
+        <div class="yn"><input type="radio" name="home" id="home-y" value="y"><label for="home-y">Yes</label><input type="radio" name="home" id="home-n" value="n"><label for="home-n">No</label></div>
       </fieldset>
       <fieldset class="q">
         <legend>Would keeping your estate out of the public probate court process matter to you?</legend>
-        <div class="yn"><input type="radio" name="probate" id="probate-y" value="y"><label for="probate-y">Yes</label><input type="radio" name="probate" id="probate-n" value="n" checked><label for="probate-n">No</label></div>
+        <div class="yn"><input type="radio" name="probate" id="probate-y" value="y"><label for="probate-y">Yes</label><input type="radio" name="probate" id="probate-n" value="n"><label for="probate-n">No</label></div>
       </fieldset>
       <fieldset class="q">
         <legend>Do you own property in more than one state?</legend>
-        <div class="yn"><input type="radio" name="multistate" id="multistate-y" value="y"><label for="multistate-y">Yes</label><input type="radio" name="multistate" id="multistate-n" value="n" checked><label for="multistate-n">No</label></div>
+        <div class="yn"><input type="radio" name="multistate" id="multistate-y" value="y"><label for="multistate-y">Yes</label><input type="radio" name="multistate" id="multistate-n" value="n"><label for="multistate-n">No</label></div>
       </fieldset>
       <fieldset class="q">
         <legend>Would you want someone to handle your money if you couldn’t?</legend>
-        <div class="yn"><input type="radio" name="money" id="money-y" value="y" checked><label for="money-y">Yes</label><input type="radio" name="money" id="money-n" value="n"><label for="money-n">No</label></div>
+        <div class="yn"><input type="radio" name="money" id="money-y" value="y"><label for="money-y">Yes</label><input type="radio" name="money" id="money-n" value="n"><label for="money-n">No</label></div>
       </fieldset>
       <fieldset class="q">
         <legend>Would you want someone to make medical decisions for you if you couldn’t?</legend>
-        <div class="yn"><input type="radio" name="care" id="care-y" value="y" checked><label for="care-y">Yes</label><input type="radio" name="care" id="care-n" value="n"><label for="care-n">No</label></div>
+        <div class="yn"><input type="radio" name="care" id="care-y" value="y"><label for="care-y">Yes</label><input type="radio" name="care" id="care-n" value="n"><label for="care-n">No</label></div>
       </fieldset>
       <div class="results" aria-live="polite">
-        <p class="pick-kicker">Based on your answers, we recommend</p>
+        <p class="pick-kicker" id="results-kicker">Based on your answers, we recommend</p>
         <p class="results-title" id="results-title"></p>
         <p class="pick-why" id="results-why"></p>
         <ul id="results"></ul>
@@ -160,54 +160,8 @@
   </div>
 </section>
 
-<!-- DOCUMENTS -->
-<section class="section tint" id="documents">
-  <div class="container">
-    <div class="section-head">
-      <p class="overline">Documents</p>
-      <h2>The essentials, each in plain words</h2>
-      <p class="sub">Most families start with a will and add the others as life gets more complicated.</p>
-    </div>
-    <ul class="doc-list">
-      <li>
-        <a href="will.html">
-          <span class="doc-ico"><svg aria-hidden="true"><use href="#i-will"/></svg></span>
-          <span class="doc-main"><strong>Last Will and Testament</strong><span>Say who receives what you own, who carries out your wishes, and who raises your children.</span></span>
-          <span class="doc-tags"><span>Children</span><span>Guardian</span><span>Executor</span></span>
-          <svg class="doc-go" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-      </li>
-      <li>
-        <a href="trust.html">
-          <span class="doc-ico"><svg aria-hidden="true"><use href="#i-trust"/></svg></span>
-          <span class="doc-main"><strong>Revocable Living Trust</strong><span>Hold your home and savings in a trust so they pass to your family privately, without going through probate.</span></span>
-          <span class="doc-tags"><span>Home</span><span>Privacy</span><span>Probate</span></span>
-          <svg class="doc-go" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-      </li>
-      <li>
-        <a href="dpoa.html">
-          <span class="doc-ico"><svg aria-hidden="true"><use href="#i-poa"/></svg></span>
-          <span class="doc-main"><strong>Durable Power of Attorney</strong><span>Choose someone you trust to pay bills and handle paperwork if you can’t.</span></span>
-          <span class="doc-tags"><span>Money</span><span>Paperwork</span></span>
-          <svg class="doc-go" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-      </li>
-      <li>
-        <a href="hcd.html">
-          <span class="doc-ico"><svg aria-hidden="true"><use href="#i-care"/></svg></span>
-          <span class="doc-main"><strong>Health Care Directive</strong><span>Put your medical wishes on record and name the person who speaks for you when you can’t.</span></span>
-          <span class="doc-tags"><span>Medical</span><span>Wishes</span></span>
-          <svg class="doc-go" aria-hidden="true"><use href="#i-arrow"/></svg>
-        </a>
-      </li>
-    </ul>
-    <p class="doc-more">These are the four most families start with. Grapevine prepares 14 in all, including a HIPAA Authorization, Final Wishes and trust paperwork. <a href="documents.html">See all 14 documents</a>, or <a href="pricing.html">compare plans</a>.</p>
-  </div>
-</section>
-
 <!-- PLAIN LANGUAGE -->
-<section class="section" id="plain">
+<section class="section tint" id="plain">
   <div class="container plain-grid">
     <div>
       <p class="overline">Plain language</p>
@@ -234,7 +188,7 @@
 </section>
 
 <!-- FAQ -->
-<section class="section tint" id="faq">
+<section class="section" id="faq">
   <div class="container">
     <p class="overline">Questions</p>
     <h2>Questions before you start?</h2>
@@ -275,7 +229,7 @@
   <div class="container foot-base"><span>© 2026 Grapevine Docs, Inc. All rights reserved.</span></div>
 </footer>
 
-<script src="js/main.js?v=20260924y"></script>
-<script src="js/nav.js?v=20260924y"></script>
+<script src="js/main.js?v=20260925a"></script>
+<script src="js/nav.js?v=20260925a"></script>
 </body>
 </html>

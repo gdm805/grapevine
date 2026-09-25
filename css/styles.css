@@ -392,3 +392,4 @@ a { color: var(--grape); }
 .finder-note.picked-note a { display: inline; }
 .badge.badge-pick { background: var(--leaf-deep); color: #fff; }
 .badge[hidden] { display: none; }
+.pick-kicker[hidden] { display: none; }

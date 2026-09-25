@@ -67,7 +67,20 @@
     var el = form.querySelector('input[name="' + name + '"]:checked');
     return el ? el.value === 'y' : false;
   }
+  /* the six questions start unanswered; the suggestion appears once every one has an answer */
+  var QUESTIONS = ['kids', 'home', 'probate', 'multistate', 'money', 'care'];
+  var kicker = document.getElementById('results-kicker');
   function render() {
+    var answered = QUESTIONS.filter(function (n) { return form.querySelector('input[name="' + n + '"]:checked'); }).length;
+    var done = answered === QUESTIONS.length;
+    if (kicker) kicker.hidden = !done;
+    if (cta) cta.style.display = done ? '' : 'none';
+    if (!done) {
+      title.textContent = answered ? 'Answer all six to see your suggestion (' + answered + ' of 6 answered).' : 'Answer all six questions to see your suggestion.';
+      if (why) why.textContent = '';
+      list.innerHTML = '';
+      return;
+    }
     var kids = answer('kids'), home = answer('home'), probate = answer('probate'), multistate = answer('multistate'), money = answer('money'), care = answer('care');
     var wantsTrust = home || probate || multistate;
     var plan = wantsTrust ? 'complete' : (money || care ? 'essentials' : 'will');
@@ -105,6 +118,8 @@
   }
   if (form && list && title) {
     form.addEventListener('change', render);
+    /* a browser's Back button can bring answers back; show the matching suggestion if so */
+    window.addEventListener('pageshow', render);
     render();
   }
 })();
