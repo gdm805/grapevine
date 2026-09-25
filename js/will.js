@@ -992,7 +992,14 @@
     v.covered_facility = a.facility === 'yes';
     v.advanced_powers = false;   /* the standard power of attorney leaves out Article Seven (special powers) */
     v.has_notary = dpSet(a, 'has_notary') === 'yes'; v.has_witness = dpSet(a, 'has_witness') === 'yes'; v.exec_choice = dpSet(a, 'exec_choice') === 'yes';
-    v.state_note = gs ? gs.note : '';
+    /* the statutory short forms (Minnesota, New York) name everyone in one sentence and carry their own signing note */
+    v.agent_names = [v.agent].concat(v.co_agents.map(function (x) { return x.co_agent; })).filter(Boolean).join(' and ');
+    v.successor_names = v.successors.map(function (x) { return x.successor; }).join(v.successors.length > 2 ? ', ' : ' and ');
+    /* statutory_form = yes (always) or single_agent (Illinois: its short form does not allow co-agents, so
+       naming co-agents falls back to the custom document and its own signing note) */
+    var sf = dpSet(a, 'statutory_form');
+    v.statutory_form = sf === 'yes' || (sf === 'single_agent' && !v.has_co_agents);
+    v.state_note = (v.has_co_agents && dpSet(a, 'sign_note_co_agents')) || dpSet(a, 'sign_note') || (gs ? gs.note : '');
     if (window.__dpoaForce) Object.assign(v, window.__dpoaForce);   /* used only for testing */
     return v;
   }

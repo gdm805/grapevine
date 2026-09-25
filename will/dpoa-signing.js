@@ -6,7 +6,11 @@ window.DPOA_SIGNING = String.raw`
 // ==========================================================================
 #! HOW TO SIGN YOUR DURABLE POWER OF ATTORNEY
 
+[[if statutory_form]]
+Your power of attorney is not valid until it is signed correctly. Yours is {{governing_state}}'s own statutory form, which the law requires to be used word for word, so read the steps below and the form's notices before you sign.
+[[else]]
 Your power of attorney is not valid until it is signed correctly, and the rules are different in every state. Yours is the {{governing_state}} form. Read its signing section (headed EXECUTION, near the end) before you sign, and follow it exactly.
+[[end]]
 
 - Do not sign ahead of time. Sign when you are in front of the people your state requires.
 

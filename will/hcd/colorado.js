@@ -5,9 +5,9 @@ window.HCD_STATES["Colorado"] = String.raw`
 //  Converted word for word from your file Grapevine_HCD_Colorado.docx (the controlled
 //  state document). Same rules as will/dpoa-template.js. To change this state, edit this file only.
 // ==========================================================================
-@set exec_choice = no
+@set exec_choice = yes
 @set exec_route_default = 
-@set exec_routes = none
+@set exec_routes = NOTARY,WITNESSES
 @set ask_ca_skilled_nursing = no
 @set ask_ct_dmhas = no
 @set ask_ct_dds = no
@@ -19,8 +19,8 @@ window.HCD_STATES["Colorado"] = String.raw`
 @set ask_oh_unconscious_anh = no
 @set ask_sc_optional_notary = no
 @set ask_vt_facility_explanation = no
-@set has_witness = no
-@set has_notary = no
+@set has_witness = yes
+@set has_notary = yes
 
 @center **MEDICAL DURABLE POWER OF ATTORNEY WITH HEALTH CARE INSTRUCTIONS**
 
@@ -605,4 +605,49 @@ The Principal declares that the Principal understands the nature and purpose of 
 @line Printed Name: {{name}}
 
 @line Date: ______________________________
+
+// C.R.S. 15-18-106: the living-will (medical treatment) declaration must be signed in the presence of two
+// witnesses OR acknowledged before a notary; 15-18-105 lists who may not be a witness or the notary.
+// The agent appointment itself (C.R.S. 15-14-506) needs neither, but one signing covers both.
+[[if exec_route=WITNESSES]]
+
+@sub WITNESSES
+
+We, the undersigned witnesses, declare that the Principal signed this Directive in our presence and appeared to be of sound mind and acting voluntarily. Neither of us is: the Principal's attending physician or any other physician; an employee of the attending physician or of a health care facility in which the Principal is a patient; a person who has a claim against any portion of the Principal's estate; or a person who knows or believes that he or she is entitled to any portion of the Principal's estate by will or as an heir.
+
+@line Witness 1 Signature: __________________________________
+
+@line Date: __________________
+
+@line Printed Name: ___________________________________________
+
+@line Address: ________________________________________________
+
+@line Witness 2 Signature: __________________________________
+
+@line Date: __________________
+
+@line Printed Name: ___________________________________________
+
+@line Address: ________________________________________________
+
+[[elif exec_route=NOTARY]]
+
+@sub NOTARIAL ACKNOWLEDGMENT
+
+The notary taking this acknowledgment may not be the Principal's physician, an employee of the Principal's physician or of a health care facility in which the Principal is a patient, a person with a claim against the Principal's estate, or a person who is or believes he or she is entitled to any part of the Principal's estate.
+
+@line STATE OF COLORADO
+
+@line COUNTY OF {{county}}
+
+@line This instrument was acknowledged before me on __________________ by {{name}}.
+
+@line Signature of Notary Public: ______________________________
+
+(Seal)
+
+@line My commission expires: ________________________________
+
+[[end]]
 `;

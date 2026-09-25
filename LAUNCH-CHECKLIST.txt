@@ -24,8 +24,16 @@ A. BEFORE BETA TESTERS START
        [x] New Jersey Final Wishes: wishes only, no appointment (decided 25 Sep).
        [x] Final Wishes now calls the person "the Declarant" (was "the Trustmaker").
        STILL OPEN:
-                   [ ] Colorado health care directive: add witnesses or notary for the living-will part
-                   [ ] Minnesota / New York powers of attorney: custom form vs. statutory short form
+       [x] Colorado health care directive: notary OR two witnesses added (C.R.S. 15-18-106), 25 Sep.
+       [x] Minnesota and New York powers of attorney now use the STATUTORY SHORT FORMS (Minn. Stat. 523.23;
+           N.Y. GOL 5-1513), word for word, 25 Sep. MN checks pre-filled: (N) all powers, durable, no self-gifts.
+           NY: letters A-N typed at (P), principal initials (P); optional sections "Intentionally Omitted".
+           Both are effective immediately (no "only if incapacitated" option in these two states).
+       [x] Illinois (one agent) and California now use their statutory forms too (25 Sep): the bank-refusal
+           protections there (755 ILCS 45/2-8; Cal. Prob. Code 4406) attach to the statutory form.
+       [x] Checked the remaining states (25 Sep): only Alaska also ties its refusal penalty to its own form, so
+           Alaska now uses its statutory form too. All other states keep the custom document (details in
+           will/NOTES-ON-YOUR-DPOA.txt).
 
 [x] 2. Web address: www.grapevinedocs.com (DNS in Microsoft 365, added 25 Sep; CNAME file in the repo).
        Do this BEFORE step 3, because every step below uses the address. Moving means: GitHub Pages

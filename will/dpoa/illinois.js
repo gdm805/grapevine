@@ -5,6 +5,10 @@ window.DPOA_STATES["Illinois"] = String.raw`
 //  Converted word for word from your file Grapevine_DPOA_Illinois.docx (the controlled
 //  state document). Same rules as will/dpoa-template.js. To change this state, edit this file only.
 //  Article Seven (special powers) is kept below but switched off: the standard DPOA leaves it out.
+//  25 Sep 2026: with ONE agent this file now prints the ILLINOIS STATUTORY SHORT FORM POWER OF ATTORNEY
+//  FOR PROPERTY (755 ILCS 45/3-3), because 755 ILCS 45/2-8 makes refusing that form unreasonable. The
+//  statutory form does not allow co-agents, so when co-agents are named the Grapevine custom document
+//  below is used instead (a valid nonstatutory power: one witness plus a notary, 3-3(b)).
 // ==========================================================================
 @set effective_choice = yes
 @set ask_determiner = no
@@ -12,7 +16,11 @@ window.DPOA_STATES["Illinois"] = String.raw`
 @set has_notary = yes
 @set has_witness = yes
 @set exec_choice = no
+@set statutory_form = single_agent
+@set sign_note = Illinois: this is the Illinois Statutory Short Form. Before signing, read the Notice on the first page and initial it. All fifteen kinds of powers are granted unless you draw a line through a title. Paragraphs 4 (agent may delegate), 5 (agent may be paid), and 9 (agent as guardian of your estate) also stay in unless you draw a line through them. If paragraph 6 says when the power takes effect, initial its bracket. Sign in front of one witness and a notary (the notary cannot also be the witness).
+@set sign_note_co_agents = Illinois: because you named co-agents, this is Grapevine's own Illinois power of attorney (Illinois's short form doesn't allow co-agents). Sign in front of one adult witness and a notary; the notary cannot also be the witness.
 
+[[if has_co_agents]]
 @dropempty
 
 @center **DURABLE POWER OF ATTORNEY**
@@ -21,11 +29,11 @@ window.DPOA_STATES["Illinois"] = String.raw`
 
 @center **ILLINOIS**
 
-**NOTICE TO THE INDIVIDUAL SIGNING THE ILLINOIS STATUTORY SHORT FORM POWER OF ATTORNEY FOR PROPERTY.**
+**NOTICE TO THE INDIVIDUAL SIGNING THIS ILLINOIS POWER OF ATTORNEY FOR PROPERTY.**
 
 PLEASE READ THIS NOTICE CAREFULLY. The form that you will be signing is a legal document. It is governed by the Illinois Power of Attorney Act. If there is anything about this form that you do not understand, you should ask a lawyer to explain it to you.
 
-The purpose of this Power of Attorney is to give your designated "agent" broad powers to handle your financial affairs, which may include the power to pledge, sell, or dispose of any of your real or personal property, even without your consent or any advance notice to you. When using the Statutory Short Form, you may name successor agents, but you may not name co-agents.
+The purpose of this Power of Attorney is to give your designated "agent" broad powers to handle your financial affairs, which may include the power to pledge, sell, or dispose of any of your real or personal property, even without your consent or any advance notice to you.
 
 This form does not impose a duty upon your agent to handle your financial affairs, so it is important that you select an agent who will agree to do this for you. It is also important to select an agent whom you trust, since you are giving that agent control over your financial assets and property. Any agent who does act for you has a duty to act in good faith for your benefit and to use due care, competence, and diligence. He or she must also act in accordance with the law and with the directions in this form. Your agent must keep a record of all receipts, disbursements, and significant actions taken as your agent.
 
@@ -33,7 +41,7 @@ Unless you specifically limit the period of time that this Power of Attorney wil
 
 This Power of Attorney does not authorize your agent to appear in court for you as an attorney-at-law or otherwise to engage in the practice of law unless he or she is a licensed attorney who is authorized to practice law in Illinois.
 
-The powers you give your agent are explained more fully in Section 3-4 of the Illinois Power of Attorney Act. This form is a part of that law. The "NOTE" paragraphs throughout this form are instructions.
+The powers you give your agent are explained more fully in Section 3-4 of the Illinois Power of Attorney Act.
 
 You are not required to sign this Power of Attorney, but it will not take effect without your signature. You should not sign this Power of Attorney if you do not understand everything in it, and what your agent will be able to do if you do sign it.
 
@@ -518,4 +526,215 @@ The meaning of the powers granted to you is contained in Section 3-4 of the Illi
 If you violate your duties as agent or act outside the authority granted to you, you may be liable for any damages, including attorney’s fees and costs, caused by your violation.
 
 If there is anything about this document or your duties that you do not understand, you should seek legal advice from an attorney.
+[[else]]
+// ---------- ILLINOIS STATUTORY SHORT FORM (755 ILCS 45/3-3), used when ONE agent is named ----------
+// "Substantially as follows" is the statute's test. Subsection (b): the NOTE paragraphs are set in bold so
+// they are distinguished from the legal paragraphs, which lets the Notice sit on its own first page
+// without the 14-point cover-sheet requirement. Do not edit the wording.
+@center **NOTICE TO THE INDIVIDUAL SIGNING THE ILLINOIS STATUTORY SHORT FORM POWER OF ATTORNEY FOR PROPERTY.**
+
+PLEASE READ THIS NOTICE CAREFULLY. The form that you will be signing is a legal document. It is governed by the Illinois Power of Attorney Act. If there is anything about this form that you do not understand, you should ask a lawyer to explain it to you.
+
+The purpose of this Power of Attorney is to give your designated "agent" broad powers to handle your financial affairs, which may include the power to pledge, sell, or dispose of any of your real or personal property, even without your consent or any advance notice to you. When using the Statutory Short Form, you may name successor agents, but you may not name co-agents.
+
+This form does not impose a duty upon your agent to handle your financial affairs, so it is important that you select an agent who will agree to do this for you. It is also important to select an agent whom you trust, since you are giving that agent control over your financial assets and property. Any agent who does act for you has a duty to act in good faith for your benefit and to use due care, competence, and diligence. He or she must also act in accordance with the law and with the directions in this form. Your agent must keep a record of all receipts, disbursements, and significant actions taken as your agent.
+
+Unless you specifically limit the period of time that this Power of Attorney will be in effect, your agent may exercise the powers given to him or her throughout your lifetime, both before and after you become incapacitated. A court, however, can take away the powers of your agent if it finds that the agent is not acting properly. You may also revoke this Power of Attorney if you wish.
+
+This Power of Attorney does not authorize your agent to appear in court for you as an attorney-at-law or otherwise to engage in the practice of law unless he or she is a licensed attorney who is authorized to practice law in Illinois.
+
+The powers you give your agent are explained more fully in Section 3-4 of the Illinois Power of Attorney Act. This form is a part of that law. The "NOTE" paragraphs throughout this form are instructions.
+
+You are not required to sign this Power of Attorney, but it will not take effect without your signature. You should not sign this Power of Attorney if you do not understand everything in it, and what your agent will be able to do if you do sign it.
+
+Please place your initials on the following line indicating that you have read this Notice:
+
+@line .....................
+@line Principal's initials
+
+@pagebreak
+
+@center **ILLINOIS STATUTORY SHORT FORM POWER OF ATTORNEY FOR PROPERTY**
+
+1. I, {{name}}, ______________________________________________ (insert name and address of principal) hereby revoke all prior powers of attorney for property executed by me and appoint:
+
+@line {{agent}}, ______________________________________________
+@line (insert name and address of agent)
+
+**(NOTE: You may not name co-agents using this form.)**
+
+as my attorney-in-fact (my "agent") to act for me and in my name (in any way I could act in person) with respect to the following powers, as defined in Section 3-4 of the "Statutory Short Form Power of Attorney for Property Law" (including all amendments), but subject to any limitations on or additions to the specified powers inserted in paragraph 2 or 3 below:
+
+**(NOTE: You must strike out any one or more of the following categories of powers you do not want your agent to have. Failure to strike the title of any category will cause the powers described in that category to be granted to the agent. To strike out a category you must draw a line through the title of that category.)**
+
+@line (a) Real estate transactions.
+@line (b) Financial institution transactions.
+@line (c) Stock and bond transactions.
+@line (d) Tangible personal property transactions.
+@line (e) Safe deposit box transactions.
+@line (f) Insurance and annuity transactions.
+@line (g) Retirement plan transactions.
+@line (h) Social Security, employment and military service benefits.
+@line (i) Tax matters.
+@line (j) Claims and litigation.
+@line (k) Commodity and option transactions.
+@line (l) Business operations.
+@line (m) Borrowing transactions.
+@line (n) Estate transactions.
+@line (o) All other property transactions.
+
+**(NOTE: Limitations on and additions to the agent's powers may be included in this power of attorney if they are specifically described below.)**
+
+2. The powers granted above shall not include the following powers or shall be modified or limited in the following particulars:
+
+**(NOTE: Here you may include any specific limitations you deem appropriate, such as a prohibition or conditions on the sale of particular stock or real estate or special rules on borrowing by the agent.)**
+
+@line ..............................................................
+@line ..............................................................
+@line ..............................................................
+
+3. In addition to the powers granted above, I grant my agent the following powers:
+
+**(NOTE: Here you may add any other delegable powers including, without limitation, power to make gifts, exercise powers of appointment, name or change beneficiaries or joint tenants or revoke or amend any trust specifically referred to below.)**
+
+@line ..............................................................
+@line ..............................................................
+@line ..............................................................
+
+**(NOTE: Your agent will have authority to employ other persons as necessary to enable the agent to properly exercise the powers granted in this form, but your agent will have to make all discretionary decisions. If you want to give your agent the right to delegate discretionary decision-making powers to others, you should keep paragraph 4, otherwise it should be struck out.)**
+
+4. My agent shall have the right by written instrument to delegate any or all of the foregoing powers involving discretionary decision-making to any person or persons whom my agent may select, but such delegation may be amended or revoked by any agent (including any successor) named by me who is acting under this power of attorney at the time of reference.
+
+**(NOTE: Your agent will be entitled to reimbursement for all reasonable expenses incurred in acting under this power of attorney. Strike out paragraph 5 if you do not want your agent to also be entitled to reasonable compensation for services as agent.)**
+
+5. My agent shall be entitled to reasonable compensation for services rendered as agent under this power of attorney.
+
+**(NOTE: This power of attorney may be amended or revoked by you at any time and in any manner. Absent amendment or revocation, the authority granted in this power of attorney will become effective at the time this power is signed and will continue until your death, unless a limitation on the beginning date or duration is made by initialing and completing one or both of paragraphs 6 and 7:)**
+
+[[if upon_incapacity]]
+6. (      ) This power of attorney shall become effective on the date that two licensed physicians who have examined me state in writing that I am unable to effectively manage my property or financial affairs, or that a court of competent jurisdiction determines that I am under a legal disability.
+[[else]]
+6. (      ) This power of attorney shall become effective on
+
+@line ..............................................................
+[[end]]
+
+**(NOTE: Insert a future date or event during your lifetime, such as a court determination of your disability or a written determination by your physician that you are incapacitated, when you want this power to first take effect.)**
+
+7. (      ) This power of attorney shall terminate on
+
+@line ..............................................................
+
+**(NOTE: Insert a future date or event, such as a court determination that you are not under a legal disability or a written determination by your physician that you are not incapacitated, if you want this power to terminate prior to your death.)**
+
+**(NOTE: If you wish to name one or more successor agents, insert the name and address of each successor agent in paragraph 8.)**
+
+8. If any agent named by me shall die, become incompetent, resign or refuse to accept the office of agent, I name the following (each to act alone and successively, in the order named) as successor(s) to such agent:
+
+[[if has_successors]]
+[[each successors]]
+@line {{successor}}, ______________________________________________
+[[end]]
+[[else]]
+@line ..............................................................
+@line ..............................................................
+[[end]]
+
+For purposes of this paragraph 8, a person shall be considered to be incompetent if and while the person is a minor or an adjudicated incompetent or a person with a disability or the person is unable to give prompt and intelligent consideration to business matters, as certified by a licensed physician.
+
+**(NOTE: If you wish to, you may name your agent as guardian of your estate if a court decides that one should be appointed. To do this, retain paragraph 9, and the court will appoint your agent if the court finds that this appointment will serve your best interests and welfare. Strike out paragraph 9 if you do not want your agent to act as guardian.)**
+
+9. If a guardian of my estate (my property) is to be appointed, I nominate the agent acting under this power of attorney as such guardian, to serve without bond or security.
+
+10. I am fully informed as to all the contents of this form and understand the full import of this grant of powers to my agent.
+
+**(NOTE: This form does not authorize your agent to appear in court for you as an attorney-at-law or otherwise to engage in the practice of law unless he or she is a licensed attorney who is authorized to practice law in Illinois.)**
+
+11. The Notice to Agent is incorporated by reference and included as part of this form.
+
+@line Dated: ................
+@line Signed ...........................................
+@line {{name}} (principal)
+
+**(NOTE: This power of attorney will not be effective unless it is signed by at least one witness and your signature is notarized, using the form below. The notary may not also sign as a witness.)**
+
+The undersigned witness certifies that {{name}}, known to me to be the same person whose name is subscribed as principal to the foregoing power of attorney, appeared before me and the notary public and acknowledged signing and delivering the instrument as the free and voluntary act of the principal, for the uses and purposes therein set forth. I believe him or her to be of sound mind and memory. The undersigned witness also certifies that the witness is not: (a) the attending physician or mental health service provider or a relative of the physician or provider; (b) an owner, operator, or relative of an owner or operator of a health care facility in which the principal is a patient or resident; (c) a parent, sibling, descendant, or any spouse of such parent, sibling, or descendant of either the principal or any agent or successor agent under the foregoing power of attorney, whether such relationship is by blood, marriage, or adoption; or (d) an agent or successor agent under the foregoing power of attorney.
+
+@line Dated: ................
+@line ..............................
+@line Witness
+
+**(NOTE: Illinois requires only one witness, but other jurisdictions may require more than one witness. If you wish to have a second witness, have him or her certify and sign here:)**
+
+(Second witness) The undersigned witness certifies that {{name}}, known to me to be the same person whose name is subscribed as principal to the foregoing power of attorney, appeared before me and the notary public and acknowledged signing and delivering the instrument as the free and voluntary act of the principal, for the uses and purposes therein set forth. I believe him or her to be of sound mind and memory. The undersigned witness also certifies that the witness is not: (a) the attending physician or mental health service provider or a relative of the physician or provider; (b) an owner, operator, or relative of an owner or operator of a health care facility in which the principal is a patient or resident; (c) a parent, sibling, descendant, or any spouse of such parent, sibling, or descendant of either the principal or any agent or successor agent under the foregoing power of attorney, whether such relationship is by blood, marriage, or adoption; or (d) an agent or successor agent under the foregoing power of attorney.
+
+@line Dated: .......................
+@line ..............................
+@line Witness
+
+@line State of ............)
+@line ) SS.
+@line County of ...........)
+
+The undersigned, a notary public in and for the above county and state, certifies that {{name}}, known to me to be the same person whose name is subscribed as principal to the foregoing power of attorney, appeared before me and the witness(es) ............. (and ..............) in person and acknowledged signing and delivering the instrument as the free and voluntary act of the principal, for the uses and purposes therein set forth (, and certified to the correctness of the signature(s) of the agent(s)).
+
+@line Dated: ................
+@line ..............................
+@line Notary Public
+@line My commission expires .................
+
+**(NOTE: You may, but are not required to, request your agent and successor agents to provide specimen signatures below. If you include specimen signatures in this power of attorney, you must complete the certification opposite the signatures of the agents.)**
+
+@line Specimen signatures of agent (and successors) / I certify that the signatures of my agent (and successors) are genuine.
+@line .......................... (agent)          ............................. (principal)
+@line .......................... (successor agent)          ............................. (principal)
+@line .......................... (successor agent)          ............................. (principal)
+
+**(NOTE: The name, address, and phone number of the person preparing this form or who assisted the principal in completing this form should be inserted below.)**
+
+@line Name: .......................
+@line Address: ....................
+@line ..............................
+@line Phone: ....................
+
+@pagebreak
+
+@center **NOTICE TO AGENT**
+
+When you accept the authority granted under this power of attorney a special legal relationship, known as agency, is created between you and the principal. Agency imposes upon you duties that continue until you resign or the power of attorney is terminated or revoked.
+
+As agent you must:
+
+(1) do what you know the principal reasonably expects you to do with the principal's property;
+
+(2) act in good faith for the best interest of the principal, using due care, competence, and diligence;
+
+(3) keep a complete and detailed record of all receipts, disbursements, and significant actions conducted for the principal;
+
+(4) attempt to preserve the principal's estate plan, to the extent actually known by the agent, if preserving the plan is consistent with the principal's best interest; and
+
+(5) cooperate with a person who has authority to make health care decisions for the principal to carry out the principal's reasonable expectations to the extent actually in the principal's best interest.
+
+As agent you must not do any of the following:
+
+(1) act so as to create a conflict of interest that is inconsistent with the other principles in this Notice to Agent;
+
+(2) do any act beyond the authority granted in this power of attorney;
+
+(3) commingle the principal's funds with your funds;
+
+(4) borrow funds or other property from the principal, unless otherwise authorized;
+
+(5) continue acting on behalf of the principal if you learn of any event that terminates this power of attorney or your authority under this power of attorney, such as the death of the principal, your legal separation from the principal, or the dissolution of your marriage to the principal.
+
+If you have special skills or expertise, you must use those special skills and expertise when acting for the principal. You must disclose your identity as an agent whenever you act for the principal by writing or printing the name of the principal and signing your own name "as Agent" in the following manner:
+
+"(Principal's Name) by (Your Name) as Agent"
+
+The meaning of the powers granted to you is contained in Section 3-4 of the Illinois Power of Attorney Act, which is incorporated by reference into the body of the power of attorney for property document.
+
+If you violate your duties as agent or act outside the authority granted to you, you may be liable for any damages, including attorney's fees and costs, caused by your violation.
+
+If there is anything about this document or your duties that you do not understand, you should seek legal advice from an attorney.
+[[end]]
 `;

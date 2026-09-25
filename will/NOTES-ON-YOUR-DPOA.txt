@@ -70,3 +70,34 @@ it on that one point, by request.
 HOW TO EDIT
 Change one state: edit will/dpoa/<state>.js. Change the shared incapacity words: edit will/dpoa-template.js.
 The notes at the top of each state file explain the codes ([[if x]], [[elif y]], [[each successors]], [[include x]]).
+
+UPDATE 25 SEPTEMBER 2026 -- MINNESOTA AND NEW YORK NOW USE THE STATE STATUTORY SHORT FORMS
+will/dpoa/minnesota.js is the Minnesota Statutory Short Form Power of Attorney (Minn. Stat. 523.23), and
+will/dpoa/new-york.js is the New York Statutory Short Form (N.Y. Gen. Oblig. Law 5-1513), copied word for word
+from the official statute text. Minnesota requires the wording to be duplicated exactly; New York requires the
+form to substantially conform and to be printed in type of at least 12 point. Do not edit their wording. In these
+two states there is no "only if I become incapacitated" choice (both are effective immediately and durable), and
+the How-to-sign box shows each state's own signing steps (the sign_note setting at the top of each file). The
+previous custom Grapevine versions of these two files are not on the site any more.
+
+UPDATE 25 SEPTEMBER 2026 -- ILLINOIS AND CALIFORNIA STATUTORY FORMS
+California (will/dpoa/california.js) is now the Uniform Statutory Form Power of Attorney, Prob. Code 4401, word
+for word from Stats. 2011 ch. 113 (the online code omits the form). Backups and the "only if incapacitated"
+choice go in its SPECIAL INSTRUCTIONS; notary only (4402); Civil Code 1189 acknowledgment.
+Illinois (will/dpoa/illinois.js) prints the Illinois Statutory Short Form Power of Attorney for Property
+(755 ILCS 45/3-3) when ONE agent is named. That form does not allow co-agents, so with co-agents the file
+falls back to the Grapevine custom Illinois document (a valid nonstatutory power: one witness + notary).
+Reason for both: the refusal protections in Cal. Prob. Code 4406 and 755 ILCS 45/2-8 are tied to the
+statutory forms. In Uniform Power of Attorney Act states the protections cover any notarized power, so
+those states keep the custom document.
+
+UPDATE 25 SEPTEMBER 2026 -- ALASKA STATUTORY FORM, AND THE 51-STATE CHECK
+Alaska (will/dpoa/alaska.js) is now the statutory General Power of Attorney (AS 13.26.645, with the alternate-
+agent option of 13.26.650(1)); its own Notice to Third Parties makes refusing a properly executed statutory
+form subject to a civil penalty plus damages. Boxes are pre-marked from the answers -- including "not affected
+by my subsequent incapacity", because AS 13.26.660(3) revokes an unmarked form at incapacity.
+The check: statutory forms are used only where a state's bank-refusal protection is tied to its own form --
+Alaska, California, Illinois (one agent), Minnesota, New York. Every other state keeps the custom document:
+Uniform Power of Attorney Act states protect any notarized power (incl. Oklahoma 2021, South Dakota); Florida,
+Pennsylvania, Texas and Indiana have refusal rules that cover any qualifying power; Arizona, Kansas, Louisiana,
+Massachusetts, Missouri, New Jersey, Oregon, Rhode Island and Tennessee have no refusal penalty tied to a form.
