@@ -23,7 +23,7 @@
   --shadow-lift: 0 18px 44px rgba(8, 35, 52, 0.16);
   --serif: "New Spirit", "Newsreader", Georgia, serif;
   --sans: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --header-h: 76px;
+  --header-h: 96px;
 }
 
 * { box-sizing: border-box; }
@@ -67,7 +67,8 @@ a { color: var(--grape); }
 .site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(254, 253, 242, 0.94); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--header-h); }
 .brand { display: block; flex: none; }
-.brand img { height: 44px; width: auto; }
+/* the header logo (images/grapevine-logo-header.svg: grapes, "Grapevine" and "Smarter Legal Documents") */
+.brand img { height: 72px; width: auto; }
 .primary { display: flex; gap: clamp(16px, 2.6vw, 34px); margin-left: auto; }
 .primary a { color: var(--ink-soft); text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 0; border-bottom: 2px solid transparent; }
 .primary a:hover { color: var(--ink); border-bottom-color: var(--leaf); }
@@ -211,8 +212,8 @@ a { color: var(--grape); }
   .site-header.open .primary a[aria-current="page"] { color: var(--grape); border-bottom-color: var(--line); }
 }
 @media (max-width: 720px) {
-  :root { --header-h: 68px; }
-  .brand img { height: 38px; }
+  :root { --header-h: 76px; }
+  .brand img { height: 52px; }
   .doc-list a { grid-template-columns: 48px minmax(0, 1fr) 20px; padding: 22px 4px; }
   .doc-ico { width: 48px; height: 48px; }
   .doc-tags { display: none; }
@@ -365,7 +366,7 @@ a { color: var(--grape); }
 .plan.picked { outline: 3px solid var(--leaf); outline-offset: 4px; }
 /* small phones: logo, "Get started" and the menu button must fit in one row */
 @media (max-width: 480px) {
-  .brand img { height: 32px; }
+  .brand img { height: 42px; }
   .bar { gap: 8px; }
   .bar .btn-sm { padding: 0 14px; font-size: 14px; min-height: 40px; }
   .menu-btn { width: 42px; height: 42px; }
