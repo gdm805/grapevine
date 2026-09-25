@@ -99,15 +99,32 @@
     }
   } catch (e) {}
 
-  /* the home page's finder sends its recommendation as ?need=will|essentials|complete: highlight that plan's
-     card and bring it into view */
+  /* the home page's "which documents do I need?" questions send their suggestion as ?need=will|essentials|complete.
+     The visitor lands at the top of this page as usual (prices, single or couple) with a note naming the
+     suggested plan; that plan's card is outlined and labelled "Suggested for you", and the page's standing
+     "Recommended" label is hidden for this visit so there's only one suggestion on screen. */
   try {
     var need = new URLSearchParams(location.search).get('need');
-    var cta = need && !form && document.querySelector('.plan [data-plan="' + need + '"]');
-    var card = cta && cta.closest('.plan');
-    if (card) {
+    var pickCta = need && !form && document.querySelector('.plan [data-plan="' + need + '"]');
+    var card = pickCta && pickCta.closest('.plan');
+    if (card && PLANS[need]) {
       card.classList.add('picked');
-      setTimeout(function () { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 80);
+      Array.prototype.forEach.call(document.querySelectorAll('.plan .badge'), function (b) { b.hidden = true; });
+      var head = card.querySelector('header') || card;
+      var badge = document.createElement('p');
+      badge.className = 'badge badge-pick';
+      badge.textContent = 'Suggested for you';
+      head.insertBefore(badge, head.firstChild);
+      var note = document.querySelector('.finder-note');
+      if (note) {
+        note.classList.add('picked-note');
+        note.innerHTML = 'Based on your answers, we suggest <strong>' + PLANS[need].name + '</strong>. ' +
+          '<a href="#" data-see-pick>See it below</a> <span aria-hidden="true">&middot;</span> <a href="index.html#finder">Change your answers</a>';
+        note.querySelector('[data-see-pick]').addEventListener('click', function (e) {
+          e.preventDefault();
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      }
     }
   } catch (e) {}
 
