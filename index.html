@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Nunito+Sans:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
-<link rel="stylesheet" href="css/styles.css?v=20260924t">
+<link rel="stylesheet" href="css/styles.css?v=20260924u">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -33,17 +33,18 @@
 
 <header class="site-header">
   <div class="container bar">
-    <a class="brand" href="#top" aria-label="Grapevine, home">
+    <a class="brand" href="index.html" aria-label="Grapevine, home">
       <img src="images/grapevine-logo-horizontal.svg" alt="Grapevine" width="195" height="44">
     </a>
-    <nav class="primary" aria-label="Main">
-      <a href="#how">How it works</a>
-      <a href="#documents">Documents</a>
+    <nav class="primary" id="site-menu" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="documents.html">Documents</a>
       <a href="pricing.html">Pricing</a>
       <a href="learn.html">Learn</a>
-      <a href="#faq">Questions</a>
+      <a href="questions.html">Questions</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="pricing.html#picker">Find my plan</a>
+    <a class="btn btn-primary btn-sm" href="#finder">Get started</a>
+    <button class="menu-btn" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -125,7 +126,7 @@
     </div>
     <ul class="doc-list">
       <li>
-        <a href="pricing.html">
+        <a href="will.html">
           <span class="doc-ico"><svg aria-hidden="true"><use href="#i-will"/></svg></span>
           <span class="doc-main"><strong>Last Will and Testament</strong><span>Say who receives what you own, who carries out your wishes, and who raises your children.</span></span>
           <span class="doc-tags"><span>Children</span><span>Guardian</span><span>Executor</span></span>
@@ -133,7 +134,7 @@
         </a>
       </li>
       <li>
-        <a href="pricing.html">
+        <a href="trust.html">
           <span class="doc-ico"><svg aria-hidden="true"><use href="#i-trust"/></svg></span>
           <span class="doc-main"><strong>Revocable Living Trust</strong><span>Hold your home and savings in a trust so they pass to your family privately, without going through probate.</span></span>
           <span class="doc-tags"><span>Home</span><span>Privacy</span><span>Probate</span></span>
@@ -141,7 +142,7 @@
         </a>
       </li>
       <li>
-        <a href="pricing.html">
+        <a href="dpoa.html">
           <span class="doc-ico"><svg aria-hidden="true"><use href="#i-poa"/></svg></span>
           <span class="doc-main"><strong>Durable Power of Attorney</strong><span>Choose someone you trust to pay bills and handle paperwork if you can’t.</span></span>
           <span class="doc-tags"><span>Money</span><span>Paperwork</span></span>
@@ -149,7 +150,7 @@
         </a>
       </li>
       <li>
-        <a href="pricing.html">
+        <a href="hcd.html">
           <span class="doc-ico"><svg aria-hidden="true"><use href="#i-care"/></svg></span>
           <span class="doc-main"><strong>Health Care Directive</strong><span>Put your medical wishes on record and name the person who speaks for you when you can’t.</span></span>
           <span class="doc-tags"><span>Medical</span><span>Wishes</span></span>
@@ -157,7 +158,7 @@
         </a>
       </li>
     </ul>
-    <p class="doc-more">Our bundles add the supporting paperwork too, such as a HIPAA Authorization, Final Wishes and Important Contacts. <a href="pricing.html">See what each plan includes</a>.</p>
+    <p class="doc-more">These are the four most families start with. Grapevine prepares 14 in all, including a HIPAA Authorization, Final Wishes and trust paperwork. <a href="documents.html">See all 14 documents</a>, or <a href="pricing.html">compare plans</a>.</p>
   </div>
 </section>
 
@@ -234,33 +235,11 @@
 
 <!-- FAQ -->
 <section class="section" id="faq">
-  <div class="container faq-grid">
-    <div>
-      <p class="overline">Questions</p>
-      <h2>Things people ask before they start</h2>
-    </div>
-    <div class="faq">
-      <details>
-        <summary>Is Grapevine a law firm?</summary>
-        <p>No. Grapevine provides document preparation tools and general information, not legal advice. We can’t represent you or act as your attorney.</p>
-      </details>
-      <details>
-        <summary>Do I still need a lawyer?</summary>
-        <p>Many people with simple situations don’t. If your family, business or property is complicated, or if you’re unsure, talk to a licensed attorney in your state.</p>
-      </details>
-      <details>
-        <summary>Does my will need witnesses?</summary>
-        <p>Usually, yes. Signing rules vary by state, and most require a will to be signed in front of witnesses. Check your state’s requirements before you sign.</p>
-      </details>
-      <details>
-        <summary>How often should I review my documents?</summary>
-        <p>Look them over every few years, and whenever something big changes: a marriage or divorce, a new child, a move, or a major change in what you own.</p>
-      </details>
-      <details>
-        <summary>Where should I keep my signed documents?</summary>
-        <p>Somewhere safe that the right people can reach. Tell your executor where they are, and give copies to anyone named in a power of attorney or healthcare directive.</p>
-      </details>
-    </div>
+  <div class="container">
+    <p class="overline">Questions</p>
+    <h2>Questions before you start?</h2>
+    <p class="sub">Is Grapevine a law firm? Do I still need a lawyer? Does my will need witnesses? We answer these and more, plainly.</p>
+    <p class="see-all"><a href="questions.html">Read the answers <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>
 </section>
 
@@ -284,20 +263,19 @@
       <img src="images/grapevine-logo.svg" alt="Grapevine, Smarter Legal Documents" width="180" height="158">
     </div>
     <nav class="foot-nav" aria-label="Footer">
-      <a href="#how">How it works</a>
-      <a href="#documents">Documents</a>
+      <a href="index.html">Home</a>
+      <a href="documents.html">Documents</a>
       <a href="pricing.html">Pricing</a>
       <a href="learn.html">Learn</a>
-      <a href="#plain">Plain language</a>
-      <a href="#finder">Which document?</a>
-      <a href="#faq">Questions</a>
+      <a href="questions.html">Questions</a>
       <a href="terms.html">Terms</a>
     </nav>
     <p class="legal"><strong>Grapevine is not a law firm.</strong> We provide document preparation tools and general information, not legal advice. Reading this site does not create an attorney-client relationship. For complex situations, talk to a licensed attorney in your state.</p>
   </div>
-  <div class="container foot-base"><span>© 2026 Grapevine. All rights reserved.</span></div>
+  <div class="container foot-base"><span>© 2026 Grapevine Docs, Inc. All rights reserved.</span></div>
 </footer>
 
-<script src="js/main.js?v=20260924t"></script>
+<script src="js/main.js?v=20260924u"></script>
+<script src="js/nav.js?v=20260924u"></script>
 </body>
 </html>

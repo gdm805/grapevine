@@ -71,6 +71,25 @@ a { color: var(--grape); }
 .primary a { color: var(--ink-soft); text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 0; border-bottom: 2px solid transparent; }
 .primary a:hover { color: var(--ink); border-bottom-color: var(--leaf); }
 
+/* the menu button (phones and tablets only; see js/nav.js) */
+.menu-btn { display: none; flex: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; padding: 0; background: var(--white); border: 1px solid var(--line); border-radius: 12px; cursor: pointer; }
+.menu-btn span { display: block; width: 20px; height: 2px; border-radius: 2px; background: var(--ink); transition: transform .2s, opacity .2s; }
+.site-header.open .menu-btn span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.site-header.open .menu-btn span:nth-child(2) { opacity: 0; }
+.site-header.open .menu-btn span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* the Documents page: every document, grouped */
+.doc-groups { border-top: 0; padding-top: 0; }
+.doc-group-h { font-size: clamp(26px, 3vw, 34px) !important; margin: 48px 0 6px !important; }
+.doc-group-h:first-child { margin-top: 0 !important; }
+.doc-group-sub { color: var(--ink-soft); margin: 0 0 14px; }
+.doc-groups .doc-list { margin-top: 14px; }
+.doc-price { font-size: 14.5px; color: var(--ink-soft); text-align: right; white-space: nowrap; }
+.doc-price b { color: var(--ink); font-weight: 600; }
+.doc-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-top: 48px; padding: 24px 28px; background: var(--sand); border-radius: var(--r-xl); }
+.doc-cta p { margin: 0; color: var(--ink-soft); }
+.doc-cta strong { color: var(--ink); }
+
 /* hero */
 .hero { padding-block: clamp(40px, 6vw, 88px) clamp(56px, 7vw, 104px); }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
@@ -193,7 +212,14 @@ a { color: var(--grape); }
   .steps p { max-width: 52ch; }
   .foot-grid { grid-template-columns: minmax(0, 1fr); }
   .primary { display: none; }
+  .bar { gap: 12px; }
   .bar .btn { margin-left: auto; }
+  .menu-btn { display: inline-flex; }
+  /* the menu, opened with the menu button, drops down under the header */
+  .site-header.open .primary { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; margin: 0; padding: 4px clamp(20px, 4vw, 40px) 14px; background: #fefdf2; border-bottom: 1px solid var(--line); box-shadow: 0 16px 32px -20px rgba(37, 36, 41, 0.35); }
+  .site-header.open .primary a { font-size: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); }
+  .site-header.open .primary a:last-child { border-bottom: 0; }
+  .site-header.open .primary a[aria-current="page"] { color: var(--grape); border-bottom-color: var(--line); }
 }
 @media (max-width: 720px) {
   :root { --header-h: 68px; }
@@ -201,6 +227,7 @@ a { color: var(--grape); }
   .doc-list a { grid-template-columns: 48px minmax(0, 1fr) 20px; padding: 22px 4px; }
   .doc-ico { width: 48px; height: 48px; }
   .doc-tags { display: none; }
+  .doc-price { grid-column: 2; grid-row: 2; text-align: left; white-space: normal; }
   .q legend { max-width: none; float: none; width: 100%; }
   .q .yn { margin-left: 0; }
   .cta-row .btn { flex: 1 1 100%; }
@@ -339,4 +366,19 @@ a { color: var(--grape); }
   .plans.two { grid-template-columns: minmax(0, 1fr); }
   .one-list li { grid-template-columns: minmax(0, 1fr) auto; }
   .one-list li .btn { grid-column: 1 / -1; justify-self: start; }
+}
+
+/* "Read the answers" link under the home page's short Questions section */
+.see-all { margin: 24px 0 0; }
+.see-all a { display: inline-flex; align-items: center; gap: 8px; font: 600 16px/1.3 var(--sans); color: var(--grape); text-decoration: none; }
+.see-all a:hover { text-decoration: underline; }
+.see-all .ico { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* the plan the home page's "which plan fits?" questions recommended */
+.plan.picked { outline: 3px solid var(--leaf); outline-offset: 4px; }
+/* small phones: logo, "Get started" and the menu button must fit in one row */
+@media (max-width: 480px) {
+  .brand img { height: 32px; }
+  .bar { gap: 8px; }
+  .bar .btn-sm { padding: 0 14px; font-size: 14px; min-height: 40px; }
+  .menu-btn { width: 42px; height: 42px; }
 }

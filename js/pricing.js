@@ -99,5 +99,17 @@
     }
   } catch (e) {}
 
+  /* the home page's finder sends its recommendation as ?need=will|essentials|complete: highlight that plan's
+     card and bring it into view */
+  try {
+    var need = new URLSearchParams(location.search).get('need');
+    var cta = need && !form && document.querySelector('.plan [data-plan="' + need + '"]');
+    var card = cta && cta.closest('.plan');
+    if (card) {
+      card.classList.add('picked');
+      setTimeout(function () { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 80);
+    }
+  } catch (e) {}
+
   paint();
 })();

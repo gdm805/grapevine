@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Nunito+Sans:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
-<link rel="stylesheet" href="css/styles.css?v=20260924t">
+<link rel="stylesheet" href="css/styles.css?v=20260924u">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -32,14 +32,15 @@
     <a class="brand" href="index.html" aria-label="Grapevine, home">
       <img src="images/grapevine-logo-horizontal.svg" alt="Grapevine" width="195" height="44">
     </a>
-    <nav class="primary" aria-label="Main">
-      <a href="index.html#how">How it works</a>
-      <a href="index.html#documents">Documents</a>
+    <nav class="primary" id="site-menu" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="documents.html">Documents</a>
       <a href="pricing.html" aria-current="page">Pricing</a>
       <a href="learn.html">Learn</a>
-      <a href="index.html#faq">Questions</a>
+      <a href="questions.html">Questions</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="#picker">Find my plan</a>
+    <a class="btn btn-primary btn-sm" href="index.html#finder">Get started</a>
+    <button class="menu-btn" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -285,41 +286,14 @@
   </div>
 </section>
 
-<!-- WHICH PLAN -->
+<!-- WHICH PLAN: the "which plan fits?" questions live on the home page (index.html#finder), so there is one
+     set of questions on the whole site. -->
 <section class="section tint" id="which">
-  <div class="container build-grid finder-grid">
-    <div>
-      <p class="overline">Which plan fits?</p>
-      <h2>Not sure which to choose?</h2>
-      <p class="sub">Answer a few quick questions and we’ll point you to the plan that fits — will, or will plus a trust. This is general information, not legal advice.</p>
-    </div>
-<form class="finder picker" id="picker" onsubmit="return false">
-      <fieldset class="q">
-        <legend>Do you have children under 18?</legend>
-        <div class="yn"><input type="radio" name="kids" id="kids-y" value="y" checked><label for="kids-y">Yes</label><input type="radio" name="kids" id="kids-n" value="n" ><label for="kids-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Do you own a home, land, or other real estate?</legend>
-        <div class="yn"><input type="radio" name="home" id="home-y" value="y" ><label for="home-y">Yes</label><input type="radio" name="home" id="home-n" value="n" checked><label for="home-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Would keeping your estate out of the public probate court process matter to you?</legend>
-        <div class="yn"><input type="radio" name="probate" id="probate-y" value="y" ><label for="probate-y">Yes</label><input type="radio" name="probate" id="probate-n" value="n" checked><label for="probate-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Do you own property in more than one state?</legend>
-        <div class="yn"><input type="radio" name="multistate" id="multistate-y" value="y" ><label for="multistate-y">Yes</label><input type="radio" name="multistate" id="multistate-n" value="n" checked><label for="multistate-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Would you want someone to handle your money if you couldn’t?</legend>
-        <div class="yn"><input type="radio" name="money" id="money-y" value="y" checked><label for="money-y">Yes</label><input type="radio" name="money" id="money-n" value="n" ><label for="money-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Would you want someone to make medical decisions for you if you couldn’t?</legend>
-        <div class="yn"><input type="radio" name="care" id="care-y" value="y" checked><label for="care-y">Yes</label><input type="radio" name="care" id="care-n" value="n" ><label for="care-n">No</label></div>
-      </fieldset>
-      <div class="pick-result" id="pick-result" aria-live="polite"></div>
-    </form>
+  <div class="container">
+    <p class="overline">Which plan fits?</p>
+    <h2>Not sure which to choose?</h2>
+    <p class="sub">Answer six quick yes-or-no questions and we’ll point you to the plan that fits. This is general information, not legal advice.</p>
+    <p class="see-all"><a href="index.html#finder">Answer the questions <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
   </div>
 </section>
 
@@ -373,8 +347,8 @@
     <h2 id="band-h">Leave your family answers, not guesses.</h2>
     <p>A few plain questions today can spare the people you love months of paperwork and hard decisions later. Find the plan that fits, then take it one question at a time.</p>
     <div class="cta-row">
-      <a class="btn btn-light btn-lg" href="#picker">Find my plan <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a class="btn btn-ghost-light btn-lg" href="index.html#documents">Browse documents</a>
+      <a class="btn btn-light btn-lg" href="index.html#finder">Find my plan <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost-light btn-lg" href="documents.html">Browse documents</a>
     </div>
   </div>
 </section>
@@ -387,22 +361,21 @@
       <img src="images/grapevine-logo.svg" alt="Grapevine, Smarter Legal Documents" width="180" height="158">
     </div>
     <nav class="foot-nav" aria-label="Footer">
-      <a href="index.html#how">How it works</a>
-      <a href="index.html#documents">Documents</a>
+      <a href="index.html">Home</a>
+      <a href="documents.html">Documents</a>
       <a href="pricing.html">Pricing</a>
       <a href="learn.html">Learn</a>
-      <a href="index.html#plain">Plain language</a>
-      <a href="index.html#finder">Which document?</a>
-      <a href="index.html#faq">Questions</a>
+      <a href="questions.html">Questions</a>
       <a href="terms.html">Terms</a>
     </nav>
     <p class="legal"><strong>Grapevine is not a law firm.</strong> We provide document preparation tools and general information, not legal advice. Reading this site does not create an attorney-client relationship. For complex situations, talk to a licensed attorney in your state.</p>
   </div>
-  <div class="container foot-base"><span>© 2026 Grapevine. All rights reserved.</span></div>
+  <div class="container foot-base"><span>© 2026 Grapevine Docs, Inc. All rights reserved.</span></div>
 </footer>
 
-<script src="js/plans.js?v=20260924t"></script>
-<script src="js/flow.js?v=20260924t"></script>
-<script src="js/pricing.js?v=20260924t"></script>
+<script src="js/plans.js?v=20260924u"></script>
+<script src="js/flow.js?v=20260924u"></script>
+<script src="js/pricing.js?v=20260924u"></script>
+<script src="js/nav.js?v=20260924u"></script>
 </body>
 </html>
