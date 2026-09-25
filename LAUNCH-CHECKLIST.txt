@@ -96,6 +96,8 @@ B. GOING LIVE (taking real money)
         a. Form Grapevine Docs, LLC in NEVADA (Nevada Secretary of State, SilverFlume: Articles of Organization,
            registered agent, state business license). The site already says "Grapevine Docs, LLC, a Nevada
            limited liability company" (Terms, footer, copyright -- changed from "Inc." on 25 Sep).
+        a2. Nevada registered agent + a Nevada business address. Then update the address in the Terms (section on
+           contact, currently "PO Box 100, Nine Mile Falls, WA 99026") -- Claude can do it in one step.
         b. EIN: free, online, same day at irs.gov once the company exists.
         c. Business bank account in the company's name.
         d. Then: Stripe > Activate payments as a Company, and change the account name from "GrapevineLegal" to
