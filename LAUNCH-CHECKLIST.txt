@@ -59,7 +59,7 @@ A. BEFORE BETA TESTERS START
        locked until they submit it; then Stripe opens with the 100%-off code already applied ($0).
        Switch: js/plans.js  GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' }
        a. [x] Tally survey published 24 Sep: https://tally.so/r/445AKO (15 questions; old 10/10b removed).
-       b. In Stripe (sandbox now to test, and again in LIVE for the beta): Product catalog > Coupons > New:
+       b. [x] SANDBOX done 25 Sep: BETA2026 (on coupon "BETA2026"), 10 uses, expires Oct 12 2026 11:59 PM; older codes inactive. In Stripe (sandbox now to test, and again in LIVE for the beta): Product catalog > Coupons > New:
           100% off, "Once". Add a promotion code to it named exactly BETA2026, with a maximum number of
           redemptions = the number of testers, and an expiry date. (Stripe counts uses across everyone;
           the website itself allows each tester ONE free checkout, which can be a whole package.)
@@ -70,6 +70,9 @@ A. BEFORE BETA TESTERS START
           document carefully before signing and report anything that looks wrong.
        g. If you quote survey answers later: say the person was a beta tester who got free documents, and
           don't pick only the positive ones (FTC). Don't post beta feedback on Google or Yelp.
+       g2. Beta banner (added 25 Sep): testers see a purple strip at the top of every page with support@ -- it
+           switches itself off on Oct 13 (BETA_UNTIL in js/nav.js). The invitation link can now also be the home
+           page: https://www.grapevinedocs.com/?beta=1
        h. AT PUBLIC LAUNCH: set GV_BETA on: false in js/plans.js, and deactivate BETA2026 in Stripe.
        NOTE (updated 25 Sep): the beta can run on the SANDBOX links (testers pay $0 with BETA2026, so no real
        money moves) -- this lets the company, EIN and bank be set up during the beta. Live Stripe (part B) is
@@ -85,7 +88,7 @@ A. BEFORE BETA TESTERS START
         Grapevine Docs, LLC. Then Claude swaps it into the header, footer, tab icon, phone icons and share
         picture.
 
-[ ] 6. Check the email addresses work: support@grapevinedocs.com appears in the Terms.
+[x] 6. (25 Sep: support@, info@, help@grapevinedocs.com all receive; shared mailbox "Grapevine Support" forwards to greg@gmgroupsb.com with a copy kept. Replying AS support@ waits for the shared mailbox to appear in Outlook.) Check the email addresses work: support@grapevinedocs.com appears in the Terms.
 
 
 ================================================================
