@@ -388,3 +388,9 @@ a { color: var(--grape); }
 
 /* trust documents: "priced per trust" note on the pricing card and at checkout */
 .per-trust { margin: 6px 0 14px; font-size: 14px; line-height: 1.45; color: var(--ink-mute); }
+
+/* beta tester banner (js/nav.js) and the footer contact line */
+.beta-bar { background: var(--grape); color: #fff; font-size: 14.5px; line-height: 1.4; padding: 8px 0; text-align: center; }
+.beta-bar a { color: #fff; font-weight: 700; text-decoration: underline; }
+.foot-contact { display: block; margin-bottom: 6px; }
+.foot-contact a { color: inherit; font-weight: 600; }
