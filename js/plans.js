@@ -58,8 +58,9 @@ window.GV_PLANS = {
     complete: { single: 499, couple: 649 },
     /* the smaller offers: any one document, and two short packages (see also `extra` below) */
     doc: { single: 49, couple: 79 },
-    /* trust-side single documents (Schedule A, Certification, Affidavit, Assignment) are one document per
-       trust, so they cost the same for a couple. Display only: they are bought through the "doc" plan. */
+    /* trust-side single documents (Schedule A, Certification, Affidavit, Assignment) are priced per TRUST: the
+       same price covers a couple's JOINT trust, but a couple with two separate trusts buys once for each trust
+       (the pricing page and checkout say so). Display only: they are bought through the "doc" plan. */
     doctrust: { single: 49, couple: 49 },
     health: { single: 129, couple: 199 },
     trustpaper: { single: 129, couple: 129 }

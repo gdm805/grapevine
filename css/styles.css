@@ -385,3 +385,6 @@ a { color: var(--grape); }
 /* the home page's "Wills, trusts and the paperwork behind them" label: same size as every green label, plus a
    soft green band, since it's the line that says what Grapevine does */
 .hero-kicker { display: inline-block; padding: 9px 16px; border-radius: var(--r-pill); background: var(--leaf-tint); }
+
+/* trust documents: "priced per trust" note on the pricing card and at checkout */
+.per-trust { margin: 6px 0 14px; font-size: 14px; line-height: 1.45; color: var(--ink-mute); }

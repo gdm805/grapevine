@@ -71,7 +71,7 @@ A. BEFORE BETA TESTERS START
        h. AT PUBLIC LAUNCH: set GV_BETA on: false in js/plans.js, and deactivate BETA2026 in Stripe.
        NOTE: the beta runs on the LIVE Stripe links, so part B steps 7-9 come before beta starts.
 
-[ ] 5. Decide the couples pricing question: trust documents (Schedule A, Certification, Affidavit,
+[x] 5. (25 Sep: trust docs are priced PER TRUST -- one price covers a joint trust; two separate trusts buy twice; wording on pricing, checkout, Questions.) Decide the couples pricing question: trust documents (Schedule A, Certification, Affidavit,
        Assignment) currently cost a couple $49, the same as one person (one trust). Other single
        documents cost a couple $79. Confirm or change.
 

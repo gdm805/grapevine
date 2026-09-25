@@ -91,6 +91,9 @@
     /* one document per trust: a couple pays the same $49 as one person for these, using the single link */
     var payHousehold = (plan === 'doc' && docKey && (GV.trustSide || []).indexOf(docKey) > -1) ? 'single' : household;
     var p = GV.plans[plan], price = GV.priceFor(plan, payHousehold);
+    /* trust documents are priced per TRUST: the same price covers a couple's joint trust, but a couple with two
+       separate trusts buys once for each trust */
+    var perTrust = plan === 'trustpaper' || (plan === 'doc' && docKey && (GV.trustSide || []).indexOf(docKey) > -1);
 
     if (docKey && window.GVPay && window.GVPay.hasPaid(docKey)) {
       root.innerHTML =
@@ -124,6 +127,7 @@
         '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : '') + '</span></p></div>' +
         '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' +
         '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+        (perTrust ? '<p class="per-trust">Priced per trust. One purchase covers one trust, including a married couple’s joint trust. If you and your spouse or partner each have your own separate trust, you’ll need one for each trust.</p>' : '') +
         (link
           ? betaSurvey() + termsFold() + (betaTester() && !surveyDone()
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Complete the survey above to continue</button>'
