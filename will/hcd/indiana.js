@@ -650,7 +650,7 @@ Witness my hand and Notarial Seal.
 
 @line My Commission Expires: ______________________________
 
-@sub Official Seal
+@line (Seal)
 
 [[end]]
 `;

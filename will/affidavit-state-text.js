@@ -22,7 +22,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line NOTARY PUBLIC
-@line Notary Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -49,7 +49,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn before me this ____________________________ by ____________________________.
 @line ________________________________________
 @line NOTARY PUBLIC
-@line Notary Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -63,7 +63,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn to before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line NOTARY PUBLIC
-@line Notary Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -91,7 +91,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line Stamp
+@line (Seal)
 @line Title of Office: ____________________
 @line My Commission Expires: ____________________
 
@@ -119,7 +119,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line Stamp
+@line (Seal)
 @line Title of Office: ____________________
 @line My Commission Expires: ____________________
 
@@ -148,7 +148,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line Signature of Notary Public — State of Florida
 @line Print, Type, or Stamp Commissioned Name of Notary Public: ____________________
-@line (Notary Seal)
+@line (Seal)
 @line Personally Known ☐  OR  Produced Identification ☐
 
 
@@ -163,7 +163,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line NOTARY PUBLIC
 @line My Commission Expires: ____________________
-@line (Notary Seal)
+@line (Seal)
 
 
 [[elif signing_state=HAWAII]]
@@ -177,7 +177,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line Notary Public, State of Hawaii
 @line My Commission Expires: ____________________
-@line (Official Seal)
+@line (Seal)
 
 
 [[elif signing_state=IDAHO]]
@@ -190,7 +190,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line Stamp
+@line (Seal)
 @line Title of Office: ____________________
 @line My Commission Expires: ____________________
 
@@ -234,7 +234,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line Stamp
+@line (Seal)
 @line Title of Office: ____________________
 @line My Commission Expires: ____________________
 
@@ -249,7 +249,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Notary Seal
+@line (Seal)
 @line My Appointment Expires: ____________________
 
 
@@ -306,7 +306,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line Notary Public
 @line My Commission Expires: ____________________
-@line (Notary Seal)
+@line (Seal)
 
 
 [[elif signing_state=MASSACHUSETTS]]
@@ -320,7 +320,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line Notary Public
 @line My Commission Expires: ____________________
-@line (Notary Seal)
+@line (Seal)
 
 
 [[elif signing_state=MICHIGAN]]
@@ -347,7 +347,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line (Stamp)
+@line (Seal)
 @line Title (and Rank): ____________________
 @line My Commission Expires: ____________________
 
@@ -363,7 +363,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line NOTARY PUBLIC
 @line My Commission Expires: ____________________
-@line (Notary Seal)
+@line (Seal)
 
 
 [[elif signing_state=MISSOURI]]
@@ -376,7 +376,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line On ____________________________, before me, the undersigned notary, personally appeared ____________________________, proved to me by satisfactory evidence to be the person who signed this document in my presence and who swore or affirmed that its contents are truthful and accurate to the best of the Affiant’s knowledge and belief.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -390,7 +390,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line (Seal, if any)
+@line (Seal)
 @line Printed Name: ____________________
 @line Title (and Rank): ____________________
 @line My Commission Expires: ____________________
@@ -420,7 +420,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line (Seal, if any)
+@line (Seal)
 @line Title and Rank (optional): ____________________
 
 
@@ -434,7 +434,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line (Seal, if any)
+@line (Seal)
 @line Title (and Rank): ____________________
 @line My Commission Expires: ____________________
 
@@ -449,7 +449,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -463,7 +463,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -491,7 +491,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -505,7 +505,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -519,7 +519,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Sworn to or affirmed and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -533,7 +533,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn to before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -547,7 +547,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public - State of Oregon
-@line Official Stamp
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -561,7 +561,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Stamp
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -575,7 +575,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -589,7 +589,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Sworn to and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public for South Carolina
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -603,7 +603,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn to before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public - South Dakota
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -617,7 +617,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Sworn to and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -631,7 +631,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Sworn to and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public, State of Texas
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -645,7 +645,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -659,7 +659,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: ____________________
 
 
@@ -673,7 +673,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line The foregoing instrument was subscribed and sworn before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
-@line Notary Seal
+@line (Seal)
 @line Notary Registration Number: ____________________    My Commission Expires: ____________________
 
 

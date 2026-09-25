@@ -495,9 +495,17 @@ This Will disposes only of my interest in community or quasi-community property 
 This Will disposes only of my interest in community property and does not dispose of any ownership interest belonging to my spouse or domestic partner.
 
 [[end]]
+[[if cp_marital]]
+This Will disposes only of my interest in marital property and does not dispose of any ownership interest belonging to my spouse.
+
+[[end]]
 [[end]]
 [[if homestead]]
 If Florida law governs rights in my homestead, nothing in this Will is intended to devise protected homestead except to the extent a devise is permitted by the Florida Constitution and applicable Florida law. Any invalid attempted devise of protected homestead shall be given the effect required by applicable law.
+
+[[end]]
+[[if is_louisiana]]
+Because Louisiana law governs this Will, the following also apply. (a) Each reference in this Will to a guardian of a minor child means a tutor, and my nomination of a guardian is my appointment of that person as tutor under Louisiana Civil Code article 257. (b) Each reference in this Will to my Personal Representative means my executor. I direct that my succession be administered as an independent administration under Louisiana Code of Civil Procedure articles 3396 through 3396.20, and that my executor serve without bond. (c) If at my death I have a forced heir, that forced heir shall receive the forced portion required by Louisiana law. The other gifts in this Will shall be reduced proportionally to the extent necessary to satisfy the forced portion.
 
 [[end]]
 ## Reliance by Third Parties

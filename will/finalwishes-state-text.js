@@ -180,7 +180,7 @@ window.FINALWISHES_SHARED['finalwishes_execution'] = String.raw`
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=ALASKA]]
 // DRAFTER NOTE: Alaska disposition-document route: the principal signs and the instrument is acknowledged before a notary public.
@@ -190,7 +190,7 @@ window.FINALWISHES_SHARED['finalwishes_execution'] = String.raw`
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=ARIZONA]]
 // DRAFTER NOTE: Arizona permits either one qualified adult witness or notarization. Grapevine uses the notary alternative in this state file.
@@ -200,7 +200,7 @@ window.FINALWISHES_SHARED['finalwishes_execution'] = String.raw`
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=ARKANSAS]]
 // DRAFTER NOTE: Arkansas requires the declarant signature and two witnesses for the Declaration of Final Disposition. A generic notary acknowledgment is not substituted for the witness requirement.
@@ -239,7 +239,7 @@ A notary public or other officer completing this certificate verifies only the i
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=CONNECTICUT]]
 // DRAFTER NOTE: Connecticut requires two attesting witnesses for the written disposition document. A notary is not substituted.
@@ -265,7 +265,7 @@ We attest that {{name}} subscribed this written disposition document in our pres
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=DISTRICT_COLUMBIA]]
 // DRAFTER NOTE: District of Columbia requires the written directions/designation to be dated and signed. No universal witness or notary validity requirement applies to this route. The acknowledgment below is optional and included as the Grapevine execution standard.
@@ -276,7 +276,7 @@ We attest that {{name}} subscribed this written disposition document in our pres
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=FLORIDA]]
 // DRAFTER NOTE: Florida recognizes written inter vivos directions within its statutory priority framework. The acknowledgment below is included as Grapevine's default execution standard and is not represented as a separate statutory validity requirement.
@@ -287,7 +287,7 @@ We attest that {{name}} subscribed this written disposition document in our pres
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=GEORGIA]]
 // DRAFTER NOTE: Georgia first reuses the Health Care Agent for disposition priority. Only if the customer chooses a different disposition designee should the separate Georgia disposition affidavit and its notarial execution render.
@@ -302,7 +302,7 @@ The separate Georgia disposition affidavit shall substantially follow the curren
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal: __________________________________________
+@line (Seal)
 
 [[end]]
 
@@ -314,7 +314,7 @@ The separate Georgia disposition affidavit shall substantially follow the curren
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=IDAHO]]
 // DRAFTER NOTE: Idaho disposition designation must be acknowledged in the manner required for a real-property conveyance instrument.
@@ -324,7 +324,7 @@ The separate Georgia disposition affidavit shall substantially follow the curren
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=ILLINOIS]]
 // DRAFTER NOTE: Illinois standalone disposition authorization uses the signed and notarized execution route.
@@ -334,7 +334,7 @@ The separate Georgia disposition affidavit shall substantially follow the curren
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 [[if has_agent]]
 
 // 755 ILCS 65: the agent's authority is not effective until the agent signs the instrument.
@@ -402,7 +402,7 @@ Dated: {{signing_date}}
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=KANSAS]]
 // DRAFTER NOTE: Kansas disposition-agent authority is not created by this Final Wishes document. Any first-priority authority granted to a health-care decision agent must appear in the applicable Kansas health-care instrument. The acknowledgment below is included as the Grapevine execution standard for these written wishes and is not represented as creating disposition-agent priority.
@@ -413,7 +413,7 @@ Dated: {{signing_date}}
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=KENTUCKY]]
 @sub FUNERAL PLANNING DECLARATION
@@ -449,7 +449,7 @@ The Declarant appeared before me and acknowledged that the Declarant voluntarily
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=LOUISIANA]]
 // DRAFTER NOTE: The standalone Louisiana declaration route is written and notarized. A controlling notarial-testament route, if selected, uses the testament execution package instead.
@@ -460,7 +460,7 @@ The Declarant appeared before me and acknowledged that the Declarant voluntarily
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=MAINE]]
 // DRAFTER NOTE: Maine requires the designation/instructions used under this route to be written and signed. No universal witness or notary requirement is imposed by the disposition provisions used for this ruleset. The acknowledgment below is optional and included as the Grapevine execution standard.
@@ -471,7 +471,7 @@ The Declarant appeared before me and acknowledged that the Declarant voluntarily
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=MARYLAND]]
 // DRAFTER NOTE: Maryland requires the individual and ONE witness to sign in each other's presence. A notary is not substituted for this witness requirement.
@@ -492,7 +492,7 @@ I witnessed {{name}} sign this document in my presence, and I sign this document
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=MICHIGAN]]
 // DRAFTER NOTE: Michigan permits EITHER two qualified witnesses OR acknowledgment before a notary for a Funeral Representative designation. Grapevine uses the notarial route here unless the witness route is separately selected.
@@ -503,7 +503,7 @@ I witnessed {{name}} sign this document in my presence, and I sign this document
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=MINNESOTA]]
 // DRAFTER NOTE: Minnesota advance arrangements must be written, dated, signed, and witnessed. A dated written instrument signed by the decedent may appoint the person with the right to control disposition. This execution page includes a witness for the directions and an optional acknowledgment for added evidentiary formality.
@@ -521,7 +521,7 @@ I witnessed {{name}} sign and date these written final-disposition directions.
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=MISSISSIPPI]]
 // DRAFTER NOTE: Mississippi uses the current Self-Directed Disposition Authorization architecture. Grapevine must load and validate the current state-prescribed/approved execution asset before an operative authorization is produced. A generic witness or notary block is not substituted.
@@ -535,7 +535,7 @@ I witnessed {{name}} sign and date these written final-disposition directions.
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=MONTANA]]
 // DRAFTER NOTE: Montana uses separate execution concepts: a controller designation is notarized, while written disposition directions require TWO adult witnesses (unless a qualifying statutory video route is used). Because this file contains both concepts, both blocks are provided and must be routed to the applicable content.
@@ -546,7 +546,7 @@ I witnessed {{name}} sign and date these written final-disposition directions.
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 @sub Disposition Directions — Two Witnesses
 
 We witnessed {{name}} sign the written disposition directions and are adults qualified to witness under Montana law.
@@ -570,7 +570,7 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=NEVADA]]
 // DRAFTER NOTE: The Nevada standalone designation route uses a statutory affidavit before a notary public. A Will or DPOA route, if selected instead, uses that instrument's execution rules.
@@ -581,7 +581,7 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=NEW_HAMPSHIRE]]
 // DRAFTER NOTE: New Hampshire requires the designation and instructions used under this route to be written and signed. No universal witness or notary validity requirement is stated in the controlling disposition provisions. The acknowledgment below is optional and included as the Grapevine execution standard.
@@ -592,7 +592,7 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=NEW_JERSEY]]
 // New Jersey: these Final Wishes state wishes only (user decision 25 Sep 2026). Appointing a funeral agent
@@ -605,7 +605,7 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=NEW_MEXICO]]
 // DRAFTER NOTE: For the New Mexico cremation-statement route, the principal signs and uses EITHER notarization OR two witnesses. Grapevine uses the notarial route here by default. Other written directions remain subject to the state ruleset.
@@ -616,7 +616,7 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=NEW_YORK]]
 // DRAFTER NOTE: New York requires the principal to sign and date the statutory appointment in the presence of TWO adult witnesses. The appointed agent must also sign the statutory acceptance/assumption section.
@@ -662,7 +662,7 @@ We are adults age 18 or older and witnessed {{name}} sign this written dispositi
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=OHIO]]
 // DRAFTER NOTE: Ohio requires the statutory declaration content and permits EITHER notarization OR two witnesses. Grapevine uses the notarial route here by default.
@@ -673,7 +673,7 @@ We are adults age 18 or older and witnessed {{name}} sign this written dispositi
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=OKLAHOMA]]
 // DRAFTER NOTE: Oklahoma representative appointments require an executed and witnessed written document. A generic signature or notary alone is not substituted for the state-specific witnessed-document overlay.
@@ -699,7 +699,7 @@ We witnessed {{name}} execute this written disposition/representative appointmen
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=PENNSYLVANIA]]
 // DRAFTER NOTE: Pennsylvania does not use this document as a generic standalone statutory agent appointment. If disposition authority is placed in a Will, the Will execution package controls. The acknowledgment below is optional for these written wishes only.
@@ -710,7 +710,7 @@ We witnessed {{name}} execute this written disposition/representative appointmen
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=RHODE_ISLAND]]
 // DRAFTER NOTE: Rhode Island uses the statutory Funeral Planning Agent Designation architecture. The execution package includes the principal, a witness, agent acceptance, and notarization.
@@ -733,7 +733,7 @@ I, {{agent_name}}, accept the appointment stated in this instrument and agree to
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=SOUTH_CAROLINA]]
 // DRAFTER NOTE: South Carolina requires the operative designation to be in a Will or another approved verified-and-attested document. A bare signature or generic notary block is not substituted.
@@ -747,7 +747,7 @@ I, {{agent_name}}, accept the appointment stated in this instrument and agree to
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=TENNESSEE]]
 // DRAFTER NOTE: Tennessee permits EITHER notarization OR two qualified adult witnesses for the written directions route. Grapevine uses the notarial route here by default.
@@ -758,7 +758,7 @@ I, {{agent_name}}, accept the appointment stated in this instrument and agree to
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=TEXAS]]
 // DRAFTER NOTE: Texas requires the principal's signature to be acknowledged. The appointment is valid without the agent's signature, but each agent or successor agent must sign an acceptance before acting.
@@ -769,7 +769,7 @@ I, {{agent_name}}, accept the appointment stated in this instrument and agree to
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 @sub Primary Agent Acceptance
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
@@ -794,7 +794,7 @@ I, {{alt_agent_name}}, accept the appointment stated in this instrument and agre
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=VERMONT]]
 // DRAFTER NOTE: Vermont routes disposition instructions through the advance-directive architecture. The advance directive must be dated and executed with TWO adult witnesses using the required affirmation. This execution block is the HCD-integrated route, not a competing standalone appointment.
@@ -820,7 +820,7 @@ We affirm that the Principal appeared to understand the nature of this advance-d
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 @sub Designee Written Acceptance
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
@@ -846,7 +846,7 @@ I witnessed {{name}} sign this written final-disposition instrument.
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[elif signing_state=WISCONSIN]]
 // DRAFTER NOTE: Wisconsin permits EITHER two qualified witnesses OR notarization for the principal. Grapevine uses the notarial route here by default. Each representative and successor representative must separately sign acceptance.
@@ -857,7 +857,7 @@ I witnessed {{name}} sign this written final-disposition instrument.
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 @sub Representative Acceptance
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
@@ -882,7 +882,7 @@ I, {{alt_agent_name}}, accept the appointment stated in this instrument and agre
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal (if required): _____________________________
+@line (Seal)
 
 [[end]]
 `;

@@ -7,7 +7,9 @@ Tick items off as they're done ( [ ] -> [x] ). Ask Claude for step-by-step help 
 A. BEFORE BETA TESTERS START
 ================================================================
 
-[ ] 1. Review the legal text that is still unreviewed. Paid documents now come out WITHOUT the SAMPLE
+[x] 1. (25 Sep: DONE -- signing audit + fixes; Louisiana will clause (tutor, executor with independent administration,
+        forced heirs) + forced-heir note; Wisconsin "marital property"; seals standardized to (Seal); trust notary
+        lines un-jammed; Learn articles updated.) Review the legal text that is still unreviewed. Paid documents now come out WITHOUT the SAMPLE
        watermark, so this is what customers will sign:
          - Louisiana / Alaska / DC wording (parish, borough, and DC's "county")
          - Wisconsin "marital property" wording
@@ -88,6 +90,13 @@ A. BEFORE BETA TESTERS START
 B. GOING LIVE (taking real money)
 ================================================================
 
+
+[ ] 6b. Anti-spoofing records for the 4 forwarding-only domains (grapevinewills.com, grapevinewill.com,
+        grapevinetrusts.com, grapevinetrust.com), at Cloudflare > each domain > DNS > Records. They never send
+        email, so say so (stops scammers sending fake mail "from" them). Add to EACH domain:
+          TXT  name @       content  v=spf1 -all
+          TXT  name _dmarc  content  v=DMARC1; p=reject;
+        About 5 minutes per domain; Claude can walk you through it. (Email itself runs only on @grapevinedocs.com.)
 [ ] 7. Stripe LIVE key for the payment check: switch Stripe out of the sandbox, then
        Developers > API keys > Create secret key > "Building your own integration" > Custom permissions:
        Checkout Sessions = Read, Payment Links = Read, everything else None.

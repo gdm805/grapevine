@@ -650,7 +650,7 @@ We declare that the principal is personally known to us, that the principal sign
 
 @line Witness my hand and notarial seal at ______________________________ in such county the day and year last above written.
 
-@sub Seal
+@line (Seal)
 
 @line Signature of Notary Public: ______________________________
 

@@ -634,5 +634,5 @@ The Principal signed this Declaration in our presence. Each witness is at least 
 
 @line My Commission Expires: _________________________________
 
-@sub Official Seal
+@line (Seal)
 `;

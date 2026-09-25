@@ -650,7 +650,7 @@ I declare under penalty of perjury that I am not related to the principal by blo
 
 @line On this ____ day of __________________, in the year ________, before me, ______________________________ (here insert name of notary public) personally appeared {{name}}, personally known to me (or proved to me on the basis of satisfactory evidence) to be the person whose name is subscribed to this instrument, and acknowledged that the Principal executed it.
 
-@sub NOTARY SEAL
+@line (Seal)
 
 @line Signature of Notary Public: ______________________________
 

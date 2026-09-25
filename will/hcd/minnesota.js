@@ -644,7 +644,7 @@ The Agent or alternate Agent may not act as a witness. At least one witness must
 
 @line My Commission Expires: _________________________________
 
-@sub Official Stamp
+@line (Seal)
 
 [[end]]
 `;

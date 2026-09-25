@@ -642,7 +642,7 @@ This document must be witnessed by two individuals of lawful age who are not the
 
 @line Signature of Notary Public: ______________________________
 
-(Seal, if any)
+(Seal)
 
 @line My appointment expires: ________________________________
 

@@ -364,7 +364,8 @@
     v.self_proving = st ? st.selfProving : false;
     v.state_note = st ? st.note : '';
     var sx = stateText[a.state] || null;
-    v.cp_quasi = !!sx && sx.community === 'quasi'; v.cp_plain = !!sx && sx.community === 'plain'; v.homestead = !!sx && sx.community === 'homestead';
+    v.cp_quasi = !!sx && sx.community === 'quasi'; v.cp_plain = !!sx && sx.community === 'plain'; v.homestead = !!sx && sx.community === 'homestead'; v.cp_marital = !!sx && sx.community === 'marital';
+    v.is_louisiana = a.state === 'Louisiana';   /* Louisiana civil-law provisions: tutor, executor, independent administration, forced heirship */
     v.no_contest_yes = sx ? sx.no_contest !== 'no' : true;
     v.__tail = sx ? (sx.tailWill || sx.tail) : [];
     return v;
@@ -556,7 +557,12 @@
         }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="children">+ Add another child</button>';
       }
       return stepHead('Do you have children?', 'Include adopted children. Stepchildren are not included unless you name them later.') +
-        pills('hasChildren', [['yes', 'Yes'], ['no', 'No']], true) + rows;
+        pills('hasChildren', [['yes', 'Yes'], ['no', 'No']], true) + rows +
+        /* Louisiana forced heirship (La. Civ. Code art. 1493): the will gives forced heirs their share, but the family
+           should know, and a Louisiana lawyer can plan around it */
+        (answers.state === 'Louisiana' && answers.hasChildren === 'yes'
+          ? '<p class="hint">Louisiana: a child who is 23 or younger, or who is permanently unable to care for themselves or manage their property, is a \u201cforced heir\u201d entitled by law to a share of your estate. Your will gives any forced heir that share and reduces the other gifts to make room. If you have such a child, consider having a Louisiana attorney review your will.</p>'
+          : '');
     },
     guardian: function () {
       return stepHead('Who should look after your children under 18?', 'This person would care for them if you couldn\u2019t. A court still has the final say.') +
@@ -749,7 +755,8 @@
     v.self_proving = st ? st.selfProving : false;
     v.state_note = st ? st.note : '';
     var sx = stateText[a.state] || null;
-    v.cp_quasi = !!sx && sx.community === 'quasi'; v.cp_plain = !!sx && sx.community === 'plain'; v.homestead = !!sx && sx.community === 'homestead';
+    v.cp_quasi = !!sx && sx.community === 'quasi'; v.cp_plain = !!sx && sx.community === 'plain'; v.homestead = !!sx && sx.community === 'homestead'; v.cp_marital = !!sx && sx.community === 'marital';
+    v.is_louisiana = a.state === 'Louisiana';   /* Louisiana civil-law provisions: tutor, executor, independent administration, forced heirship */
     v.no_contest_yes = sx ? sx.no_contest !== 'no' : true;
     v.__tail = sx ? sx.tail : [];
     return v;

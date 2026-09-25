@@ -27,7 +27,7 @@ Ala. Code § 19-3B-1013.
 @line ________________________________________
 @line Notary Public / Authorized Officer
 @line My Commission Expires: __________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=ALASKA]]
@@ -47,7 +47,7 @@ Alaska Stat. § 13.36.079.
 @line Title or Rank
 @line Serial Number, if any: __________________
 @line My Commission Expires: __________________
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 
 [[elif signing_state=ARIZONA]]
@@ -65,7 +65,7 @@ Ariz. Rev. Stat. § 14-11013.
 @line Signature of Notarial Officer
 @line Notary Public
 @line My Commission Expires: __________________
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 
 [[elif signing_state=ARKANSAS]]
@@ -83,7 +83,7 @@ Ark. Code § 28-73-1013.
 @line ________________________________________
 @line Signature of Notary Public
 @line My Commission Expires: __________________
-@line [SEAL OF OFFICE]
+@line (Seal)
 
 
 [[elif signing_state=CALIFORNIA]]
@@ -101,7 +101,7 @@ Cal. Probate Code § 18100.5.
 @line WITNESS my hand and official seal.
 @line ________________________________________
 @line Signature of Notary Public
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=COLORADO]]
@@ -121,7 +121,7 @@ Colo. Rev. Stat. § 15-5-1013.
 @line Title of Office
 @line Notary ID: ______________________________
 @line My Commission Expires: __________________
-@line [OFFICIAL STAMP]
+@line (Seal)
 
 
 [[elif signing_state=CONNECTICUT]]
@@ -158,7 +158,7 @@ Conn. Gen. Stat. § 45a-499zzz.
 @line ________________________________________
 @line Title of Office
 @line My Commission Expires: __________________
-@line [OFFICIAL STAMP]
+@line (Seal)
 
 
 [[elif signing_state=DISTRICT_COLUMBIA]]
@@ -176,7 +176,7 @@ D.C. Code § 19-1310.13.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=FLORIDA]]
@@ -196,7 +196,7 @@ Fla. Stat. § 736.1017.
 @line Print, Type, or Stamp Commissioned Name of Notary Public
 @line Personally Known ☐  OR  Produced Identification ☐
 @line Type of Identification Produced: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=GEORGIA]]
@@ -216,7 +216,7 @@ O.C.G.A. § 53-12-280.
 @line Signature of Notary Public
 @line Notary Public, State of Georgia
 @line My Commission Expires: __________________
-@line [STAMP/SEAL]
+@line (Seal)
 
 
 [[elif signing_state=HAWAII]]
@@ -233,7 +233,7 @@ Haw. Rev. Stat. § 554D-1013.
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line Notary Seal: __________________________________________
+@line (Seal)
 
 
 [[elif signing_state=IDAHO]]
@@ -250,7 +250,7 @@ Idaho Code §§ 68-114 to 68-116.
 @line Notary Public: ________________________________________
 @line Residing at: __________________________________________
 @line Commission Expires: ___________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=ILLINOIS]]
@@ -266,7 +266,7 @@ Idaho Code §§ 68-114 to 68-116.
 @line This instrument was acknowledged before me on __________________, 20____, by ____________________________, as Trustee of {{trust_name}}.
 @line Notary Public: ________________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=INDIANA]]
@@ -285,7 +285,7 @@ Ind. Code § 30-4-4-5.
 @line Printed Name: _________________________________________
 @line County of Residence: __________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=IOWA]]
@@ -302,7 +302,7 @@ Iowa Code § 633A.4604.
 @line Notarial Officer: _____________________________________
 @line Title of Office: ______________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=KANSAS]]
@@ -318,7 +318,7 @@ K.S.A. § 58a-1013.
 @line This instrument was acknowledged before me on __________________, 20____, by ____________________________, as Trustee of {{trust_name}}.
 @line Notary Public: ________________________________________
 @line My Appointment Expires: _______________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=KENTUCKY]]
@@ -335,7 +335,7 @@ KRS § 386B.10-120.
 @line Notary Public: ________________________________________
 @line Notary ID / Commission No.: ___________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=LOUISIANA]]
@@ -351,7 +351,7 @@ La. R.S. § 9:2092.
 @line Thus done and signed on __________________, 20____.
 @line Notary Public: ________________________________________
 @line Printed Name / Notary ID: _____________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MAINE]]
@@ -368,7 +368,7 @@ La. R.S. § 9:2092.
 @line Notary Public / Authorized Officer: ___________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MARYLAND]]
@@ -384,7 +384,7 @@ Md. Code, Est. & Trusts § 14.5-910.
 @line This record was acknowledged before me on __________________, 20____, by ____________________________, as Trustee of {{trust_name}}.
 @line Notary Public: ________________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MASSACHUSETTS]]
@@ -400,7 +400,7 @@ Mass. Gen. Laws ch. 203E, § 1013.
 @line On this ______ day of __________________, 20____, before me, the undersigned Notary Public, personally appeared ____________________________, proved to me through satisfactory evidence of identification to be the person whose name is signed on this instrument, and acknowledged to me that the instrument was signed voluntarily for its stated purpose as Trustee of {{trust_name}}.
 @line Notary Public: ________________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MICHIGAN]]
@@ -414,7 +414,7 @@ MCL § 700.7913.
 @line State of Michigan, County of __________________________
 @line My Commission Expires: ________________________________
 @line Acting in the County of: ______________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MINNESOTA]]
@@ -430,7 +430,7 @@ Minn. Stat. § 501C.1013.
 @line Signed and sworn to (or affirmed) before me on __________________, 20____, by ____________________________, ____________________________.
 @line Notary Public / Authorized Officer: ___________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MISSISSIPPI]]
@@ -446,7 +446,7 @@ Miss. Code § 91-8-1013.
 @line Personally appeared before me, the undersigned notarial officer, ____________________________, ____________________________, who executed the foregoing Certification of Trust and whose signature and execution are hereby attested by me on this ______ day of __________________, 20____.
 @line Notary Public: ________________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MISSOURI]]
@@ -462,7 +462,7 @@ RSMo § 456.10-1013.
 @line On this ______ day of __________________, 20____, before me personally appeared ____________________________, known to me or proved to me to be the person whose name is subscribed to this instrument and acknowledged that the same was executed in the stated capacity as Trustee of {{trust_name}}.
 @line Notary Public: ________________________________________
 @line My Commission Expires: ________________________________
-@line [SEAL]
+@line (Seal)
 
 
 [[elif signing_state=MONTANA]]
@@ -480,7 +480,7 @@ Mont. Code § 72-38-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NEBRASKA]]
@@ -498,7 +498,7 @@ Neb. Rev. Stat. §§ 30-38,102 through 30-38,104.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NEVADA]]
@@ -516,7 +516,7 @@ Nev. Rev. Stat. §§ 164.400–164.410.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NEW_HAMPSHIRE]]
@@ -534,7 +534,7 @@ N.H. Rev. Stat. § 564-B:10-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NEW_JERSEY]]
@@ -552,7 +552,7 @@ N.J. Stat. § 3B:31-81.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NEW_MEXICO]]
@@ -570,7 +570,7 @@ N.M. Stat. § 46A-10-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NEW_YORK]]
@@ -588,7 +588,7 @@ EPTL Article 7 (no dedicated certification-of-trust statute).
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NORTH_CAROLINA]]
@@ -606,7 +606,7 @@ N.C. Gen. Stat. § 36C-10-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=NORTH_DAKOTA]]
@@ -624,7 +624,7 @@ N.D. Cent. Code § 59-18-13.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=OHIO]]
@@ -642,7 +642,7 @@ Ohio Rev. Code § 5810.13.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=OKLAHOMA]]
@@ -660,7 +660,7 @@ Okla. Stat. tit. 60, § 175.6a.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=OREGON]]
@@ -678,7 +678,7 @@ Or. Rev. Stat. § 130.860.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=PENNSYLVANIA]]
@@ -696,7 +696,7 @@ Or. Rev. Stat. § 130.860.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=RHODE_ISLAND]]
@@ -714,7 +714,7 @@ R.I. Gen. Laws tit. 18 (no dedicated certification-of-trust statute).
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=SOUTH_CAROLINA]]
@@ -732,7 +732,7 @@ S.C. Code § 62-7-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=SOUTH_DAKOTA]]
@@ -750,7 +750,7 @@ S.D. Codified Laws §§ 55-4-51 through 55-4-51.3.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=TENNESSEE]]
@@ -768,7 +768,7 @@ Tenn. Code Ann. § 35-15-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=TEXAS]]
@@ -786,7 +786,7 @@ Prop. Code § 114.086.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=UTAH]]
@@ -804,7 +804,7 @@ Utah Code § 75-7-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=VERMONT]]
@@ -822,7 +822,7 @@ Utah Code § 75-7-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=VIRGINIA]]
@@ -840,7 +840,7 @@ Va. Code § 64.2-804.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=WASHINGTON]]
@@ -858,7 +858,7 @@ RCW 11.98.075.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=WEST_VIRGINIA]]
@@ -876,7 +876,7 @@ W. Va. Code § 44D-10-1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=WISCONSIN]]
@@ -894,7 +894,7 @@ Wis. Stat. § 701.1013.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 
 [[elif signing_state=WYOMING]]
@@ -912,7 +912,7 @@ Wyo. Stat. § 4-10-1014.
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
 @line My Commission Expires: ________________________
-@line [Notary Seal]
+@line (Seal)
 
 [[end]]
 `;

@@ -640,7 +640,7 @@ We witnessed the Principal’s signing in the presence of each other and the Pri
 
 @line Signature of notarial officer: ______________________________________________
 
-@sub Stamp
+@line (Seal)
 
 @line Title of office: _________________________________________
 

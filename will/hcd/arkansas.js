@@ -646,7 +646,7 @@ In witness whereof I hereunto set my hand and official seal.
 
 @line Signature of Notary Public: ______________________________________________
 
-@line [Seal of Office]
+@line (Seal)
 
 @line My Commission expires: ______________________________
 

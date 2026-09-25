@@ -646,7 +646,7 @@ I declare under penalty of perjury pursuant to Section 97-9-61, Mississippi Code
 
 @line On this ____ day of __________________, in the year ________, before me, ______________________________ (insert name of notary public) appeared {{name}}, personally known to me (or proved to me on the basis of satisfactory evidence) to be the person whose name is subscribed to this instrument, and acknowledged that the Principal executed it. I declare under the penalty of perjury that the person whose name is subscribed to this instrument appears to be of sound mind and under no duress, fraud or undue influence.
 
-@sub Notary Seal
+@line (Seal)
 
 @line Signature of Notary Public: ______________________________
 

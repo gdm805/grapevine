@@ -86,11 +86,11 @@ Property later transferred to or acquired by the Trust shall also become part of
 
 @sub Preservation of Property Character
 
-Property transferred to this Trust shall retain the same character it had immediately before the transfer, including as the separate property of either Trustmaker, jointly owned property of both Trustmakers, or community or quasi-community property, as applicable. Proceeds, substitutions, exchanges, and reinvestments of such property shall retain that character to the extent provided by applicable law. The transfer of property to this Trust shall not, by itself, change its character.
+Property transferred to this Trust shall retain the same character it had immediately before the transfer, including as the separate property of either Trustmaker, jointly owned property of both Trustmakers, or community, quasi-community, or marital property, as applicable. Proceeds, substitutions, exchanges, and reinvestments of such property shall retain that character to the extent provided by applicable law. The transfer of property to this Trust shall not, by itself, change its character.
 
 @sub Authority Over Property
 
-The Trustee's authority over separate property, jointly owned property, and community or quasi-community property shall be subject to the respective ownership rights of the Trustmakers and applicable law. Creation of this Trust and transfer of property to it shall not, by themselves, enlarge the rights of either Trustmaker in property owned by the other Trustmaker or alter either Trustmaker's ownership interest in jointly owned or community or quasi-community property.
+The Trustee's authority over separate property, jointly owned property, and community, quasi-community, or marital property shall be subject to the respective ownership rights of the Trustmakers and applicable law. Creation of this Trust and transfer of property to it shall not, by themselves, enlarge the rights of either Trustmaker in property owned by the other Trustmaker or alter either Trustmaker's ownership interest in jointly owned or community, quasi-community, or marital property.
 
 @sub Records and Segregation
 
@@ -228,13 +228,13 @@ A vacancy in the office of Trustee does not terminate this Trust. The Trust shal
 
 While the Trust remains revocable, each Trustmaker reserves the rights and powers provided in this Article to the extent exercisable by that Trustmaker.
 
-Each Trustmaker may independently exercise reserved powers with respect to that Trustmaker's separate property. Reserved powers affecting jointly owned property or community or quasi-community property shall be exercised by both Trustmakers, except to the extent otherwise permitted by applicable law.
+Each Trustmaker may independently exercise reserved powers with respect to that Trustmaker's separate property. Reserved powers affecting jointly owned property or community, quasi-community, or marital property shall be exercised by both Trustmakers, except to the extent otherwise permitted by applicable law.
 
 ## Amendment, Revocation, or Restatement While Both Trustmakers Have Capacity
 
 While both Trustmakers are living and have legal capacity, either Trustmaker may amend or revoke this Trust Agreement with respect to that Trustmaker's separate property and provisions relating solely to that property.
 
-Any amendment or revocation affecting jointly owned property, community or quasi-community property, or provisions applicable to both Trustmakers or the Trust generally must be made by both Trustmakers. Any restatement of this Trust Agreement must be made by both Trustmakers.
+Any amendment or revocation affecting jointly owned property, community, quasi-community, or marital property, or provisions applicable to both Trustmakers or the Trust generally must be made by both Trustmakers. Any restatement of this Trust Agreement must be made by both Trustmakers.
 
 An amendment, revocation, or restatement must be made by a written instrument signed by each Trustmaker whose consent is required, clearly stating the intended action, and delivered to the Trustee.
 
@@ -246,7 +246,7 @@ A valid restatement replaces the governing provisions of this Trust Agreement wh
 
 While a Trustmaker is living and has legal capacity, that Trustmaker may withdraw that Trustmaker's separate property from the Trust at any time.
 
-Jointly owned property and community or quasi-community property may be withdrawn with the consent of both Trustmakers, except to the extent otherwise permitted by applicable law.
+Jointly owned property and community, quasi-community, or marital property may be withdrawn with the consent of both Trustmakers, except to the extent otherwise permitted by applicable law.
 
 A withdrawal of property does not, by itself, amend or revoke any other provision of this Trust Agreement.
 
@@ -258,7 +258,7 @@ Either Trustmaker may transfer additional property to the Trust. Property added 
 
 If one Trustmaker becomes incapacitated while the other Trustmaker has legal capacity, the Trustmaker having legal capacity may continue to exercise all reserved powers with respect to that Trustmaker's separate property.
 
-The Trustmaker having legal capacity may exercise powers with respect to jointly owned property and community or quasi-community property only to the extent permitted by applicable law. The Trustmaker having legal capacity may not exercise a reserved power belonging to the incapacitated Trustmaker with respect to the incapacitated Trustmaker's separate property. Except as otherwise authorized by this Trust Agreement or applicable law, the incapacity of one Trustmaker does not transfer that Trustmaker's reserved powers to the other Trustmaker.
+The Trustmaker having legal capacity may exercise powers with respect to jointly owned property and community, quasi-community, or marital property only to the extent permitted by applicable law. The Trustmaker having legal capacity may not exercise a reserved power belonging to the incapacitated Trustmaker with respect to the incapacitated Trustmaker's separate property. Except as otherwise authorized by this Trust Agreement or applicable law, the incapacity of one Trustmaker does not transfer that Trustmaker's reserved powers to the other Trustmaker.
 
 ## Exercise of Reserved Powers During Incapacity
 
@@ -468,13 +468,13 @@ The Trustee may execute contracts, receipts, releases, deeds, assignments, bills
 
 While both Trustmakers are living and have legal capacity, each Trustmaker may use, manage, control, invest, withdraw, spend, distribute, gift, or otherwise deal with that Trustmaker's separate property held in the Trust, including income and principal, as though the Trust had not been created.
 
-The Trustmakers may exercise those rights with respect to jointly owned property and community or quasi-community property according to their respective ownership rights and applicable law.
+The Trustmakers may exercise those rights with respect to jointly owned property and community, quasi-community, or marital property according to their respective ownership rights and applicable law.
 
 ## Reliance on Trustmakers' Instructions
 
 While both Trustmakers have legal capacity, the Trustee may rely upon instructions given by a Trustmaker concerning that Trustmaker's separate property without further inquiry.
 
-The Trustee may rely upon instructions concerning jointly owned property or community or quasi-community property to the extent those instructions are authorized by both Trustmakers or otherwise permitted by applicable law.
+The Trustee may rely upon instructions concerning jointly owned property or community, quasi-community, or marital property to the extent those instructions are authorized by both Trustmakers or otherwise permitted by applicable law.
 
 The Trustee shall not be liable for acting in good faith in accordance with instructions authorized under this Section.
 
@@ -482,7 +482,7 @@ The Trustee shall not be liable for acting in good faith in accordance with inst
 
 If one Trustmaker becomes incapacitated as determined under [[ref def_incapacity]], the other Trustmaker shall continue to serve as Trustee while willing and able to serve.
 
-The Trustee shall administer the incapacitated Trustmaker's separate property and the incapacitated Trustmaker's interest in jointly owned property and community or quasi-community property for the benefit of the incapacitated Trustmaker, subject to the rights and interests of the other Trustmaker and applicable law.
+The Trustee shall administer the incapacitated Trustmaker's separate property and the incapacitated Trustmaker's interest in jointly owned property and community, quasi-community, or marital property for the benefit of the incapacitated Trustmaker, subject to the rights and interests of the other Trustmaker and applicable law.
 
 The Trustee may obtain medical evaluations reasonably necessary to determine the incapacitated Trustmaker's capacity and may pay the cost from the Trust Estate.
 
@@ -530,7 +530,7 @@ The acting Trustee shall execute any documents reasonably necessary to complete 
 
 ## Standard of Lifetime Administration
 
-During the joint lifetimes of the Trustmakers, the Trustee shall administer each Trustmaker's separate property for the benefit of that Trustmaker and shall administer jointly owned property and community or quasi-community property for the benefit of both Trustmakers, in each case according to their respective ownership rights and applicable law.
+During the joint lifetimes of the Trustmakers, the Trustee shall administer each Trustmaker's separate property for the benefit of that Trustmaker and shall administer jointly owned property and community, quasi-community, or marital property for the benefit of both Trustmakers, in each case according to their respective ownership rights and applicable law.
 
 In administering property for a Trustmaker's benefit, the Trustee may use income and principal for that Trustmaker without regard to the interests of remainder beneficiaries.
 
@@ -568,9 +568,9 @@ If the character, ownership, or proper allocation of property cannot be reasonab
 
 ## Allocation of Trustmakers' Property
 
-The Trustee shall allocate the surviving Trustmaker's separate property and the surviving Trustmaker's interest in jointly owned property, community or quasi-community property, and other property to the Survivor's Trust.
+The Trustee shall allocate the surviving Trustmaker's separate property and the surviving Trustmaker's interest in jointly owned property, community, quasi-community, or marital property, and other property to the Survivor's Trust.
 
-The deceased Trustmaker's separate property and the deceased Trustmaker's interest in jointly owned property, community or quasi-community property, and other property shall be allocated or distributed according to the first-death funding provisions of this Trust Agreement.
+The deceased Trustmaker's separate property and the deceased Trustmaker's interest in jointly owned property, community, quasi-community, or marital property, and other property shall be allocated or distributed according to the first-death funding provisions of this Trust Agreement.
 
 Property passing by right of survivorship, beneficiary designation, contract, or operation of law shall be treated according to the rights created by the governing instrument and applicable law.
 

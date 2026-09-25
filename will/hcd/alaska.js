@@ -672,7 +672,7 @@ I swear under penalty of perjury under AS 11.56.200 that the principal is person
 
 @line On this ______ day of ______________________________, in the year __________, before me, ______________________________________________ (insert name of notary public) appeared {{name}}, personally known to me (or proved to me on the basis of satisfactory evidence) to be the person whose name is subscribed to this instrument, and acknowledged that the person executed it.
 
-@sub Notary Seal
+@line (Seal)
 
 @line Signature of Notary Public: ______________________________________________
 

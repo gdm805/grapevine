@@ -670,7 +670,7 @@ I declare under penalty of false swearing pursuant to section 710-1062, Hawaii R
 
 @line On this __________ day of __________________, in the year ________, before me, ______________________________________________ (insert name of notary public) appeared {{name}}, personally known to me (or proved to me on the basis of satisfactory evidence) to be the person whose name is subscribed to this instrument, and acknowledged that he or she executed it.
 
-@sub Notary Seal
+@line (Seal)
 
 @line Signature of Notary Public: ______________________________________________
 

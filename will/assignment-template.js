@@ -227,7 +227,7 @@ No state requires a witness, notary, or sworn oath for this Assignment -- a sign
 @line ________________________________________
 @line Notary Public
 @line My Commission Expires: ____________________
-@line [SEAL]
+@line (Seal)
 
 [[end]]
 `;

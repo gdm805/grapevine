@@ -47,7 +47,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line This record was acknowledged before me on ____________________ by ________________________________________________.
 @line ____________________________________________
 @line Signature of Notarial Officer
-@line [STAMP]
+@line (Seal)
 @line ____________________________________________
 @line Title of Office
 @line My Commission Expires: ____________________
@@ -63,7 +63,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My Commission Expires: ____________________
-@line [SEAL OF OFFICE]
+@line (Seal)
 
 [[elif signing_state=CALIFORNIA]]
 
@@ -76,7 +76,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line WITNESS my hand and official seal.
 @line ____________________________________
 @line Signature
-@line [SEAL]
+@line (Seal)
 
 [[elif signing_state=COLORADO]]
 
@@ -89,7 +89,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Signature of Notarial Officer
 @line Title of Office: __________________________
 @line My Commission Expires: ______________
-@line [NOTARY STAMP]
+@line (Seal)
 
 [[elif signing_state=CONNECTICUT]]
 
@@ -103,7 +103,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line __________________________________
 @line Printed Name and Title or Rank
 @line My Commission Expires: ______________________________
-@line [SEAL, IF ANY]
+@line (Seal)
 
 [[elif signing_state=DELAWARE]]
 
@@ -130,7 +130,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line [Seal/Stamp]
+@line (Seal)
 @line Title of Office: _________________________
 @line My Commission Expires: __________________
 
@@ -142,7 +142,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line [Seal]
+@line (Seal)
 @line Title of Office: _________________________
 @line My Commission Expires: __________________
 
@@ -174,7 +174,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Printed Name: ___________________________
 @line Commission No.: _________________________
 @line My Commission Expires: _________________
-@line [Notary Seal]
+@line (Seal)
 
 [[elif signing_state=GEORGIA]]
 
@@ -186,7 +186,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ________________________________________
 @line Notary Public
 @line My Commission Expires: _________________
-@line [Notarial Seal]
+@line (Seal)
 
 [[elif signing_state=HAWAII]]
 
@@ -199,7 +199,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Notary Public, State of Hawaii
 @line Printed Name: ___________________________
 @line My Commission Expires: _________________
-@line [Official Seal]
+@line (Seal)
 
 [[elif signing_state=IDAHO]]
 
@@ -210,7 +210,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
 @line ________________________________________
 @line Signature of Notary Public
-@line [Seal/Stamp]
+@line (Seal)
 @line Title of Office: _________________________
 @line My Commission Expires: __________________
 
@@ -223,7 +223,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line This instrument was acknowledged before me on ____________________, 20____, by ______________________________________.
 @line ________________________________________
 @line Notary Public
-@line Official Seal
+@line (Seal)
 @line My Commission Expires: _________________
 
 [[elif signing_state=INDIANA]]
@@ -240,7 +240,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Commission Number: _____________________
 @line My Commission Expires: _________________
 @line County of Commission: __________________
-@line [Official Seal]
+@line (Seal)
 
 [[elif signing_state=IOWA]]
 
@@ -251,7 +251,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line [Seal/Stamp]
+@line (Seal)
 @line Title of Office: _________________________
 @line My Commission Expires: __________________
 
@@ -264,7 +264,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
 @line ________________________________________
 @line Signature of Notarial Officer
-@line [Stamp]
+@line (Seal)
 @line Title of Office: _________________________
 @line My Commission Expires: _________________
 
@@ -272,91 +272,139 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF KENTUCKYCOUNTY OF ____________________
+@line STATE OF KENTUCKY
+@line COUNTY OF ____________________
 @line The foregoing instrument was acknowledged before me this _____ day of ____________________, 20____, by ______________________________.
-@line __________________________________Notary PublicPrinted Name: ____________________My Commission Expires: __________Commission No.: __________________
+@line __________________________________
+@line Notary Public
+@line Printed Name: ____________________
+@line My Commission Expires: __________Commission No.: __________________
 @line Authority: KRS Chapter 423
 
 [[elif signing_state=LOUISIANA]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF LOUISIANAPARISH OF ____________________
+@line STATE OF LOUISIANA
+@line PARISH OF ____________________
 @line On this _____ day of ____________________, 20____, before me personally appeared ______________________________, to me known to be the person described in and who executed the foregoing instrument, and acknowledged that the person executed it as the person's free act and deed.
-@line __________________________________Notary PublicPrinted Name: ____________________Notary/Bar No.: __________________
+@line __________________________________
+@line Notary Public
+@line Printed Name: ____________________
+@line Notary/Bar No.: __________________
 @line Authority: La. R.S. 35:511
 
 [[elif signing_state=MAINE]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MAINECOUNTY OF ____________________
+@line STATE OF MAINE
+@line COUNTY OF ____________________
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________.
-@line __________________________________Signature of Notarial OfficerPrinted Name: ____________________Title of Office: __________________My Commission Expires: __________[STAMP, IF APPLICABLE]
+@line __________________________________
+@line Signature of Notarial Officer
+@line Printed Name: ____________________
+@line Title of Office: __________________
+@line My Commission Expires: __________
+@line (Seal)
 @line Authority: 4 M.R.S. § 1917(1)
 
 [[elif signing_state=MARYLAND]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MARYLANDCOUNTY OF ____________________
+@line STATE OF MARYLAND
+@line COUNTY OF ____________________
 @line I certify that the following person personally appeared before me this _____ day of ____________________, 20____: ______________________________, and acknowledged signing the foregoing record for the purposes stated therein.
-@line __________________________________Notary PublicPrinted Name: ____________________My Commission Expires: __________[SEAL]
+@line __________________________________
+@line Notary Public
+@line Printed Name: ____________________
+@line My Commission Expires: __________
+@line (Seal)
 @line Authority: Md. Code, State Gov't, Title 18 (RULONA)
 
 [[elif signing_state=MASSACHUSETTS]]
 
 @sub Notary Acknowledgment
 
-@line COMMONWEALTH OF MASSACHUSETTSCOUNTY OF ____________________
+@line COMMONWEALTH OF MASSACHUSETTS
+@line COUNTY OF ____________________
 @line On this _____ day of ____________________, 20____, before me, the undersigned notary public, ______________________________ personally appeared, proved to me through satisfactory evidence of identification, which was ______________________________, to be the person whose name is signed on the preceding or attached document, and acknowledged to me that the person signed it voluntarily for its stated purpose.
-@line __________________________________Notary PublicPrinted Name: ____________________My Commission Expires: __________[SEAL]
+@line __________________________________
+@line Notary Public
+@line Printed Name: ____________________
+@line My Commission Expires: __________
+@line (Seal)
 @line Authority: M.G.L. c. 222, § 15(b)
 
 [[elif signing_state=MICHIGAN]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MICHIGANCOUNTY OF ____________________
+@line STATE OF MICHIGAN
+@line COUNTY OF ____________________
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________.
-@line __________________________________Notary Public, State of MichiganCounty of Commission: ____________My Commission Expires: __________Acting in County of: ______________
+@line __________________________________
+@line Notary Public, State of Michigan
+@line County of Commission: ____________
+@line My Commission Expires: __________
+@line Acting in County of: ______________
 @line Authority: Michigan Law on Notarial Acts, MCL 55.287
 
 [[elif signing_state=MINNESOTA]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MINNESOTACOUNTY OF ____________________
+@line STATE OF MINNESOTA
+@line COUNTY OF ____________________
 @line This instrument was acknowledged before me on ____________________, 20____, by ______________________________.
-@line __________________________________Signature of Notarial OfficerTitle: ___________________________My Commission Expires: __________[STAMP]
+@line __________________________________
+@line Signature of Notarial Officer
+@line Title: ___________________________
+@line My Commission Expires: __________
+@line (Seal)
 @line Authority: Minn. Stat. §§ 358.47-.48
 
 [[elif signing_state=MISSISSIPPI]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MISSISSIPPICOUNTY OF ____________________
+@line STATE OF MISSISSIPPI
+@line COUNTY OF ____________________
 @line Personally appeared before me, the undersigned authority, ______________________________, who acknowledged that the person signed and delivered the foregoing instrument on the date stated therein as the person's voluntary act and deed.
 @line Given under my hand and official seal this _____ day of ____________________, 20____.
-@line __________________________________Notary PublicMy Commission Expires: __________[SEAL]
+@line __________________________________
+@line Notary Public
+@line My Commission Expires: __________
+@line (Seal)
 @line Authority: Mississippi acknowledgment practice; Miss. notary law
 
 [[elif signing_state=MISSOURI]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MISSOURICOUNTY OF ____________________
+@line STATE OF MISSOURI
+@line COUNTY OF ____________________
 @line On this _____ day of ____________________, 20____, before me personally appeared ______________________________, to me known to be the person described in and who executed the foregoing instrument, and acknowledged that the person executed the same as the person's free act and deed.
-@line __________________________________Notary PublicMy Commission Expires: __________[SEAL]
+@line __________________________________
+@line Notary Public
+@line My Commission Expires: __________
+@line (Seal)
 @line Authority: RSMo 442.210(1); 486.330
 
 [[elif signing_state=MONTANA]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MONTANACOUNTY OF ____________________
+@line STATE OF MONTANA
+@line COUNTY OF ____________________
 @line This record was acknowledged before me on ____________________, 20____, by ______________________________.
-@line __________________________________Signature of Notarial OfficerPrinted Name: ____________________Title of Office: __________________My Commission Expires: __________[OFFICIAL STAMP]
+@line __________________________________
+@line Signature of Notarial Officer
+@line Printed Name: ____________________
+@line Title of Office: __________________
+@line My Commission Expires: __________
+@line (Seal)
 @line Authority: Montana RULONA short-form acknowledgment
 
 [[elif signing_state=NEBRASKA]]
@@ -369,7 +417,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=NEVADA]]
 
@@ -381,7 +429,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=NEW_HAMPSHIRE]]
 
@@ -393,7 +441,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=NEW_JERSEY]]
 
@@ -405,7 +453,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=NEW_MEXICO]]
 
@@ -417,7 +465,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=NEW_YORK]]
 
@@ -429,7 +477,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=NORTH_CAROLINA]]
 
@@ -441,7 +489,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=NORTH_DAKOTA]]
 
@@ -453,7 +501,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=OHIO]]
 
@@ -465,7 +513,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=OKLAHOMA]]
 
@@ -477,7 +525,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=OREGON]]
 
@@ -489,7 +537,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=PENNSYLVANIA]]
 
@@ -501,7 +549,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=RHODE_ISLAND]]
 
@@ -513,7 +561,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=SOUTH_CAROLINA]]
 
@@ -525,7 +573,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=SOUTH_DAKOTA]]
 
@@ -537,7 +585,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=TENNESSEE]]
 
@@ -549,7 +597,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=TEXAS]]
 
@@ -561,7 +609,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=UTAH]]
 
@@ -573,7 +621,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=VERMONT]]
 
@@ -585,7 +633,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=VIRGINIA]]
 
@@ -597,7 +645,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line ____________________________________________
 @line Notary Public / Authorized Officer
 @line My commission expires: ____________________
-@line [NOTARIAL SEAL / STAMP]
+@line (Seal)
 
 [[elif signing_state=WASHINGTON]]
 
@@ -610,7 +658,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Notary Public
 @line Title of Office: ________________________________
 @line My Commission Expires: ____________________
-@line [OFFICIAL STAMP]
+@line (Seal)
 
 [[elif signing_state=WEST_VIRGINIA]]
 
@@ -623,7 +671,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Notarial Officer
 @line Title of Office: ________________________________
 @line My Commission Expires: ____________________
-@line [OFFICIAL STAMP]
+@line (Seal)
 
 [[elif signing_state=WISCONSIN]]
 
@@ -636,7 +684,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Notarial Officer
 @line Title of Office: ________________________________
 @line My Commission Expires: ____________________
-@line [OFFICIAL STAMP]
+@line (Seal)
 
 [[elif signing_state=WYOMING]]
 
@@ -649,7 +697,7 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 @line Notarial Officer
 @line Title (and Rank): ________________________________
 @line My Commission Expires: ____________________
-@line [OFFICIAL STAMP]
+@line (Seal)
 
 [[end]]
 `;

@@ -49,7 +49,7 @@ Most adults with children, a home, savings, or particular wishes benefit from ha
 
 ## What makes a will valid
 
-The rules vary by state, but a will generally needs to be written, signed by you, and signed by witnesses who watched you sign. You must be an adult of sound mind, acting of your own free will. Following your state's signing steps carefully matters, because a will that isn't signed correctly may not be honored.
+The rules vary by state, but a will generally needs to be written, signed by you, and signed by witnesses who watched you sign. A few states also involve a notary; in Louisiana, for example, the will is signed in front of a notary and two witnesses. You must be an adult of sound mind, acting of your own free will. Following your state's signing steps carefully matters, because a will that isn't signed correctly may not be honored.
 
 A will usually goes through probate, which is the court process of settling an estate. If you want to avoid probate, read [our comparison of wills and living trusts](learn.html#will-vs-living-trust).
 
@@ -60,6 +60,10 @@ date: 2026-09-21
 summary: Both say who gets your property. They differ on probate, privacy, cost and what happens if you become unable to manage your own affairs.
 ---
 Both a will and a living trust let you decide who receives your property. They work differently, and many families use both.
+
+## The short answer
+
+Compared with administering a trust, settling an estate under a will is usually more costly, is a public affair, takes a lot more time, and can be very complicated. A will goes through probate, a court process with filings, deadlines and fees, and the court file is open to the public. A trust is administered privately by the trustee you chose, usually without going to court.
 
 ## The main differences
 
@@ -158,7 +162,7 @@ Your executor is the person you name in your will to handle your estate after yo
 
 ## What to look for
 
-Choose someone who is an adult, organized, honest and calm under pressure. They do not need to be a lawyer or a financial expert, and they can hire professionals to help. It also helps if they live close by, or can travel when needed, because some tasks are hard to do from far away.
+Choose someone who is an adult, organized, honest and calm under pressure. They do not need to be a lawyer or a financial expert, and they can hire professionals to help. It also helps if they live close by, or can travel when needed, because some tasks are hard to do from far away. Some states limit who can serve from out of state. Florida, for example, allows a nonresident executor only if they are a close relative, and other states may require an out-of-state executor to post a bond or name a local agent.
 
 Many people choose a spouse, an adult child, a sibling or a trusted friend. If your estate is complicated, you might choose a professional, such as a bank or trust company.
 

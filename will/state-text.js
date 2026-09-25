@@ -13,6 +13,7 @@ window.WILL_STATE_TEXT = String.raw`
 //      community: none        which community-property sentence to show in Section 6.02:
 //                             quasi = "community or quasi-community property" (California)
 //                             plain = "community property" (the other community property states)
+//                             marital = "marital property" (Wisconsin, a marital property state, Wis. Stat. ch. 766)
 //                             homestead = the Florida homestead sentence
 //                             none = no sentence
 //      no_contest: yes        yes shows the No-Contest Provision, no leaves it out (Florida)
@@ -73,7 +74,7 @@ Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and s
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Alaska
 community: none
@@ -116,7 +117,7 @@ Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and s
 
 @sign Officer Authorized to Administer Oaths
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Arizona
 community: plain
@@ -159,7 +160,7 @@ Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and s
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Arkansas
 community: none
@@ -206,7 +207,7 @@ Subscribed and sworn before me on ____________________, 20____.
 
 @sign Officer Authorized to Administer Oaths
 
-@line [Seal / Commission information]
+@line (Seal)
 
 === California
 community: quasi
@@ -354,7 +355,7 @@ Subscribed, sworn and acknowledged before me on ____________________, 20____.
 
 @sign Officer Authorized to Administer Oaths
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === District of Columbia
 community: none
@@ -463,7 +464,7 @@ Sworn to and subscribed before me on ____________________, 20____.
 
 @sign Notary Public
 
-@line [Official Seal]
+@line (Seal)
 
 === Hawaii
 community: none
@@ -522,7 +523,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign My Commission Expires
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Idaho
 community: plain
@@ -581,7 +582,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, and subscribed and
 
 @sign My Commission Expires
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Illinois
 community: none
@@ -748,7 +749,7 @@ Subscribed, sworn, and acknowledged before me by {{name}}, and subscribed and sw
 
 @sign My Commission Expires
 
-@line [OFFICIAL STAMP / SEAL]
+@line (Seal)
 
 === Kansas
 community: none
@@ -795,7 +796,7 @@ Subscribed, acknowledged, and sworn to before me on ____________________, 20____
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Kentucky
 community: none
@@ -844,7 +845,7 @@ Subscribed, sworn to, and acknowledged before me by the Testator and subscribed 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Louisiana
 community: plain
@@ -924,7 +925,7 @@ Subscribed, sworn to, and acknowledged before me by the Testator and subscribed 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Maryland
 community: none
@@ -1009,7 +1010,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Michigan
 community: none
@@ -1058,7 +1059,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Minnesota
 community: none
@@ -1107,7 +1108,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Mississippi
 community: none
@@ -1156,7 +1157,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Missouri
 community: none
@@ -1205,7 +1206,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Montana
 community: none
@@ -1254,7 +1255,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Nebraska
 community: none
@@ -1303,7 +1304,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === Nevada
 community: plain
@@ -1352,7 +1353,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === New Hampshire
 community: none
@@ -1401,7 +1402,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === New Jersey
 community: none
@@ -1450,7 +1451,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Notarial Officer
 
-@line [Official Seal / Capacity]
+@line (Seal)
 
 === New Mexico
 community: plain
@@ -1509,7 +1510,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === New York
 community: none
@@ -1564,7 +1565,7 @@ Sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === North Carolina
 community: none
@@ -1623,7 +1624,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === North Dakota
 community: none
@@ -1682,7 +1683,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Ohio
 community: none
@@ -1769,7 +1770,7 @@ Subscribed, acknowledged, and sworn to before me by the Testator and subscribed 
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Oregon
 community: none
@@ -1826,7 +1827,7 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Pennsylvania
 community: none
@@ -1883,7 +1884,7 @@ Subscribed, sworn to, and acknowledged before me on ____________________, 20____
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Rhode Island
 community: none
@@ -1938,7 +1939,7 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === South Carolina
 community: none
@@ -1997,7 +1998,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === South Dakota
 community: none
@@ -2056,7 +2057,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Tennessee
 community: none
@@ -2105,7 +2106,7 @@ Sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 I, the undersigned attesting witness, being first duly sworn, state the facts to which I would be required to testify in court to prove this Will: that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in my presence; that I signed as a witness as required by law; and that the Testator appeared to be of sound mind and acting voluntarily.
 
@@ -2121,7 +2122,7 @@ Sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Texas
 community: plain
@@ -2178,7 +2179,7 @@ Subscribed, sworn to, and acknowledged before me by the Testator, and subscribed
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Utah
 community: none
@@ -2237,7 +2238,7 @@ Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and 
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Vermont
 community: none
@@ -2294,7 +2295,7 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Virginia
 community: none
@@ -2347,7 +2348,7 @@ Sworn and acknowledged before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Washington
 community: plain
@@ -2402,7 +2403,7 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === West Virginia
 community: none
@@ -2457,10 +2458,10 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Wisconsin
-community: plain
+community: marital
 no_contest: yes
 witnesses: 2
 notary: yes
@@ -2514,7 +2515,7 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 === Wyoming
 community: none
@@ -2571,6 +2572,6 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @sign Official Capacity
 
-@line [OFFICIAL SEAL]
+@line (Seal)
 
 `;
