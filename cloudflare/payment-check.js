@@ -39,8 +39,10 @@ var ALLOWED_SITES = ['https://gdm805.github.io', 'http://localhost:8000', 'http:
 
 /* true = only unlock payments where the customer ticked Stripe's "I agree to the Terms of Service" box. That box
    appears only on Payment Links with "Require customers to accept your terms of service" switched on, so switch
-   it on for EVERY link before setting this to true, or payments through a link without it won't unlock. */
-var REQUIRE_TERMS = true;
+   it on for EVERY link before setting this to true, or payments through a link without it won't unlock.
+   Off for now: the Stripe SANDBOX can't hold a Terms of service URL (Settings > Public details needs an
+   activated account). Turn it on when setting up the LIVE links (LAUNCH-CHECKLIST.txt, step 3). */
+var REQUIRE_TERMS = false;
 
 /* the documents that can be bought one at a time (must match "singles" in js/plans.js) */
 var SINGLE_DOCS = ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'schedulea', 'cert', 'affidavit', 'assignment'];

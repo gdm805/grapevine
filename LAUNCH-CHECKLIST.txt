@@ -21,13 +21,14 @@ A. BEFORE BETA TESTERS START
        custom domain + DNS at your domain registrar, then updating the 12 Stripe redirect addresses,
        the Terms URL in Stripe, and ALLOWED_SITES in cloudflare/payment-check.js.
 
-[ ] 3. Turn on the Terms and Conditions checkbox at Stripe (do these in this order):
+[ ] 3. Turn on the Terms and Conditions checkbox at Stripe -- in the LIVE account (the sandbox can't hold a
+       Terms of service URL; tried 24 Sep). Do these in this order:
        a. Stripe > Settings > Business > Public details > Terms of service URL:
           https://gdm805.github.io/grapevine/terms.html   (or the grapevinedocs.com address)
        b. On EACH of the 12 Payment Links: Edit > switch on "Require customers to accept your
           terms of service". Save.
-       c. Only after a and b: paste the updated cloudflare/payment-check.js into Cloudflare again and
-          Deploy (it now refuses payments where the terms box wasn't ticked -- REQUIRE_TERMS = true).
+       c. Only after a and b: in cloudflare/payment-check.js set REQUIRE_TERMS = true (Claude can do it),
+          paste the file into Cloudflare again and Deploy (it then refuses payments without the ticked box).
        d. Test purchase with card 4242 4242 4242 4242: the checkbox appears, and documents unlock.
 
 [ ] 4. Beta testers: free documents in exchange for the feedback survey, fully automatic (built 24 Sep).

@@ -174,7 +174,9 @@
     if (typeof d === 'string' && d.indexOf('Tally.FormSubmitted') > -1) {
       try { localStorage.setItem('grapevine.beta.survey', '1'); } catch (x) {}
       render();
-      window.scrollTo(0, 0);
+      /* bring the thank-you note and the now-unlocked button into view */
+      var done = root.querySelector('.beta-box.done');
+      if (done && done.scrollIntoView) done.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   });
 
