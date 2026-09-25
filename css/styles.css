@@ -380,3 +380,6 @@ a { color: var(--grape); }
 .badge.badge-pick { background: var(--leaf-deep); color: #fff; }
 .badge[hidden] { display: none; }
 .pick-kicker[hidden] { display: none; }
+/* the home page's "Wills, trusts and the paperwork behind them" line above the main heading: larger than the
+   small labels elsewhere, since it's the line that says what Grapevine does */
+.hero-kicker { display: inline-block; font-size: clamp(15px, 1.5vw, 19px); letter-spacing: 0.07em; line-height: 1.35; padding: 9px 16px; border-radius: var(--r-pill); background: var(--leaf-tint); }
