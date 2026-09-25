@@ -35,7 +35,7 @@ var PAYMENT_LINKS = {
 
 /* the web addresses allowed to ask this program about payments: your live site, plus your own computer
    for testing. Add your own domain here if you move the site to one. */
-var ALLOWED_SITES = ['https://gdm805.github.io', 'http://localhost:8000', 'http://127.0.0.1:8000'];
+var ALLOWED_SITES = ['https://www.grapevinedocs.com', 'https://grapevinedocs.com', 'https://gdm805.github.io', 'http://localhost:8000', 'http://127.0.0.1:8000'];
 
 /* true = only unlock payments where the customer ticked Stripe's "I agree to the Terms of Service" box. That box
    appears only on Payment Links with "Require customers to accept your terms of service" switched on, so switch

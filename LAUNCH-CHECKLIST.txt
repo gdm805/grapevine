@@ -16,7 +16,7 @@ A. BEFORE BETA TESTERS START
          - the six Learn articles (Claude's drafts)
        To put SAMPLE back on everything while revising: js/plans.js, GV_SAMPLE_WATERMARK = true
 
-[ ] 2. Decide the web address. Keep gdm805.github.io/grapevine, or move to grapevinedocs.com?
+[x] 2. Web address: www.grapevinedocs.com (DNS in Microsoft 365, added 25 Sep; CNAME file in the repo).
        Do this BEFORE step 3, because every step below uses the address. Moving means: GitHub Pages
        custom domain + DNS at your domain registrar, then updating the 12 Stripe redirect addresses,
        the Terms URL in Stripe, ALLOWED_SITES in cloudflare/payment-check.js, and the share-picture
@@ -25,7 +25,7 @@ A. BEFORE BETA TESTERS START
 [ ] 3. Turn on the Terms and Conditions checkbox at Stripe -- in the LIVE account (the sandbox can't hold a
        Terms of service URL; tried 24 Sep). Do these in this order:
        a. Stripe > Settings > Business > Public details > Terms of service URL:
-          https://gdm805.github.io/grapevine/terms.html   (or the grapevinedocs.com address)
+          https://www.grapevinedocs.com/terms.html
        b. On EACH of the 12 Payment Links: Edit > switch on "Require customers to accept your
           terms of service". Save.
        c. Only after a and b: in cloudflare/payment-check.js set REQUIRE_TERMS = true (Claude can do it),
@@ -33,7 +33,7 @@ A. BEFORE BETA TESTERS START
        d. Test purchase with card 4242 4242 4242 4242: the checkbox appears, and documents unlock.
 
 [ ] 4. Beta testers: free documents in exchange for the feedback survey, fully automatic (built 24 Sep).
-       How it works: testers use the invitation link  https://gdm805.github.io/grapevine/pricing.html?beta=1
+       How it works: testers use the invitation link  https://www.grapevinedocs.com/pricing.html?beta=1
        (any page + ?beta=1). At checkout the Tally survey (form 445AKO) appears and the payment button stays
        locked until they submit it; then Stripe opens with the 100%-off code already applied ($0).
        Switch: js/plans.js  GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' }

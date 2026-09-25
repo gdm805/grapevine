@@ -13,9 +13,9 @@
         matching price in js/plans.js (Products > Add a Payment Link, one per row below).
      2. In that Payment Link's settings, under "After payment", choose "Redirect customers to a website"
         and enter, for the Will plan's single-person link:
-          https://YOURDOMAIN/paid.html?plan=will&household=single&session_id={CHECKOUT_SESSION_ID}
-        Swap "will" and "single" for the matching plan/household on each link, and swap YOURDOMAIN for
-        your real domain once the site is live. Type {CHECKOUT_SESSION_ID} exactly like that -- Stripe
+          https://www.grapevinedocs.com/paid.html?plan=will&household=single&session_id={CHECKOUT_SESSION_ID}
+        Swap "will" and "single" for the matching plan/household on each link. Type {CHECKOUT_SESSION_ID}
+        exactly like that -- Stripe
         fills it in automatically; it is not something you type in yourself.
      3. Paste the six Payment Link URLs below.
 

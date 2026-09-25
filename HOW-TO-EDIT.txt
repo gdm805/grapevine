@@ -283,7 +283,7 @@ SETTING IT UP (about 20 minutes, one time):
  B. Check each Stripe Payment Link. Payment Links > open each one > Edit > After payment >
     "Redirect customers to your website" must end in  &session_id={CHECKOUT_SESSION_ID}
     typed exactly like that, for example:
-    https://gdm805.github.io/grapevine/paid.html?plan=will&household=single&session_id={CHECKOUT_SESSION_ID}
+    https://www.grapevinedocs.com/paid.html?plan=will&household=single&session_id={CHECKOUT_SESSION_ID}
  C. Cloudflare. Go to dash.cloudflare.com and sign up (free plan). In the left menu: Workers & Pages
     (under "Compute") > Create > "Start with Hello World!" (Create Worker). Name it
     grapevine-payment-check and click Deploy.
