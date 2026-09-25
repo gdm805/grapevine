@@ -18,47 +18,47 @@ window.FINALWISHES_TEMPLATE = String.raw`
 
 ## Purpose
 
-The Trustmaker makes the following directions and states the following wishes concerning the care and disposition of the Trustmaker's remains and the arrangements following death. These provisions are intended to express and, to the extent permitted by applicable law, carry out the Trustmaker's directions and wishes.
+{{name}} (the “Declarant”) makes the following directions and states the following wishes concerning the care and disposition of the Declarant's remains and the arrangements following death. These provisions are intended to express and, to the extent permitted by applicable law, carry out the Declarant's directions and wishes.
 
 ## Governing Law
 
-These Final Wishes shall be interpreted and given effect under the law governing disposition of the Trustmaker's remains.
+These Final Wishes shall be interpreted and given effect under the law governing disposition of the Declarant's remains.
 
 ## No Change to Estate Distributions
 
-These Final Wishes do not dispose of property under the Trustmaker's trust or will, change a beneficiary designation, or alter a fiduciary's powers except to the limited extent that applicable law gives a designated person authority over disposition of remains or final arrangements.
+These Final Wishes do not dispose of property under the Declarant's trust or will, change a beneficiary designation, or alter a fiduciary's powers except to the limited extent that applicable law gives a designated person authority over disposition of remains or final arrangements.
 
 # DISPOSITION OF REMAINS
 
-## Trustmaker's Direction
+## Declarant's Direction
 
 [[if has_disposition]]
 
-The Trustmaker directs or, where applicable law treats the following as nonbinding, expresses the preference that the Trustmaker's remains be handled as follows:
+The Declarant directs or, where applicable law treats the following as nonbinding, expresses the preference that the Declarant's remains be handled as follows:
 
 [[if disposition=BURIAL]]
 
-The Trustmaker prefers burial.
+The Declarant prefers burial.
 
 [[elif disposition=CREMATION]]
 
-The Trustmaker prefers cremation.
+The Declarant prefers cremation.
 
 [[elif disposition=GREEN_BURIAL]]
 
-The Trustmaker prefers natural or green burial, to the extent lawful and reasonably available.
+The Declarant prefers natural or green burial, to the extent lawful and reasonably available.
 
 [[elif disposition=DONATION]]
 
-The Trustmaker prefers donation of the Trustmaker's body for anatomical, medical, educational, or scientific purposes to the extent separately authorized and accepted under applicable law.
+The Declarant prefers donation of the Declarant's body for anatomical, medical, educational, or scientific purposes to the extent separately authorized and accepted under applicable law.
 
 [[elif disposition=OTHER]]
 
-The Trustmaker states the following other preference concerning disposition of remains: {{disposition_other_text}}.
+The Declarant states the following other preference concerning disposition of remains: {{disposition_other_text}}.
 
 [[elif disposition=NO_PREFERENCE]]
 
-The Trustmaker does not state a preference concerning the method of disposition and leaves that decision to the person legally authorized to control disposition of the Trustmaker's remains.
+The Declarant does not state a preference concerning the method of disposition and leaves that decision to the person legally authorized to control disposition of the Declarant's remains.
 
 [[end]]
 
@@ -68,7 +68,7 @@ The Trustmaker does not state a preference concerning the method of disposition 
 
 [[if has_location]]
 
-If reasonably practicable, the Trustmaker prefers that burial, interment, scattering, placement, donation, or other disposition occur at or in connection with: {{location}}.
+If reasonably practicable, the Declarant prefers that burial, interment, scattering, placement, donation, or other disposition occur at or in connection with: {{location}}.
 
 [[end]]
 
@@ -76,13 +76,13 @@ If reasonably practicable, the Trustmaker prefers that burial, interment, scatte
 
 [[if has_remains_details]]
 
-The Trustmaker states the following additional instructions concerning the Trustmaker's remains: {{remains_details}}.
+The Declarant states the following additional instructions concerning the Declarant's remains: {{remains_details}}.
 
 [[end]]
 
 ## Practical and Lawful Performance
 
-A direction is subject to applicable law and reasonable practical limits, including availability, timing, public-health requirements, and available funds. A person acting under this document may make only those adjustments reasonably necessary to carry out the Trustmaker's intent as closely as practicable.
+A direction is subject to applicable law and reasonable practical limits, including availability, timing, public-health requirements, and available funds. A person acting under this document may make only those adjustments reasonably necessary to carry out the Declarant's intent as closely as practicable.
 
 # FUNERAL, MEMORIAL, AND PERSONAL WISHES
 
@@ -92,23 +92,23 @@ A direction is subject to applicable law and reasonable practical limits, includ
 
 [[if service=FUNERAL]]
 
-The Trustmaker prefers a funeral service.
+The Declarant prefers a funeral service.
 
 [[elif service=MEMORIAL]]
 
-The Trustmaker prefers a memorial service.
+The Declarant prefers a memorial service.
 
 [[elif service=CELEBRATION]]
 
-The Trustmaker prefers a celebration of life.
+The Declarant prefers a celebration of life.
 
 [[elif service=NONE]]
 
-The Trustmaker prefers that no formal funeral, memorial service, or celebration of life be held.
+The Declarant prefers that no formal funeral, memorial service, or celebration of life be held.
 
 [[elif service=NO_PREFERENCE]]
 
-The Trustmaker leaves the nature of any funeral, memorial, celebration, or gathering to the person arranging it.
+The Declarant leaves the nature of any funeral, memorial, celebration, or gathering to the person arranging it.
 
 [[end]]
 
@@ -118,7 +118,7 @@ The Trustmaker leaves the nature of any funeral, memorial, celebration, or gathe
 
 [[if has_service_details]]
 
-The Trustmaker expresses the following additional wishes concerning any service or gathering: {{service_details}}.
+The Declarant expresses the following additional wishes concerning any service or gathering: {{service_details}}.
 
 [[end]]
 
@@ -126,7 +126,7 @@ The Trustmaker expresses the following additional wishes concerning any service 
 
 [[if has_personal_requests]]
 
-The Trustmaker expresses the following additional personal requests concerning final arrangements: {{personal_requests}}.
+The Declarant expresses the following additional personal requests concerning final arrangements: {{personal_requests}}.
 
 [[end]]
 
@@ -136,7 +136,7 @@ The Trustmaker expresses the following additional personal requests concerning f
 
 [[if has_prepaid]]
 
-The Trustmaker has indicated that funeral, burial, cremation, cemetery, memorial, donation, or related arrangements may have been made or prepaid with {{provider}}, located at {{provider_location}}, reference {{reference}}. The person handling final arrangements should contact the identified provider to determine the current terms and status of any arrangement.
+The Declarant has indicated that funeral, burial, cremation, cemetery, memorial, donation, or related arrangements may have been made or prepaid with {{provider}}, located at {{provider_location}}, reference {{reference}}. The person handling final arrangements should contact the identified provider to determine the current terms and status of any arrangement.
 
 [[end]]
 
@@ -144,7 +144,7 @@ The Trustmaker has indicated that funeral, burial, cremation, cemetery, memorial
 
 [[if has_document_location]]
 
-Supporting records concerning the Trustmaker's final arrangements may be located at: {{document_location}}.
+Supporting records concerning the Declarant's final arrangements may be located at: {{document_location}}.
 
 [[end]]
 
@@ -154,11 +154,11 @@ Supporting records concerning the Trustmaker's final arrangements may be located
 
 [[if has_agent]]
 
-To the extent permitted by applicable law, the Trustmaker designates {{agent_name}} to control disposition of the Trustmaker's remains and final arrangements, subject to the directions stated in this document.
+To the extent permitted by applicable law, the Declarant designates {{agent_name}} to control disposition of the Declarant's remains and final arrangements, subject to the directions stated in this document.
 
 [[if has_alt_agent]]
 
-If that person cannot or will not serve, the Trustmaker designates {{alt_agent_name}} as successor.
+If that person cannot or will not serve, the Declarant designates {{alt_agent_name}} as successor.
 
 [[end]]
 
@@ -168,7 +168,7 @@ If that person cannot or will not serve, the Trustmaker designates {{alt_agent_n
 
 [[if no_agent]]
 
-If the Trustmaker has not made an effective designation of a person to control disposition, applicable law will determine authority.
+If the Declarant has not made an effective designation of a person to control disposition, applicable law will determine authority.
 
 [[end]]
 
@@ -176,20 +176,20 @@ If the Trustmaker has not made an effective designation of a person to control d
 
 ## Governing State Provisions
 
-The provisions of this Article apply under the law of the Trustmaker's governing state and control over any inconsistent general language in this document.
+The provisions of this Article apply under the law of the Declarant's governing state and control over any inconsistent general language in this document.
 
 [[include finalwishes_state]]
 
 # EXECUTION
 
-## Trustmaker Signature
+## Declarant Signature
 
-The Trustmaker signs these Final Wishes to confirm the directions, wishes, and appointments stated in this instrument.
+The Declarant signs these Final Wishes to confirm the directions, wishes, and appointments stated in this instrument.
 
 @line Dated: {{signing_date}}
 
 @line ________________________________________
-@line {{name}}, Trustmaker
+@line {{name}}, Declarant
 
 [[include finalwishes_execution]]
 `;

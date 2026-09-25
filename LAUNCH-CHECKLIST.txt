@@ -21,10 +21,11 @@ A. BEFORE BETA TESTERS START
          DC/Louisiana/Alaska/Virginia place wording in will and power of attorney; Illinois health care directive
          witness (755 ILCS 45/4-5.1); Illinois Final Wishes agent acceptance; drafter jargon removed from Final Wishes;
          PDF page numbers no longer restart at EXECUTION; "☐" boxes now print in PDFs.
-       STILL OPEN: [ ] New Jersey Final Wishes (appointment needs NJ's prescribed form -- decide)
+       [x] New Jersey Final Wishes: wishes only, no appointment (decided 25 Sep).
+       [x] Final Wishes now calls the person "the Declarant" (was "the Trustmaker").
+       STILL OPEN:
                    [ ] Colorado health care directive: add witnesses or notary for the living-will part
                    [ ] Minnesota / New York powers of attorney: custom form vs. statutory short form
-                   [ ] Final Wishes calls the person "the Trustmaker" even when there is no trust
 
 [x] 2. Web address: www.grapevinedocs.com (DNS in Microsoft 365, added 25 Sep; CNAME file in the repo).
        Do this BEFORE step 3, because every step below uses the address. Moving means: GitHub Pages

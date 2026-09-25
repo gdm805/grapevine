@@ -15,139 +15,139 @@ window.FINALWISHES_SHARED = window.FINALWISHES_SHARED || {};
 // ==========================================================================
 window.FINALWISHES_SHARED['finalwishes_state'] = String.raw`
 [[if signing_state=ALABAMA]]
-The Trustmaker intends the directions in this instrument to be considered together with any designation of an authorizing agent that the Trustmaker makes in a form Alabama law recognizes. If there is such a designation, its terms control who is authorized to act.
+The Declarant intends the directions in this instrument to be considered together with any designation of an authorizing agent that the Declarant makes in a form Alabama law recognizes. If there is such a designation, its terms control who is authorized to act.
 
 [[elif signing_state=ALASKA]]
-The Trustmaker intends this instrument to state final-disposition directions and, if selected, to designate the person authorized to carry them out under Alaska law.
+The Declarant intends this instrument to state final-disposition directions and, if selected, to designate the person authorized to carry them out under Alaska law.
 
 [[elif signing_state=ARIZONA]]
-The Trustmaker intends these written final-disposition directions to be effective under Arizona law. If the Trustmaker has given this authority to a health care agent in a separate health care power of attorney, that appointment controls over any inconsistent designation in this instrument.
+The Declarant intends these written final-disposition directions to be effective under Arizona law. If the Declarant has given this authority to a health care agent in a separate health care power of attorney, that appointment controls over any inconsistent designation in this instrument.
 
 [[elif signing_state=ARKANSAS]]
-The Trustmaker intends this instrument to operate as the Trustmaker's written declaration concerning final disposition to the fullest extent permitted by Arkansas law.
+The Declarant intends this instrument to operate as the Declarant's written declaration concerning final disposition to the fullest extent permitted by Arkansas law.
 
 [[elif signing_state=CALIFORNIA]]
-The Trustmaker intends these written directions to be followed to the fullest extent permitted by California law, subject to applicable requirements concerning definiteness, payment, and lawful performance.
+The Declarant intends these written directions to be followed to the fullest extent permitted by California law, subject to applicable requirements concerning definiteness, payment, and lawful performance.
 
 [[elif signing_state=COLORADO]]
-The Trustmaker intends the disposition directions and any selected designee in this instrument to be given effect under Colorado law.
+The Declarant intends the disposition directions and any selected designee in this instrument to be given effect under Colorado law.
 
 [[elif signing_state=CONNECTICUT]]
-The Trustmaker intends these written directions and any person designated in this instrument to control disposition to be given effect under Connecticut law, when this instrument is signed as Connecticut law requires.
+The Declarant intends these written directions and any person designated in this instrument to control disposition to be given effect under Connecticut law, when this instrument is signed as Connecticut law requires.
 
 [[elif signing_state=DELAWARE]]
-The Trustmaker intends this instrument to state the Trustmaker's directions concerning disposition and ceremonial arrangements and, if selected, to designate the person authorized to act.
+The Declarant intends this instrument to state the Declarant's directions concerning disposition and ceremonial arrangements and, if selected, to designate the person authorized to act.
 
 [[elif signing_state=DISTRICT_COLUMBIA]]
-The Trustmaker intends this dated and signed written instrument to state final-disposition directions and, if applicable, designate a disposition representative under District of Columbia law.
+The Declarant intends this dated and signed written instrument to state final-disposition directions and, if applicable, designate a disposition representative under District of Columbia law.
 
 [[elif signing_state=FLORIDA]]
-The Trustmaker states these written inter vivos directions concerning final disposition. If no separate legally effective appointment controls, authority shall be determined under Florida law.
+The Declarant states these written inter vivos directions concerning final disposition. If no separate legally effective appointment controls, authority shall be determined under Florida law.
 
 [[elif signing_state=GEORGIA]]
-The Trustmaker's Georgia advance directive for health care governs who has authority over disposition of the Trustmaker's remains. These Final Wishes state the Trustmaker's directions and do not appoint a second, conflicting person unless Georgia law permits it and the Trustmaker has expressly done so here.
+The Declarant's Georgia advance directive for health care governs who has authority over disposition of the Declarant's remains. These Final Wishes state the Declarant's directions and do not appoint a second, conflicting person unless Georgia law permits it and the Declarant has expressly done so here.
 
 [[elif signing_state=HAWAII]]
-The Trustmaker intends any designation in this instrument of a person to control disposition to be effective when this instrument is signed and acknowledged as provided at its end.
+The Declarant intends any designation in this instrument of a person to control disposition to be effective when this instrument is signed and acknowledged as provided at its end.
 
 [[elif signing_state=IDAHO]]
-If disposition authority is granted in the Trustmaker's health-care power of attorney or durable power of attorney, that express grant controls. These Final Wishes state the Trustmaker's directions and preferences.
+If disposition authority is granted in the Declarant's health-care power of attorney or durable power of attorney, that express grant controls. These Final Wishes state the Declarant's directions and preferences.
 
 [[elif signing_state=ILLINOIS]]
-The Trustmaker intends this instrument to state final-disposition directions and, if an agent is named, to designate that agent under the Illinois Disposition of Remains Act (755 ILCS 65). The agent's authority begins only when the agent signs this instrument.
+The Declarant intends this instrument to state final-disposition directions and, if an agent is named, to designate that agent under the Illinois Disposition of Remains Act (755 ILCS 65). The agent's authority begins only when the agent signs this instrument.
 
 [[elif signing_state=INDIANA]]
-The Trustmaker's Indiana funeral planning declaration, if any, is the separate declaration contained in this document, signed as provided at its end. The rest of these Final Wishes states the Trustmaker's wishes.
+The Declarant's Indiana funeral planning declaration, if any, is the separate declaration contained in this document, signed as provided at its end. The rest of these Final Wishes states the Declarant's wishes.
 
 [[elif signing_state=IOWA]]
-The Trustmaker's appointment of a designee for final disposition under Iowa law, if any, is the separate declaration contained in this document, signed as provided at its end. The rest of these Final Wishes states the Trustmaker's wishes.
+The Declarant's appointment of a designee for final disposition under Iowa law, if any, is the separate declaration contained in this document, signed as provided at its end. The rest of these Final Wishes states the Declarant's wishes.
 
 [[elif signing_state=KANSAS]]
-If the Trustmaker grants final-disposition authority to a health-care agent, the express grant in the applicable health-care power of attorney controls. These Final Wishes state the Trustmaker's directions and preferences.
+If the Declarant grants final-disposition authority to a health-care agent, the express grant in the applicable health-care power of attorney controls. These Final Wishes state the Declarant's directions and preferences.
 
 [[elif signing_state=KENTUCKY]]
-The Trustmaker's Kentucky funeral planning declaration, if any, is the separate declaration contained in this document, signed as provided at its end.
+The Declarant's Kentucky funeral planning declaration, if any, is the separate declaration contained in this document, signed as provided at its end.
 
 [[elif signing_state=LOUISIANA]]
-Under Louisiana law, a designation of a person to control disposition is effective only if made in a notarial or testamentary form Louisiana recognizes. These Final Wishes state the Trustmaker's directions and preferences.
+Under Louisiana law, a designation of a person to control disposition is effective only if made in a notarial or testamentary form Louisiana recognizes. These Final Wishes state the Declarant's directions and preferences.
 
 [[elif signing_state=MAINE]]
-The Trustmaker intends any person selected in this instrument to have custody and control of the Trustmaker's remains to the extent provided by Maine law.
+The Declarant intends any person selected in this instrument to have custody and control of the Declarant's remains to the extent provided by Maine law.
 
 [[elif signing_state=MARYLAND]]
-The Trustmaker intends these written final-disposition directions and any agent designated in this instrument to be effective under Maryland law, when this instrument is signed and witnessed as provided at its end.
+The Declarant intends these written final-disposition directions and any agent designated in this instrument to be effective under Maryland law, when this instrument is signed and witnessed as provided at its end.
 
 [[elif signing_state=MASSACHUSETTS]]
-The Trustmaker intends these written final-arrangement wishes to be followed to the fullest extent recognized under Massachusetts law, subject to any controlling preneed agreement or other lawful arrangement. Any authority given in the Trustmaker's will or arising in the administration of the Trustmaker's estate is not changed by this instrument.
+The Declarant intends these written final-arrangement wishes to be followed to the fullest extent recognized under Massachusetts law, subject to any controlling preneed agreement or other lawful arrangement. Any authority given in the Declarant's will or arising in the administration of the Declarant's estate is not changed by this instrument.
 
 [[elif signing_state=MICHIGAN]]
-If the Trustmaker designates a Funeral Representative, the designation is effective when this instrument is signed as provided at its end. The Funeral Representative shall follow the lawful written directions stated here.
+If the Declarant designates a Funeral Representative, the designation is effective when this instrument is signed as provided at its end. The Funeral Representative shall follow the lawful written directions stated here.
 
 [[elif signing_state=MINNESOTA]]
-The Trustmaker intends any person selected to control disposition, and these final-disposition directions, to be evidenced by this dated written instrument, signed as provided at its end under Minnesota law.
+The Declarant intends any person selected to control disposition, and these final-disposition directions, to be evidenced by this dated written instrument, signed as provided at its end under Minnesota law.
 
 [[elif signing_state=MISSISSIPPI]]
-These Final Wishes state the Trustmaker's directions concerning final arrangements. They do not designate an agent for disposition or change the order of priority under Mississippi law; that may be done only in the form Mississippi law prescribes.
+These Final Wishes state the Declarant's directions concerning final arrangements. They do not designate an agent for disposition or change the order of priority under Mississippi law; that may be done only in the form Mississippi law prescribes.
 
 [[elif signing_state=MISSOURI]]
-If the Trustmaker grants right-of-sepulcher or final-disposition authority in a durable power of attorney, that express grant controls. These Final Wishes state the Trustmaker's directions and preferences.
+If the Declarant grants right-of-sepulcher or final-disposition authority in a durable power of attorney, that express grant controls. These Final Wishes state the Declarant's directions and preferences.
 
 [[elif signing_state=MONTANA]]
 Any designation of another person to control final disposition is effective only if made in a written instrument signed as Montana law requires. Written disposition directions are subject to Montana's witness requirements.
 
 [[elif signing_state=NEBRASKA]]
-The Trustmaker intends these final-disposition directions, and any designation of a person to control disposition, to be given effect by the affidavit included with this instrument.
+The Declarant intends these final-disposition directions, and any designation of a person to control disposition, to be given effect by the affidavit included with this instrument.
 
 [[elif signing_state=NEVADA]]
-If the Trustmaker selects a person to order burial or cremation, the designation is made by the affidavit included with this instrument.
+If the Declarant selects a person to order burial or cremation, the designation is made by the affidavit included with this instrument.
 
 [[elif signing_state=NEW_HAMPSHIRE]]
-The Trustmaker intends any selected person to have custody and control of the Trustmaker's remains to the extent provided by New Hampshire law and this signed designation.
+The Declarant intends any selected person to have custody and control of the Declarant's remains to the extent provided by New Hampshire law and this signed designation.
 
 [[elif signing_state=NEW_JERSEY]]
-Under New Jersey law, a person to control funeral and disposition arrangements must be appointed in the form New Jersey law prescribes. These Final Wishes state the Trustmaker's directions and preferences.
+Under New Jersey law, a person to control funeral and disposition arrangements must be appointed in the form New Jersey law prescribes or in a will. These Final Wishes state the Declarant's directions and preferences only; they do not appoint anyone to control disposition.
 
 [[elif signing_state=NEW_MEXICO]]
-The Trustmaker intends these written final-disposition directions to be followed under New Mexico law. If cremation is selected, the cremation direction in this instrument is signed as provided at its end. This document does not create a general appointment of an agent to control disposition.
+The Declarant intends these written final-disposition directions to be followed under New Mexico law. If cremation is selected, the cremation direction in this instrument is signed as provided at its end. This document does not create a general appointment of an agent to control disposition.
 
 [[elif signing_state=NEW_YORK]]
 Any appointment in this instrument of an agent to control disposition of remains is made under New York Public Health Law section 4201, including the successor-agent and acceptance provisions at its end.
 
 [[elif signing_state=NORTH_CAROLINA]]
-The Trustmaker intends these final-disposition directions, and any delegation of authority, to operate within the order of priority set by North Carolina law. A separate written statement is subject to North Carolina's witness requirements.
+The Declarant intends these final-disposition directions, and any delegation of authority, to operate within the order of priority set by North Carolina law. A separate written statement is subject to North Carolina's witness requirements.
 
 [[elif signing_state=NORTH_DAKOTA]]
-The Trustmaker intends this signed and dated written statement to direct lawful disposition and, when applicable, to assign the duty of final disposition to the person identified in this instrument.
+The Declarant intends this signed and dated written statement to direct lawful disposition and, when applicable, to assign the duty of final disposition to the person identified in this instrument.
 
 [[elif signing_state=OHIO]]
 Any appointment in this instrument of a representative for disposition is made by written declaration under Ohio law, including its required content, successor representatives, preferences, and signing requirements.
 
 [[elif signing_state=OKLAHOMA]]
-The Trustmaker intends these directions, and any appointment of a representative, to be effective when this instrument is signed and witnessed as Oklahoma law requires, or through another instrument Oklahoma law recognizes.
+The Declarant intends these directions, and any appointment of a representative, to be effective when this instrument is signed and witnessed as Oklahoma law requires, or through another instrument Oklahoma law recognizes.
 
 [[elif signing_state=OREGON]]
-Any appointment in this instrument of a person to make decisions about disposition of remains is made in the Oregon statutory form or a substantially similar form, with the Trustmaker's lawful written directions preserved.
+Any appointment in this instrument of a person to make decisions about disposition of remains is made in the Oregon statutory form or a substantially similar form, with the Declarant's lawful written directions preserved.
 
 [[elif signing_state=PENNSYLVANIA]]
-These Final Wishes preserve the Trustmaker's written directions and evidence of intent. Any authority over disposition given in the Trustmaker's will or another instrument Pennsylvania law recognizes remains governed by that instrument and applicable law.
+These Final Wishes preserve the Declarant's written directions and evidence of intent. Any authority over disposition given in the Declarant's will or another instrument Pennsylvania law recognizes remains governed by that instrument and applicable law.
 
 [[elif signing_state=RHODE_ISLAND]]
 Any appointment in this instrument of a Funeral Planning Agent is made by statutory designation under Rhode Island law, including the agent's acceptance and the signing requirements at its end.
 
 [[elif signing_state=SOUTH_CAROLINA]]
-Under South Carolina law, a binding designation for cremation or disposition must be made in a will or another document South Carolina law recognizes. These Final Wishes preserve the Trustmaker's directions but are not themselves a statutory designation.
+Under South Carolina law, a binding designation for cremation or disposition must be made in a will or another document South Carolina law recognizes. These Final Wishes preserve the Declarant's directions but are not themselves a statutory designation.
 
 [[elif signing_state=SOUTH_DAKOTA]]
 Any designation of another person to control final disposition is made by the notarized affidavit included with this instrument. Specific lawful directions may be attached to the affidavit.
 
 [[elif signing_state=TENNESSEE]]
-The Trustmaker intends these written final-disposition directions to operate under Tennessee law. If no controlling directions or pre-need arrangement exists, the applicable statutory priority remains separate.
+The Declarant intends these written final-disposition directions to operate under Tennessee law. If no controlling directions or pre-need arrangement exists, the applicable statutory priority remains separate.
 
 [[elif signing_state=TEXAS]]
 Any appointment in this instrument of an agent to control disposition of remains is made under Texas Health and Safety Code section 711.002, including successor agents and the acceptance each agent must sign before acting.
 
 [[elif signing_state=UTAH]]
-The Trustmaker intends these written directions, and any person selected in this instrument to have first priority, to be given effect under Utah law. An ordinary power of attorney, which ends at death, does not take the place of this designation.
+The Declarant intends these written directions, and any person selected in this instrument to have first priority, to be given effect under Utah law. An ordinary power of attorney, which ends at death, does not take the place of this designation.
 
 [[elif signing_state=VERMONT]]
 Under Vermont law, instructions about disposition of remains and funeral goods and services are given through an advance directive. These Final Wishes do not create a separate, competing appointment of a person to control disposition.
@@ -156,7 +156,7 @@ Under Vermont law, instructions about disposition of remains and funeral goods a
 Any designation in this instrument of a person to arrange the funeral and disposition of remains is effective when this instrument is signed and notarized, and accepted in writing by the designee, as Virginia law requires.
 
 [[elif signing_state=WASHINGTON]]
-The Trustmaker intends these written wishes, and any agent designated in this instrument, to be effective when this instrument is signed and witnessed as provided at its end. Any controlling prearrangement or military designation remains separately governed.
+The Declarant intends these written wishes, and any agent designated in this instrument, to be effective when this instrument is signed and witnessed as provided at its end. Any controlling prearrangement or military designation remains separately governed.
 
 [[elif signing_state=WEST_VIRGINIA]]
 Any designation of another person to control final disposition is made by the notarized affidavit included with this instrument. Specific lawful directions may be attached.
@@ -165,7 +165,7 @@ Any designation of another person to control final disposition is made by the no
 Any Authorization for Final Disposition in this instrument is made under Wisconsin law, including the representative, any successor representatives, special directions, and the signed acceptance of each person appointed.
 
 [[elif signing_state=WYOMING]]
-The Trustmaker intends this signed written instrument to state final-disposition directions and, if applicable, a written designation recognized under Wyoming law.
+The Declarant intends this signed written instrument to state final-disposition directions and, if applicable, a written designation recognized under Wyoming law.
 
 [[end]]
 `;
@@ -595,19 +595,9 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 @line Notary Seal (if required): _____________________________
 
 [[elif signing_state=NEW_JERSEY]]
-// DRAFTER NOTE: The operative standalone appointment must use the current New Jersey board-approved appointment form. That form requires the individual to sign in the presence of TWO witnesses and a notary. The national generic appointment language does not replace the board-approved form.
-
-We witnessed {{name}} execute the appointment voluntarily in our presence.
-@sub Witness 1
-@line Signature: ________________________________________
-@line Printed Name: _____________________________________
-@line Address: __________________________________________
-@line Date: _____________________________________________
-@sub Witness 2
-@line Signature: ________________________________________
-@line Printed Name: _____________________________________
-@line Address: __________________________________________
-@line Date: _____________________________________________
+// New Jersey: these Final Wishes state wishes only (user decision 25 Sep 2026). Appointing a funeral agent
+// requires New Jersey's prescribed form or a will (N.J.S.A. 45:27-22), so no appointment and no witness
+// lines here; the acknowledgment is optional and only confirms the signature.
 @sub Notarial Acknowledgment
 @line State of New Jersey
 @line County of _________________________________________

@@ -2757,7 +2757,7 @@
     v.reference = clean(a.reference);
     v.has_document_location = a.hasDocumentLocation === 'yes' && !!clean(a.documentLocation);
     v.document_location = clean(a.documentLocation);
-    v.has_agent = a.hasAgent === 'yes' && !!clean(a.agentName);
+    v.has_agent = !FW_NO_AGENT_STATES[a.state] && a.hasAgent === 'yes' && !!clean(a.agentName);
     v.no_agent = !v.has_agent;
     v.agent_name = clean(a.agentName);
     v.has_alt_agent = v.has_agent && a.hasAltAgent === 'yes' && !!clean(a.altAgentName);
@@ -2765,6 +2765,11 @@
     v.state_note = st ? st.note : '';
     return v;
   }
+  /* states where Final Wishes states wishes only and does not appoint anyone: the law there requires a
+     specific form for that appointment, so the "name someone" question is replaced by this explanation */
+  var FW_NO_AGENT_STATES = {
+    'New Jersey': 'In New Jersey, the person who controls your funeral and burial arrangements must be appointed in the form New Jersey law prescribes, so this document records your wishes only and doesn’t appoint anyone. To name that person, talk to a New Jersey funeral home or attorney about the state’s appointment form, or name them in your will.'
+  };
   var RENDER_FINALWISHES = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
@@ -2808,6 +2813,8 @@
         (answers.hasDocumentLocation === 'yes' ? field('Where they’re located', text('documentLocation', '')) : '');
     },
     agent: function () {
+      if (FW_NO_AGENT_STATES[answers.state]) return stepHead('Who is authorized to decide', '') +
+        '<p class="hint">' + FW_NO_AGENT_STATES[answers.state] + '</p>';
       return stepHead('Who is authorized to decide', 'Optional. To the extent your state allows it, you can name someone to control disposition of your remains and carry out these wishes.') +
         field('Do you want to name that person here?', pills('hasAgent', [['yes', 'Yes'], ['no', 'No — leave it to applicable law']], true)) +
         (answers.hasAgent === 'yes' ? field('Their full legal name', text('agentName', '')) : '') +
@@ -2861,6 +2868,7 @@
       if (a.hasPrepaid === 'yes' && !clean(a.provider)) e.push('Enter the provider, or answer No.');
       if (a.hasDocumentLocation === 'yes' && !clean(a.documentLocation)) e.push('Enter where the records are located, or answer No.');
     } else if (id === 'agent') {
+      if (FW_NO_AGENT_STATES[a.state]) return e;
       if (!a.hasAgent) e.push('Answer whether you want to name someone here.');
       if (a.hasAgent === 'yes' && !clean(a.agentName)) e.push('Enter that person’s full legal name.');
       if (a.hasAgent === 'yes' && a.hasAltAgent === 'yes' && !clean(a.altAgentName)) e.push('Enter the backup’s full legal name, or answer No.');
