@@ -382,3 +382,8 @@ a { color: var(--grape); }
   .bar .btn-sm { padding: 0 14px; font-size: 14px; min-height: 40px; }
   .menu-btn { width: 42px; height: 42px; }
 }
+/* "Not sure what you need?" line at the top of Pricing and Documents, pointing to the home page questions */
+.finder-note { margin-top: 18px; font-size: 16px; color: var(--ink-soft); }
+.finder-note a { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--grape); text-decoration: none; }
+.finder-note a:hover { text-decoration: underline; }
+.finder-note .ico { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }

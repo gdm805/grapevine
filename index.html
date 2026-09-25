@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Nunito+Sans:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
-<link rel="stylesheet" href="css/styles.css?v=20260924u">
+<link rel="stylesheet" href="css/styles.css?v=20260924v">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -86,6 +86,50 @@
       </article>
       <p class="try-note">Sample answers. Your answers become your document.</p>
     </div>
+  </div>
+</section>
+
+<!-- FINDER -->
+<section class="section tint" id="finder">
+  <div class="container finder-grid">
+    <div>
+      <p class="overline">Not sure where to start?</p>
+      <h2>Which documents do I need?</h2>
+      <p class="sub">Six quick yes-or-no questions, about a minute. We’ll suggest the documents and package that fit your situation — a will, or a will plus a trust. This is general information, not legal advice.</p>
+    </div>
+    <form class="finder" id="finder-form" onsubmit="return false">
+      <fieldset class="q">
+        <legend>Do you have children under 18?</legend>
+        <div class="yn"><input type="radio" name="kids" id="kids-y" value="y" checked><label for="kids-y">Yes</label><input type="radio" name="kids" id="kids-n" value="n"><label for="kids-n">No</label></div>
+      </fieldset>
+      <fieldset class="q">
+        <legend>Do you own a home, land, or other real estate?</legend>
+        <div class="yn"><input type="radio" name="home" id="home-y" value="y"><label for="home-y">Yes</label><input type="radio" name="home" id="home-n" value="n" checked><label for="home-n">No</label></div>
+      </fieldset>
+      <fieldset class="q">
+        <legend>Would keeping your estate out of the public probate court process matter to you?</legend>
+        <div class="yn"><input type="radio" name="probate" id="probate-y" value="y"><label for="probate-y">Yes</label><input type="radio" name="probate" id="probate-n" value="n" checked><label for="probate-n">No</label></div>
+      </fieldset>
+      <fieldset class="q">
+        <legend>Do you own property in more than one state?</legend>
+        <div class="yn"><input type="radio" name="multistate" id="multistate-y" value="y"><label for="multistate-y">Yes</label><input type="radio" name="multistate" id="multistate-n" value="n" checked><label for="multistate-n">No</label></div>
+      </fieldset>
+      <fieldset class="q">
+        <legend>Would you want someone to handle your money if you couldn’t?</legend>
+        <div class="yn"><input type="radio" name="money" id="money-y" value="y" checked><label for="money-y">Yes</label><input type="radio" name="money" id="money-n" value="n"><label for="money-n">No</label></div>
+      </fieldset>
+      <fieldset class="q">
+        <legend>Would you want someone to make medical decisions for you if you couldn’t?</legend>
+        <div class="yn"><input type="radio" name="care" id="care-y" value="y" checked><label for="care-y">Yes</label><input type="radio" name="care" id="care-n" value="n"><label for="care-n">No</label></div>
+      </fieldset>
+      <div class="results" aria-live="polite">
+        <p class="pick-kicker">Based on your answers, we recommend</p>
+        <p class="results-title" id="results-title"></p>
+        <p class="pick-why" id="results-why"></p>
+        <ul id="results"></ul>
+      </div>
+      <a class="btn btn-primary" id="results-cta" href="pricing.html">See this package’s price <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </form>
   </div>
 </section>
 
@@ -189,52 +233,8 @@
   </div>
 </section>
 
-<!-- FINDER -->
-<section class="section tint" id="finder">
-  <div class="container finder-grid">
-    <div>
-      <p class="overline">Not sure where to start?</p>
-      <h2>Answer a few quick questions</h2>
-      <p class="sub">We’ll point you to the package and documents that fit your situation — will, or will plus a trust. This is general information, not legal advice.</p>
-    </div>
-    <form class="finder" id="finder-form" onsubmit="return false">
-      <fieldset class="q">
-        <legend>Do you have children under 18?</legend>
-        <div class="yn"><input type="radio" name="kids" id="kids-y" value="y" checked><label for="kids-y">Yes</label><input type="radio" name="kids" id="kids-n" value="n"><label for="kids-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Do you own a home, land, or other real estate?</legend>
-        <div class="yn"><input type="radio" name="home" id="home-y" value="y"><label for="home-y">Yes</label><input type="radio" name="home" id="home-n" value="n" checked><label for="home-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Would keeping your estate out of the public probate court process matter to you?</legend>
-        <div class="yn"><input type="radio" name="probate" id="probate-y" value="y"><label for="probate-y">Yes</label><input type="radio" name="probate" id="probate-n" value="n" checked><label for="probate-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Do you own property in more than one state?</legend>
-        <div class="yn"><input type="radio" name="multistate" id="multistate-y" value="y"><label for="multistate-y">Yes</label><input type="radio" name="multistate" id="multistate-n" value="n" checked><label for="multistate-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Would you want someone to handle your money if you couldn’t?</legend>
-        <div class="yn"><input type="radio" name="money" id="money-y" value="y" checked><label for="money-y">Yes</label><input type="radio" name="money" id="money-n" value="n"><label for="money-n">No</label></div>
-      </fieldset>
-      <fieldset class="q">
-        <legend>Would you want someone to make medical decisions for you if you couldn’t?</legend>
-        <div class="yn"><input type="radio" name="care" id="care-y" value="y" checked><label for="care-y">Yes</label><input type="radio" name="care" id="care-n" value="n"><label for="care-n">No</label></div>
-      </fieldset>
-      <div class="results" aria-live="polite">
-        <p class="pick-kicker">Based on your answers, we recommend</p>
-        <p class="results-title" id="results-title"></p>
-        <p class="pick-why" id="results-why"></p>
-        <ul id="results"></ul>
-      </div>
-      <a class="btn btn-primary" id="results-cta" href="pricing.html">See this package’s price <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </form>
-  </div>
-</section>
-
 <!-- FAQ -->
-<section class="section" id="faq">
+<section class="section tint" id="faq">
   <div class="container">
     <p class="overline">Questions</p>
     <h2>Questions before you start?</h2>
@@ -275,7 +275,7 @@
   <div class="container foot-base"><span>© 2026 Grapevine Docs, Inc. All rights reserved.</span></div>
 </footer>
 
-<script src="js/main.js?v=20260924u"></script>
-<script src="js/nav.js?v=20260924u"></script>
+<script src="js/main.js?v=20260924v"></script>
+<script src="js/nav.js?v=20260924v"></script>
 </body>
 </html>
