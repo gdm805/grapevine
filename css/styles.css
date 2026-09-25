@@ -46,7 +46,8 @@ a { color: var(--grape); }
 .skip:focus { top: 12px; }
 .ico { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
 
-.overline { font: 700 12px/1.3 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--leaf-deep); }
+/* the green section labels above headings ("HOW IT WORKS", "PRICING"...), sized to be read, not skimmed past */
+.overline { font: 700 clamp(15px, 1.5vw, 19px)/1.35 var(--sans); letter-spacing: 0.07em; text-transform: uppercase; color: var(--leaf-deep); }
 
 /* buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 26px; border-radius: var(--r-pill); font: 600 16px/1 var(--sans); border: 2px solid transparent; cursor: pointer; text-decoration: none; transition: background 0.15s, border-color 0.15s, transform 0.15s; white-space: nowrap; }
@@ -293,7 +294,7 @@ a { color: var(--grape); }
 .need:has(input:checked) { border: 2px solid var(--grape); padding: 15.5px 17.5px; background: var(--grape-tint); }
 .need:has(input:focus-visible) { outline: 3px solid var(--grape); outline-offset: 2px; }
 .pick-result { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(22px, 3vw, 32px); display: grid; gap: 10px; justify-items: start; }
-.pick-kicker { font: 700 12px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--leaf-deep); }
+.pick-kicker { font: 700 15px/1.3 var(--sans); letter-spacing: 0.07em; text-transform: uppercase; color: var(--leaf-deep); }
 .pick-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; }
 .pick-line h3 { font-size: 34px; line-height: 1.1; }
 .pick-price { color: var(--ink-mute); font-size: 15px; }
@@ -380,6 +381,6 @@ a { color: var(--grape); }
 .badge.badge-pick { background: var(--leaf-deep); color: #fff; }
 .badge[hidden] { display: none; }
 .pick-kicker[hidden] { display: none; }
-/* the home page's "Wills, trusts and the paperwork behind them" line above the main heading: larger than the
-   small labels elsewhere, since it's the line that says what Grapevine does */
-.hero-kicker { display: inline-block; font-size: clamp(15px, 1.5vw, 19px); letter-spacing: 0.07em; line-height: 1.35; padding: 9px 16px; border-radius: var(--r-pill); background: var(--leaf-tint); }
+/* the home page's "Wills, trusts and the paperwork behind them" label: same size as every green label, plus a
+   soft green band, since it's the line that says what Grapevine does */
+.hero-kicker { display: inline-block; padding: 9px 16px; border-radius: var(--r-pill); background: var(--leaf-tint); }
