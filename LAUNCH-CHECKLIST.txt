@@ -65,7 +65,7 @@ A. BEFORE BETA TESTERS START
           the website itself allows each tester ONE free checkout, which can be a whole package.)
        c. On each Payment Link: switch on "Allow promotion codes".
        d. The payment check already accepts $0 purchases (cloudflare/payment-check.js, pasted in step 3c).
-       e. Test: private window > pricing.html?beta=1 > make a document > checkout > survey > $0 > download.
+       e. [x] DONE 25 Sep on www.grapevinedocs.com (sandbox) -- Test: private window > pricing.html?beta=1 > make a document > checkout > survey > $0 > download.
        f. Send ONE invitation email to all testers with the ?beta=1 link. Tell them it's a beta: read every
           document carefully before signing and report anything that looks wrong.
        g. If you quote survey answers later: say the person was a beta tester who got free documents, and
