@@ -322,12 +322,11 @@ normally. Set "on" to false at public launch. Steps are in LAUNCH-CHECKLIST.txt,
 
 3g. THE MENU (every page)
 ------------------------------------------
-Every page has the same top menu: Home, Documents, Pricing, Learn, Questions, plus a purple
+Every page has the same top menu: Home, Pricing, Learn, Questions, plus a purple
 "Get started" button that goes to the "which plan fits?" questions on the home page (index.html#finder),
 and the same footer. On phones and tablets the menu folds into a button with three lines (js/nav.js).
 The menu is written into each page's <header>; to change it, ask Claude to update all pages at once so
 they stay identical. The page you're on is marked with aria-current="page" in that page's menu.
-Documents page: documents.html (one <li> per document; prices fill in from js/plans.js).
 Questions page: questions.html (the pricing questions also appear on pricing.html; keep them in step).
 
 3c. THE ESSENTIALS/COMPLETE PACKAGE FLOW

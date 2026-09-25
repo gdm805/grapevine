@@ -7,7 +7,6 @@ Files
 -----
 index.html        Home page (all copy lives here)
 pricing.html      Pricing page
-documents.html    Every document in one list, grouped, each with its price and a link to start it.
 questions.html    All the common questions (the home page links here).
 will.html         The will builder (questions on the left, your will on the right)
 pour-over.html    The pour-over will builder (for people with a living trust)
@@ -34,7 +33,6 @@ css/styles.css    Styles. Colors and fonts are variables at the top of the file.
 css/checkout.css  Styles for the checkout and payment-received pages.
 js/main.js        Home page interactions: live document demo, plain-vs-legal switch, "which document" finder.
 js/nav.js         The phone/tablet menu button (three lines) in the header of every page.
-js/documents.js   Fills in the prices on documents.html from js/plans.js.
 js/plans.js       Plan names, prices and what each includes. ALL PRICES LIVE AT THE TOP OF THIS FILE.
 js/pricing.js     Pricing page. Reads its numbers from js/plans.js.
 js/checkout.js    Checkout page. PASTE YOUR STRIPE PAYMENT LINKS AT THE TOP OF THIS FILE to take real payment.
