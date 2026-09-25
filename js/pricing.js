@@ -12,6 +12,11 @@
      in this browser (sessionStorage) so it survives normal navigation but resets in a new tab. */
   var household = 'single';
   try { household = sessionStorage.getItem('gv.household') === 'couple' ? 'couple' : 'single'; } catch (e) {}
+  /* ?household=couple|single in the address (the home page's questions send it) wins, and is remembered */
+  try {
+    var hq = new URLSearchParams(location.search).get('household');
+    if (hq === 'couple' || hq === 'single') { household = hq; sessionStorage.setItem('gv.household', household); }
+  } catch (e) {}
 
   function setHousehold(h) {
     household = h === 'couple' ? 'couple' : 'single';

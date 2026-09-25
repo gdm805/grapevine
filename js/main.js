@@ -51,11 +51,11 @@
     });
   }
 
-  /* Finder: which package and documents fit. Real estate, wanting to skip probate, and owning
-     property in more than one state are the classic reasons someone benefits from a trust on top
-     of a will -- any one of those points at Complete, same as js/plans.js's own "why" for that
-     plan. Otherwise, wanting help with money or medical decisions points at Essentials; a plain
-     will covers everything else. */
+  /* Finder: which package and documents fit. Owning real estate or wanting to keep the estate out of
+     probate points at Complete (a will plus a living trust). Otherwise, wanting someone to handle money or
+     medical decisions points at Essentials; a plain will covers everything else. "Are you married?" doesn't
+     change the plan -- it sends the visitor to couple pricing and names the joint versions. The explanation
+     under the suggestion repeats only the answers this visitor actually gave "yes" to. */
   var form = document.getElementById('finder-form');
   var list = document.getElementById('results');
   var title = document.getElementById('results-title');
@@ -68,8 +68,9 @@
     return el ? el.value === 'y' : false;
   }
   /* the six questions start unanswered; the suggestion appears once every one has an answer */
-  var QUESTIONS = ['kids', 'home', 'probate', 'multistate', 'money', 'care'];
+  var QUESTIONS = ['married', 'kids', 'home', 'probate', 'money', 'care'];
   var kicker = document.getElementById('results-kicker');
+  function joinAnd(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + (a.length > 2 ? ',' : '') + ' and ' + a[a.length - 1]; }
   function render() {
     var answered = QUESTIONS.filter(function (n) { return form.querySelector('input[name="' + n + '"]:checked'); }).length;
     var done = answered === QUESTIONS.length;
@@ -81,24 +82,42 @@
       list.innerHTML = '';
       return;
     }
-    var kids = answer('kids'), home = answer('home'), probate = answer('probate'), multistate = answer('multistate'), money = answer('money'), care = answer('care');
-    var wantsTrust = home || probate || multistate;
+    var married = answer('married'), kids = answer('kids'), home = answer('home'), probate = answer('probate'), money = answer('money'), care = answer('care');
+    var wantsTrust = home || probate;
     var plan = wantsTrust ? 'complete' : (money || care ? 'essentials' : 'will');
-    var out = [{
-      t: 'Last Will and Testament',
-      w: kids ? 'Start here. It lets you name a guardian for your children and say who carries out your wishes.'
-              : 'Start here. It says who receives what you own and who carries out your wishes.'
-    }];
-    if (wantsTrust) out.push({ t: 'Revocable Living Trust', w: 'Helps your home and property pass to your family privately, without going through probate.' });
-    if (money) out.push({ t: 'Durable Power of Attorney', w: 'Names someone to pay bills and handle paperwork if you can’t.' });
-    if (care) out.push({ t: 'Health Care Directive', w: 'Records your medical wishes and names who speaks for you when you can’t.' });
-    title.textContent = PLAN_NAMES[plan] + ' — ' + out.length + (out.length === 1 ? ' document' : ' documents');
+    var each = married ? ' (one for each of you)' : '';
+    var out = [];
+    /* Complete: the trust comes first (the pour-over will refers to it), then the pour-over will */
+    if (wantsTrust) {
+      out.push({ t: married ? 'Joint Revocable Living Trust' : 'Revocable Living Trust',
+        w: (home ? 'Lets your home and property pass ' : 'Lets your property pass ') + (married ? 'to your spouse and family' : 'to your family') + (probate ? ' privately, without going through probate.' : ' without going through probate.') });
+      out.push({ t: 'Pour-Over Will' + each,
+        w: 'Sends anything left outside the trust into it' + (kids ? ', and names a guardian for your children.' : '.') });
+    } else {
+      out.push({ t: 'Last Will and Testament' + each,
+        w: kids ? 'Names a guardian for your children, says who receives what you own, and who carries out your wishes.'
+                : 'Says who receives what you own and who carries out your wishes.' });
+    }
+    if (money) out.push({ t: 'Durable Power of Attorney' + each, w: 'Names someone to pay bills and handle paperwork if you can’t.' });
+    if (care) out.push({ t: 'Health Care Directive' + each, w: 'Records your medical wishes and names who speaks for you when you can’t.' });
+    title.textContent = PLAN_NAMES[plan] + (married ? ' for couples' : '') + ' — ' + out.length + (out.length === 1 ? ' document' : ' kinds of documents');
     if (why) {
-      why.textContent = wantsTrust
-        ? 'Owning real estate, wanting to avoid probate, or owning property in more than one state are the usual reasons a trust is worth adding to a will.'
-        : (money || care
-          ? 'On top of a will, this adds the paperwork that lets someone act for you — with your money and your medical care — while you’re alive.'
-          : 'A will covers naming a guardian for your children and saying who receives what you own.');
+      /* only the reasons this visitor gave */
+      var reasons = [];
+      if (married) reasons.push('are married');
+      if (kids) reasons.push('have children under 18');
+      if (home) reasons.push('own real estate');
+      if (probate) reasons.push('want to keep your estate out of probate court');
+      if (money) reasons.push('want someone to handle your money if you can’t');
+      if (care) reasons.push('want someone to make medical decisions for you if you can’t');
+      var planText = {
+        complete: 'the Complete package, a will plus a living trust' + (married ? ' for the two of you' : '') + ', is a good option',
+        essentials: 'the Essentials package, a will plus the documents that let someone act for you' + (married ? ', for each of you' : '') + ', is a good option',
+        will: 'a will' + (married ? ' for each of you' : '') + ' is a good place to start'
+      }[plan];
+      why.textContent = reasons.length
+        ? 'Because you ' + joinAnd(reasons) + ', ' + planText + '.'
+        : 'Based on your answers, ' + planText + '.';
     }
     list.innerHTML = out.map(function (r) {
       return '<li>' + tick + '<span><strong>' + r.t + '</strong><span class="why">' + r.w + '</span></span></li>';
@@ -112,6 +131,7 @@
       try {
         var u = new URL(cta.getAttribute('href'), location.href);
         u.searchParams.set('need', plan);
+        u.searchParams.set('household', answer('married') ? 'couple' : 'single');
         cta.setAttribute('href', u.href);
       } catch (e) {}
     }

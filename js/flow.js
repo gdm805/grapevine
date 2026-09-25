@@ -16,7 +16,10 @@ window.GVFlow = (function () {
   var FLOWS = {
     will: ['will', 'finalwishes', 'contacts'],
     essentials: ['will', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
-    complete: ['pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'trust', 'cert', 'affidavit', 'assignment', 'finalwishes', 'contacts'],
+    /* Complete starts with the TRUST: the pour-over will asks about the trust (its name, date, trustee), so the
+       trust has to exist in the person's mind -- and in their answers -- first. ALL trust documents (the trust and
+       its paperwork) come before the pour-over will; then the personal documents. (Changed 25 Sep 2026; it used to start with the pour-over will.) */
+    complete: ['trust', 'cert', 'affidavit', 'assignment', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
     /* the two short packages sold from "Just need one document?" on the pricing page */
     health: ['hcd', 'dementia', 'hipaa', 'finalwishes'],
     trustpaper: ['schedulea', 'cert', 'affidavit', 'assignment']
@@ -88,8 +91,18 @@ window.GVFlow = (function () {
     var a = e.target.closest('[data-plan]');
     if (!a) return;
     var plan = a.getAttribute('data-plan');
-    if (plan === 'doc') start('doc', a.getAttribute('data-doc'));
-    else if (FLOWS[plan]) start(plan); else clear();
+    var f = null;
+    if (plan === 'doc') f = start('doc', a.getAttribute('data-doc'));
+    else if (FLOWS[plan]) f = start(plan); else clear();
+    /* send the click to the flow's FIRST document (for Complete: the trust, or the joint trust for a couple),
+       whatever page the link itself names, keeping its ?household= and other settings */
+    if (f && f.docs.length && a.getAttribute('href')) {
+      try {
+        var to = new URL(pageFor(f.docs[0]), location.href), from = new URL(a.getAttribute('href'), location.href);
+        from.searchParams.forEach(function (v, k) { to.searchParams.set(k, v); });
+        a.setAttribute('href', to.href);
+      } catch (err) { /* keep the link as it was */ }
+    }
   });
 
   return { start: start, current: current, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };

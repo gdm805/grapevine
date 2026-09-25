@@ -106,13 +106,13 @@ window.GV_PLANS = {
       name: 'Complete',
       tag: 'Everything in Essentials, plus a trust for your home and savings.',
       lead: 'Everything in Essentials, plus',
-      includes: ['Pour-Over Will', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts', 'Revocable Living Trust (or a Joint Trust, for couples)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust'],
+      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust', 'Pour-Over Will', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
       cta: 'Start with Complete',
       why: 'Adds a trust and the paperwork that supports it, so your home and savings can pass on privately.',
       /* Complete customers get the pour-over will instead of the plain will, but nothing stops them from also
          wanting the plain one, so the top plan unlocks every builder that exists today. */
       unlocks: ['will', 'pourover', 'dpoa', 'dementia', 'hcd', 'hipaa', 'trust', 'trustjoint', 'cert', 'affidavit', 'assignment', 'finalwishes', 'contacts'],
-      goesTo: 'pour-over.html'
+      goesTo: 'trust.html'
     },
     doc: {
       name: 'Single document',
