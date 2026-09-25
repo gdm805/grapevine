@@ -6,6 +6,13 @@
   'use strict';
 
   var LS_KEY, KIND, buildVars;
+  /* the per-state files (will/dpoa, will/hcd, will/hipaa) load on demand; give them the same ?v= stamp as
+     this script so a new release is never mixed with an old, cached state file */
+  var ASSET_V = (function () {
+    var el = document.currentScript || document.querySelector('script[src*="js/will.js"]');
+    var m = el && /[?&]v=([^&]+)/.exec(el.src || '');
+    return m ? '?v=' + m[1] : '';
+  })();
   var LABELS = {
     name: 'your full name', name_caps: 'YOUR FULL NAME', city: 'your city', county: 'your county', state: 'your state',
     spouse: 'spouse\u2019s name', guardian: 'guardian', alt_guardian: 'alternate guardian',
@@ -951,7 +958,7 @@
       var cbs = DP_PENDING[name]; delete DP_PENDING[name];
       cbs.forEach(function (f) { if (f) f(); });
     }
-    s.src = 'will/dpoa/' + dpSlug(name) + '.js';
+    s.src = 'will/dpoa/' + dpSlug(name) + '.js' + ASSET_V;
     s.onload = fin; s.onerror = fin;
     document.head.appendChild(s);
   }
@@ -969,6 +976,12 @@
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase();
     v.county = clean(a.county).replace(/\s+county$/i, '');
     v.state = st ? st.name : ''; v.governing_state = gs ? gs.name : v.state;
+    /* where the person lives, as the opening line says it: "Travis County, Texas", but "Acadia Parish,
+       Louisiana", "Anchorage, Alaska" and "the District of Columbia" -- the county list already carries the
+       right word (County, Parish, Borough, City) for each place */
+    var place = clean(a.county);
+    v.residence = v.state === 'District of Columbia' ? 'the District of Columbia'
+      : [place ? (/\b(county|parish|borough|area|city|municipality)$/i.test(place) || v.state === 'Alaska' ? place : place + ' County') : '____________________ County', v.state].filter(Boolean).join(', ');
     v.agent = clean(a.agent);
     v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
     v.has_successors = v.successors.length > 0;
@@ -1282,7 +1295,7 @@
       var cbs = HCD_PENDING[name]; delete HCD_PENDING[name];
       cbs.forEach(function (f) { if (f) f(); });
     }
-    s.src = 'will/hcd/' + hcdSlug(name) + '.js';
+    s.src = 'will/hcd/' + hcdSlug(name) + '.js' + ASSET_V;
     s.onload = fin; s.onerror = fin;
     document.head.appendChild(s);
   }
@@ -1551,7 +1564,7 @@
       var cbs = HIPAA_PENDING[name]; delete HIPAA_PENDING[name];
       cbs.forEach(function (f) { if (f) f(); });
     }
-    s.src = 'will/hipaa/' + hipaaSlug(name) + '.js';
+    s.src = 'will/hipaa/' + hipaaSlug(name) + '.js' + ASSET_V;
     s.onload = fin; s.onerror = fin;
     document.head.appendChild(s);
   }
@@ -3077,11 +3090,16 @@
     return e;
   }
 
+  /* Louisiana's notarial testament must be signed by the testator at the end AND on every other separate
+     page (La. Civ. Code art. 1577), so a Louisiana will or pour-over will gets a signature blank in the
+     footer of every page */
+  function laPageSign() { return answers && answers.state === 'Louisiana' ? 'Testator\u2019s signature: ____________________   ' : ''; }
+
   /* ---------- put the chosen kind together ---------- */
   var KINDS = {
-    will: { key: 'will', ls: 'grapevine.will.v2', file: 'Last-Will-and-Testament', footer: function (n) { return 'Last Will and Testament of ' + n; },
+    will: { key: 'will', ls: 'grapevine.will.v2', file: 'Last-Will-and-Testament', footer: function (n) { return laPageSign() + 'Last Will and Testament of ' + n; },
       empty: EMPTY_WILL, rows: ROWS_WILL, steps: STEPS_WILL, render: RENDER_WILL, validate: validateWill, buildVars: buildVarsWill },
-    pourover: { key: 'pourover', ls: 'grapevine.pourover.v1', file: 'Pour-Over-Will', footer: function (n) { return 'Pour-Over Will For ' + n; },
+    pourover: { key: 'pourover', ls: 'grapevine.pourover.v1', file: 'Pour-Over-Will', footer: function (n) { return laPageSign() + 'Pour-Over Will For ' + n; },
       empty: EMPTY_PO, rows: ROWS_PO, steps: STEPS_PO, render: RENDER_PO, validate: validatePO, buildVars: buildVarsPO },
     dpoa: { key: 'dpoa', ls: 'grapevine.dpoa.v1', file: 'Durable-Power-of-Attorney', footer: function (n) { return 'Durable Power of Attorney of ' + n; },
       empty: EMPTY_DP, rows: ROWS_DP, steps: STEPS_DP, render: RENDER_DP, validate: validateDP, buildVars: buildVarsDP },

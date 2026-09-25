@@ -29,7 +29,7 @@ window.DPOA_STATES["Alaska"] = String.raw`
 
 ## Durable Power of Attorney
 
-I, {{name}}, of {{county}} County, {{state}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
+I, {{name}}, of {{residence}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
 
 ## Durability and Personal Authority
 
@@ -439,7 +439,7 @@ To the extent permitted by law, this Power of Attorney and related certification
 
 I declare that I understand the nature and purpose of this Power of Attorney, that I execute it voluntarily, and that I intend to grant my Agent the authority stated here subject to its limitations and applicable law.
 
-@line Executed in ____________________ County, Alaska.
+@line Executed in ____________________, Alaska.
 
 @line DATED: ____________________, 20____
 

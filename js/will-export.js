@@ -165,6 +165,8 @@
   }
 
   function pdf(blocks, o) {
+    /* the PDF font (Tinos) has no ballot-box character, so print "☐" as a drawn-looking "[  ]" */
+    blocks = blocks.map(function (b) { return b.t && b.t.indexOf('\u2610') > -1 ? Object.assign({}, b, { t: b.t.replace(/\u2610/g, '[  ]') }) : b; });
     return loadLibs().then(function () {
       var doc = new window.jspdf.jsPDF({ unit: 'pt', format: 'letter' });
       doc.addFileToVFS('Tinos-Regular.ttf', window.GV_FONTS.regular); doc.addFont('Tinos-Regular.ttf', 'Tinos', 'normal');
@@ -341,7 +343,10 @@
           case 'ul':
             b.items.forEach(function (it) { space(30); font(false, 12); doc.text('•', M + 12, base(12)); para(it, { left: 36, justify: false, after: 5 }); });
             y += 3; break;
-          case 'break': newPage(); sections.push({ start: doc.getNumberOfPages(), footer: b.footer || o.footer }); break;
+          case 'break':
+            /* only a package's document boundary (a break that carries its own footer) restarts "Page X of Y";
+               an ordinary page break inside one document (such as before EXECUTION) keeps counting */
+            newPage(); if (b.footer) sections.push({ start: doc.getNumberOfPages(), footer: b.footer }); break;
           default: {
             var nk = blocks[bi + 1] && blocks[bi + 1].k;
             para(b.t, { keep: (nk === 'sign' || nk === 'line') ? 80 : 0, justify: !/_{4}/.test(b.t) });

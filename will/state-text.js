@@ -232,11 +232,9 @@ On ____________________, 20____, {{name}} declared to us that this instrument is
 community: none
 no_contest: yes
 witnesses: 2
-notary: no
+notary: yes
 --- tail
-// NOTE: your Will_Pour_Over_Colorado.docx has no text under "Witness Attestation" and ends with a
-// "Self-Proving Affidavit" heading with nothing under it. I left the empty heading out of the will.
-// Please add the Colorado attestation text (and affidavit, if you want one) here.
+// Attestation and optional self-proving affidavit follow C.R.S. 15-11-502 and 15-11-504(2).
 @sub Testator Execution
 
 I execute this Will on ____________________, 20____ in ____________________ County, Colorado. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
@@ -244,6 +242,8 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 @sign {{name}}, Testator
 
 @sub Witness Attestation
+
+We, the undersigned witnesses, declare that {{name}} signed this instrument, or acknowledged the Testator's signature or this Will, in our presence as the Testator's Last Will and Testament, and that each of us signs as a witness within a reasonable time after witnessing that signing or acknowledgment.
 
 @sign Witness 1 Signature
 
@@ -256,6 +256,29 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 @sign Printed Name
 
 @sign Address
+
+@sub Self-Proving Affidavit
+
+I, {{name}}, the Testator, sign my name to this instrument this _____ day of ____________________, 20____, and being first duly sworn, declare to the undersigned authority that I sign and execute this instrument as my Will and that I sign it willingly, or willingly direct another to sign for me, that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+
+@sign {{name}}, Testator
+
+We, the undersigned witnesses, sign our names to this instrument, being first duly sworn, and declare to the undersigned authority that the Testator signs and executes this instrument as the Testator's Will and that the Testator signs it willingly, or willingly directs another to sign for the Testator, and that each of us, in the presence and hearing of the Testator, signs this Will as witness to the Testator's signing, and that to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+
+@sign Witness 1
+
+@sign Witness 2
+
+@line STATE OF COLORADO
+@line COUNTY OF ____________________
+
+Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this _____ day of ____________________, 20____.
+
+@sign Notary Public
+
+@line My commission expires: ____________________
+
+@line (Seal)
 
 === Connecticut
 community: none
@@ -341,7 +364,7 @@ notary: no
 --- tail
 @sub Testator Execution
 
-I execute this Will on ____________________, 20____ in ____________________ County, the District of Columbia. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
+I execute this Will on ____________________, 20____ in Washington, District of Columbia. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
 
 @sign {{name}}, Testator
 
@@ -383,24 +406,25 @@ We, the undersigned witnesses, declare that {{name}} declared this instrument to
 
 @sub Self-Proving Affidavit
 
+// Fla. Stat. 732.503(1), statutory form
 @line STATE OF FLORIDA
 @line COUNTY OF ____________________
 
-I, {{name}}, declare to the officer taking my acknowledgment and to the subscribing witnesses that I signed this instrument as my Will.
+I, {{name}}, declare to the officer taking my acknowledgment of this instrument, and to the subscribing witnesses, that I signed this instrument as my will.
 
 @sign Testator
 
-We, the undersigned witnesses, having been sworn by the officer signing below, declare on our oaths that the Testator declared the instrument to be the Testator's Will and signed it in our presence, and that we each signed the instrument as a witness in the presence of the Testator and of each other.
+We, ____________________ and ____________________, have been sworn by the officer signing below, and declare to that officer on our oaths that the testator declared the instrument to be the testator's will and signed it in our presence and that we each signed the instrument as a witness in the presence of the testator and of each other.
 
 @sign Witness
 
 @sign Witness
 
-Acknowledged by the Testator and sworn to and subscribed by the witnesses before me on ____________________, 20____.
+Acknowledged and subscribed before me by means of ☐ physical presence or ☐ online notarization by the testator, {{name}}, who ☐ is personally known to me or ☐ has produced ____________________ as identification, and sworn to and subscribed before me by each of the following witnesses: ____________________ who ☐ is personally known to me or ☐ has produced ____________________ as identification, by means of ☐ physical presence or ☐ online notarization; and ____________________ who ☐ is personally known to me or ☐ has produced ____________________ as identification, by means of ☐ physical presence or ☐ online notarization. Subscribed by me in the presence of the testator and the subscribing witnesses, by the means specified herein, all on ____________________ (date).
 
-@sign Notary Public / Officer Authorized to Administer Oaths
+@sign Signature of Officer
 
-@line [Florida certificate fields / seal as applicable]
+@sign Print, type, or stamp commissioned name and affix official seal
 
 === Georgia
 community: none
@@ -483,15 +507,11 @@ We, the undersigned witnesses, being first duly sworn, declare that the Testator
 
 @sign Address
 
-@sign Signature
-
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
 @sign Address
-
-@sign Signature
 
 @line State of ____________________
 @line County of ____________________
@@ -546,15 +566,11 @@ We, the undersigned witnesses, being first duly sworn, declare that the Testator
 
 @sign Address
 
-@sign Signature
-
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
 @sign Address
-
-@sign Signature
 
 @line State of ____________________
 @line County of ____________________
@@ -589,15 +605,11 @@ We, the undersigned credible witnesses, attest that {{name}} signed this instrum
 
 @sign Address
 
-@sign Signature
-
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
 @sign Address
-
-@sign Signature
 
 @sub Witness Proof Clause
 
@@ -611,15 +623,11 @@ Each undersigned witness states that the witness was present and saw {{name}} si
 
 @sign Address
 
-@sign Signature
-
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
 @sign Address
-
-@sign Signature
 
 === Indiana
 community: none
@@ -675,15 +683,11 @@ We, the undersigned Testator and witnesses, declare:
 
 @sign Address
 
-@sign Signature
-
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
 @sign Address
-
-@sign Signature
 
 This clause is intended to satisfy Ind. Code §29-1-5-3.1(c)/(d). No notary is required for this traditional self-proving clause.
 
@@ -732,15 +736,11 @@ We, {{name}} and the undersigned witnesses, being first duly sworn, declare that
 
 @sign Address
 
-@sign Signature
-
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
 @sign Address
-
-@sign Signature
 
 Subscribed, sworn, and acknowledged before me by {{name}}, and subscribed and sworn before me by the two witnesses, on ____________________, 20____.
 
@@ -852,25 +852,30 @@ no_contest: yes
 witnesses: 2
 notary: yes
 --- tail
+// Notarial testament, La. Civ. Code art. 1577. The testator signs at the end AND on every other separate
+// page (the footer of each page has a line for it), in front of the notary and both witnesses; the
+// attestation clause below follows the wording of article 1577.
 @sub Testator Execution
 
-I execute this Will on ____________________, 20____ in ____________________ County, Louisiana. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
+I execute this Will on ____________________, 20____ in ____________________ Parish, Louisiana. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament. I have signed this Will at the end and on each other separate page.
 
 @sign {{name}}, Testator
 
-@sub Witness And Notarial Execution
+@sub Attestation Clause
 
-Executed on ____________________, 20____ before the undersigned notary public and in the presence of the two undersigned competent witnesses. {{name}} declares that this instrument is the Testator's testament and signs it as the Testator's free and voluntary act.
+In our presence the testator has declared or signified that this instrument is the testator's testament and has signed it at the end and on each other separate page, and in the presence of the testator and each other we have hereunto subscribed our names this _____ day of ____________________, 20____.
 
-@sign {{name}}, Testator
+@sign Witness 1 Signature
 
-@sign Witness 1
+@sign Printed Name
 
-@sign Witness 2
+@sign Witness 2 Signature
+
+@sign Printed Name
 
 @sign Notary Public
 
-@sign Printed Name / Notary Identification
+@sign Printed Name / Notary Identification Number
 
 === Maine
 community: none
@@ -1541,10 +1546,6 @@ The Testator declared to each of us that this instrument is the Testator’s Las
 
 We, the undersigned attesting witnesses, being duly sworn, state that {{name}} declared this instrument to be the Testator’s Last Will and Testament; signed the Will in our presence or acknowledged the Testator’s signature to each of us; requested each of us to sign as a witness; and, at the time of execution, appeared to be of sound mind and memory and free from restraint. Each of us signed within the statutory thirty-day period.
 
-@sign Witness 1 Residence Address
-
-@sign Witness 2 Residence Address
-
 @sign Witness 1 - Signature
 
 @sign Printed Name
@@ -2071,7 +2072,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator as required by the law of Tennessee.
+We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator and in the presence of each other, as required by the law of Tennessee.
 
 @sign Witness 1 - Signature
 
@@ -2252,7 +2253,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator as required by the law of Vermont.
+We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator and in the presence of each other, as required by the law of Vermont.
 
 @sign Witness 1 - Signature
 
@@ -2303,7 +2304,7 @@ notary: yes
 --- tail
 @sub Testator Execution
 
-I execute this Will on ____________________, 20____ in ____________________ County, Virginia. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
+I execute this Will on ____________________, 20____ in the City or County of ____________________, Virginia. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
 
 @sign {{name}}, Testator
 

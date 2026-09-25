@@ -174,9 +174,9 @@ If the Trustmaker has not made an effective designation of a person to control d
 
 # STATE-SPECIFIC PROVISIONS
 
-## State Route Controls
+## Governing State Provisions
 
-Only the provisions for the Trustmaker's governing state shall render. The selected state route controls over inconsistent general language in this document. State-specific execution language is supplied through Grapevine's State Execution Library.
+The provisions of this Article apply under the law of the Trustmaker's governing state and control over any inconsistent general language in this document.
 
 [[include finalwishes_state]]
 

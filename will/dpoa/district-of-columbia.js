@@ -51,7 +51,7 @@ If you have questions about the power of attorney or the authority you are grant
 
 ## Durable Power of Attorney
 
-I, {{name}}, of {{county}} County, {{state}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
+I, {{name}}, of {{residence}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
 
 ## Durability and Personal Authority
 
@@ -459,7 +459,7 @@ To the extent permitted by law, this Power of Attorney and related certification
 
 I declare that I understand the nature and purpose of this Power of Attorney, that I execute it voluntarily, and that I intend to grant my Agent the authority stated here subject to its limitations and applicable law.
 
-@line Executed in ____________________ County, District of Columbia.
+@line Executed in Washington, District of Columbia.
 
 @line DATED: ____________________, 20____
 

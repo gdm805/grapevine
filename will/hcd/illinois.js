@@ -19,7 +19,7 @@ window.HCD_STATES["Illinois"] = String.raw`
 @set ask_oh_unconscious_anh = no
 @set ask_sc_optional_notary = no
 @set ask_vt_facility_explanation = no
-@set has_witness = no
+@set has_witness = yes
 @set has_notary = no
 
 @center **POWER OF ATTORNEY FOR HEALTH CARE WITH HEALTH CARE INSTRUCTIONS**
@@ -603,6 +603,20 @@ The Principal declares that the Principal understands the nature and purpose of 
 @line Signature: ______________________________________________
 
 @line Printed Name: {{name}}
+
+@line Date: ______________________________
+
+@sub WITNESS
+
+// 755 ILCS 45/4-5.1: every Illinois health care agency must bear the signature of one adult witness to the
+// principal's signing, and lists who may not be that witness.
+I, the undersigned witness, certify that I am 18 years of age or older, that I witnessed {{name}} sign or acknowledge this document, and that the Principal appeared to be of sound mind and acting voluntarily. I am not: (a) the Principal's attending physician or mental health service provider, or a relative of the physician or provider; (b) an owner, operator, or relative of an owner or operator of a health care facility in which the Principal is a patient or resident; (c) a parent, sibling, descendant, or the spouse of a parent, sibling, or descendant of either the Principal or any Health Care Agent or Successor Health Care Agent named in this document, regardless of whether the relationship is by blood, marriage, or adoption; or (d) a Health Care Agent or Successor Health Care Agent named in this document.
+
+@line Witness Signature: ______________________________________________
+
+@line Printed Name: ______________________________________________
+
+@line Address: ______________________________________________
 
 @line Date: ______________________________
 `;

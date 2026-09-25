@@ -43,7 +43,7 @@ If you have questions about this power of attorney or the authority you are gran
 
 ## Durable Power of Attorney
 
-I, {{name}}, of {{county}} County, {{state}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
+I, {{name}}, of {{residence}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
 
 ## Durability and Personal Authority
 

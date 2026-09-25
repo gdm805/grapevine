@@ -15,7 +15,7 @@ Alaska | 2 | yes | yes |
 Arizona | 2 | yes | yes | 
 Arkansas | 2 | yes | yes | 
 California | 2 | no | yes | 
-Colorado | 2 | no | yes | 
+Colorado | 2 | yes | yes | 
 Connecticut | 2 | yes | yes | 
 Delaware | 2 | yes | yes | 
 District of Columbia | 2 | no | yes | 
@@ -28,7 +28,7 @@ Indiana | 2 | no | yes |
 Iowa | 2 | yes | yes | 
 Kansas | 2 | yes | yes | 
 Kentucky | 2 | yes | yes | 
-Louisiana | 2 | yes | yes | In Louisiana, the will is signed in front of a notary public and two witnesses.
+Louisiana | 2 | yes | yes | In Louisiana, sign in front of a notary public and both witnesses at the same time, and sign your full name at the end of the will AND on the signature line at the bottom of every other page. A page left unsigned can make the whole will invalid.
 Maine | 2 | yes | yes | 
 Maryland | 2 | no | yes | 
 Massachusetts | 2 | yes | yes | 

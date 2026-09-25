@@ -63,7 +63,7 @@ I have read the foregoing notice and I understand the legal and fiduciary duties
 
 ## Durable Power of Attorney
 
-I, {{name}}, of {{county}} County, {{state}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
+I, {{name}}, of {{residence}}, execute this instrument as my Durable Power of Attorney and appoint the Agent designated in this instrument to act for me with respect to the powers expressly granted by this Power of Attorney and any authority incidental to those powers under applicable law.
 
 ## Durability and Personal Authority
 
@@ -479,11 +479,11 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Choose One California Execution Method
 
-@sub Route A - Notarial Acknowledgment
+@sub Option A - Notarial Acknowledgment
 
 A California notarial acknowledgment or other acknowledgment authorized by California law shall be attached or completed for the Principal's signature.
 
-@sub Route B - Two Witnesses
+@sub Option B - Two Witnesses
 
 We declare under penalty of perjury under the laws of the State of California that the Principal signed or acknowledged this Power of Attorney in our presence; that the Principal appeared to be of sound mind and under no duress, fraud, or undue influence; and that neither of us is the Agent designated in this Power of Attorney.
 
