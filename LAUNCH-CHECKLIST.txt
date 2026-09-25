@@ -19,7 +19,8 @@ A. BEFORE BETA TESTERS START
 [ ] 2. Decide the web address. Keep gdm805.github.io/grapevine, or move to grapevinedocs.com?
        Do this BEFORE step 3, because every step below uses the address. Moving means: GitHub Pages
        custom domain + DNS at your domain registrar, then updating the 12 Stripe redirect addresses,
-       the Terms URL in Stripe, and ALLOWED_SITES in cloudflare/payment-check.js.
+       the Terms URL in Stripe, ALLOWED_SITES in cloudflare/payment-check.js, and the share-picture
+       address (og:image, https://gdm805.github.io/grapevine/...) in every page (Claude can do it in one go).
 
 [ ] 3. Turn on the Terms and Conditions checkbox at Stripe -- in the LIVE account (the sandbox can't hold a
        Terms of service URL; tried 24 Sep). Do these in this order:
@@ -54,6 +55,12 @@ A. BEFORE BETA TESTERS START
 [ ] 5. Decide the couples pricing question: trust documents (Schedule A, Certification, Affidavit,
        Assignment) currently cost a couple $49, the same as one person (one trust). Other single
        documents cost a couple $79. Confirm or change.
+
+[ ] 5b. Professional logo (user is having one made, 25 Sep). Ask the designer for: SVG + PDF (or AI/EPS)
+        originals; horizontal, stacked and icon-only versions; full color + one-color white; transparent
+        background; hex color codes; font names (and licenses); written transfer of all rights to
+        Grapevine Docs, Inc. Then Claude swaps it into the header, footer, tab icon, phone icons and share
+        picture.
 
 [ ] 6. Check the email addresses work: support@grapevinedocs.com appears in the Terms.
 
