@@ -136,7 +136,9 @@ C. AFTER BETA (bigger projects)
 
 [ ] 12. Customer accounts: log in from anywhere to see purchases and documents.
 [ ] 13. The "vault" upsell (secure document storage for customers; likely a paid plan).
-[ ] 14. Privacy Policy (needed once accounts store customers' answers and documents on a server).
+[~] 14. Privacy Policy: FIRST VERSION DRAFTED 26 Sep (privacy.html, linked in every footer and from the Terms) --
+        user to review. MUST be updated before accounts/vault store answers or documents on a server, or if any
+        new outside service (analytics, etc.) is added.
 [ ] 15. Update the Terms for accounts and the vault: section 6 (delivery; the "remembered only in that
         browser" wording goes away), section 8 (your information), and auto-renewal / cancellation
         terms if the vault is a subscription.
