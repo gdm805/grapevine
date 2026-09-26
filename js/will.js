@@ -61,18 +61,18 @@
      "your name" question is actually an array row (Certification of Trust's trustmakers list). */
   var PROFILE_KEY = 'grapevine.profile.v1';
   var PROFILE_MAP = {
-    will: { name: 'name', county: 'county' },
-    pourover: { name: 'name', county: 'county' },
-    dpoa: { name: 'name', county: 'county' },
-    dementia: { name: 'name' },
-    hcd: { name: 'name', address: 'address', phone: 'phone', dob: 'dob' },
-    hipaa: { name: 'name' },
-    trust: { name: 'name' },
-    trustjoint: { name: 'name1', name2: 'name2' },
-    cert: { name: 'trustmakers[0].name', name2: 'trustmakers[1].name' },
-    affidavit: { name: 'tm1Name', name2: 'tm2Name' },
-    assignment: { name: 'tm1Name', name2: 'tm2Name' },
-    finalwishes: { name: 'name' },
+    will: { name: 'name', county: 'county', state: 'state' },
+    pourover: { name: 'name', county: 'county', state: 'state' },
+    dpoa: { name: 'name', county: 'county', state: 'state' },
+    dementia: { name: 'name', state: 'state' },
+    hcd: { name: 'name', address: 'address', phone: 'phone', dob: 'dob', state: 'state' },
+    hipaa: { name: 'name', state: 'state' },
+    trust: { name: 'name', state: 'state' },
+    trustjoint: { name: 'name1', name2: 'name2', state: 'state' },
+    cert: { name: 'trustmakers[0].name', name2: 'trustmakers[1].name', state: 'state' },
+    affidavit: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
+    assignment: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
+    finalwishes: { name: 'name', state: 'state' },
     schedulea: { name: 'tm1Name', name2: 'tm2Name' },
     contacts: { name: 'name' }
   };
@@ -626,7 +626,7 @@
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
       var bens = v.beneficiaries.map(function (b) { return esc(b.beneficiary) + ' (' + esc(b.share) + '%)'; }).join(', ');
-      var pr = esc(v.executor) + (v.has_successors ? '. Backups: ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
+      var pr = esc(v.executor) + (v.has_successors ? '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
       return stepHead('Your will is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
         '<div class="sum">' +
         row('Lives in', esc([v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ')), 'start') +
@@ -797,12 +797,12 @@
       return stepHead('Tell us about your trust', 'Your pour-over will sends anything left outside your trust into it. Copy these details from your signed trust document.') +
         field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust.') +
         field('Date your trust was first signed', '<input class="input" type="date" data-k="trustDate" value="' + val(answers.trustDate) + '">', 'Use the original date, not the date of any later amendment.') +
-        field('Is it a joint trust, created by you and another person?', pills('jointTrust', [['yes', 'Yes'], ['no', 'No']], true)) +
+        field('Is it a joint trust, one that you and another person made together (for example, with your spouse)?', pills('jointTrust', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.jointTrust === 'yes' ? field('The other person’s full legal name', text('otherTrustmaker', '')) : '');
     },
     executor: function () {
       var co = answers.prMode === 'co';
-      return stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn’t in your trust. Your will calls this person your Personal Representative. Some states call it an executor.') +
+      return stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn’t in your trust. Your will calls this person your Personal Representative. Some states call it an executor. You can name one person or more than one. If you name more than one, choose below whether they take turns (one at a time) or serve together.') +
         cards('prMode', [['successive', 'One at a time', 'Your first choice serves. If they can’t, the next person on your list steps in.'], ['co', 'Two or more together', 'They serve together as co-personal representatives.']]) +
         (co ? field('Co-personal representatives', nameRows('coPRs', 'Co-personal representative', 2) + addBtn('coPRs', '+ Add another'), 'Enter at least two people.')
             : field('Personal representative’s full name', text('executor', ''))) +
@@ -838,7 +838,7 @@
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
       var pr = v.pr_co ? 'Together: ' + esc(v.co_prs.map(function (x) { return x.co_pr; }).join(', ')) : esc(v.executor);
-      if (v.successors.length) pr += '. Backups: ' + esc(v.successors.map(function (x) { return x.successor; }).join(', '));
+      if (v.successors.length) pr += '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', '));
       var guardians = v.guardian_nominations.map(function (g) { return (v.guardian_nominations.length > 1 ? esc(g.applies_to) + ': ' : '') + esc(g.guardian); }).join('; ');
       return stepHead('Your pour-over will is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
         '<div class="sum">' +
@@ -1031,7 +1031,7 @@
         field('County where you live', countySelect('county'));
     },
     agent: function () {
-      return stepHead('Who should act for you?', 'Your agent handles your money and property if you can’t, or if you ask them to. Choose someone you trust completely. Your document calls this person your Agent.') +
+      return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Choose someone you trust completely. Many people choose the same person they named to carry out their will. Your document calls this person your Agent.') +
         field('Your agent’s full name', text('agent', '')) +
         coAgentFields(false) +
         field('Backups <em>(optional)</em>', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can’t serve, the first backup takes over, then the next.');
@@ -1059,7 +1059,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      var agent = esc(v.agent) + (v.has_co_agents ? ' and ' + esc(v.co_agents.map(function (x) { return x.co_agent; }).join(', ')) + (v.co_separate ? ' (each may act alone)' : ' (must act together)') : '') + (v.has_successors ? '. Backups: ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
+      var agent = esc(v.agent) + (v.has_co_agents ? ' and ' + esc(v.co_agents.map(function (x) { return x.co_agent; }).join(', ')) + (v.co_separate ? ' (each may act alone)' : ' (must act together)') : '') + (v.has_successors ? '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
       var starts = dpSet(answers, 'effective_choice') === 'no' ? 'Right away (the only option in ' + esc(v.governing_state) + ')' : (answers.effective === 'incapacity' ? 'Only if I become incapacitated' : (answers.effective === 'now' ? 'Right away' : ''));
       return stepHead('Your power of attorney is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
         '<div class="sum">' +
@@ -3214,7 +3214,12 @@
              bought the plan before, revisiting)? Leave this document's own buttons showing, since
              there's nothing left to wait for. */
           var actionsEl2 = stepEl.querySelector('.actions');
-          if (actionsEl2 && nextKind) actionsEl2.outerHTML = renderPkgContinue(nextKind);
+          if (actionsEl2 && nextKind) {
+            actionsEl2.outerHTML = renderPkgContinue(nextKind);
+            /* the Continue button goes BELOW the "How to sign" instructions, so nobody skips past them */
+            var cont = stepEl.querySelector('.pkg-continue'), instrEl = stepEl.querySelector('.instr');
+            if (cont && instrEl) instrEl.parentNode.insertBefore(cont, instrEl.nextSibling);
+          }
         }
       } else {
         addPaywallBanner();
