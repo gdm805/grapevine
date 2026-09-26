@@ -2020,7 +2020,7 @@
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
-      return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it. Florida and Delaware ask for two witnesses in addition to a notary; every other state asks for a notary only.') +
+      return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
         field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
         field('Name your trust', text('trustName', 'For example, Maria Elena Alvarez Living Trust'), 'You can change this later. Many people use their own name.') +
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
@@ -2261,7 +2261,7 @@
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
-      return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it. Florida and Delaware ask for two witnesses in addition to a notary; every other state asks for a notary only.') +
+      return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
         field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
         field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'You can change this later.') +
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
