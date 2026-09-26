@@ -69,10 +69,12 @@
       household = ans.household === 'couple' ? 'couple' : 'single';
       /* a beta tester's free checkout: one per tester, so retire the beta discount in this browser */
       if (ans.free) { try { localStorage.setItem('grapevine.beta.used', '1'); } catch (x) {} }
+      wasFree = !!ans.free;
       finish(true, ans.doc || '');
     })
     .catch(function () { problem('We couldn’t reach the payment check. Check your internet connection and try again.' + ASK_EMAIL, true); });
 
+  var wasFree = false;
   function finish(verified, confirmedDoc) {
     /* a single-document purchase unlocks just the document that was chosen at checkout (remembered in this
        browser); if it can't be found -- say, someone paid on a different device -- ask which one it was */
@@ -99,17 +101,21 @@
     var unlockedNames = { will: 'your will', pourover: 'your pour-over will', dpoa: 'your power of attorney', dementia: 'your care preferences', hcd: 'your health care directive', hipaa: 'your HIPAA authorization', trust: 'your living trust', trustjoint: 'your joint living trust', cert: 'your certification of trust', affidavit: 'your affidavit of trustee', assignment: 'your assignment of personal property', finalwishes: 'your final wishes', contacts: 'your important contacts', schedulea: 'your Schedule A' };
     var unlocked = (plan === 'doc' ? [docKey] : (p.unlocks || [])).map(function (k) { return unlockedNames[k] || k; });
 
+    /* back to the finished documents, with the download box brought into view (js/will.js reads ?download=all) */
+    var downloadHref = window.GVUrl(goTo) + (goTo.indexOf('?') > -1 ? '&' : '?') + 'download=all';
+    var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : 'Your ' + esc(p.name) + ' package';
+    var amount = wasFree ? '$0 (beta tester)' : money(GV.priceFor(plan, (plan === 'doc' && (GV.trustSide || []).indexOf(docKey) > -1) ? 'single' : household)) + ', one-time';
     root.innerHTML =
       '<div class="paid-card">' +
       '<div class="paid-badge"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>' +
-      '<h1>Payment received</h1>' +
-      '<p class="lead">Thank you. ' + (plan === 'doc' ? 'Your document' : 'Your ' + esc(p.name) + ' plan') + ' is unlocked in this browser, so you can download and print ' + unlocked.join(' and ') + ' right away.</p>' +
+      '<h1>You’re all set</h1>' +
+      '<p class="lead">' + what + ' is unlocked. Download ' + (plan === 'doc' ? 'it' : 'your documents') + ' now, then follow the signing steps for each one.</p>' +
+      '<div class="paid-actions"><a class="btn btn-primary btn-lg" href="' + esc(downloadHref) + '">Download your ' + (plan === 'doc' ? 'document' : 'documents') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>' +
       '<div class="paid-summary">' +
       '<div class="sum-row"><span class="sum-l">' + (plan === 'doc' ? 'Document' : 'Plan') + '</span><span class="sum-v">' + esc(plan === 'doc' && window.GVFlow ? window.GVFlow.baseLabel(docKey) : p.name) + '</span></div>' +
-      '<div class="sum-row"><span class="sum-l">Amount</span><span class="sum-v">' + money(GV.priceFor(plan, (plan === 'doc' && (GV.trustSide || []).indexOf(docKey) > -1) ? 'single' : household)) + ', one-time</span></div>' +
+      '<div class="sum-row"><span class="sum-l">Amount</span><span class="sum-v">' + amount + '</span></div>' +
       '</div>' +
-      '<div class="paid-actions"><a class="btn btn-primary btn-lg" href="' + esc(window.GVUrl(goTo)) + '">Continue to your document <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>' +
-      '<p class="paid-note">This unlocks on this device and browser. If you switch devices or clear your browser data, keep your payment confirmation email handy — there’s no account system yet to look purchases up automatically.</p>' +
+      '<p class="paid-note"><strong>Save your files right away.</strong> Your purchase is remembered only in this browser on this device. If you switch devices or clear your browser data, email support@grapevinedocs.com with your Stripe receipt and we’ll help you get back in.</p>' +
       '</div>';
   }
 })();

@@ -223,3 +223,6 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .rowitem:has(.child-rel) { flex-wrap: wrap; row-gap: 6px; }
 .rowitem:has(.child-rel) > .input:first-child { flex: 1 1 calc(100% - 60px); }
 .rowitem .child-rel { order: 3; flex: 1 1 100%; margin-bottom: 6px; }
+
+/* the one next-step button at the end of a document or package (pay, or download everything) */
+.pay-btn { width: 100%; justify-content: center; margin: 4px 0 14px; white-space: nowrap; }

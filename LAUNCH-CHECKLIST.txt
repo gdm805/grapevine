@@ -59,7 +59,7 @@ A. BEFORE BETA TESTERS START
        locked until they submit it; then Stripe opens with the 100%-off code already applied ($0).
        Switch: js/plans.js  GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' }
        a. [x] Tally survey published 24 Sep: https://tally.so/r/445AKO (15 questions; old 10/10b removed).
-       b. [x] SANDBOX done 25 Sep: BETA2026 (on coupon "BETA2026"), 10 uses, expires Oct 12 2026 11:59 PM; older codes inactive. In Stripe (sandbox now to test, and again in LIVE for the beta): Product catalog > Coupons > New:
+       b. [x] SANDBOX done 25 Sep: BETA2026 (on coupon "BETA TESTER 2026", created 26 Sep), 15 uses, expires Oct 12 2026 11:59 PM; old coupon deleted. In Stripe (sandbox now to test, and again in LIVE for the beta): Product catalog > Coupons > New:
           100% off, "Once". Add a promotion code to it named exactly BETA2026, with a maximum number of
           redemptions = the number of testers, and an expiry date. (Stripe counts uses across everyone;
           the website itself allows each tester ONE free checkout, which can be a whole package.)

@@ -3576,6 +3576,14 @@
     var hero = document.querySelector('.will-hero'); if (!hero || f.plan === 'doc') return;
     var over = hero.querySelector('.overline'), h1 = hero.querySelector('h1'), lead = hero.querySelector('.lead'), sw = hero.querySelector('.kind-switch');
     if (over) over.textContent = 'Document ' + (idx + 1) + ' of ' + f.docs.length + ' \u00b7 ' + window.GVFlow.labelFor(docId);
+    var finished = stepId === 'review' && idx === f.docs.length - 1;
+    if (finished) {
+      if (over) over.textContent = 'All ' + f.docs.length + ' documents answered';
+      if (h1) h1.textContent = f.plan === 'doc' ? 'Your documents are ready' : 'Your ' + pkgName(f) + ' package is ready';
+      if (lead) lead.textContent = paidUp() ? 'Everything is unlocked. Download all your documents below, then follow each one\u2019s signing steps.' : 'Every document is answered. Pay once, then download and print them all.';
+      if (sw) sw.hidden = true;
+      return;
+    }
     if (h1) h1.textContent = 'Let\u2019s write your ' + pkgName(f) + ' package';
     if (lead) lead.textContent = 'You\u2019ll answer a few plain questions for each of the ' + f.docs.length + ' documents, one after another, and watch each take shape. Names and details you\u2019ve already given carry over, so you only type them once. Your answers stay in this browser.';
     if (sw) sw.hidden = true;
@@ -3601,6 +3609,21 @@
       '<a class="btn btn-primary btn-lg" href="' + esc(page) + '">Continue to your ' + esc(label) + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
       '</div>';
   }
+  /* what the customer is about to pay, for the one "Continue to payment" button (price from js/plans.js) */
+  function payOffer(f) {
+    var GV = window.GV_PLANS, plan = (f && f.plan) || (window.GVPay ? window.GVPay.planForDoc(kindKey) : 'essentials');
+    var hh = (f && f.couple) ? 'couple' : (function () { try { return sessionStorage.getItem('gv.household') === 'couple' ? 'couple' : 'single'; } catch (e) { return 'single'; } })();
+    if (plan === 'doc' && GV && (GV.trustSide || []).indexOf(kindKey) > -1) hh = 'single';
+    var price = GV ? GV.priceFor(plan, hh) : 0;
+    var beta = false;
+    try { beta = !!(window.GV_BETA && window.GV_BETA.on && localStorage.getItem('grapevine.beta') === '1' && localStorage.getItem('grapevine.beta.used') !== '1'); } catch (e) {}
+    return { price: price, priceText: price ? '$' + price : '', beta: beta };
+  }
+  function payButton(o) {
+    return '<a class="btn btn-primary pay-btn" href="' + checkoutHref() + '">' +
+      (o.beta ? 'Continue &mdash; it’s free' : 'Continue to payment') +
+      ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>';
+  }
   function renderPkgComplete(f, thisKind) {
     var paid = paidUp();
     var rows = f.docs.map(function (k) {
@@ -3608,11 +3631,16 @@
       if (k === thisKind) return '<div class="pkg-done-row pkg-current-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><span class="pkg-here">You’re here</span></div>';
       return '<div class="pkg-done-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><a class="link" href="' + esc(pageUrl(k)) + '">' + (paid ? 'Open &amp; download' : 'Open') + '</a></div>';
     }).join('');
-    var lede = paid ? 'Every document below is ready. Open each one to download or print it, or get the whole package in one PDF below.' :
-      'Every document below is answered and ready. Downloading and printing unlock together, right after you pay.';
-    var allPdfBtn = paid && f.docs.length > 1 ? '<button type="button" class="btn btn-primary" data-pkg-pdf>Download all ' + f.docs.length + ' documents as one PDF</button>' : '';
-    return '<div class="pkg-complete"><h3>' + (f.plan === 'doc' ? 'Your documents are complete' : 'Your ' + esc(pkgName(f)) + ' package is complete') + '</h3>' +
-      '<p>' + lede + '</p><div class="pkg-done-list">' + rows + '</div>' + allPdfBtn + '</div>';
+    var n = f.docs.length, o = payOffer(f);
+    if (paid) {
+      var allPdfBtn = n > 1 ? '<button type="button" class="btn btn-primary pay-btn" data-pkg-pdf>Download all ' + n + ' documents (PDF)</button>' : '';
+      return '<div class="pkg-complete" id="pkg-complete"><h3>' + (f.plan === 'doc' ? 'Your documents are unlocked' : 'Your ' + esc(pkgName(f)) + ' package is unlocked') + '</h3>' +
+        '<p>Download everything in one PDF, or open any document to download it for Word or print it on its own. Save your files now: your purchase is remembered only in this browser.</p>' +
+        allPdfBtn + '<div class="pkg-done-list">' + rows + '</div></div>';
+    }
+    return '<div class="pkg-complete" id="pkg-complete"><h3>All ' + n + ' documents are ready</h3>' +
+      '<p>' + (o.beta ? 'As a beta tester, you get them free: answer the short survey at checkout, then download and print them all.' : 'Pay ' + (o.priceText || '') + ' once to download and print them all.') + ' Previewing and changing your answers stay free.</p>' +
+      payButton(o) + '<div class="pkg-done-list">' + rows + '</div></div>';
   }
   function insertHtmlBefore(html, ref) {
     var div = document.createElement('div'); div.innerHTML = html;
@@ -3621,11 +3649,14 @@
   function addPaywallBanner() {
     var actions = stepEl.querySelector('.actions');
     if (!actions || paidUp()) return;
-    var banner = document.createElement('div');
-    banner.className = 'unlock-banner';
-    banner.innerHTML = '<p><strong>Your document is ready.</strong> Downloading and printing unlock once you choose a plan. Previewing and changing your answers stay free.</p>' +
-      '<a class="btn btn-primary" href="' + checkoutHref() + '">See plans and continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>';
-    actions.parentNode.insertBefore(banner, actions);
+    if (!stepEl.querySelector('.pkg-complete')) {
+      var fl = window.GVFlow && window.GVFlow.current();
+      var o = payOffer(fl && fl.docs.indexOf(docId) > -1 ? fl : null);
+      var banner = document.createElement('div');
+      banner.className = 'unlock-banner';
+      banner.innerHTML = '<p><strong>Your document is ready.</strong> ' + (o.beta ? 'As a beta tester, you get it free: answer the short survey at checkout.' : 'Pay ' + (o.priceText || '') + ' once to download and print it.') + ' Previewing and changing your answers stay free.</p>' + payButton(o);
+      actions.parentNode.insertBefore(banner, actions);
+    }
     /* not paid yet: the download buttons stay out of sight (they would only bounce to checkout) so the
        banner is the one clear next step; "View your document" and the answers stay available */
     stepEl.querySelectorAll('[data-print], [data-word], [data-pdf], [data-pkg-pdf], .export-status').forEach(function (el) { el.hidden = true; el.style.display = 'none'; });
@@ -3863,4 +3894,11 @@
   };
 
   draw(null);
+  /* arriving from the "payment received" page (?download=all): bring the download box into view */
+  if (/[?&]download=all\b/.test(location.search)) {
+    setTimeout(function () {
+      var box = document.getElementById('pkg-complete');
+      if (box) { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); var b = box.querySelector('[data-pkg-pdf]'); if (b) b.focus(); }
+    }, 500);
+  }
 })();

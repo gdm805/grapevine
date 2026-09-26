@@ -115,13 +115,14 @@
 
     root.innerHTML =
       '<p class="overline">Checkout</p>' +
-      '<h1>' + (docLabel ? 'Unlock ' + esc(docLabel) : 'Choose your plan') + '</h1>' +
+      /* arrived from a finished document: the plan was chosen before the questions, so this page names what
+         they're buying -- the whole package, or the one document -- and goes straight to paying */
+      '<h1>' + (docLabel ? (plan === 'doc' ? 'Unlock ' + esc(docLabel) : 'Unlock your ' + esc(p.name) + ' package') : 'Choose your plan') + '</h1>' +
       (docLabel
-        ? '<p class="lead">Your answers are already saved in this browser. Pay once for ' + (plan === 'doc' ? 'this document' : 'the ' + esc(p.name) + ' plan') + ' and you can download and print ' + esc(docLabel) + ' right away.</p>'
+        ? '<p class="lead">Your answers are saved in this browser. ' + (plan === 'doc' ? 'Pay once, and this document unlocks for download and printing.' : 'Pay once, and every document in your ' + esc(p.name) + ' package unlocks for download and printing.') + '</p>'
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
       (docLabel
-        /* arrived from a document with a plan already chosen: show what they're buying, not the pickers */
-        ? '<p class="household-label">' + (household === 'couple' ? 'Pricing for you and your spouse or partner' : 'Pricing for one person') + ' &middot; <a href="' + window.GVUrl('pricing.html') + '?household=' + household + '">Choose a different plan</a></p>'
+        ? '<p class="household-label">' + (household === 'couple' ? 'Pricing for you and your spouse or partner' : 'Pricing for one person') + '</p>'
         : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
       '<div class="order-card">' +
         '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : '') + '</span></p></div>' +
@@ -131,11 +132,12 @@
         (link
           ? betaSurvey() + termsFold() + (betaTester() && !surveyDone()
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Complete the survey above to continue</button>'
-            : '<a class="btn btn-primary btn-lg" href="' + payHref + '">' + (betaTester() ? 'Continue to get your free documents' : 'Continue to secure payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>')
+            : '<a class="btn btn-primary btn-lg" href="' + payHref + '">' + (betaTester() ? 'Continue &mdash; your documents are free' : 'Continue to secure payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>')
           : '<div class="pay-off"><p><strong>Payments aren’t turned on yet.</strong> Add a Stripe Payment Link for the ' + esc(p.name) + ' plan (' + household + ') in <code>js/checkout.js</code>, or open <code>paid.html?plan=' + plan + '&household=' + household + '</code> to try the unlocked view.</p></div>') +
         '<p class="secure-note"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Handled by Stripe on their own secure page. We never see or store your card details.</p>' +
       '</div>' +
-      '<p class="keep-drafting">Not ready to pay? <a href="' + window.GVUrl(validReturn || p.goesTo) + '">Keep drafting for free</a> — your answers stay saved in this browser, and you can come back to pay whenever you like.</p>';
+      '<p class="keep-drafting">Not ready to pay? <a href="' + window.GVUrl(validReturn || p.goesTo) + '">Go back to your documents</a> — your answers stay saved in this browser, and you can come back to pay whenever you like.' +
+      (docLabel ? ' <a href="' + window.GVUrl('pricing.html') + '?household=' + household + '">Choose a different plan</a>' : '') + '</p>';
   }
 
   /* ---------- the beta test (GV_BETA in js/plans.js) ----------
