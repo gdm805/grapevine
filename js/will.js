@@ -61,14 +61,14 @@
      "your name" question is actually an array row (Certification of Trust's trustmakers list). */
   var PROFILE_KEY = 'grapevine.profile.v1';
   var PROFILE_MAP = {
-    will: { name: 'name', county: 'county', state: 'state' },
-    pourover: { name: 'name', county: 'county', state: 'state' },
-    dpoa: { name: 'name', county: 'county', state: 'state' },
+    will: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    pourover: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    dpoa: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     dementia: { name: 'name', state: 'state' },
-    hcd: { name: 'name', address: 'address', phone: 'phone', dob: 'dob', state: 'state' },
-    hipaa: { name: 'name', state: 'state' },
-    trust: { name: 'name', state: 'state' },
-    trustjoint: { name: 'name1', name2: 'name2', state: 'state' },
+    hcd: { name: 'name', address: 'address', phone: 'phone', dob: 'dob', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    hipaa: { name: 'name', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    trust: { name: 'name', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    trustjoint: { name: 'name1', name2: 'name2', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     cert: { name: 'trustmakers[0].name', name2: 'trustmakers[1].name', state: 'state' },
     affidavit: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     assignment: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
@@ -106,7 +106,8 @@
     var out = {};
     Object.keys(m).forEach(function (f) {
       if (f === 'name') out.name2 = m[f];
-      else if (f === 'county' || f === 'address') out[f] = m[f];
+      else if (f === 'county' || f === 'address' || f === 'state') out[f] = m[f];   /* same household */
+      else if (f === 'ageOk' || f === 'freeOk') out[f + '2'] = m[f];              /* the second person's own confirmations */
     });
     return out;
   }
@@ -3157,6 +3158,22 @@
     if (saved && saved.answers) { answers = Object.assign(clone(KIND.empty), saved.answers); stepId = saved.step || 'start'; restored = stepId !== 'start' || !!answers.state; }
   } catch (e) { /* storage unavailable: carry on without saving */ }
   applyProfile(answers, KIND);
+  /* Inside a package: a document's first screen (state, 18 or older, own free will) that is already fully
+     answered from an earlier document is skipped, with a note and a Change link -- so a Complete package
+     doesn't ask where you live eleven times. A pour-over will inside Complete comes after the trust, so its
+     "I have created my trust" box is ticked for them. */
+  var startSkip = null;
+  (function () {
+    var fl = window.GVFlow && window.GVFlow.current();
+    if (!fl || restored) return;
+    if (KIND.key === 'pourover' && fl.plan === 'complete') answers.trustOk = true;
+    if (stepId !== 'start' || !answers.state) return;
+    try { if (KIND.validate('start').length) return; } catch (e) { return; }
+    var vis = visibleSteps(answers);
+    if (vis.length < 2 || vis[0].id !== 'start') return;
+    stepId = vis[1].id;
+    startSkip = { id: 'start', text: 'We used your answers from earlier: you live in ' + answers.state + (answers.ageOk ? ' and are 18 or older' : '') + '.' };
+  })();
   function save() {
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
@@ -3190,7 +3207,10 @@
       '<div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + Math.max(pct, 6) + '%"></i></div>';
     var err = errors.length ? '<div class="errs" role="alert"><strong>Almost there.</strong><ul>' + errors.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>' : '';
     var note = (restored && stepId !== 'start') ? '<p class="restored">Welcome back. We restored your answers from this browser.</p>' : '';
-    if (skipNote) {
+    if (startSkip) {
+      note = '<p class="restored">' + esc(startSkip.text) + ' <button type="button" class="link" data-goto="start">Change</button></p>';
+      /* kept until the person moves to another step: some documents redraw once their state's file loads */
+    } else if (skipNote) {
       note = '<p class="restored">We used the name from your earlier answers: ' + esc(skipNote.name) + '. <button type="button" class="link" data-goto="' + esc(skipNote.id) + '">Change</button></p>';
       skipNote = null;
     }
@@ -3392,7 +3412,7 @@
     stepEl.querySelectorAll('[data-print], [data-word], [data-pdf], [data-pkg-pdf], .export-status').forEach(function (el) { el.hidden = true; el.style.display = 'none'; });
   }
   function go(id, opts) {
-    stepId = id; errors = [];
+    stepId = id; errors = []; startSkip = null;
     draw(opts && opts.focus);
     if (!(opts && opts.quiet)) { var r = stepEl.getBoundingClientRect(); if (r.top < 0) window.scrollTo(0, window.scrollY + r.top - 100); }
   }
