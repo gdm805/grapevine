@@ -140,6 +140,15 @@
   /* "the" + a trust's name, without doubling it: most names already begin with "The" ("The Alvarez Family
      Trust"), so a sentence like "part of the {{trust_name}}" would read "part of the The Alvarez Family Trust" */
   function theTrust(n) { return !n ? '' : (/^the\s/i.test(n) ? n : 'the ' + n); }
+  /* How property is titled in the trust's name -- the exact wording to give a bank, brokerage or title company:
+     "[Name(s)], as (Co-)Trustee(s) of [Trust Name], dated ___, and any amendments made to it" */
+  function trustTitle(names, trustName, date, restatedOn) {
+    names = (names || []).filter(Boolean);
+    var who = names.length ? (names.length > 1 ? names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1] : names[0]) : '____________________';
+    var role = names.length > 1 ? 'Co-Trustees' : 'Trustee';
+    return who + ', as ' + role + ' of ' + (theTrust(trustName) || '____________________') + ', dated ' + (date || '____________________') +
+      (restatedOn ? ', as restated on ' + restatedOn : '') + ', and any amendments made to it';
+  }
   var TRUST_FACTS_KEY = 'grapevine.trustfacts.v1';
   function saveTrustFacts(a, kind) {
     if (kind.key !== 'trust' && kind.key !== 'trustjoint') return;
@@ -152,6 +161,12 @@
       name1: clean(kind.key === 'trustjoint' ? a.name1 : a.name), name2: kind.key === 'trustjoint' ? clean(a.name2) : ''
     };
     try { localStorage.setItem(TRUST_FACTS_KEY, JSON.stringify(facts)); } catch (e) { /* ignore */ }
+  }
+  /* true when this document is for the trust written on this site (its name matches the saved trust facts).
+     Grapevine's own trust puts no special limits on the Trustee, so the Certification skips that question. */
+  function madeHere(a) {
+    var f; try { f = JSON.parse(localStorage.getItem(TRUST_FACTS_KEY) || 'null'); } catch (e) { f = null; }
+    return !!(f && f.trustName && clean(a.trustName) === f.trustName);
   }
   function applyTrustFacts(a, kind) {
     var f; try { f = JSON.parse(localStorage.getItem(TRUST_FACTS_KEY) || 'null'); } catch (e) { f = null; }
@@ -169,7 +184,11 @@
     fill('trustName', f.trustName); fill('origTrustDate', f.origDate);
     fill('trustRestated', f.restated ? 'yes' : 'no');
     if (f.restated) fill('restatementDate', f.restatementDate);
-    if (k === 'cert') { if (!f.restated) fill('hasAmendments', 'no'); }
+    if (k === 'cert') {
+      if (!f.restated) fill('hasAmendments', 'no');
+      /* on a Grapevine trust the Trustmakers are the first Trustees */
+      if (!(a.trustees || []).some(function (t) { return clean(t.name); })) a.trustees = [f.name1, f.name2].filter(Boolean).map(function (n) { return { name: n, address: '' }; });
+    }
     else if (fresh) a.trustType = f.joint ? 'JOINT' : 'SINGLE';
   }
 
@@ -1866,6 +1885,7 @@
     v.trust_starts_with_the = /^the\s/i.test(v.trust_name) ? 'YES' : 'NO';
     v.trust_type = a.trustType === 'RESTATEMENT' ? 'RESTATEMENT' : 'NEW';
     v.orig_trust_name = clean(a.origTrustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
+    v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'MARRIED' ? 'MARRIED' : (a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'UNMARRIED');
     v.spouse = clean(a.spouse); v.partner = clean(a.partner);
     v.is_married = v.marital_status !== 'UNMARRIED';
@@ -1991,7 +2011,9 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
+        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
+          'Pick the date you’ll sign in front of the notary, and sign on that date. It becomes your trust’s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, every one of those documents gets a blank line to fill in by hand, which is easy to get wrong.') +
+        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> choosing a date now is strongly recommended. You can change it later if your plans change &mdash; just come back and update it before you print.</p>');
     },
     review: function () {
       var v = buildVarsTrust(answers, states, tpl.settings);
@@ -2105,6 +2127,7 @@
     v.trust_starts_with_the = /^the\s/i.test(v.trust_name) ? 'YES' : 'NO';
     v.trust_type = a.trustType === 'RESTATEMENT' ? 'RESTATEMENT' : 'NEW';
     v.orig_trust_name = clean(a.origTrustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
+    v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'MARRIED';
     v.children = (a.children || []).map(function (c) { return { child: clean(c.name) }; }).filter(function (c) { return c.child; });
     v.has_children = v.children.length > 0;
@@ -2226,7 +2249,9 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
+        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
+          'Pick the date you’ll sign in front of the notary, and sign on that date. It becomes your trust’s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, every one of those documents gets a blank line to fill in by hand, which is easy to get wrong.') +
+        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> choosing a date now is strongly recommended. You can change it later if your plans change &mdash; just come back and update it before you print.</p>');
     },
     review: function () {
       var v = buildVarsTrustJoint(answers, states, tpl.settings);
@@ -2303,7 +2328,7 @@
     { id: 'trustees', label: 'Current trustees' },
     { id: 'authority', label: 'Trustee authority' },
     { id: 'revocability', label: 'Revocability' },
-    { id: 'powers', label: 'Limitations' },
+    { id: 'powers', label: 'Limitations', show: function (a) { return !madeHere(a); } },
     { id: 'title', label: 'Manner of taking title' },
     { id: 'signing', label: 'Signing' },
     { id: 'review', label: 'Review and sign' }
@@ -2338,7 +2363,7 @@
     v.limitations_summary = clean(a.limitationsSummary);
     /* no literal "the" before the trust name -- a trust name commonly starts with "The" itself
        (e.g. "The Alvarez Family Trust"), which would otherwise double up */
-    v.title_format = clean(a.titleFormat) || (v.trustees[0] ? v.trustees[0].trustee_name + ', Trustee of ' + v.trust_name : '');
+    v.title_format = trustTitle(v.trustees.map(function (t) { return t.trustee_name; }), v.trust_name, v.orig_trust_date, v.trust_restated ? v.restatement_date : '');
     v.certification_date = v.signing_date;
     v.certifying_trustee = v.trustees[0] ? v.trustees[0].trustee_name : '';
     v.state_note = st ? st.note : '';
@@ -2393,13 +2418,15 @@
       return h;
     },
     powers: function () {
-      return stepHead('Limitations on the Trustee', 'Optional. Most trusts have none of these.') +
-        field('Does anything limit, direct, or require special consent for the Trustee’s authority?', pills('hasLimitations', [['yes', 'Yes'], ['no', 'No']], true)) +
+      return stepHead('Limits on the Trustee', 'Most trusts have none. This only matters if your trust itself says the Trustee needs someone’s permission, or must follow a special rule, before doing certain things, for example “the Trustee may not sell the family home without my daughter’s written consent.” Check the Trustee’s powers section of your trust if you’re not sure.') +
+        field('Does your trust limit what the Trustee can do, or require someone’s consent first?', pills('hasLimitations', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.hasLimitations === 'yes' ? field('Describe the limitation, direction, or required consent', text('limitationsSummary', '')) : '');
     },
     title: function () {
-      return stepHead('Manner of taking title', 'How property is typically titled in the name of your trust.') +
-        field('Title format', text('titleFormat', 'For example, Maria Elena Alvarez, Trustee of The Alvarez Family Trust'), 'Leave blank to use your first trustee’s name and trust name.');
+      var tv = buildVarsCert(answers, states, tpl.settings);
+      return stepHead('How to title property in your trust', 'When you move property into your trust (a new deed for your home, or retitling a bank or brokerage account), give the bank or title company this exact wording. Your Certification states it too.') +
+        '<div class="title-box">' + esc(tv.title_format) + '</div>' +
+        '<p class="hint">It comes from your trustees’ names, your trust’s name and its date. To change it, go back and edit those answers.</p>';
     },
     signing: function () {
       return stepHead('Signing', '') +

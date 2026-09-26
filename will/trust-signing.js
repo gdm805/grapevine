@@ -23,7 +23,7 @@ Your trust is not valid until it is signed correctly. In {{state}}, that general
 
 A trust only controls property that has actually been retitled into its name. Signing this document is the first step, not the last. After you sign:
 
-- Retitle real estate, bank accounts, and investment accounts into the name of your trust, {{trust_name}}.
+- Retitle real estate, bank accounts, and investment accounts into the name of your trust. Use this exact wording: **{{title_line}}**.
 - Update the beneficiary or transfer-on-death designations on accounts that allow them, where your attorney or advisor recommends it.
 - Keep a signed pour-over will with your trust. It catches anything you forget to retitle, but property passing through a pour-over will may still have to go through probate first.
 - Some banks, brokerages, and title companies will ask for a Certification of Trust before they'll retitle an account, instead of your whole trust document. You can create one at cert.html.
