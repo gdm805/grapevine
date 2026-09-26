@@ -18,7 +18,7 @@
     spouse: 'spouse\u2019s name', guardian: 'guardian', alt_guardian: 'alternate guardian',
     executor: 'personal representative', successor: 'successor', gift: 'gift', recipient: 'recipient',
     beneficiary: 'beneficiary', share: 'share', cont_name: 'contingent beneficiary',
-    child: 'child\u2019s name', trust_name: 'name of your trust', trust_date: 'date of your trust', other_trustmaker: 'other trustmaker',
+    child: 'child\u2019s name', trust_name: 'name of your trust', the_trust_name: 'the name of your trust', trust_date: 'date of your trust', other_trustmaker: 'other trustmaker',
     co_pr: 'co-personal representative', applies_to: 'child', alternate: 'alternate guardian', prop_fid: 'property fiduciary', prop_alt: 'alternate'
   };
   var MARK = { fill: '\u0001', close: '\u0002', blank: '\u0003', refOpen: '\u0004', refClose: '\u0005' };
@@ -129,6 +129,48 @@
       if (v) patch[profileField] = v;
     });
     writeProfile(patch);
+  }
+
+  /* ---------- trust facts: the living trust (single or joint) is written first in a Complete package, and
+     the documents that go with it -- Certification, Affidavit, Assignment, Schedule A and the pour-over will --
+     need the same facts: its name, whether it is joint, the trustmakers, and its dates. The trust saves them
+     here; the others fill them in when their own answers are still EMPTY (a value someone typed is never
+     overwritten). Dates: a NEW trust is dated the day it is signed (the trust's signing date); a RESTATEMENT
+     keeps the original trust date and adds the restatement date (the day the restatement is signed). */
+  /* "the" + a trust's name, without doubling it: most names already begin with "The" ("The Alvarez Family
+     Trust"), so a sentence like "part of the {{trust_name}}" would read "part of the The Alvarez Family Trust" */
+  function theTrust(n) { return !n ? '' : (/^the\s/i.test(n) ? n : 'the ' + n); }
+  var TRUST_FACTS_KEY = 'grapevine.trustfacts.v1';
+  function saveTrustFacts(a, kind) {
+    if (kind.key !== 'trust' && kind.key !== 'trustjoint') return;
+    var restated = a.trustType === 'RESTATEMENT';
+    var facts = {
+      trustName: clean(a.trustName), joint: kind.key === 'trustjoint',
+      restated: restated,
+      origDate: restated ? (a.origTrustDate || '') : (a.signingDate || ''),
+      restatementDate: restated ? (a.signingDate || '') : '',
+      name1: clean(kind.key === 'trustjoint' ? a.name1 : a.name), name2: kind.key === 'trustjoint' ? clean(a.name2) : ''
+    };
+    try { localStorage.setItem(TRUST_FACTS_KEY, JSON.stringify(facts)); } catch (e) { /* ignore */ }
+  }
+  function applyTrustFacts(a, kind) {
+    var f; try { f = JSON.parse(localStorage.getItem(TRUST_FACTS_KEY) || 'null'); } catch (e) { f = null; }
+    if (!f || !f.trustName) return;
+    function fill(k, v) { if (v && (a[k] === '' || a[k] === undefined)) a[k] = v; }
+    var k = kind.key;
+    if (k === 'pourover') {
+      fill('trustName', f.trustName); fill('trustDate', f.origDate);
+      fill('jointTrust', f.joint ? 'yes' : 'no');
+      if (f.joint) fill('otherTrustmaker', clean(a.name) && clean(a.name) === f.name2 ? f.name1 : f.name2);
+      return;
+    }
+    if (['cert', 'affidavit', 'assignment', 'schedulea'].indexOf(k) === -1) return;
+    var fresh = !a.trustName;
+    fill('trustName', f.trustName); fill('origTrustDate', f.origDate);
+    fill('trustRestated', f.restated ? 'yes' : 'no');
+    if (f.restated) fill('restatementDate', f.restatementDate);
+    if (k === 'cert') { if (!f.restated) fill('hasAmendments', 'no'); }
+    else if (fresh) a.trustType = f.joint ? 'JOINT' : 'SINGLE';
   }
 
   /* ---------- state rules ---------- */
@@ -731,6 +773,7 @@
     v.children_answered = a.hasChildren === 'yes' || a.hasChildren === 'no';
     v.children_yes = hasKids; v.children = kids; v.minor_children_yes = minors.length > 0;
     v.trust_name = clean(a.trustName); v.trust_date = longDate(a.trustDate);
+    v.the_trust_name = theTrust(v.trust_name);
     v.joint_trust = a.jointTrust === 'yes'; v.other_trustmaker = clean(a.otherTrustmaker);
     v.pr_co = a.prMode === 'co'; v.pr_successive = !v.pr_co;
     v.executor = clean(a.executor);
@@ -2995,7 +3038,7 @@
   function buildVarsScheduleA(a, states, settings) {
     var v = {};
     v.trust_type = a.trustType === 'JOINT' ? 'JOINT' : 'SINGLE';
-    v.trust_name = clean(a.trustName);
+    v.trust_name = clean(a.trustName); v.the_trust_name = theTrust(v.trust_name);
     v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.trust_restated = a.trustRestated === 'yes';
     v.restatement_date = a.restatementDate ? longDate(a.restatementDate) : '';
@@ -3158,6 +3201,7 @@
     if (saved && saved.answers) { answers = Object.assign(clone(KIND.empty), saved.answers); stepId = saved.step || 'start'; restored = stepId !== 'start' || !!answers.state; }
   } catch (e) { /* storage unavailable: carry on without saving */ }
   applyProfile(answers, KIND);
+  applyTrustFacts(answers, KIND);
   /* Inside a package: a document's first screen (state, 18 or older, own free will) that is already fully
      answered from an earlier document is skipped, with a note and a Change link -- so a Complete package
      doesn't ask where you live eleven times. A pour-over will inside Complete comes after the trust, so its
@@ -3177,6 +3221,7 @@
   function save() {
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
+    saveTrustFacts(answers, KIND);
   }
 
   /* ---------- show the current step ---------- */

@@ -19,11 +19,11 @@ window.SCHEDULEA_TEMPLATE = String.raw`
 
 [[if trust_restated]]
 
-This Schedule A is attached to and forms part of the {{trust_name}}, originally dated {{orig_trust_date}} and most recently restated on {{restatement_date}} (the "Trust").
+This Schedule A is attached to and forms part of {{the_trust_name}}, originally dated {{orig_trust_date}} and most recently restated on {{restatement_date}} (the "Trust").
 
 [[else]]
 
-This Schedule A is attached to and forms part of the {{trust_name}}, dated {{orig_trust_date}} (the "Trust").
+This Schedule A is attached to and forms part of {{the_trust_name}}, dated {{orig_trust_date}} (the "Trust").
 
 [[end]]
 

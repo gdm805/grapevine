@@ -63,7 +63,7 @@ I have no children.
 [[end]]
 ## Existing Trust
 
-I have established or am a Trustmaker of the {{trust_name}}, originally dated {{trust_date}} and, if applicable, amended or restated from time to time (the "**Trust**"). The Trust is intended to receive property from my probate estate under this Will.
+I have established or am a Trustmaker of {{the_trust_name}}, originally dated {{trust_date}} and, if applicable, amended or restated from time to time (the "**Trust**"). The Trust is intended to receive property from my probate estate under this Will.
 
 [[if joint_trust]]
 The Trust is a Joint Trust created by me and {{other_trustmaker}}. A reference in this Will to the Trust includes the Trust as it exists at my death and any separate trust or share then continuing under its terms that the Trust designates to receive property passing from my estate.
