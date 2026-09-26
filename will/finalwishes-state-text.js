@@ -173,7 +173,7 @@ The Declarant intends this signed written instrument to state final-disposition 
 window.FINALWISHES_SHARED['finalwishes_execution'] = String.raw`
 [[if signing_state=ALABAMA]]
 // DRAFTER NOTE: These Final Wishes are wishes/instructions only under the current Alabama route. The acknowledgment below is included as the Grapevine execution standard and is not represented as changing statutory priority or as required for validity.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Alabama
 @line County of ________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -220,7 +220,7 @@ We attest that {{name}} signed or acknowledged this Declaration of Final Disposi
 [[elif signing_state=CALIFORNIA]]
 // DRAFTER NOTE: California written directions are coordinated with the health-care-agent priority rules and statutory conditions governing binding written directions. The acknowledgment below is included as a Grapevine execution standard; it does not itself establish that the directions satisfy every condition of California Health and Safety Code section 7100.1.
 
-@sub Optional California Notarial Acknowledgment
+@sub California Notarial Acknowledgment
 
 A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
 @line State of California
@@ -258,7 +258,7 @@ We attest that {{name}} subscribed this written disposition document in our pres
 
 [[elif signing_state=DELAWARE]]
 // DRAFTER NOTE: Delaware requires a written, dated, signed declaration; acknowledgment is optional. Grapevine includes the notary acknowledgment as its default execution standard.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Delaware
 @line County of ________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -269,7 +269,7 @@ We attest that {{name}} subscribed this written disposition document in our pres
 
 [[elif signing_state=DISTRICT_COLUMBIA]]
 // DRAFTER NOTE: District of Columbia requires the written directions/designation to be dated and signed. No universal witness or notary validity requirement applies to this route. The acknowledgment below is optional and included as the Grapevine execution standard.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of District of Columbia
 @line District of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -280,7 +280,7 @@ We attest that {{name}} subscribed this written disposition document in our pres
 
 [[elif signing_state=FLORIDA]]
 // DRAFTER NOTE: Florida recognizes written inter vivos directions within its statutory priority framework. The acknowledgment below is included as Grapevine's default execution standard and is not represented as a separate statutory validity requirement.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Florida
 @line County of ________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -406,7 +406,7 @@ Dated: {{signing_date}}
 
 [[elif signing_state=KANSAS]]
 // DRAFTER NOTE: Kansas disposition-agent authority is not created by this Final Wishes document. Any first-priority authority granted to a health-care decision agent must appear in the applicable Kansas health-care instrument. The acknowledgment below is included as the Grapevine execution standard for these written wishes and is not represented as creating disposition-agent priority.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Kansas
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -464,7 +464,7 @@ The Declarant appeared before me and acknowledged that the Declarant voluntarily
 
 [[elif signing_state=MAINE]]
 // DRAFTER NOTE: Maine requires the designation/instructions used under this route to be written and signed. No universal witness or notary requirement is imposed by the disposition provisions used for this ruleset. The acknowledgment below is optional and included as the Grapevine execution standard.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Maine
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -485,7 +485,7 @@ I witnessed {{name}} sign this document in my presence, and I sign this document
 
 [[elif signing_state=MASSACHUSETTS]]
 // DRAFTER NOTE: This document preserves written funeral and burial wishes; it does not create a standalone statutory disposition-agent appointment. Any controlling Will or estate-administration route remains separate. The acknowledgment below is optional and included as the Grapevine execution standard for the written wishes.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Massachusetts
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -514,7 +514,7 @@ I witnessed {{name}} sign and date these written final-disposition directions.
 @line Printed Name: _____________________________________
 @line Address: __________________________________________
 @line Date: _____________________________________________
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Minnesota
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -528,7 +528,7 @@ I witnessed {{name}} sign and date these written final-disposition directions.
 
 [[elif signing_state=MISSOURI]]
 // DRAFTER NOTE: Missouri disposition authority under this route is created through a durable power of attorney expressly granting the right of sepulcher. This Final Wishes document does not create that authority. The acknowledgment below is optional and applies only to these written wishes.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Missouri
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -585,7 +585,7 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 
 [[elif signing_state=NEW_HAMPSHIRE]]
 // DRAFTER NOTE: New Hampshire requires the designation and instructions used under this route to be written and signed. No universal witness or notary validity requirement is stated in the controlling disposition provisions. The acknowledgment below is optional and included as the Grapevine execution standard.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of New Hampshire
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -655,7 +655,7 @@ We are adults age 18 or older and witnessed {{name}} sign this written dispositi
 
 [[elif signing_state=NORTH_DAKOTA]]
 // DRAFTER NOTE: North Dakota requires the statement to be signed and dated. No universal witness or notary requirement applies to this route. The acknowledgment below is optional and included as the Grapevine execution standard.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of North Dakota
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -703,7 +703,7 @@ We witnessed {{name}} execute this written disposition/representative appointmen
 
 [[elif signing_state=PENNSYLVANIA]]
 // DRAFTER NOTE: Pennsylvania does not use this document as a generic standalone statutory agent appointment. If disposition authority is placed in a Will, the Will execution package controls. The acknowledgment below is optional for these written wishes only.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Pennsylvania
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -875,7 +875,7 @@ I, {{alt_agent_name}}, accept the appointment stated in this instrument and agre
 
 [[elif signing_state=WYOMING]]
 // DRAFTER NOTE: Wyoming uses a signed written instrument. No universal witness or notary validity formality is stated for this route. The acknowledgment below is optional and included as the Grapevine execution standard.
-@sub Optional Notarial Acknowledgment
+@sub Notarial Acknowledgment
 @line State of Wyoming
 @line County of _________________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.

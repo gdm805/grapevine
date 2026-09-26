@@ -26,4 +26,6 @@ This Assignment only reaches property that can be transferred by a plain written
 
 - If you add significant new property later, sign a new Assignment rather than writing on this one.
 - Your Certification of Trust is usually what a bank or title company will actually ask to see before retitling an account -- see cert.html.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

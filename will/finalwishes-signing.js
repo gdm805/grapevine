@@ -27,4 +27,6 @@ Final Wishes states your preferences and, where your state allows it, names who'
 {{state_note}}
 
 [[end]]
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

@@ -24,4 +24,6 @@ A Certification of Trust exists to prove your trust's existence and your authori
 
 [[end]]
 Review this Certification whenever your trustee, trust name, or trust terms change.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

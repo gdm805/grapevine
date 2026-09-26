@@ -219,7 +219,7 @@ No state requires a witness, notary, or sworn oath for this Assignment -- a sign
 
 [[if wants_notary]]
 
-@sub Optional Notary Acknowledgment
+@sub Notary Acknowledgment
 
 @line State of {{state}}
 @line County/Parish of ________________________________

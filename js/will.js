@@ -710,7 +710,7 @@
         /* Louisiana forced heirship (La. Civ. Code art. 1493): the will gives forced heirs their share, but the family
            should know, and a Louisiana lawyer can plan around it */
         (answers.state === 'Louisiana' && answers.hasChildren === 'yes'
-          ? '<p class="hint">Louisiana: a child who is 23 or younger, or who is permanently unable to care for themselves or manage their property, is a \u201cforced heir\u201d entitled by law to a share of your estate. Your will gives any forced heir that share and reduces the other gifts to make room. If you have such a child, consider having a Louisiana attorney review your will.</p>'
+          ? '<p class="hint">Louisiana: a child who is 23 or younger, or who is permanently unable to care for themselves or manage their property, is a \u201cforced heir\u201d entitled by law to a share of your estate. Your will gives any forced heir that share and reduces the other gifts to make room. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>'
           : '');
     },
     guardian: function () {
@@ -939,7 +939,7 @@
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married'
           ? field('Your spouse’s or domestic partner’s full legal name', text('spouse', '')) +
-            field('If your marriage or partnership ends before you die, should everything in this will about that person be cancelled?', pills('revokeSpouse', [['yes', 'Yes, cancel it'], ['no', 'No, keep it']]), 'Most people choose yes. Either way, the law of your state may decide.')
+            field('If your marriage or partnership ends before you die, should everything in this will about that person be cancelled?', pills('revokeSpouse', [['yes', 'Yes, cancel it'], ['no', 'No, keep it']]), 'The law of your state may also affect this.')
           : '');
     },
     children: function () { return RENDER_WILL.children(); },
@@ -1169,7 +1169,7 @@
       }
       return stepHead('First, where do you live?', 'A power of attorney is governed by state law. Each state has its own form, its own required notices and its own signing rules.') +
         field('State where you live', '<select class="input" data-k="state" data-rerender>' + opts(answers.state, 'Choose your state') + '</select>') +
-        field('Which state’s power of attorney should we use?', '<select class="input" data-k="govState" data-rerender>' + opts(answers.govState, answers.state ? 'The state where I live (' + esc(answers.state) + ')' : 'The state where I live') + '</select>', 'Most people use the state where they live. Choose a different state only if you have a reason, such as owning property there or planning to move there.') +
+        field('Which state’s power of attorney should we use?', '<select class="input" data-k="govState" data-rerender>' + opts(answers.govState, answers.state ? 'The state where I live (' + esc(answers.state) + ')' : 'The state where I live') + '</select>', 'This is normally the state where you live. You can choose a different state’s form, for example if you own property there or plan to move there.') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>' +
@@ -1196,7 +1196,7 @@
     more: function () {
       var h = stepHead('One more thing for ' + esc(dpGov(answers)), 'Your state’s form asks for this.');
       if (dpSet(answers, 'ask_determiner') === 'yes' && answers.effective === 'incapacity') {
-        h += field('Who decides whether you are incapacitated?', text('determiner', 'Leave blank to use your agent'), 'Your state’s form needs a named person for this. Most people name their agent or their doctor. If you leave it blank, we use your agent.');
+        h += field('Who decides whether you are incapacitated?', text('determiner', 'Leave blank to use your agent'), 'Your state’s form needs a named person for this, such as your agent or your doctor. If you leave it blank, we use your agent.');
       }
       if (dpSet(answers, 'ask_facility') === 'yes') {
         h += field('Do you live in, or are you about to move into, a hospital, assisted-living, nursing or similar care facility?', pills('facility', [['yes', 'Yes'], ['no', 'No']], true), 'Your state has an extra rule for people in a care facility.');
@@ -1328,7 +1328,7 @@
         '</div>' +
         field('Right now, are you able to understand this document and communicate your own wishes?', pills('capacityCheck', [['yes', 'Yes'], ['unsure', 'I’m not sure']], true));
       if (answers.capacityCheck === 'unsure') {
-        h += '<div class="restored">That’s okay — this will be here whenever you’re ready. Consider talking with your doctor, or with a lawyer, before you complete or sign it.</div>';
+        h += '<div class="restored">That’s okay — this will be here whenever you’re ready. You may want to talk with your doctor before you complete or sign it. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</div>';
       }
       return h;
     },
@@ -1345,7 +1345,7 @@
       var h = stepHead('As memory or thinking problems get worse, what’s your overall approach to medical care?', 'You can pick one overall approach, or set it separately for mild, moderate and advanced decline if you’d rather.') +
         cards('approach', [
           ['full', 'Treat everything, at every stage', 'Medical care generally aimed at prolonging life, whatever stage I’m in.'],
-          ['balanced', 'Balance treatment with comfort as it gets worse', 'Treat illness early on; as decline becomes more severe, shift the focus toward comfort. This is what most people choose.'],
+          ['balanced', 'Balance treatment with comfort as it gets worse', 'Treat illness early on; as decline becomes more severe, shift the focus toward comfort..'],
           ['comfort', 'Comfort first, from the start', 'Comfort and quality of life come first, even at a mild stage.']
         ]);
       h += '<label class="check" style="margin-top:16px"><input type="checkbox" data-k="customizeStages"' + (answers.customizeStages ? ' checked' : '') + ' data-rerender><span>Set this separately for mild, moderate and advanced decline</span></label>';
@@ -1363,7 +1363,7 @@
       return h;
     },
     choices: function () {
-      return stepHead('A few practical choices', 'These give your health-care agent and care team more specific guidance. Each is optional to answer, but we recommend making a choice.') +
+      return stepHead('A few practical choices', 'These give your health-care agent and care team more specific guidance. Each is optional.') +
         field('If cognitive decline makes unfamiliar settings especially hard, how do you feel about hospital transfers?', cards('hospitalization', [
           ['beneficial', 'Hospitalize when it helps', 'Permit hospital transfer when my agent and treating professionals believe it’s likely to meaningfully help.'],
           ['limit', 'Treat me where I am when possible', 'Prefer treatment in my current residence or care setting, and avoid transfers likely to cause distress or disorientation for limited benefit.']
@@ -1550,7 +1550,7 @@
         coAgentFields(true);
     },
     successor: function () {
-      return stepHead('Backup agents', 'If your first choice can’t serve, the first backup takes over, then the next. This is optional but recommended.') +
+      return stepHead('Backup agents', 'If your first choice can’t serve, the first backup takes over, then the next. This is optional.') +
         field('Backups', '<div class="rowset">' + answers.successors.map(function (b, i) {
           return '<div class="ben"><input class="input" data-list="successors" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Backup ' + (i + 1) + ' full name" aria-label="Backup ' + (i + 1) + ' full name">' +
             '<input class="input" type="tel" data-list="successors" data-i="' + i + '" data-f="phone" value="' + val(b.phone) + '" placeholder="Phone" aria-label="Backup ' + (i + 1) + ' phone">' +
@@ -2057,7 +2057,7 @@
     },
     powers: function () {
       return stepHead('If you become incapacitated', 'You already have full control over your trust while you’re able to manage your own affairs. This is about someone else acting for you if you can’t.') +
-        field('If you also sign a power of attorney, should that agent be able to amend, revoke, or restate this trust on your behalf?', pills('poaReservedPowers', [['yes', 'Yes'], ['no', 'No — only I can amend or revoke my trust']], true), 'Most people choose no. Your successor trustee can still manage trust property either way — this is only about changing the trust’s terms.');
+        field('If you also sign a power of attorney, should that agent be able to amend, revoke, or restate this trust on your behalf?', pills('poaReservedPowers', [['yes', 'Yes'], ['no', 'No — only I can amend or revoke my trust']], true), 'Your successor trustee can still manage trust property either way — this is only about changing the trust’s terms.');
     },
     gifts: function () {
       var h = stepHead('Specific gifts', 'Leave specific items or amounts to specific people before everything else is divided. This is optional.') +
@@ -2101,7 +2101,7 @@
         field('County where you’ll sign', countySelect('signingCounty')) +
         field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
           'Pick the date you’ll sign in front of the notary, and sign on that date. It becomes your trust’s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, every one of those documents gets a blank line to fill in by hand, which is easy to get wrong.') +
-        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> choosing a date now is strongly recommended. You can change it later if your plans change &mdash; just come back and update it before you print.</p>');
+        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> a date entered here prints on your trust and on the documents that go with it. You can change it later &mdash; just come back and update it before you print.</p>');
     },
     review: function () {
       var v = buildVarsTrust(answers, states, tpl.settings);
@@ -2340,7 +2340,7 @@
         field('County where you’ll sign', countySelect('signingCounty')) +
         field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
           'Pick the date you’ll sign in front of the notary, and sign on that date. It becomes your trust’s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, every one of those documents gets a blank line to fill in by hand, which is easy to get wrong.') +
-        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> choosing a date now is strongly recommended. You can change it later if your plans change &mdash; just come back and update it before you print.</p>');
+        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> a date entered here prints on your trust and on the documents that go with it. You can change it later &mdash; just come back and update it before you print.</p>');
     },
     review: function () {
       var v = buildVarsTrustJoint(answers, states, tpl.settings);

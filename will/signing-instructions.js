@@ -26,4 +26,6 @@ Your will is not valid until it is signed correctly. In {{state}}, that generall
 
 [[end]]
 Review your will after a marriage, divorce, birth or adoption, a move to a new state, or a large change in what you own.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

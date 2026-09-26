@@ -29,4 +29,6 @@ Your health care directive is not valid until it is signed correctly, and the ru
 
 [[end]]
 You can cancel your health care directive at any time while you have capacity. Review it after a marriage, divorce, new diagnosis, or a move to a new state.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

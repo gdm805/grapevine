@@ -38,4 +38,6 @@ Also make sure your trust, {{trust_name}}, has been signed. This will refers to 
 
 [[end]]
 Review your will and your trust after a marriage, divorce, birth or adoption, a move to a new state, or a large change in what you own.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

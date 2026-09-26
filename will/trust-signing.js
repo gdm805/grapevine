@@ -19,4 +19,6 @@ Your trust takes effect when it is signed. In {{state}}, sign it in front of a n
 - The notary completes the acknowledgment and adds their seal.
 - Keep the signed original in a safe place, and tell your successor trustee where it is.
 - Do not add, cross out or change anything after you sign. To make a change later, sign a written amendment or a restatement.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

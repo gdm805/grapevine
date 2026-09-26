@@ -84,7 +84,7 @@
         ? 'On top of a will, this adds the paperwork that lets someone act for you, with your money and your medical care, while you’re alive.'
         : 'A will covers naming a guardian for your children and saying who receives what you own.');
     out.innerHTML =
-      '<p class="pick-kicker">Based on your answers, we suggest</p>' +
+      '<p class="pick-kicker">Matches your answers</p>' +
       '<div class="pick-line"><h3>' + p.name + '</h3><p class="pick-price"><span>' + money_(GV.priceFor(key, household)) + '</span> one-time' + (household === 'couple' ? ', for a couple' : '') + '</p></div>' +
       '<p class="pick-why">' + why + '</p>' +
       '<ul class="pick-docs">' + docs.map(function (d) { return '<li>' + d + '</li>'; }).join('') + '</ul>' +
@@ -118,12 +118,12 @@
       var head = card.querySelector('header') || card;
       var badge = document.createElement('p');
       badge.className = 'badge badge-pick';
-      badge.textContent = 'Suggested for you';
+      badge.textContent = 'Matches your answers';
       head.insertBefore(badge, head.firstChild);
       var note = document.querySelector('.finder-note');
       if (note) {
         note.classList.add('picked-note');
-        note.innerHTML = 'Based on your answers, we suggest <strong>' + PLANS[need].name + '</strong>. ' +
+        note.innerHTML = 'Based on your answers: <strong>' + PLANS[need].name + '</strong>. ' +
           '<a href="#" data-see-pick>See it below</a> <span aria-hidden="true">&middot;</span> <a href="index.html#finder">Change your answers</a>';
         note.querySelector('[data-see-pick]').addEventListener('click', function (e) {
           e.preventDefault();

@@ -19,4 +19,6 @@ Listing property here shows that you meant it for the trust. Real estate, vehicl
 - Your bank or brokerage will usually ask for a Certification of Trust before it retitles an account -- see cert.html.
 - Never write a full account number here. The institution, the type of account, and the last four digits are enough.
 - When you buy or sell something significant, sign a new Schedule A rather than writing on this one.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

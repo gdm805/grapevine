@@ -690,7 +690,6 @@ We, the undersigned Testator and witnesses, declare:
 
 @sign Address
 
-This clause is intended to satisfy Ind. Code §29-1-5-3.1(c)/(d). No notary is required for this traditional self-proving clause.
 
 === Iowa
 community: none

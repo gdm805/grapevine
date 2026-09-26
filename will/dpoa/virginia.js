@@ -439,7 +439,7 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Optional Acknowledgment
+@sub Acknowledgment
 
 @line STATE OF VIRGINIA
 

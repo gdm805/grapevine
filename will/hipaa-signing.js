@@ -13,5 +13,5 @@ No witness or notary is required for this document in any state. Just sign and d
 - Keep the original with your other health care documents, such as your health care directive.
 - You can revoke this authorization in writing at any time.
 
-This is general information, not legal advice for your specific situation.
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

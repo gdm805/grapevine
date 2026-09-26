@@ -35,4 +35,6 @@ Your power of attorney is not valid until it is signed correctly, and the rules 
 
 [[end]]
 You can cancel your power of attorney at any time while you have capacity. Review it after a marriage, divorce, or a move to a new state, and if you no longer trust your agent.
+
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

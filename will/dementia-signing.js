@@ -12,5 +12,5 @@ This document is meant to be attached to your Advance Health Care Directive (som
 - Give a copy to your health-care agent, and keep it with your health-care directive so they are found together.
 - You can change your mind about any of this at any time while you are able to make your own decisions. Your current, capable wishes always come first.
 
-This is general information, not legal advice for your specific situation.
+If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

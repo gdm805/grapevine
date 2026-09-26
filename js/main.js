@@ -111,9 +111,9 @@
       if (money) reasons.push('want someone to handle your money if you can’t');
       if (care) reasons.push('want someone to make medical decisions for you if you can’t');
       var planText = {
-        complete: 'the Complete package, a will plus a living trust' + (married ? ' for the two of you' : '') + ', is a good option',
-        essentials: 'the Essentials package, a will plus the documents that let someone act for you' + (married ? ', for each of you' : '') + ', is a good option',
-        will: 'a will' + (married ? ' for each of you' : '') + ' is a good place to start'
+        complete: 'the Complete package, a will plus a living trust' + (married ? ' for the two of you' : '') + ', covers what you described',
+        essentials: 'the Essentials package, a will plus the documents that let someone act for you' + (married ? ', for each of you' : '') + ', covers what you described',
+        will: 'a will' + (married ? ' for each of you' : '') + ' covers what you described'
       }[plan];
       why.textContent = reasons.length
         ? 'Because you ' + joinAnd(reasons) + ', ' + planText + '.'

@@ -459,7 +459,7 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Optional Acknowledgment
+@sub Acknowledgment
 
 @line STATE OF WISCONSIN
 
@@ -523,7 +523,7 @@ The meaning of the authority granted to you is defined in the Uniform Power of A
 
 If there is anything about this document or your duties that you do not understand, you should seek legal advice.
 
-@sub OPTIONAL SIGNATURE OF AGENT
+@sub SIGNATURE OF AGENT
 
 I have read and accept the duties and liabilities of the agent as specified in this Power of Attorney.
 
