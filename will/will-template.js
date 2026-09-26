@@ -92,6 +92,16 @@ For purposes of this Will, my children are:
 I have no children.
 
 [[end]]
+[[if has_stepchildren]]
+My spouse's or partner's children from a prior relationship, who are my stepchildren, are:
+
+[[each stepchildren]]
+@row {{stepchild}} |
+
+[[end]]
+Unless this Will expressly provides otherwise, a stepchild of mine is not treated as my child for purposes of this Will.
+
+[[end]]
 [[end]]
 [[if has_minor_children]]
 // ADDED: your draft had no guardian clause (Section 1.06 is missing from the numbering).

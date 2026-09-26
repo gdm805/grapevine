@@ -218,3 +218,8 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .pkg-next-top { margin: 4px 0 16px; padding: 10px 14px; border-radius: 12px; background: var(--grape-tint, #efe8f8); font-size: 15px; }
 .pkg-next-top a { font-weight: 700; color: var(--grape, #583785); }
 .pkg-next-top span { color: var(--ink-mute, #6b6570); font-size: 13.5px; }
+
+/* "whose child?" choice under each child's name (married will, pour-over will, joint trust) */
+.rowitem:has(.child-rel) { flex-wrap: wrap; row-gap: 6px; }
+.rowitem:has(.child-rel) > .input:first-child { flex: 1 1 calc(100% - 60px); }
+.rowitem .child-rel { order: 3; flex: 1 1 100%; margin-bottom: 6px; }

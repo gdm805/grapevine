@@ -138,7 +138,11 @@ The Trustmakers have the following children:
 
 [[end]]
 
+[[if has_one_parent_child]]
+For purposes of this Trust Agreement, each person identified above is a Child of the Trustmakers, except that a person identified above as the child of one Trustmaker only is a Child of that Trustmaker only.
+[[else]]
 For purposes of this Trust Agreement, each person identified above is a Child of the Trustmakers.
+[[end]]
 
 [[else]]
 

@@ -238,17 +238,22 @@
     try { var o = readShared(); Object.keys(patch).forEach(function (k) { if (patch[k] !== undefined && patch[k] !== '') o[k] = patch[k]; }); localStorage.setItem(SHARED_KEY, JSON.stringify(o)); } catch (e) { /* ignore */ }
   }
   function kidNames(list) { return (list || []).map(function (c) { return clean(c.name); }).filter(Boolean); }
+  /* children are shared as { name, rel } with rel from the household's point of view: 'both', 'p1' (first
+     person's only) or 'p2' (second person's only). A will's own 'mine'/'spouse' is translated both ways. */
+  function kidsShared(list, relOf) { return (list || []).filter(function (c) { return clean(c.name); }).map(function (c) { return { name: clean(c.name), rel: relOf(c.rel) }; }); }
+  function willRelToShared(r) { return r === 'mine' ? 'p1' : (r === 'spouse' ? 'p2' : (r === 'both' ? 'both' : '')); }
+  function sharedRelToWill(r) { if (r === 'both') return 'both'; if (r === 'p1') return SPOUSE2 ? 'spouse' : 'mine'; if (r === 'p2') return SPOUSE2 ? 'mine' : 'spouse'; return ''; }
   function saveShared(a, kind) {
     var k = kind.key;
     if (SPOUSE2) return;   /* the first person's answers are the household's reference */
     if (k === 'will' || k === 'pourover') {
       writeShared({ marital: a.marital, spouse: a.marital === 'married' ? clean(a.spouse) : '',
-        children: a.hasChildren === 'yes' ? kidNames(a.children) : (a.hasChildren === 'no' ? [] : undefined) });
+        children: a.hasChildren === 'yes' ? kidsShared(a.children, willRelToShared) : (a.hasChildren === 'no' ? [] : undefined) });
     } else if (k === 'trust') {
       writeShared({ marital: a.maritalStatus ? (a.maritalStatus === 'UNMARRIED' ? 'unmarried' : 'married') : '',
-        spouse: clean(a.spouse || a.partner), children: kidNames(a.children).length ? kidNames(a.children) : undefined });
+        spouse: clean(a.spouse || a.partner), children: kidNames(a.children).length ? kidsShared(a.children, function () { return ''; }) : undefined });
     } else if (k === 'trustjoint') {
-      writeShared({ marital: 'married', spouse: clean(a.name2), children: kidNames(a.children).length ? kidNames(a.children) : undefined });
+      writeShared({ marital: 'married', spouse: clean(a.name2), children: kidNames(a.children).length ? kidsShared(a.children, function (r) { return r || ''; }) : undefined });
     } else if (k === 'hcd') {
       var succ = (a.successors || []).map(function (x) { return clean(x.name); }).filter(Boolean);
       writeShared({ hcAgent: clean(a.agent), hcAgentContact: [clean(a.agentPhone), clean(a.agentEmail)].filter(Boolean).join(' | '), hcAlt1: succ[0] || '', hcAlt2: succ[1] || '' });
@@ -262,15 +267,15 @@
       fill('marital', sh.marital);
       if (a.marital === 'married') fill('spouse', SPOUSE2 ? clean(readProfile().name) : sh.spouse);
       if (!a.hasChildren && kids) {
-        if (kids.length) { a.hasChildren = 'yes'; a.children = kids.map(function (n) { return { name: n, minor: false }; }); }
+        if (kids.length) { a.hasChildren = 'yes'; a.children = kids.map(function (n) { return typeof n === 'string' ? { name: n, minor: false } : { name: n.name, minor: false, rel: sharedRelToWill(n.rel) }; }); }
         else a.hasChildren = 'no';
       }
     } else if (k === 'trust') {
       if (!a.maritalStatus && sh.marital) a.maritalStatus = sh.marital === 'married' ? 'MARRIED' : 'UNMARRIED';
       if (a.maritalStatus === 'MARRIED') fill('spouse', sh.spouse);
-      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: n }; });
+      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: typeof n === 'string' ? n : n.name }; });
     } else if (k === 'trustjoint') {
-      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: n }; });
+      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return typeof n === 'string' ? { name: n } : { name: n.name, rel: n.rel || '' }; });
     } else if (k === 'hcd') {
       /* where they'll sign starts as the county where they live (one way only: it never changes the home county) */
       fill('signingCounty', clean(readProfile().county));
@@ -484,8 +489,9 @@
   /* ---------- answers -> blanks ---------- */
   function buildVarsWill(a, states, settings) {
     var v = {}, st = states.map[a.state] || null;
-    var kids = (a.children || []).map(function (c) { return { child: clean(c.name), minor: !!c.minor }; }).filter(function (c) { return c.child; });
+    var wk = willKids(a), kids = wk.own;
     var hasKids = a.hasChildren === 'yes' && kids.length > 0;
+    v.stepchildren = a.hasChildren === 'yes' ? wk.step : []; v.has_stepchildren = v.stepchildren.length > 0;
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase(); v.city = clean(a.city);
     v.county = clean(a.county).replace(/\s+county$/i, '');
     v.state = st ? st.name : '';
@@ -701,6 +707,7 @@
       if (answers.hasChildren === 'yes') {
         rows = '<div class="rowset">' + answers.children.map(function (c, i) {
           return '<div class="rowitem"><input class="input" data-list="children" data-i="' + i + '" data-f="name" value="' + val(c.name) + '" placeholder="Child\u2019s full name" aria-label="Child ' + (i + 1) + ' name">' +
+            (answers.marital === 'married' ? relSelect('children', i, c.rel, CHILD_REL_WILL) : '') +
             '<label class="check sm"><input type="checkbox" data-list="children" data-i="' + i + '" data-f="minor" data-rerender' + (c.minor ? ' checked' : '') + '><span>Under 18</span></label>' +
             rm('children', i, 'child ' + (i + 1), answers.children.length > 1) + '</div>';
         }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="children">+ Add another child</button>';
@@ -813,6 +820,7 @@
     } else if (id === 'children') {
       if (!a.hasChildren) e.push('Tell us whether you have children.');
       if (a.hasChildren === 'yes' && !a.children.some(function (c) { return clean(c.name); })) e.push('Enter at least one child\u2019s name.');
+      if (a.hasChildren === 'yes' && a.marital === 'married' && a.children.some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
     } else if (id === 'guardian') {
       if (!clean(a.guardian)) e.push('Enter the name of the person who should be guardian.');
     } else if (id === 'executor') {
@@ -860,16 +868,34 @@
     { id: 'propfid', label: 'Property for a minor', show: hasMinor },
     { id: 'review', label: 'Review and sign' }
   ];
+  /* a guardian can be named only for your OWN minor children, so a spouse's child (a stepchild) is left out */
   function minorsOf(a) {
-    return (a.children || []).map(function (c, i) { return { child: clean(c.name), minor: !!c.minor, idx: i }; }).filter(function (c) { return c.child && c.minor; });
+    return (a.children || []).map(function (c, i) { return { child: clean(c.name), minor: !!c.minor, idx: i, rel: c.rel }; }).filter(function (c) { return c.child && c.minor && c.rel !== 'spouse'; });
+  }
+  /* WHOSE CHILD (married will / pour-over will): 'both' = ours, 'mine' = mine from a prior relationship,
+     'spouse' = my spouse's or partner's from a prior relationship (my stepchild). Recorded so the will says
+     plainly which children are the will-maker's own, and a stepchild is named as a stepchild. */
+  var CHILD_REL_WILL = [['both', 'Ours (both of us)'], ['mine', 'Only mine (prior relationship)'], ['spouse', 'Only my spouse’s (prior relationship)']];
+  function relSelect(list, i, current, opts) {
+    return '<select class="input child-rel" data-list="' + list + '" data-i="' + i + '" data-f="rel" aria-label="Whose child is this?">' +
+      '<option value="">Whose child?</option>' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (current === o[0] ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
+  }
+  function willKids(a) {
+    var married = a.marital === 'married';
+    var all = (a.children || []).map(function (c) { return { name: clean(c.name), minor: !!c.minor, rel: married ? (c.rel || '') : 'both' }; }).filter(function (c) { return c.name; });
+    return {
+      own: all.filter(function (c) { return c.rel !== 'spouse'; }).map(function (c) { return { child: c.name + (c.rel === 'mine' ? ' (my child from a prior relationship)' : ''), minor: c.minor }; }),
+      step: all.filter(function (c) { return c.rel === 'spouse'; }).map(function (c) { return { stepchild: c.name }; })
+    };
   }
   function altList(names) {
     return names.map(clean).filter(Boolean).map(function (x) { return { alternate: x }; });
   }
   function buildVarsPO(a, states, settings) {
     var v = {}, st = states.map[a.state] || null;
-    var kids = (a.children || []).map(function (c) { return { child: clean(c.name) }; }).filter(function (c) { return c.child; });
+    var wk = willKids(a), kids = wk.own.map(function (c) { return { child: c.child }; });
     var hasKids = a.hasChildren === 'yes' && kids.length > 0;
+    v.stepchildren = a.hasChildren === 'yes' ? wk.step : []; v.has_stepchildren = v.stepchildren.length > 0;
     var minors = hasKids ? minorsOf(a) : [];
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase();
     v.county = clean(a.county).replace(/\s+county$/i, '');
@@ -1026,6 +1052,7 @@
     } else if (id === 'children') {
       if (!a.hasChildren) e.push('Tell us whether you have children.');
       if (a.hasChildren === 'yes' && !a.children.some(function (c) { return clean(c.name); })) e.push('Enter at least one child’s name.');
+      if (a.hasChildren === 'yes' && a.marital === 'married' && a.children.some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
     } else if (id === 'trust') {
       if (!clean(a.trustName)) e.push('Enter the name of your trust.');
       if (!/^\d{4}-\d{2}-\d{2}$/.test(a.trustDate || '')) e.push('Enter the date your trust was first signed.');
@@ -2217,7 +2244,12 @@
     v.orig_trust_name = clean(a.origTrustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'MARRIED';
-    v.children = (a.children || []).map(function (c) { return { child: clean(c.name) }; }).filter(function (c) { return c.child; });
+    /* whose child: a child from a prior relationship is identified as the child of that Trustmaker only */
+    v.children = (a.children || []).filter(function (c) { return clean(c.name); }).map(function (c) {
+      var only = c.rel === 'p1' ? clean(a.name1) : (c.rel === 'p2' ? clean(a.name2) : '');
+      return { child: clean(c.name) + (only ? ' (child of ' + only + ' only, from a prior relationship)' : '') };
+    });
+    v.has_one_parent_child = (a.children || []).some(function (c) { return clean(c.name) && (c.rel === 'p1' || c.rel === 'p2'); });
     v.has_children = v.children.length > 0;
     v.excluded = (a.excluded || []).map(function (x) { return { excluded_name: clean(x.name), excluded_relationship: clean(x.relationship) }; }).filter(function (x) { return x.excluded_name; });
     v.has_excluded = v.excluded.length > 0;
@@ -2280,7 +2312,13 @@
     family: function () {
       var h = stepHead('Your family', '') +
         field('Marital status', pills('maritalStatus', [['MARRIED', 'Married'], ['PARTNER', 'Registered domestic partners']], true));
-      h += field('Children', nameRows('children', 'Child', 0) + addBtn('children', '+ Add a child'), 'Leave blank if you have no children.');
+      var n1 = (clean(answers.name1).split(' ')[0]) || 'First Trustmaker', n2 = (clean(answers.name2).split(' ')[0]) || 'Second Trustmaker';
+      var jrows = '<div class="rowset">' + answers.children.map(function (c, k) {
+        return '<div class="rowitem"><input class="input" data-list="children" data-i="' + k + '" data-f="name" value="' + val(c.name) + '" placeholder="Child ' + (k + 1) + ' full name" aria-label="Child ' + (k + 1) + '">' +
+          relSelect('children', k, c.rel, [['both', 'Both of ours'], ['p1', 'Only ' + n1 + '’s (prior relationship)'], ['p2', 'Only ' + n2 + '’s (prior relationship)']]) +
+          rm('children', k, 'child ' + (k + 1), answers.children.length > 0) + '</div>';
+      }).join('') + '</div>';
+      h += field('Children', jrows + addBtn('children', '+ Add a child'), 'Leave blank if you have no children. For each child, choose whose child they are.');
       h += field('Anyone you want to intentionally exclude? (optional)', '<div class="rowset">' + answers.excluded.map(function (x, i) {
         return '<div class="rowitem two"><input class="input" data-list="excluded" data-i="' + i + '" data-f="name" value="' + val(x.name) + '" placeholder="Full name">' +
           '<input class="input" data-list="excluded" data-i="' + i + '" data-f="relationship" value="' + val(x.relationship) + '" placeholder="Relationship">' +
@@ -2381,6 +2419,7 @@
       if (clean(a.name1).length < 2) e.push('Enter the first Trustmaker’s full legal name.');
       if (clean(a.name2).length < 2) e.push('Enter the second Trustmaker’s full legal name.');
     } else if (id === 'family') {
+      if ((a.children || []).some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
       if (!a.maritalStatus) e.push('Choose whether you are married or registered domestic partners.');
     } else if (id === 'trustee') {
       var list = a.trusteeMode === 'COTRUSTEES' ? a.cotrustees : a.successors;
