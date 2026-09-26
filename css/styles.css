@@ -394,3 +394,17 @@ a { color: var(--grape); }
 .beta-bar a { color: #fff; font-weight: 700; text-decoration: underline; }
 .foot-contact { display: block; margin-bottom: 6px; }
 .foot-contact a { color: inherit; font-weight: 600; }
+
+/* compare table on phones: fit the screen instead of scrolling sideways -- smaller type, tight cells,
+   document names wrap onto two lines, and the price row stays readable */
+@media (max-width: 640px) {
+  .compare { min-width: 0; font-size: 13.5px; table-layout: fixed; }
+  .compare th, .compare td { padding: 10px 4px; }
+  .compare thead th { font-size: 13.5px; padding-block: 12px; letter-spacing: -0.01em; }
+  .compare tbody th, .compare tfoot th { width: 42%; padding-left: 12px; line-height: 1.3; }
+  .compare tr.group th { padding: 10px 12px; font-size: 10.5px; letter-spacing: 0.08em; }
+  .compare tfoot th, .compare tfoot td { font-size: 14px; }
+  .compare .ico { width: 16px; height: 16px; }
+  .compare thead th:first-child { width: 38%; }
+  .compare .yes { width: 26px; height: 26px; }
+}
