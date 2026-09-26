@@ -213,3 +213,8 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 
 /* Certification: the exact title wording, shown as a copyable box */
 .title-box { margin: 10px 0 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper, #fffef8); font-weight: 600; line-height: 1.45; user-select: all; }
+
+/* package: the next document, shown near the top of a finished document's review screen */
+.pkg-next-top { margin: 4px 0 16px; padding: 10px 14px; border-radius: 12px; background: var(--grape-tint, #efe8f8); font-size: 15px; }
+.pkg-next-top a { font-weight: 700; color: var(--grape, #583785); }
+.pkg-next-top span { color: var(--ink-mute, #6b6570); font-size: 13.5px; }

@@ -3411,6 +3411,14 @@
             /* the Continue button goes BELOW the "How to sign" instructions, so nobody skips past them */
             var cont = stepEl.querySelector('.pkg-continue'), instrEl = stepEl.querySelector('.instr');
             if (cont && instrEl) instrEl.parentNode.insertBefore(cont, instrEl.nextSibling);
+            /* and a short "Next" line near the top, so the next document is easy to see without scrolling */
+            var sumEl = stepEl.querySelector('.sum');
+            if (sumEl) {
+              var nx = document.createElement('p');
+              nx.className = 'pkg-next-top';
+              nx.innerHTML = 'Next in your package: <a href="' + esc(pageUrl(nextKind)) + '">' + esc(window.GVFlow.labelFor(nextKind)) + ' &rarr;</a> <span>(read how to sign this one below first)</span>';
+              sumEl.parentNode.insertBefore(nx, sumEl);
+            }
           }
         }
       } else {
