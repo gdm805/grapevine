@@ -67,8 +67,8 @@
     dementia: { name: 'name', state: 'state' },
     hcd: { name: 'name', address: 'address', phone: 'phone', dob: 'dob', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     hipaa: { name: 'name', dob: 'dob', address: 'address', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
-    trust: { name: 'name', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
-    trustjoint: { name: 'name1', name2: 'name2', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    trust: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    trustjoint: { name: 'name1', name2: 'name2', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     cert: { name: 'trustmakers[0].name', name2: 'trustmakers[1].name', state: 'state' },
     affidavit: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     assignment: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
@@ -271,6 +271,9 @@
       if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: n }; });
     } else if (k === 'trustjoint') {
       if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: n }; });
+    } else if (k === 'hcd') {
+      /* where they'll sign starts as the county where they live (one way only: it never changes the home county) */
+      fill('signingCounty', clean(readProfile().county));
     } else if (k === 'hipaa' && !SPOUSE2) {
       fill('agentName', sh.hcAgent); fill('agentContact', sh.hcAgentContact); fill('alt1Name', sh.hcAlt1); fill('alt2Name', sh.hcAlt2);
     }
@@ -1912,7 +1915,7 @@
 
   /* ---------- REVOCABLE LIVING TRUST (single trustmaker) ---------- */
   var EMPTY_TRUST = {
-    state: '', ageOk: false, freeOk: false,
+    state: '', county: '', ageOk: false, freeOk: false,
     trustName: '', trustType: 'NEW', origTrustName: '', origTrustDate: '',
     name: '',
     maritalStatus: '', spouse: '', partner: '',
@@ -2029,7 +2032,8 @@
     },
     about: function () {
       return stepHead('About you', 'You’re the Trustmaker — the person creating the trust.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' }));
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
+        field('County where you live', countySelect('county'), 'Your other documents use this too, so you won’t be asked again.');
     },
     family: function () {
       var h = stepHead('Your family', '') +
@@ -2155,7 +2159,7 @@
 
   /* ---------- REVOCABLE LIVING TRUST (joint -- married couple or domestic partners) ---------- */
   var EMPTY_TRUST_JOINT = {
-    state: '', ageOk: false, freeOk: false,
+    state: '', county: '', ageOk: false, freeOk: false,
     trustName: '', trustType: 'NEW', origTrustName: '', origTrustDate: '',
     name1: '', name2: '',
     maritalStatus: '',
@@ -2270,7 +2274,8 @@
     about: function () {
       return stepHead('About you both', 'You’re both Trustmakers — the people creating the trust together.') +
         field('First Trustmaker’s full legal name', text('name1', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
-        field('Second Trustmaker’s full legal name', text('name2', 'For example, John Michael Alvarez'));
+        field('Second Trustmaker’s full legal name', text('name2', 'For example, John Michael Alvarez')) +
+        field('County where you live', countySelect('county'), 'Your other documents use this too, so you won’t be asked again.');
     },
     family: function () {
       var h = stepHead('Your family', '') +
@@ -3339,6 +3344,7 @@
     startSkip = { id: 'start', text: 'We filled in ' + labels.join(', ') + ' from your earlier answers.' };
   })();
   function save() {
+    if ((KIND.key === 'trust' || KIND.key === 'trustjoint') && answers.county && !answers.signingCounty) answers.signingCounty = answers.county;
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
     saveTrustFacts(answers, KIND);
