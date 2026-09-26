@@ -66,7 +66,7 @@
     dpoa: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     dementia: { name: 'name', state: 'state' },
     hcd: { name: 'name', address: 'address', phone: 'phone', dob: 'dob', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
-    hipaa: { name: 'name', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    hipaa: { name: 'name', dob: 'dob', address: 'address', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     trust: { name: 'name', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     trustjoint: { name: 'name1', name2: 'name2', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
     cert: { name: 'trustmakers[0].name', name2: 'trustmakers[1].name', state: 'state' },
@@ -157,7 +157,8 @@
       restated: restated,
       origDate: restated ? (a.origTrustDate || '') : (a.signingDate || ''),
       restatementDate: restated ? (a.signingDate || '') : '',
-      name1: clean(key === 'trustjoint' ? a.name1 : a.name), name2: key === 'trustjoint' ? clean(a.name2) : ''
+      name1: clean(key === 'trustjoint' ? a.name1 : a.name), name2: key === 'trustjoint' ? clean(a.name2) : '',
+      signingCounty: a.signingCounty || '', signingDate: a.signingDate || ''
     };
   }
   function saveTrustFacts(a, kind) {
@@ -185,8 +186,10 @@
     var f = readTrustFacts();
     return !!(f && f.trustName && clean(a.trustName) === f.trustName);
   }
+  var CARRY_CONFIRMED = {};
   function applyTrustFacts(a, kind) {
     var f = readTrustFacts();
+    if (f && f.trustName && ['affidavit', 'assignment', 'schedulea'].indexOf(kind.key) > -1) CARRY_CONFIRMED.trustType = 1;
     if (!f || !f.trustName) return;
     function fill(k, v) { if (v && (a[k] === '' || a[k] === undefined)) a[k] = v; }
     var k = kind.key;
@@ -201,12 +204,76 @@
     fill('trustName', f.trustName); fill('origTrustDate', f.origDate);
     fill('trustRestated', f.restated ? 'yes' : 'no');
     if (f.restated) fill('restatementDate', f.restatementDate);
+    /* What Grapevine's own trust says, so these documents don't ask: it is revocable; the Trustmakers are the
+       first Trustees, still living; and two Co-Trustees must act together (majority of two = both), except for
+       routine administrative acts. Only applied while this document's own answer is untouched. */
+    if (fresh) {
+      if (k === 'cert') { a.revocability = 'REVOCABLE'; CARRY_CONFIRMED.revocability = 1; if (f.joint) { a.trusteeRule = 'ALL'; CARRY_CONFIRMED.trusteeRule = 1; } }
+      if (k === 'assignment') { a.revocability = 'FULLY_REVOCABLE'; CARRY_CONFIRMED.revocability = 1; }
+      if (k === 'affidavit') {
+        CARRY_CONFIRMED.trustmakerStatus = 1; CARRY_CONFIRMED.jointPhase = 1;
+        if (!a.affiantIsSuccessor) { a.affiantIsSuccessor = 'no'; CARRY_CONFIRMED.affiantIsSuccessor = 1; }
+        if (f.joint) { a.trusteeRule = 'ALL'; CARRY_CONFIRMED.trusteeRule = 1; }
+      }
+    }
+    /* the trust paperwork is normally signed at the same appointment as the trust */
+    fill('signingCounty', f.signingCounty); fill('signingDate', f.signingDate);
+    if (k === 'affidavit') {
+      fill('affiantName', f.name1);
+      if (!(a.trustees || []).some(function (t) { return clean(t.name); })) a.trustees = [f.name1, f.name2].filter(Boolean).map(function (n) { return { name: n }; });
+    }
     if (k === 'cert') {
       if (!f.restated) fill('hasAmendments', 'no');
       /* on a Grapevine trust the Trustmakers are the first Trustees */
       if (!(a.trustees || []).some(function (t) { return clean(t.name); })) a.trustees = [f.name1, f.name2].filter(Boolean).map(function (n) { return { name: n, address: '' }; });
     }
     else if (fresh || !clean(a.tm1Name)) a.trustType = f.joint ? 'JOINT' : 'SINGLE';
+  }
+
+  /* ---------- shared answers beyond the profile: marital status and spouse, children, the health care agent.
+     Same rule as everywhere else: a later document fills these in only where its own answer is still empty. */
+  var SHARED_KEY = 'grapevine.shared.v1';
+  function readShared() { try { return JSON.parse(localStorage.getItem(SHARED_KEY) || '{}') || {}; } catch (e) { return {}; } }
+  function writeShared(patch) {
+    try { var o = readShared(); Object.keys(patch).forEach(function (k) { if (patch[k] !== undefined && patch[k] !== '') o[k] = patch[k]; }); localStorage.setItem(SHARED_KEY, JSON.stringify(o)); } catch (e) { /* ignore */ }
+  }
+  function kidNames(list) { return (list || []).map(function (c) { return clean(c.name); }).filter(Boolean); }
+  function saveShared(a, kind) {
+    var k = kind.key;
+    if (SPOUSE2) return;   /* the first person's answers are the household's reference */
+    if (k === 'will' || k === 'pourover') {
+      writeShared({ marital: a.marital, spouse: a.marital === 'married' ? clean(a.spouse) : '',
+        children: a.hasChildren === 'yes' ? kidNames(a.children) : (a.hasChildren === 'no' ? [] : undefined) });
+    } else if (k === 'trust') {
+      writeShared({ marital: a.maritalStatus ? (a.maritalStatus === 'UNMARRIED' ? 'unmarried' : 'married') : '',
+        spouse: clean(a.spouse || a.partner), children: kidNames(a.children).length ? kidNames(a.children) : undefined });
+    } else if (k === 'trustjoint') {
+      writeShared({ marital: 'married', spouse: clean(a.name2), children: kidNames(a.children).length ? kidNames(a.children) : undefined });
+    } else if (k === 'hcd') {
+      var succ = (a.successors || []).map(function (x) { return clean(x.name); }).filter(Boolean);
+      writeShared({ hcAgent: clean(a.agent), hcAgentContact: [clean(a.agentPhone), clean(a.agentEmail)].filter(Boolean).join(' | '), hcAlt1: succ[0] || '', hcAlt2: succ[1] || '' });
+    }
+  }
+  function applyShared(a, kind) {
+    var sh = readShared(), k = kind.key;
+    function fill(key, v) { if (v && (a[key] === '' || a[key] === undefined)) a[key] = v; }
+    var kids = sh.children;
+    if (k === 'will' || k === 'pourover') {
+      fill('marital', sh.marital);
+      if (a.marital === 'married') fill('spouse', SPOUSE2 ? clean(readProfile().name) : sh.spouse);
+      if (!a.hasChildren && kids) {
+        if (kids.length) { a.hasChildren = 'yes'; a.children = kids.map(function (n) { return { name: n, minor: false }; }); }
+        else a.hasChildren = 'no';
+      }
+    } else if (k === 'trust') {
+      if (!a.maritalStatus && sh.marital) a.maritalStatus = sh.marital === 'married' ? 'MARRIED' : 'UNMARRIED';
+      if (a.maritalStatus === 'MARRIED') fill('spouse', sh.spouse);
+      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: n }; });
+    } else if (k === 'trustjoint') {
+      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: n }; });
+    } else if (k === 'hipaa' && !SPOUSE2) {
+      fill('agentName', sh.hcAgent); fill('agentContact', sh.hcAgentContact); fill('alt1Name', sh.hcAlt1); fill('alt2Name', sh.hcAlt2);
+    }
   }
 
   /* ---------- state rules ---------- */
@@ -2343,10 +2410,10 @@
     { id: 'start', label: 'Your trust' },
     { id: 'trustmakers', label: 'Trustmakers' },
     { id: 'trustees', label: 'Current trustees' },
-    { id: 'authority', label: 'Trustee authority' },
+    { id: 'authority', label: 'Trustee authority', show: function (a) { return (a.trustees || []).filter(function (t) { return clean(t.name); }).length > 1; } },
     { id: 'revocability', label: 'Revocability' },
     { id: 'powers', label: 'Limitations', show: function (a) { return !madeHere(a); } },
-    { id: 'title', label: 'Manner of taking title' },
+    { id: 'title', label: 'How to title property' },
     { id: 'signing', label: 'Signing' },
     { id: 'review', label: 'Review and sign' }
   ];
@@ -2523,7 +2590,7 @@
     { id: 'trustmakers', label: 'Trustmakers' },
     { id: 'affiant', label: 'About you' },
     { id: 'trustees', label: 'Current trustees' },
-    { id: 'authority', label: 'Trustee authority' },
+    { id: 'authority', label: 'Trustee authority', show: function (a) { return (a.trustees || []).filter(function (t) { return clean(t.name); }).length > 1; } },
     { id: 'transaction', label: 'Transaction' },
     { id: 'signing', label: 'Signing' },
     { id: 'review', label: 'Review and sign' }
@@ -3244,8 +3311,15 @@
     var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
     if (saved && saved.answers) { answers = Object.assign(clone(KIND.empty), saved.answers); stepId = saved.step || 'start'; restored = stepId !== 'start' || !!answers.state; }
   } catch (e) { /* storage unavailable: carry on without saving */ }
+  var beforeCarry = JSON.parse(JSON.stringify(answers));
   applyProfile(answers, KIND);
   applyTrustFacts(answers, KIND);
+  applyShared(answers, KIND);
+  /* CARRIED: every answer that was filled in from an earlier document. A screen whose answers are ALL carried
+     is skipped (see next() and the start-screen skip below) -- never ask again what was already answered. */
+  var CARRIED = {};
+  Object.keys(answers).forEach(function (k) { if (JSON.stringify(answers[k]) !== JSON.stringify(beforeCarry[k]) && answers[k] !== '' && answers[k] !== false) CARRIED[k] = 1; });
+  Object.keys(CARRY_CONFIRMED).forEach(function (k) { CARRIED[k] = 1; });
   /* Inside a package: a document's first screen (state, 18 or older, own free will) that is already fully
      answered from an earlier document is skipped, with a note and a Change link -- so a Complete package
      doesn't ask where you live eleven times. A pour-over will inside Complete comes after the trust, so its
@@ -3259,13 +3333,16 @@
     try { if (KIND.validate('start').length) return; } catch (e) { return; }
     var vis = visibleSteps(answers);
     if (vis.length < 2 || vis[0].id !== 'start') return;
-    stepId = vis[1].id;
-    startSkip = { id: 'start', text: 'We used your answers from earlier: you live in ' + answers.state + (answers.ageOk ? ' and are 18 or older' : '') + '.' };
+    var j = 1, labels = [vis[0].label];
+    while (j < vis.length - 1 && stepAllCarried(vis[j].id)) { labels.push(vis[j].label); j++; }
+    stepId = vis[j].id;
+    startSkip = { id: 'start', text: 'We filled in ' + labels.join(', ') + ' from your earlier answers.' };
   })();
   function save() {
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
     saveTrustFacts(answers, KIND);
+    saveShared(answers, KIND);
   }
 
   /* ---------- show the current step ---------- */
@@ -3300,7 +3377,7 @@
       note = '<p class="restored">' + esc(startSkip.text) + ' <button type="button" class="link" data-goto="start">Change</button></p>';
       /* kept until the person moves to another step: some documents redraw once their state's file loads */
     } else if (skipNote) {
-      note = '<p class="restored">We used the name from your earlier answers: ' + esc(skipNote.name) + '. <button type="button" class="link" data-goto="' + esc(skipNote.id) + '">Change</button></p>';
+      note = '<p class="restored">We filled in ' + esc(skipNote.labels.join(', ')) + ' from your earlier answers. <button type="button" class="link" data-goto="' + esc(skipNote.id) + '">Change</button></p>';
       skipNote = null;
     }
     var st = states.map[answers.state];
@@ -3510,17 +3587,23 @@
      screen, so a name is never asked twice. A step with anything still unanswered (a spouse, a date of
      birth) is shown as usual. */
   var skipNote = null;
-  var SKIPPABLE = ['about', 'you'];
+  /* a screen is skipped when every answer on it was carried over from an earlier document and it's complete */
+  function stepAllCarried(id) {
+    var h = '';
+    try { h = KIND.render[id](); } catch (e) { return false; }
+    var keys = {};
+    h.replace(/data-(?:k|list)="([^"]+)"/g, function (_, k) { keys[k] = 1; return _; });
+    var list = Object.keys(keys);
+    if (!list.length || !list.every(function (k) { return CARRIED[k]; })) return false;
+    try { return !KIND.validate(id).length; } catch (e) { return false; }
+  }
   function next() {
     errors = KIND.validate(stepId);
     if (errors.length) { draw(); return; }
     var vis = visibleSteps(answers), i = vis.map(function (s) { return s.id; }).indexOf(stepId);
-    var j = Math.min(i + 1, vis.length - 1), skipped = null;
-    while (j < vis.length - 1 && SKIPPABLE.indexOf(vis[j].id) > -1 && !clean(KIND.validate(vis[j].id).join('')) && clean(answers.name || answers.name1 || answers.tm1Name)) {
-      skipped = { id: vis[j].id, name: clean(answers.name || answers.name1 || answers.tm1Name) };
-      j++;
-    }
-    skipNote = skipped;
+    var j = Math.min(i + 1, vis.length - 1), skipped = [];
+    while (j < vis.length - 1 && stepAllCarried(vis[j].id)) { skipped.push(vis[j]); j++; }
+    skipNote = skipped.length ? { id: skipped[0].id, labels: skipped.map(function (x) { return x.label; }) } : null;
     go(vis[j].id);
   }
   function back() {
