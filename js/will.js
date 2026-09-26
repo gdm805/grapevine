@@ -150,26 +150,43 @@
       (restatedOn ? ', as restated on ' + restatedOn : '') + ', and any amendments made to it';
   }
   var TRUST_FACTS_KEY = 'grapevine.trustfacts.v1';
-  function saveTrustFacts(a, kind) {
-    if (kind.key !== 'trust' && kind.key !== 'trustjoint') return;
+  function factsFrom(a, key) {
     var restated = a.trustType === 'RESTATEMENT';
-    var facts = {
-      trustName: clean(a.trustName), joint: kind.key === 'trustjoint',
+    return {
+      trustName: clean(a.trustName), joint: key === 'trustjoint',
       restated: restated,
       origDate: restated ? (a.origTrustDate || '') : (a.signingDate || ''),
       restatementDate: restated ? (a.signingDate || '') : '',
-      name1: clean(kind.key === 'trustjoint' ? a.name1 : a.name), name2: kind.key === 'trustjoint' ? clean(a.name2) : ''
+      name1: clean(key === 'trustjoint' ? a.name1 : a.name), name2: key === 'trustjoint' ? clean(a.name2) : ''
     };
-    try { localStorage.setItem(TRUST_FACTS_KEY, JSON.stringify(facts)); } catch (e) { /* ignore */ }
+  }
+  function saveTrustFacts(a, kind) {
+    if (kind.key !== 'trust' && kind.key !== 'trustjoint') return;
+    try { localStorage.setItem(TRUST_FACTS_KEY, JSON.stringify(factsFrom(a, kind.key))); } catch (e) { /* ignore */ }
+  }
+  /* the saved facts -- or, for a trust written before facts were saved, worked out from the trust's own
+     saved answers (joint trust first if both exist and it has a name) */
+  function readTrustFacts() {
+    var f = null;
+    try { f = JSON.parse(localStorage.getItem(TRUST_FACTS_KEY) || 'null'); } catch (e) { f = null; }
+    if (f && f.trustName) return f;
+    var tries = [['trustjoint', 'grapevine.trustjoint.v1'], ['trust', 'grapevine.trust.v1']];
+    for (var i = 0; i < tries.length; i++) {
+      try {
+        var saved = JSON.parse(localStorage.getItem(tries[i][1]) || 'null');
+        if (saved && saved.answers && clean(saved.answers.trustName)) return factsFrom(saved.answers, tries[i][0]);
+      } catch (e) { /* ignore */ }
+    }
+    return null;
   }
   /* true when this document is for the trust written on this site (its name matches the saved trust facts).
      Grapevine's own trust puts no special limits on the Trustee, so the Certification skips that question. */
   function madeHere(a) {
-    var f; try { f = JSON.parse(localStorage.getItem(TRUST_FACTS_KEY) || 'null'); } catch (e) { f = null; }
+    var f = readTrustFacts();
     return !!(f && f.trustName && clean(a.trustName) === f.trustName);
   }
   function applyTrustFacts(a, kind) {
-    var f; try { f = JSON.parse(localStorage.getItem(TRUST_FACTS_KEY) || 'null'); } catch (e) { f = null; }
+    var f = readTrustFacts();
     if (!f || !f.trustName) return;
     function fill(k, v) { if (v && (a[k] === '' || a[k] === undefined)) a[k] = v; }
     var k = kind.key;
@@ -189,7 +206,7 @@
       /* on a Grapevine trust the Trustmakers are the first Trustees */
       if (!(a.trustees || []).some(function (t) { return clean(t.name); })) a.trustees = [f.name1, f.name2].filter(Boolean).map(function (n) { return { name: n, address: '' }; });
     }
-    else if (fresh) a.trustType = f.joint ? 'JOINT' : 'SINGLE';
+    else if (fresh || !clean(a.tm1Name)) a.trustType = f.joint ? 'JOINT' : 'SINGLE';
   }
 
   /* ---------- state rules ---------- */
