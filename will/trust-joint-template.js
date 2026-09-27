@@ -808,17 +808,51 @@ The Trustee may retain reasonable reserves and complete any remaining administra
 
 # SPECIFIC GIFTS
 
-[[if has_first_death_gifts]]
+[[if has_tm1_gifts]]
 
-## Specific Gifts at First Death
+## Specific Gifts at the Death of {{name1}}
 
-Upon the death of the first Trustmaker to die, the Trustee shall distribute the Specific Gifts designated by that deceased Trustmaker to be made at that Trustmaker's death.
+Upon the death of {{name1}}, whether {{name1}} is the first or the surviving Trustmaker to die, the Trustee shall make the following Specific Gifts from the property of {{name1}}, including the interest of {{name1}} in the Survivor's Trust if {{name1}} is the surviving Trustmaker.
 
-[[each first_death_gifts]]
+[[each tm1_gifts]]
 
 {{gift_description}} to {{gift_beneficiary}}
 
-If {{gift_beneficiary}} does not survive the first Trustmaker to die by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:
+If {{gift_beneficiary}} does not survive {{name1}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:
+
+[[if gift_contingent=DESCENDANTS]]
+
+the Specific Gift shall be distributed to that beneficiary's then-living descendants, by right of representation.
+
+[[elif gift_contingent=NAMED]]
+
+the Specific Gift shall be distributed to {{gift_contingent_name}}.
+
+[[elif gift_contingent=CHARITY]]
+
+the Specific Gift shall be distributed to {{gift_contingent_name}}.
+
+[[else]]
+
+the Specific Gift shall lapse and become part of the remainder of the Trust Estate.
+
+[[end]]
+
+[[end]]
+
+[[end]]
+
+[[if has_tm2_gifts]]
+
+## Specific Gifts at the Death of {{name2}}
+
+Upon the death of {{name2}}, whether {{name2}} is the first or the surviving Trustmaker to die, the Trustee shall make the following Specific Gifts from the property of {{name2}}, including the interest of {{name2}} in the Survivor's Trust if {{name2}} is the surviving Trustmaker.
+
+[[each tm2_gifts]]
+
+{{gift_description}} to {{gift_beneficiary}}
+
+If {{gift_beneficiary}} does not survive {{name2}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:
 
 [[if gift_contingent=DESCENDANTS]]
 
@@ -844,7 +878,7 @@ the Specific Gift shall lapse and become part of the remainder of the Trust Esta
 
 [[if has_survivor_death_gifts]]
 
-## Specific Gifts at Death of Surviving Trustmaker
+## Specific Gifts After Both Trustmakers Have Died
 
 Upon the death of the surviving Trustmaker, the Trustee shall make the following Specific Gifts from the Survivor's Trust:
 

@@ -206,6 +206,17 @@
     var f = readTrustFacts();
     return madeHere(a) && !!f && f.firstDeathPlan === 'SURVIVOR';
   }
+  /* joint trust gifts: one list, each with "when" = P1 (at the first-named Trustmaker's death), P2, or BOTH
+     (after both have died). Answers saved before this list existed are brought in: after-both gifts keep
+     their timing; a "first of you dies" gift has no owner, so its "when" is left for the person to choose. */
+  function jointGiftList(a) {
+    var filled = function (g) { return clean(g.description) || clean(g.beneficiary); };
+    if ((a.jointGifts || []).some(filled)) return a.jointGifts;
+    var old = (a.firstDeathGifts || []).filter(filled).map(function (g) { return Object.assign({}, g, { when: '' }); })
+      .concat((a.survivorDeathGifts || []).filter(filled).map(function (g) { return Object.assign({}, g, { when: 'BOTH' }); }));
+    return old.length ? old : (a.jointGifts || []);
+  }
+  function firstName(n) { return clean(n).split(' ')[0] || ''; }
   var CARRY_CONFIRMED = {};
   function applyTrustFacts(a, kind) {
     var f = readTrustFacts();
@@ -2070,8 +2081,8 @@
     if (a.wantsGifts === 'no') v.gifts = [];
     v.has_gifts = v.gifts.length > 0;
     v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
-    trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.beneficiary; })
-      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
+    trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.beneficiary; })
+      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_ownership: clean(p.ownership), real_property_county_state: clean(p.countyState), real_property_deed_reference: clean(p.deedReference) };
@@ -2265,8 +2276,8 @@
     children: [{ name: '' }],
     excluded: [{ name: '', relationship: '' }],
     trusteeMode: 'SUCCESSIVE', successors: [{ name: '' }], cotrustees: [{ name: '' }],
-    firstDeathGifts: [{ description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' }],
-    survivorDeathGifts: [{ description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' }],
+    jointGifts: [{ description: '', beneficiary: '', when: '', contingent: 'DESCENDANTS', contingentName: '' }],
+    firstDeathGifts: [], survivorDeathGifts: [],
     residuary: [{ name: '', pct: '' }],
     assetRealProperty: '', realProperty: [{ address: '', ownership: '', reference: '' }],
     assetBank: '', bankAccounts: [{ institution: '', type: '', last4: '', ownership: '' }],
@@ -2278,6 +2289,7 @@
   var ROWS_TRUST_JOINT = {
     children: { name: '' }, excluded: { name: '', relationship: '' },
     successors: { name: '' }, cotrustees: { name: '' },
+    jointGifts: { description: '', beneficiary: '', when: '', contingent: 'DESCENDANTS', contingentName: '' },
     firstDeathGifts: { description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' },
     survivorDeathGifts: { description: '', beneficiary: '', contingent: 'DESCENDANTS', contingentName: '' },
     residuary: { name: '', pct: '' },
@@ -2330,21 +2342,19 @@
     v.is_cotrustees = v.trustee_mode === 'COTRUSTEES';
     v.successors = (a.successors || []).map(function (s) { return { successor: clean(s.name) }; }).filter(function (s) { return s.successor; });
     v.cotrustees = (a.cotrustees || []).map(function (s) { return { cotrustee: clean(s.name) }; }).filter(function (s) { return s.cotrustee; });
-    v.first_death_gifts = (a.firstDeathGifts || []).map(function (g) {
-      return { gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_contingent: g.contingent || 'DESCENDANTS', gift_contingent_name: clean(g.contingentName) };
+    var jg = (a.wantsGifts === 'no' ? [] : jointGiftList(a)).map(function (g) {
+      return { when: g.when || '', gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_contingent: g.contingent || 'DESCENDANTS', gift_contingent_name: clean(g.contingentName) };
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
-    v.has_first_death_gifts = v.first_death_gifts.length > 0;
-    v.survivor_death_gifts = (a.survivorDeathGifts || []).map(function (g) {
-      return { gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_contingent: g.contingent || 'DESCENDANTS', gift_contingent_name: clean(g.contingentName) };
-    }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
-    v.has_survivor_death_gifts = v.survivor_death_gifts.length > 0;
+    v.tm1_gifts = jg.filter(function (g) { return g.when === 'P1'; }); v.has_tm1_gifts = v.tm1_gifts.length > 0;
+    v.tm2_gifts = jg.filter(function (g) { return g.when === 'P2'; }); v.has_tm2_gifts = v.tm2_gifts.length > 0;
+    v.survivor_death_gifts = jg.filter(function (g) { return g.when === 'BOTH'; }); v.has_survivor_death_gifts = v.survivor_death_gifts.length > 0;
+    v.has_first_death_gifts = v.has_tm1_gifts || v.has_tm2_gifts;
     /* first death: the share of the one who died goes into a separate Family Trust, or stays in the Survivor's Trust */
     v.family_trust = a.firstDeathPlan !== 'SURVIVOR';
-    if (a.wantsGifts === 'no') { v.first_death_gifts = []; v.survivor_death_gifts = []; v.has_first_death_gifts = v.has_survivor_death_gifts = false; }
     v.has_any_gifts = v.has_first_death_gifts || v.has_survivor_death_gifts;
     v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
-    trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.beneficiary; })
-      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
+    trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.beneficiary; })
+      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_reference: clean(p.reference), real_property_ownership: clean(p.ownership) };
@@ -2420,20 +2430,25 @@
         '<p class="hint">If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     gifts: function () {
-      function giftBlock(listKey, heading, hint) {
-        return field(heading, '<div class="rowset">' + answers[listKey].map(function (g, i) {
-          return '<div class="rowitem two"><input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="description" value="' + val(g.description) + '" placeholder="What (e.g., $5,000, or my piano)">' +
-            '<input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="beneficiary" value="' + val(g.beneficiary) + '" placeholder="To whom">' +
-            rm(listKey, i, 'gift ' + (i + 1), answers[listKey].length > 1) + '</div>';
-        }).join('') + '</div>' + addBtn(listKey, '+ Add another gift'), hint);
+      var n1 = firstName(answers.name1) || 'the first of you', n2 = firstName(answers.name2) || 'the second of you';
+      var WHEN = [['P1', 'When ' + n1 + ' dies'], ['P2', 'When ' + n2 + ' dies'], ['BOTH', 'After both of you have died']];
+      answers.jointGifts = jointGiftList(answers);
+      if (!answers.jointGifts.length) answers.jointGifts = [{ description: '', beneficiary: '', when: '', contingent: 'DESCENDANTS', contingentName: '' }];
+      function giftRows() {
+        return '<div class="rowset">' + answers.jointGifts.map(function (g, i) {
+          return '<div class="rowitem stack"><input class="input" data-list="jointGifts" data-i="' + i + '" data-f="description" value="' + val(g.description) + '" placeholder="What (e.g., $5,000, or my piano)" aria-label="Gift ' + (i + 1) + '">' +
+            '<input class="input" data-list="jointGifts" data-i="' + i + '" data-f="beneficiary" value="' + val(g.beneficiary) + '" placeholder="To whom" aria-label="Gift ' + (i + 1) + ' recipient">' +
+            '<select class="input" data-list="jointGifts" data-i="' + i + '" data-f="when" aria-label="When gift ' + (i + 1) + ' is made"><option value="">When?</option>' +
+            WHEN.map(function (w) { return '<option value="' + w[0] + '"' + (g.when === w[0] ? ' selected' : '') + '>' + esc(w[1]) + '</option>'; }).join('') + '</select>' +
+            rm('jointGifts', i, 'gift ' + (i + 1), answers.jointGifts.length > 1) + '</div>';
+        }).join('') + '</div>' + addBtn('jointGifts', '+ Add another gift');
       }
-      if (!answers.wantsGifts && [].concat(answers.firstDeathGifts || [], answers.survivorDeathGifts || []).some(function (g) { return clean(g.description) || clean(g.beneficiary); })) answers.wantsGifts = 'yes';
+      if (!answers.wantsGifts && answers.jointGifts.some(function (g) { return clean(g.description) || clean(g.beneficiary); })) answers.wantsGifts = 'yes';
       var top = stepHead('Do you want to leave any specific gifts?', (answers.firstDeathPlan === 'SURVIVOR' ? 'When the first of you dies, everything stays in the trust for the survivor. ' : 'When the first of you dies, the survivor\u2019s share stays in a Survivor\u2019s Trust the survivor controls, and the other share goes into a Family Trust for the survivor\u2019s support. ') + 'After both of you have died, what\u2019s left is divided among the people you name on the next screen. You don\u2019t need to name each other anywhere. Specific gifts are optional: they leave particular items or amounts to other people.') +
         pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true);
       if (answers.wantsGifts !== 'yes') return top;
       return top +
-        giftBlock('firstDeathGifts', 'Gifts when the first of you dies', 'To someone other than your spouse or partner, distributed before the rest stays in the trust for the survivor.') +
-        giftBlock('survivorDeathGifts', 'Gifts after both of you have died', 'Distributed before everything else is divided among your final beneficiaries.') +
+        field('Gifts', giftRows(), 'For each gift, choose when it is made. \u201cWhen ' + esc(n1) + ' dies\u201d means at ' + esc(n1) + '\u2019s death, whether ' + esc(n1) + ' dies first or second, from ' + esc(n1) + '\u2019s share. \u201cAfter both of you have died\u201d gifts are made before the rest is divided among your final beneficiaries.') +
         '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     residuary: function () {
@@ -2521,9 +2536,10 @@
     } else if (id === 'gifts') {
       if (!a.wantsGifts) e.push('Choose whether you want to leave any specific gifts.');
       else if (a.wantsGifts === 'yes') {
-        var gs = ([].concat(a.firstDeathGifts || [], a.survivorDeathGifts || [])).filter(function (g) { return clean(g.description) || clean(g.beneficiary); });
+        var gs = jointGiftList(a).filter(function (g) { return clean(g.description) || clean(g.beneficiary); });
         if (!gs.length) e.push('Add at least one gift, or choose \u201cNo, skip this.\u201d');
         else if (gs.some(function (g) { return !clean(g.description) || !clean(g.beneficiary); })) e.push('Each gift needs both what it is and who receives it.');
+        if (gs.some(function (g) { return !g.when; })) e.push('For each gift, choose when it is made.');
       }
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
