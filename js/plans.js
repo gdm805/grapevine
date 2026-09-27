@@ -95,7 +95,7 @@ window.GV_PLANS = {
     essentials: {
       name: 'Essentials',
       tag: 'Your will, plus the documents that let someone act for you.',
-      lead: 'Everything in Will, plus',
+      lead: 'Everything in Will, plus these additional documents:',
       includes: ['Last Will and Testament', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
       cta: 'Start with Essentials',
       why: 'Adds the documents that let someone speak and act for you, plus Final Wishes and Important Contacts.',
@@ -105,7 +105,7 @@ window.GV_PLANS = {
     complete: {
       name: 'Complete',
       tag: 'Everything in Essentials, plus a trust for your home and savings.',
-      lead: 'Everything in Essentials, plus',
+      lead: 'Everything in Essentials, plus these additional documents:',
       includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust', 'Pour-Over Will', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
       cta: 'Start with Complete',
       why: 'Adds a trust and the paperwork that supports it, so your home and savings can pass on privately.',
