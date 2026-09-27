@@ -2244,7 +2244,9 @@
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
         row('Trustmaker', esc(v.name), 'about') +
-        row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') + '</div>' +
+        row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') +
+        (v.has_gifts ? row('Specific gifts', v.gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary); }).join('<br>'), 'gifts') : '') +
+        row('Beneficiaries', v.residuary.map(function (r) { return esc(r.residuary_name) + (r.residuary_pct ? ' (' + esc(r.residuary_pct) + '%)' : ''); }).join('<br>'), 'residuary') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
@@ -2526,7 +2528,12 @@
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
         row('Trustmakers', esc(v.name1) + (v.name2 ? ' and ' + esc(v.name2) : ''), 'about') +
-        row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') + '</div>' +
+        row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') +
+        (v.has_any_gifts ? row('Specific gifts', [].concat(
+          v.tm1_gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary) + ' (when ' + esc(firstName(v.name1)) + ' dies)'; }),
+          v.tm2_gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary) + ' (when ' + esc(firstName(v.name2)) + ' dies)'; }),
+          v.survivor_death_gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary) + ' (after both have died)'; })).join('<br>'), 'gifts') : '') +
+        row('Final beneficiaries', v.residuary.map(function (r) { return esc(r.residuary_name) + (r.residuary_pct ? ' (' + esc(r.residuary_pct) + '%)' : ''); }).join('<br>'), 'residuary') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
