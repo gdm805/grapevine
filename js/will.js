@@ -172,7 +172,8 @@
       origDate: restated ? (a.origTrustDate || '') : (a.signingDate || ''),
       restatementDate: restated ? (a.signingDate || '') : '',
       name1: clean(key === 'trustjoint' ? a.name1 : a.name), name2: key === 'trustjoint' ? clean(a.name2) : '',
-      signingCounty: a.signingCounty || '', signingDate: a.signingDate || ''
+      signingCounty: a.signingCounty || '', signingDate: a.signingDate || '',
+      firstDeathPlan: key === 'trustjoint' ? (a.firstDeathPlan || '') : ''
     };
   }
   function saveTrustFacts(a, kind) {
@@ -199,6 +200,11 @@
   function madeHere(a) {
     var f = readTrustFacts();
     return !!(f && f.trustName && clean(a.trustName) === f.trustName);
+  }
+  /* a joint trust made here with "it all stays with the survivor" has no Family Trust */
+  function noFamilyTrust(a) {
+    var f = readTrustFacts();
+    return madeHere(a) && !!f && f.firstDeathPlan === 'SURVIVOR';
   }
   var CARRY_CONFIRMED = {};
   function applyTrustFacts(a, kind) {
@@ -2153,7 +2159,7 @@
       return h;
     },
     residuary: function () {
-      return stepHead('Who gets everything else?', 'After any specific gifts, this is how the rest of your trust is divided.') +
+      return stepHead('Who gets everything else?', 'After you die and any specific gifts are made, this is how the rest of your trust is divided. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list.' + ((answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER') ? ' This trust is yours alone: your spouse or partner receives something from it only if you name them here or in a specific gift.' : '')) +
         field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
           return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
@@ -2285,6 +2291,7 @@
     { id: 'about', label: 'About you both' },
     { id: 'family', label: 'Family' },
     { id: 'trustee', label: 'Successor trustee' },
+    { id: 'firstdeath', label: 'At the first death' },
     { id: 'gifts', label: 'Specific gifts' },
     { id: 'residuary', label: 'Everything else' },
     { id: 'assets', label: 'Trust property' },
@@ -2331,6 +2338,8 @@
       return { gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_contingent: g.contingent || 'DESCENDANTS', gift_contingent_name: clean(g.contingentName) };
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
     v.has_survivor_death_gifts = v.survivor_death_gifts.length > 0;
+    /* first death: the share of the one who died goes into a separate Family Trust, or stays in the Survivor's Trust */
+    v.family_trust = a.firstDeathPlan !== 'SURVIVOR';
     if (a.wantsGifts === 'no') { v.first_death_gifts = []; v.survivor_death_gifts = []; v.has_first_death_gifts = v.has_survivor_death_gifts = false; }
     v.has_any_gifts = v.has_first_death_gifts || v.has_survivor_death_gifts;
     v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
@@ -2402,6 +2411,14 @@
       else h += field('Successor Trustees, in order', nameRows('successors', 'Successor', 0) + addBtn('successors', '+ Add another'));
       return h;
     },
+    firstdeath: function () {
+      return stepHead('When the first of you dies, what happens to that person\u2019s share?', 'Either way, the survivor keeps full control of their own share, and everything is provided for the survivor first. The difference is what happens to the share of the one who died.') +
+        cards('firstDeathPlan', [
+          ['SURVIVOR', 'It all stays with the survivor', 'Both shares stay in one trust the survivor fully controls. The survivor can use it, manage it, and change the trust, including who receives what is left at the end.'],
+          ['FAMILY', 'Set aside the first share in a Family Trust', 'The share of the one who died goes into a separate trust that can\u2019t be changed. It can pay for the survivor\u2019s health, education, maintenance, and support, and what is left goes to your final beneficiaries.']
+        ]) +
+        '<p class="hint">If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
+    },
     gifts: function () {
       function giftBlock(listKey, heading, hint) {
         return field(heading, '<div class="rowset">' + answers[listKey].map(function (g, i) {
@@ -2411,7 +2428,7 @@
         }).join('') + '</div>' + addBtn(listKey, '+ Add another gift'), hint);
       }
       if (!answers.wantsGifts && [].concat(answers.firstDeathGifts || [], answers.survivorDeathGifts || []).some(function (g) { return clean(g.description) || clean(g.beneficiary); })) answers.wantsGifts = 'yes';
-      var top = stepHead('Do you want to leave any specific gifts?', 'When the first of you dies, everything stays in the trust for the surviving spouse or partner, who keeps using and controlling it. You don’t need to name each other anywhere. Specific gifts are optional: they leave particular items or amounts to other people.') +
+      var top = stepHead('Do you want to leave any specific gifts?', (answers.firstDeathPlan === 'SURVIVOR' ? 'When the first of you dies, everything stays in the trust for the survivor. ' : 'When the first of you dies, the survivor\u2019s share stays in a Survivor\u2019s Trust the survivor controls, and the other share goes into a Family Trust for the survivor\u2019s support. ') + 'After both of you have died, what\u2019s left is divided among the people you name on the next screen. You don\u2019t need to name each other anywhere. Specific gifts are optional: they leave particular items or amounts to other people.') +
         pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true);
       if (answers.wantsGifts !== 'yes') return top;
       return top +
@@ -2420,7 +2437,7 @@
         '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     residuary: function () {
-      return stepHead('Who gets everything else, after both of you have died?', 'While either of you is living, the trust stays with the survivor. These are your final beneficiaries: the people or organizations who receive what’s left after both of you have died. Don’t list each other here.') +
+      return stepHead('Who gets everything else, after both of you have died?', 'The surviving spouse or partner is provided for first. These are your final beneficiaries: the people or organizations who receive what\u2019s left after both of you have died' + (answers.firstDeathPlan === 'SURVIVOR' ? ' (the survivor can change this list later).' : ' (the survivor can change who receives the survivor\u2019s own share, but not the Family Trust).') + ' Don\u2019t list each other here. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list.') +
         field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
           return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
@@ -2499,6 +2516,8 @@
     } else if (id === 'trustee') {
       var list = a.trusteeMode === 'COTRUSTEES' ? a.cotrustees : a.successors;
       if (!(list || []).some(function (x) { return clean(x.name); })) e.push('Name at least one successor trustee.');
+    } else if (id === 'firstdeath') {
+      if (!a.firstDeathPlan) e.push('Choose what happens to the first share.');
     } else if (id === 'gifts') {
       if (!a.wantsGifts) e.push('Choose whether you want to leave any specific gifts.');
       else if (a.wantsGifts === 'yes') {
@@ -2739,6 +2758,7 @@
     v.tm2_name = clean(a.tm2Name);
     v.trustmaker_status = a.trustmakerStatus === 'DECEASED' ? 'DECEASED' : 'LIVING';
     v.joint_phase = a.jointPhase === 'FIRST_DECEASED' ? 'FIRST_DECEASED' : (a.jointPhase === 'BOTH_DECEASED' ? 'BOTH_DECEASED' : 'BOTH_LIVING');
+    if (a.adminShareType === 'FAMILY_TRUST' && noFamilyTrust(a)) a.adminShareType = 'SURVIVORS_TRUST';
     v.admin_share = clean(a.adminShare) || (a.adminShareType === 'FAMILY_TRUST' ? 'Family Trust' : (a.adminShareType === 'SURVIVORS_TRUST' ? "Survivor's Trust" : ''));
     v.admin_share_type = a.adminShareType || 'SURVIVORS_TRUST';
     v.affiant_is_successor = a.affiantIsSuccessor === 'yes';
@@ -2775,7 +2795,9 @@
         h += field('Second Trustmaker’s full legal name', text('tm2Name', ''));
         h += field('What is the trust’s current administrative phase?', pills('jointPhase', [['BOTH_LIVING', 'Both Trustmakers living'], ['FIRST_DECEASED', 'One deceased, one living'], ['BOTH_DECEASED', 'Both deceased']], true));
         if (answers.jointPhase === 'FIRST_DECEASED') {
-          h += field('Which trust or share does this Affidavit concern?', pills('adminShareType', [['SURVIVORS_TRUST', "Survivor's Trust"], ['FAMILY_TRUST', 'Family Trust'], ['OTHER', 'Something else']], true));
+          var noFT = noFamilyTrust(answers);
+          if (noFT && answers.adminShareType === 'FAMILY_TRUST') answers.adminShareType = 'SURVIVORS_TRUST';
+          h += field('Which trust or share does this Affidavit concern?', pills('adminShareType', [['SURVIVORS_TRUST', "Survivor's Trust"]].concat(noFT ? [] : [['FAMILY_TRUST', 'Family Trust']], [['OTHER', 'Something else']]), true));
           if (answers.adminShareType === 'OTHER') h += field('Describe the trust or share', text('adminShare', ''));
         }
       } else {

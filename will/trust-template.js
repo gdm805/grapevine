@@ -618,6 +618,8 @@ The remaining Trust Estate shall be distributed or allocated as follows:
 
 [[end]]
 
+If a beneficiary named in this Section does not survive the Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it, that share shall be distributed to that beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in this Section who receive their shares, in proportion to their shares; or, if there are none, as provided in the Remote Contingent Distribution Section of this Article.
+
 ## Remote Contingent Distribution
 
 If at any time property of the Trust Estate is required to be distributed and neither a beneficiary designated to receive that property nor any applicable contingent beneficiary is then entitled to receive it, the Trustee shall distribute that property to the persons who would then be the Trustmaker’s heirs under the intestacy laws of the state whose law governs the administration of the Trust, in the shares they would receive under those laws.

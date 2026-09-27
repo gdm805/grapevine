@@ -592,13 +592,17 @@ After determining the respective property interests of the Trustmakers and payin
 
 [[if has_first_death_gifts]]
 
-Before allocating the deceased Trustmaker's remaining property to the Survivor's Trust or Family Trust, the Trustee shall distribute any Specific Gifts becoming distributable at the first Trustmaker's death under this Trust Agreement. Those gifts shall be charged against the deceased Trustmaker's property unless the governing gift provision expressly provides otherwise.
+Before allocating the deceased Trustmaker's remaining property to the Survivor's Trust[[if family_trust]] or Family Trust[[end]], the Trustee shall distribute any Specific Gifts becoming distributable at the first Trustmaker's death under this Trust Agreement. Those gifts shall be charged against the deceased Trustmaker's property unless the governing gift provision expressly provides otherwise.
 
 [[end]]
 
 The Trustee shall allocate the surviving Trustmaker's property to the Survivor's Trust.
 
+[[if family_trust]]
 The Trustee shall allocate the deceased Trustmaker's property to the Family Trust and administer that property according to this Trust Agreement.
+[[else]]
+The Trustee shall allocate the deceased Trustmaker's property to the Survivor's Trust, to be held and administered as part of the Survivor's Trust for the surviving Trustmaker under [[ref art_survivors_trust]].
+[[end]]
 
 ## Method of Allocation
 
@@ -612,17 +616,17 @@ An allocation need not divide each item of property proportionately if the aggre
 
 Until the required allocations and funding are completed, the Trustee may continue to hold and administer the Trust Estate as a single administrative fund.
 
-The Trustee shall maintain records sufficient to identify the property, income, expenses, gains, losses, and liabilities properly attributable to the Survivor's Trust, any Family Trust required to be funded, and any other trust or beneficial interest.
+The Trustee shall maintain records sufficient to identify the property, income, expenses, gains, losses, and liabilities properly attributable to the Survivor's Trust, [[if family_trust]]any Family Trust required to be funded, [[end]]and any other trust or beneficial interest.
 
 ## Tax Elections and Completion of Administration
 
 The Trustee may make tax elections, allocations, divisions, and other tax-related decisions permitted by applicable law and may rely upon qualified tax professionals in making those decisions.
 
-After completing the administration required under this Article, the Trustee shall administer the Survivor's Trust, any Family Trust funded under the applicable first-death funding provisions, and any other continuing trust according to their respective provisions.
+After completing the administration required under this Article, the Trustee shall administer the Survivor's Trust, [[if family_trust]]any Family Trust funded under the applicable first-death funding provisions, [[end]]and any other continuing trust according to their respective provisions.
 
 Completion of administration under this Article does not terminate any continuing trust created under this Trust Agreement.
 
-# SURVIVOR'S TRUST
+# SURVIVOR'S TRUST {#art_survivors_trust}
 
 ## Creation and Funding of Survivor's Trust
 
@@ -634,7 +638,9 @@ The Survivor's Trust shall be separately accounted for and administered accordin
 
 During the surviving Trustmaker's lifetime and while having legal capacity, the surviving Trustmaker may amend, revoke, or restate the Survivor's Trust, in whole or in part.
 
+[[if family_trust]]
 Any amendment, revocation, or restatement shall apply only to the Survivor's Trust and shall not amend, revoke, alter, or affect the Family Trust.
+[[end]]
 
 ## Control of Survivor's Trust
 
@@ -662,6 +668,7 @@ The Trustee may consider other financial resources reasonably available to the s
 
 If the surviving Trustmaker's legal capacity is restored as determined under [[ref def_restoration]], the surviving Trustmaker shall resume the rights and powers provided under this Article.
 
+[[if family_trust]]
 ## Separation from Family Trust
 
 The Survivor's Trust and Family Trust are separate trusts after the death of the first Trustmaker.
@@ -672,6 +679,7 @@ Property allocated to the Family Trust shall not become part of the Survivor's T
 
 The Trustee shall maintain records sufficient to identify the property, income, expenses, distributions, and liabilities attributable to each trust.
 
+[[end]]
 ## Death of Surviving Trustmaker
 
 Upon the death of the surviving Trustmaker, the Survivor's Trust shall become irrevocable.
@@ -680,8 +688,9 @@ All powers reserved to the surviving Trustmaker over the Survivor's Trust shall 
 
 The Trustee shall determine the then-remaining balance of the Survivor's Trust and shall pay or reserve from the Survivor's Trust for expenses, taxes, liabilities, and other obligations properly chargeable to the Survivor's Trust.
 
-The Trustee shall maintain the identity of the Survivor's Trust separately from the Family Trust and any other trust or share then being administered.
+The Trustee shall maintain the identity of the Survivor's Trust separately from [[if family_trust]]the Family Trust and [[end]]any other trust or share then being administered.
 
+[[if family_trust]]
 # FAMILY TRUST
 
 ## Creation and Funding of Family Trust
@@ -736,11 +745,12 @@ Upon the death of the surviving Trustmaker, the Trustee shall determine the then
 
 The Trustee shall maintain the identity of the Family Trust separately from the Survivor's Trust and any other trust or share then being administered.
 
+[[end]]
 # DEATH OF SECOND TRUSTMAKER
 
 ## Assumption of Trusteeship
 
-Upon the death of the surviving Trustmaker, the designated Successor Trustee who accepts the office shall assume responsibility for administering the Survivor's Trust, Family Trust, and any other trust or separate share then being administered under this Trust Agreement.
+Upon the death of the surviving Trustmaker, the designated Successor Trustee who accepts the office shall assume responsibility for administering the Survivor's Trust, [[if family_trust]]Family Trust, [[end]]and any other trust or separate share then being administered under this Trust Agreement.
 
 ## Duties During Administration
 
@@ -760,37 +770,19 @@ The Trustee may make partial or interim distributions whenever the Trustee reaso
 
 ## Completion and Distribution
 
-After paying or making reasonable provision for lawful obligations, the Trustee shall complete administration and distribution of the Survivor's Trust under this Trust Agreement, the Family Trust under this Trust Agreement, and any other continuing trust or separate share according to its governing provisions. Specific Gifts becoming distributable at the surviving Trustmaker's death shall be made as provided under this Trust Agreement.
+After paying or making reasonable provision for lawful obligations, the Trustee shall complete administration and distribution of the Survivor's Trust under this Trust Agreement, [[if family_trust]]the Family Trust under this Trust Agreement, [[end]]and any other continuing trust or separate share according to its governing provisions. Specific Gifts becoming distributable at the surviving Trustmaker's death shall be made as provided under this Trust Agreement.
 
-The Trustee shall preserve the separate identity of the Survivor's Trust, Family Trust, and any other separate trust or share and shall charge expenses, taxes, liabilities, gifts, and distributions to the property properly responsible for them under this Trust Agreement and applicable law.
+The Trustee shall preserve the separate identity of the Survivor's Trust, [[if family_trust]]Family Trust, [[end]]and any other separate trust or share and shall charge expenses, taxes, liabilities, gifts, and distributions to the property properly responsible for them under this Trust Agreement and applicable law.
 
 ## Final Distribution
 
-After completing the administration required by this Article, the Trustee shall combine the then-remaining balances of the Survivor's Trust and the Family Trust and distribute the combined amount as follows:
+After completing the administration required by this Article, the Trustee shall [[if family_trust]]combine the then-remaining balances of the Survivor's Trust and the Family Trust and distribute the combined amount[[else]]distribute the then-remaining balance of the Survivor's Trust[[end]] as follows:
 
 [[each residuary]]
 
 {{residuary_pct}}% to {{residuary_name}}, outright.
 
-If {{residuary_name}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it,
-
-[[if gift_contingent=DESCENDANTS]]
-
-that share shall be distributed to that beneficiary's then-living descendants, by right of representation.
-
-[[elif gift_contingent=NAMED]]
-
-that share shall be distributed to {{gift_contingent_name}}.
-
-[[elif gift_contingent=CHARITY]]
-
-that share shall be distributed to {{gift_contingent_name}}.
-
-[[else]]
-
-that share shall be distributed under this Trust Agreement.
-
-[[end]]
+If {{residuary_name}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it, that share shall be distributed to that beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in this Section who receive their shares, in proportion to their shares; or, if there are none, as provided in the Failure of Distribution Section of this Article.
 
 [[end]]
 
@@ -808,9 +800,9 @@ If neither a designated remainder beneficiary nor an applicable contingent benef
 
 ## Termination
 
-The Survivor's Trust and the Family Trust shall each terminate when the Trustee has completed administration and distributed the combined remaining balance as provided in this Article.
+[[if family_trust]]The Survivor's Trust and the Family Trust shall each terminate when the Trustee has completed administration and distributed the combined remaining balance as provided in this Article.[[else]]The Survivor's Trust shall terminate when the Trustee has completed administration and distributed its remaining balance as provided in this Article.[[end]]
 
-The Trustee may retain reasonable reserves and complete any remaining administrative acts reasonably necessary before closing both trusts.
+The Trustee may retain reasonable reserves and complete any remaining administrative acts reasonably necessary before closing [[if family_trust]]both trusts[[else]]the Survivor's Trust[[end]].
 
 [[if has_any_gifts]]
 
@@ -1012,9 +1004,12 @@ Beneficiary means any person or organization entitled to receive a benefit under
 
 Survivor's Trust means the separate revocable trust created upon the death of the first Trustmaker and funded with the property allocated to it under this Trust Agreement.
 
+[[if family_trust]]
 ## Family Trust
 
 Family Trust means the separate irrevocable trust created upon the death of the first Trustmaker and funded with the property allocated to it under this Trust Agreement.
+
+[[end]]
 
 ## Child
 
@@ -1080,7 +1075,7 @@ Routine Administrative Acts include depositing and transferring funds, paying or
 
 ## Trust Estate
 
-Trust Estate means all property held by the Trustee under this Trust Agreement at the applicable time, including income, appreciation, reinvestments, substitutions, and additions, except when the context refers specifically to the Survivor's Trust, Family Trust, or another separate trust or share.
+Trust Estate means all property held by the Trustee under this Trust Agreement at the applicable time, including income, appreciation, reinvestments, substitutions, and additions, except when the context refers specifically to the Survivor's Trust, [[if family_trust]]Family Trust, [[end]]or another separate trust or share.
 
 ## Trustee
 
