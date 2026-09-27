@@ -744,7 +744,8 @@
         }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="gifts">+ Add another gift</button>';
       }
       return stepHead('Is there anything you want a specific person to have?', 'For example, jewelry, a car, or a sum of money. You can skip this. Everything else is covered next.') +
-        pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true) + rows;
+        pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true) + rows +
+        (answers.wantsGifts === 'yes' ? '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '');
     },
     residuary: function () {
       var a = answers, v = buildVars(a, states, tpl.settings), opts = [];
@@ -2097,6 +2098,7 @@
             '<input class="input" data-list="gifts" data-i="' + i + '" data-f="beneficiary" value="' + val(g.beneficiary) + '" placeholder="To whom">' +
             rm('gifts', i, 'gift ' + (i + 1), answers.gifts.length > 1) + '</div>';
         }).join('') + '</div>' + addBtn('gifts', '+ Add another gift'), 'If a gift’s recipient doesn’t survive you, it goes to that person’s descendants by default — you can change that per gift below.');
+      h += '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
       return h;
     },
     residuary: function () {
@@ -2105,7 +2107,8 @@
           return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
             rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>';
-        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.');
+        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.') +
+        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     assets: function () {
       function assetBlock(flagKey, label, listKey, cols, ph) {
@@ -2345,17 +2348,19 @@
             rm(listKey, i, 'gift ' + (i + 1), answers[listKey].length > 1) + '</div>';
         }).join('') + '</div>' + addBtn(listKey, '+ Add another gift'), hint);
       }
-      return stepHead('Specific gifts', 'Leave specific items or amounts to specific people before everything else is divided. Both are optional.') +
-        giftBlock('firstDeathGifts', 'Gifts when the first of you dies', 'Distributed before the rest passes into the survivor’s trust.') +
-        giftBlock('survivorDeathGifts', 'Gifts after both of you have died', 'Distributed before everything else is divided among your final beneficiaries.');
+      return stepHead('Specific gifts', 'When the first of you dies, everything stays in the trust for the surviving spouse or partner, who keeps using and controlling it. You don’t need to name each other anywhere. Specific gifts are optional: they leave particular items or amounts to other people.') +
+        giftBlock('firstDeathGifts', 'Gifts when the first of you dies', 'To someone other than your spouse or partner, distributed before the rest stays in the trust for the survivor.') +
+        giftBlock('survivorDeathGifts', 'Gifts after both of you have died', 'Distributed before everything else is divided among your final beneficiaries.') +
+        '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     residuary: function () {
-      return stepHead('Who gets everything else?', 'After any specific gifts and after both of you have died, this is how the rest of your trust is divided.') +
+      return stepHead('Who gets everything else, after both of you have died?', 'While either of you is living, the trust stays with the survivor. These are your final beneficiaries: the people or organizations who receive what’s left after both of you have died. Don’t list each other here.') +
         field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
           return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
             rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>';
-        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.');
+        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.') +
+        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     assets: function () {
       function assetBlock(flagKey, label, listKey, cols, ph) {
