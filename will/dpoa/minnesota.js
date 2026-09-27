@@ -18,6 +18,7 @@ window.DPOA_STATES["Minnesota"] = String.raw`
 @set has_notary = yes
 @set has_witness = no
 @set exec_choice = no
+@set trust_power_ok = no
 @set statutory_form = yes
 @set sign_note = Minnesota requires this exact state form. Before signing, read the IMPORTANT NOTICE TO THE PRINCIPAL and write your initials on the line at its end. Fill in your address and your attorney(s)-in-fact's addresses by hand. Sign in front of a notary. Your attorney(s)-in-fact must sign the acknowledgment page before acting for you (no notary needed for their signatures).
 

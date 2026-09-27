@@ -177,7 +177,8 @@
       restatementDate: restated ? (a.signingDate || '') : '',
       name1: clean(key === 'trustjoint' ? a.name1 : a.name), name2: key === 'trustjoint' ? clean(a.name2) : '',
       signingCounty: a.signingCounty || '', signingDate: a.signingDate || '',
-      firstDeathPlan: key === 'trustjoint' ? (a.firstDeathPlan || '') : ''
+      firstDeathPlan: key === 'trustjoint' ? (a.firstDeathPlan || '') : '',
+      poaTrustPowers: key === 'trust' ? (a.poaReservedPowers || '') : ''
     };
   }
   function saveTrustFacts(a, kind) {
@@ -233,6 +234,8 @@
     if (!f || !f.trustName) return;
     function fill(k, v) { if (v && (a[k] === '' || a[k] === undefined)) a[k] = v; }
     var k = kind.key;
+    /* the single trust's answer about a power-of-attorney agent carries into that person's power of attorney */
+    if (k === 'dpoa') { if (!SPOUSE2 && !f.joint && f.poaTrustPowers) fill('trustPowers', f.poaTrustPowers); return; }
     if (k === 'pourover') {
       fill('trustName', f.trustName); fill('trustDate', f.origDate);
       fill('jointTrust', f.joint ? 'yes' : 'no');
@@ -1180,7 +1183,7 @@
     name: '', county: '',
     agent: '', successors: [{ name: '' }],
     agentMode: 'single', coAgents: [{ name: '' }],
-    effective: '', determiner: '', facility: ''
+    effective: '', determiner: '', facility: '', trustPowers: ''
   };
   var ROWS_DP = { successors: { name: '' }, coAgents: { name: '' } };
   var DP_CACHE = {}, DP_FAIL = {}, DP_PENDING = {};
@@ -1219,6 +1222,8 @@
     { id: 'agent', label: 'Your agent' },
     { id: 'effective', label: 'When it starts', show: function (a) { return dpSet(a, 'effective_choice') !== 'no'; } },
     { id: 'more', label: 'One more thing', show: function (a) { return (dpSet(a, 'ask_determiner') === 'yes' && a.effective === 'incapacity') || dpSet(a, 'ask_facility') === 'yes'; } },
+    /* Minnesota's statutory form can't be added to, so it can't grant trust powers: not asked there */
+    { id: 'trustpower', label: 'Your trust', show: function (a) { return dpSet(a, 'trust_power_ok') !== 'no'; } },
     { id: 'review', label: 'Review and sign' }
   ];
   function buildVarsDP(a, states, settings) {
@@ -1250,6 +1255,9 @@
     var sf = dpSet(a, 'statutory_form');
     v.statutory_form = sf === 'yes' || (sf === 'single_agent' && !v.has_co_agents);
     v.state_note = (v.has_co_agents && dpSet(a, 'sign_note_co_agents')) || dpSet(a, 'sign_note') || (gs ? gs.note : '');
+    /* trust powers: carried from the living trust made here, or answered on the "Your trust" screen */
+    v.trust_powers_yes = a.trustPowers === 'yes';
+    if (v.trust_powers_yes) { v.trust_power_amend = v.trust_power_restate = v.trust_power_revoke = v.trust_power_withdraw = true; v.any_special_trust_power = true; v.advanced_powers = true; }
     if (window.__dpoaForce) Object.assign(v, window.__dpoaForce);   /* used only for testing */
     return v;
   }
@@ -1277,6 +1285,11 @@
         field('Your agent’s full name', text('agent', '')) +
         coAgentFields(false) +
         dpBackups();
+    },
+    trustpower: function () {
+      return stepHead('Your revocable living trust', 'If you have a revocable living trust, your agent can change it only if this power of attorney says so, and your trust also allows it.') +
+        field('Should your agent be able to amend, restate, or revoke your revocable living trust, and withdraw property from it, on your behalf?', pills('trustPowers', [['yes', 'Yes'], ['no', 'No'], ['none', 'I don\u2019t have a revocable living trust']], true)) +
+        '<p class="hint">If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     effective: function () {
       return stepHead('When should your agent’s power start?', 'You can cancel this document at any time while you have capacity.') +
@@ -1337,6 +1350,8 @@
       coAgentErrors(a, e, false);
       if (!a.wantsBackups) e.push('Choose whether you want to name a backup agent.');
       if (a.wantsBackups === 'yes' && !(a.successors || []).some(function (b) { return clean(b.name); })) e.push('Enter a backup agent\u2019s name, or choose \u201cNo backup.\u201d');
+    } else if (id === 'trustpower') {
+      if (!a.trustPowers) e.push('Answer the question about your trust.');
     } else if (id === 'effective') {
       if (!a.effective) e.push('Choose when your agent’s power should start.');
     } else if (id === 'more') {

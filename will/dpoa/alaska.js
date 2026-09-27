@@ -53,7 +53,11 @@ MARK THE BOXES BELOW TO INDICATE THE POWERS YOU WANT TO GIVE YOUR AGENT OR AGENT
 
 The agent or agents you have appointed WILL NOT have the power to do any of the following acts UNLESS you MARK the box opposite that category:
 
+[[if trust_powers_yes]]
+@line create, amend, revoke, or terminate an inter vivos trust ( X )
+[[else]]
 @line create, amend, revoke, or terminate an inter vivos trust (   )
+[[end]]
 @line make a gift, subject to the limitations of AS 13.26.665(q) and any special instructions in this power of attorney (   )
 @line create or change a beneficiary designation (   )
 @line revoke a transfer on death deed made under AS 13.48 (   )

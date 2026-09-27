@@ -70,6 +70,10 @@ ON THE FOLLOWING LINES YOU MAY GIVE SPECIAL INSTRUCTIONS LIMITING OR EXTENDING T
 If any agent named above dies, becomes incapacitated, resigns, or refuses or is otherwise unable to act, I appoint the following as successor agent, each to act alone and successively, in the order named: {{successor_names}}. Each successor agent has the same powers as the agent named above.
 
 [[end]]
+[[if trust_powers_yes]]
+My agent may amend, restate, or revoke any revocable living trust of which I am a trustmaker (settlor), and may withdraw property from it, to the extent the terms of the trust permit.
+
+[[end]]
 [[if upon_incapacity]]
 This power of attorney shall become effective only upon my incapacity. My incapacity shall be established by a written declaration under penalty of perjury by {{determiner}} that I am unable to manage my property and financial affairs. A third person may rely on that declaration.
 

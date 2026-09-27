@@ -111,7 +111,11 @@ You need not initial the other lines if you initial line (P).
 
 (g) **CERTAIN GIFT TRANSACTIONS: (OPTIONAL)** Intentionally Omitted.
 
+[[if trust_powers_yes]]
+(h) **MODIFICATIONS: (OPTIONAL)** My agent may amend, restate, or revoke any revocable living trust of which I am a trustmaker (settlor), and may withdraw property from it, to the extent the terms of the trust permit.
+[[else]]
 (h) **MODIFICATIONS: (OPTIONAL)** Intentionally Omitted.
+[[end]]
 
 (i) **DESIGNATION OF MONITOR(S): (OPTIONAL)** Intentionally Omitted.
 
