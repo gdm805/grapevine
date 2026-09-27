@@ -384,6 +384,7 @@ I certify that the Declarant signed or acknowledged this Indiana Funeral Plannin
 [[elif signing_state=IOWA]]
 // DRAFTER NOTE: Iowa uses a separate declaration of designee for final disposition. Iowa permits two mutual witnesses or notarial acknowledgment; Grapevine uses the notary alternative in this state file.
 
+[[if has_agent]]
 The following designation is a separate legal instrument within this document.
 @sub Declaration of Designee for Final Disposition
 
@@ -403,6 +404,7 @@ Dated: {{signing_date}}
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=KANSAS]]
 // DRAFTER NOTE: Kansas disposition-agent authority is not created by this Final Wishes document. Any first-priority authority granted to a health-care decision agent must appear in the applicable Kansas health-care instrument. The acknowledgment below is included as the Grapevine execution standard for these written wishes and is not represented as creating disposition-agent priority.
@@ -632,11 +634,13 @@ We witnessed {{name}} sign and date the Appointment of Agent to Control Disposit
 @line Printed Name: _____________________________________
 @line Address: __________________________________________
 @line Date: _____________________________________________
+[[if has_agent]]
 @sub Agent Acceptance / Assumption
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
 @line Signature: ________________________________________
 @line Date: _____________________________________________
+[[end]]
 
 [[elif signing_state=NORTH_CAROLINA]]
 // DRAFTER NOTE: The separate North Carolina written-statement route requires the principal's signature plus TWO adult witnesses. A notary is not substituted for the witness requirement.
@@ -721,11 +725,13 @@ I witnessed {{name}} execute this Funeral Planning Agent Designation.
 @line Printed Name: _____________________________________
 @line Address: __________________________________________
 @line Date: _____________________________________________
+[[if has_agent]]
 @sub Funeral Planning Agent Acceptance
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
 @line Signature: ________________________________________
 @line Date: _____________________________________________
+[[end]]
 @sub Notarial Acknowledgment
 @line State of Rhode Island
 @line County of _________________________________________
@@ -770,6 +776,7 @@ I, {{agent_name}}, accept the appointment stated in this instrument and agree to
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[if has_agent]]
 @sub Primary Agent Acceptance
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
@@ -783,6 +790,7 @@ I, {{alt_agent_name}}, accept the appointment stated in this instrument and agre
 @line Signature: ________________________________________
 @line Date: _____________________________________________
 
+[[end]]
 [[end]]
 
 [[elif signing_state=UTAH]]
@@ -821,11 +829,13 @@ We affirm that the Principal appeared to understand the nature of this advance-d
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[if has_agent]]
 @sub Designee Written Acceptance
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
 @line Signature: ________________________________________
 @line Date: _____________________________________________
+[[end]]
 
 [[elif signing_state=WASHINGTON]]
 // DRAFTER NOTE: Washington requires the direct wishes to be signed in the presence of ONE witness. A designated-agent document must also be signed and dated in the presence of ONE witness.
@@ -858,6 +868,7 @@ I witnessed {{name}} sign this written final-disposition instrument.
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[if has_agent]]
 @sub Representative Acceptance
 
 I, {{agent_name}}, accept the appointment stated in this instrument and agree to act subject to applicable law and the directions stated in this document.
@@ -871,6 +882,7 @@ I, {{alt_agent_name}}, accept the appointment stated in this instrument and agre
 @line Signature: ________________________________________
 @line Date: _____________________________________________
 
+[[end]]
 [[end]]
 
 [[elif signing_state=WYOMING]]

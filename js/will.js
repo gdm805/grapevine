@@ -21,7 +21,12 @@
     child: 'child\u2019s name', trust_name: 'name of your trust', the_trust_name: 'the name of your trust', trust_date: 'date of your trust', other_trustmaker: 'other trustmaker',
     co_pr: 'co-personal representative', applies_to: 'child', alternate: 'alternate guardian', prop_fid: 'property fiduciary', prop_alt: 'alternate'
   };
-  var MARK = { fill: '\u0001', close: '\u0002', blank: '\u0003', refOpen: '\u0004', refClose: '\u0005' };
+  var MARK = { fill: '\u0001', close: '\u0002', blank: '\u0003', refOpen: '\u0004', refClose: '\u0005', drop: '\u0006' };
+  /* optional answers: when left empty, the whole line they sit on is left out of the document
+     (no "[address]" placeholder). Only use these on lines that say nothing else. */
+  var DROP_IF_EMPTY = { address: 1, dob: 1, phone: 1, email: 1, agent_address: 1, trustee_address: 1, expiration_text: 1, limitations: 1, agent_contact: 1 };
+  /* dates people may leave blank on purpose: printed as a line to fill in by hand */
+  var HAND_BLANK = { signing_date: 1, certification_date: 1 };
   var ARTICLES = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN'];
   var WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   var SURVIVAL = { 30: 'thirty', 45: 'forty-five', 60: 'sixty', 90: 'ninety', 120: 'one hundred twenty' };
@@ -340,9 +345,13 @@
       if (n.t === 'text') {
         out += n.v.replace(/\{\{\s*(\w+)\s*\}\}/g, function (_, k) {
           var v = scope[k];
-          if (v == null || v === '' || Array.isArray(v)) return MARK.blank + '[' + (LABELS[k] || k.replace(/_/g, ' ')) + ']' + MARK.close;
+          if (v == null || v === '' || Array.isArray(v)) {
+            if (DROP_IF_EMPTY[k]) return MARK.drop;
+            if (HAND_BLANK[k]) return '____________________';
+            return MARK.blank + '[' + (LABELS[k] || k.replace(/_/g, ' ')) + ']' + MARK.close;
+          }
           return MARK.fill + v + MARK.close;
-        });
+        }).split('\n').filter(function (l) { return l.indexOf(MARK.drop) < 0; }).join('\n');
       } else if (n.t === 'include') {
         var sh = (window.DPOA_SHARED || {})[n.k] || (window.TRUST_SHARED || {})[n.k] || (window.CERT_SHARED || {})[n.k] || (window.AFFIDAVIT_SHARED || {})[n.k] || (window.FINALWISHES_SHARED || {})[n.k];
         if (sh) out += '\n\n' + renderNodes(parseTemplate(sh).nodes, scope) + '\n\n';
