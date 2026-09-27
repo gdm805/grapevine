@@ -3490,6 +3490,8 @@
      doesn't ask where you live eleven times. A pour-over will inside Complete comes after the trust, so its
      "I have created my trust" box is ticked for them. */
   var startSkip = null;
+  /* switched between the single and joint trust inside a Complete package: keep the package going */
+  if (window.GVFlow && window.GVFlow.useTrust) window.GVFlow.useTrust(KIND.key);
   (function () {
     var fl = window.GVFlow && window.GVFlow.current();
     if (!fl || restored) return;
@@ -3669,6 +3671,13 @@
   /* ---------- payment: downloading and printing unlock when the visitor has paid (see js/checkout.js
      and js/entitlements.js). The document itself previews for free at every step, including this one. */
   function paidUp() { return !window.GVPay || window.GVPay.hasPaid(kindKey); }
+  /* single or couple for pricing: the package says so; a joint trust or a second spouse's document always
+     means a couple; otherwise what was chosen on the pricing page */
+  function householdNow(f) {
+    if (f && f.docs && f.docs.indexOf(docId) > -1) return f.couple ? 'couple' : 'single';
+    if (kindKey === 'trustjoint' || SPOUSE2) return 'couple';
+    try { return sessionStorage.getItem('gv.household') === 'couple' ? 'couple' : 'single'; } catch (e) { return 'single'; }
+  }
   function checkoutHref() {
     var f = window.GVFlow && window.GVFlow.current();
     var plan = (f && f.docs.indexOf(docId) > -1) ? f.plan : (window.GVPay ? window.GVPay.planForDoc(kindKey) : 'essentials');
@@ -3679,7 +3688,9 @@
        give the artifact's own address on a preview, not this document's filename -- pageFor is the
        correct source either way. */
     var backTo = window.GVFlow ? window.GVFlow.pageFor(kindKey) : (kindKey + '.html');
-    return window.GVUrl('checkout.html') + '?plan=' + plan + '&return=' + encodeURIComponent(backTo);
+    var hh = householdNow(f);
+    if (plan === 'doc' && window.GV_PLANS && (window.GV_PLANS.trustSide || []).indexOf(kindKey) > -1) hh = 'single';
+    return window.GVUrl('checkout.html') + '?plan=' + plan + '&household=' + hh + '&return=' + encodeURIComponent(backTo);
   }
 
   /* ---------- package flow: Essentials/Complete answer every document back to back (js/flow.js
@@ -3733,7 +3744,7 @@
   /* what the customer is about to pay, for the one "Continue to payment" button (price from js/plans.js) */
   function payOffer(f) {
     var GV = window.GV_PLANS, plan = (f && f.plan) || (window.GVPay ? window.GVPay.planForDoc(kindKey) : 'essentials');
-    var hh = (f && f.couple) ? 'couple' : (function () { try { return sessionStorage.getItem('gv.household') === 'couple' ? 'couple' : 'single'; } catch (e) { return 'single'; } })();
+    var hh = householdNow(f);
     if (plan === 'doc' && GV && (GV.trustSide || []).indexOf(kindKey) > -1) hh = 'single';
     var price = GV ? GV.priceFor(plan, hh) : 0;
     var beta = false;

@@ -70,6 +70,23 @@ window.GVFlow = (function () {
     return f;
   }
   function current() { return read(); }
+  /* Someone in a Complete package who switches between the single and joint trust (the "Write the joint
+     version instead" link) is still in their package: the flow is rebuilt for that household -- a joint
+     trust means a couple (personal documents twice, couple pricing), a single trust means one person --
+     keeping every document already finished. Called by js/will.js on the trust pages. */
+  function useTrust(kind) {
+    var f = read();
+    if (!f || (kind !== 'trust' && kind !== 'trustjoint')) return f;
+    var other = kind === 'trust' ? 'trustjoint' : 'trust';
+    if (f.docs.indexOf(kind) > -1 || f.docs.indexOf(other) === -1) return f;
+    try { sessionStorage.setItem('gv.household', kind === 'trustjoint' ? 'couple' : 'single'); } catch (e) { /* ignore */ }
+    var done = f.done.map(function (d) { return d === other ? kind : d; });
+    var nf = start(f.plan);
+    if (!nf) return f;
+    nf.done = done.filter(function (d) { return nf.docs.indexOf(d) > -1; });
+    write(nf);
+    return nf;
+  }
   function markDone(kind) {
     var f = read(); if (!f || f.docs.indexOf(kind) === -1) return;
     if (f.done.indexOf(kind) === -1) { f.done.push(kind); write(f); }
@@ -105,5 +122,5 @@ window.GVFlow = (function () {
     }
   });
 
-  return { start: start, current: current, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
+  return { start: start, current: current, useTrust: useTrust, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
 })();
