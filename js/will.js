@@ -43,6 +43,15 @@
   /* a phone/email doesn't have to be filled in, but if someone starts typing one we check it looks
      like a whole one before letting them move on -- catches a dropped digit or a cut-off address
      rather than silently saving something nobody could actually call or write to */
+  /* a beneficiary written as a trust ("The Trustee of the Jane Doe Supplemental Needs Trust ...") */
+  function isTrustName(s) { return /\btrust\b/i.test(String(s || '')); }
+  function isSntName(s) { return /special[\s-]+needs|supplemental[\s-]+needs|\bSNT\b/i.test(String(s || '')); }
+  /* turns on the "Gifts to a Trust" section, and the standby supplemental needs trust, only when a trust is named */
+  function trustGiftFlags(v, names) {
+    names = names.map(clean).filter(Boolean);
+    v.has_trust_gift = names.some(function (n) { return isTrustName(n) || isSntName(n); });
+    v.has_snt_gift = names.some(isSntName);
+  }
   function isCompletePhone(s) { return String(s).replace(/\D/g, '').length >= 10; }
   function isCompleteEmail(s) { return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(String(s).trim()); }
   function numWord(n) { return WORDS[n] || String(n); }
@@ -515,9 +524,13 @@
     v.gifts = (a.gifts || []).map(function (g) { return { gift: clean(g.item), recipient: clean(g.recipient) }; }).filter(function (g) { return g.gift && g.recipient; });
     v.has_gifts = a.wantsGifts === 'yes' && v.gifts.length > 0;
     v.beneficiaries = (a.beneficiaries || []).filter(function (b) { return clean(b.name); }).map(function (b) {
-      var c = b.contingent || 'descendants';
-      return { beneficiary: clean(b.name), share: clean(b.share), cont_name: clean(b.contName), cont_descendants: c === 'descendants', cont_named: c === 'named', cont_charity: c === 'charity', cont_others: c === 'others' };
+      var c = b.contingent || 'descendants', nm = clean(b.name), snt = isSntName(nm), tr = snt || isTrustName(nm);
+      /* a trust has no descendants: that choice doesn't apply to one (the others share it, or the remote rule) */
+      if (tr && c === 'descendants') c = 'remote';
+      return { beneficiary: nm, share: clean(b.share), cont_name: clean(b.contName), is_trust: tr, is_snt: snt,
+        cont_descendants: !snt && c === 'descendants', cont_named: !snt && c === 'named', cont_charity: !snt && c === 'charity', cont_others: !snt && c === 'others', cont_remote: !snt && c === 'remote' };
     });
+    trustGiftFlags(v, v.gifts.map(function (g) { return g.recipient; }).concat(v.beneficiaries.map(function (b) { return b.beneficiary; }), v.beneficiaries.map(function (b) { return b.cont_name; })));
     var days = parseInt(settings.survival_days, 10) || 30;
     v.survival_days = String(days);
     v.survival_words = (SURVIVAL[days] || String(days)) + ' (' + days + ')';
@@ -754,6 +767,7 @@
       }
       return stepHead('Is there anything you want a specific person to have?', 'For example, jewelry, a car, or a sum of money. You can skip this. Everything else is covered next.') +
         pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true) + rows +
+        (answers.wantsGifts === 'yes' ? '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust, except as a backup if the trust you name no longer exists at your death. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '') +
         (answers.wantsGifts === 'yes' ? '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '');
     },
     residuary: function () {
@@ -770,21 +784,25 @@
         var total = a.beneficiaries.reduce(function (t, b) { return t + (parseFloat(b.share) || 0); }, 0);
         var multi = a.beneficiaries.filter(function (b) { return clean(b.name); }).length > 1;
         table = '<div class="bens">' + a.beneficiaries.map(function (b, i) {
+          var snt = isSntName(b.name), tr = snt || isTrustName(b.name);
+          if (tr && (!b.contingent || b.contingent === 'descendants')) b.contingent = multi ? 'others' : 'named';
           var c = b.contingent || 'descendants';
           var sel = '<select class="input" data-list="beneficiaries" data-i="' + i + '" data-f="contingent" data-rerender aria-label="If ' + val(b.name || 'this person') + ' does not survive me">' +
-            '<option value="descendants"' + (c === 'descendants' ? ' selected' : '') + '>Their descendants take their share</option>' +
+            (tr ? '' : '<option value="descendants"' + (c === 'descendants' ? ' selected' : '') + '>Their descendants take their share</option>') +
             '<option value="named"' + (c === 'named' ? ' selected' : '') + '>A person I name takes it</option>' +
             '<option value="charity"' + (c === 'charity' ? ' selected' : '') + '>A charity I name takes it</option>' +
             '<option value="others"' + (c === 'others' ? ' selected' : '') + (multi ? '' : ' disabled') + '>The others on this list share it</option></select>';
           return '<div class="ben"><div class="rowitem"><input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Person or organization" aria-label="Beneficiary ' + (i + 1) + '">' +
             '<span class="pct"><input class="input" inputmode="decimal" data-list="beneficiaries" data-i="' + i + '" data-f="share" value="' + val(b.share) + '" placeholder="50" aria-label="Share ' + (i + 1) + ' percent"><b>%</b></span>' +
             rm('beneficiaries', i, 'beneficiary ' + (i + 1), a.beneficiaries.length > 1) + '</div>' +
-            '<div class="cont"><span class="cont-l">If they do not survive me</span>' + sel +
-            ((c === 'named' || c === 'charity') ? '<input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="contName" value="' + val(b.contName) + '" placeholder="' + (c === 'charity' ? 'Name of the charity' : 'Name of the person') + '" aria-label="Contingent beneficiary ' + (i + 1) + '">' : '') +
+            (snt ? '<div class="cont"><span class="cont-l">If this trust no longer exists at my death</span><span class="hint">The share is held for the same person in a backup supplemental needs trust that your will sets up.</span>' :
+            '<div class="cont"><span class="cont-l">' + (tr ? 'If this trust no longer exists at my death' : 'If they do not survive me') + '</span>' + sel) +
+            (!snt && (c === 'named' || c === 'charity') ? '<input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="contName" value="' + val(b.contName) + '" placeholder="' + (c === 'charity' ? 'Name of the charity' : 'Name of the person') + '" aria-label="Contingent beneficiary ' + (i + 1) + '">' : '') +
             '</div></div>';
         }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="beneficiaries">+ Add another</button>' +
           '<p class="hint" id="pct-total">Shares add up to ' + fmtShare(total) + '%. They need to add up to 100%.</p>';
       }
+      if (a.residuary === 'named') table += '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust, except as a backup if the trust you name no longer exists at your death. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
       if (onlyNamed) return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Name each person or organization and the share each receives.') + table;
       return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Start with a choice below, then adjust it.') +
         cards('residuary', opts) + table;
@@ -854,8 +872,8 @@
         if (!bs.length) e.push('Add at least one person or organization.');
         else if (bs.some(function (b) { return !clean(b.name) || !(parseFloat(b.share) > 0); })) e.push('Each one needs a name and a share.');
         else if (Math.abs(tot - 100) > 0.05) e.push('The shares add up to ' + fmtShare(tot) + '%. They must add up to 100%.');
-        if (bs.some(function (b) { return (b.contingent === 'named' || b.contingent === 'charity') && !clean(b.contName); })) e.push('Enter who takes the share when someone does not survive you.');
-        if (bs.length === 1 && bs[0].contingent === 'others') e.push('There are no others on the list to share it. Choose a different option.');
+        if (bs.some(function (b) { return !isSntName(b.name) && (b.contingent === 'named' || b.contingent === 'charity') && !clean(b.contName); })) e.push('Enter who takes the share when someone does not survive you.');
+        if (bs.length === 1 && bs[0].contingent === 'others' && !isSntName(bs[0].name)) e.push('There are no others on the list to share it. Choose a different option.');
       }
     }
     return e;
@@ -2040,6 +2058,8 @@
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
     v.has_gifts = v.gifts.length > 0;
     v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
+    trustGiftFlags(v, [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.beneficiary; })
+      .concat([].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_ownership: clean(p.ownership), real_property_county_state: clean(p.countyState), real_property_deed_reference: clean(p.deedReference) };
@@ -2123,7 +2143,7 @@
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
             rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>';
         }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.') +
-        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
+        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust, except as a backup if the trust you name no longer exists. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     assets: function () {
       function assetBlock(flagKey, label, listKey, cols, ph) {
@@ -2289,6 +2309,8 @@
     v.has_survivor_death_gifts = v.survivor_death_gifts.length > 0;
     v.has_any_gifts = v.has_first_death_gifts || v.has_survivor_death_gifts;
     v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
+    trustGiftFlags(v, [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.beneficiary; })
+      .concat([].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_reference: clean(p.reference), real_property_ownership: clean(p.ownership) };
@@ -2375,7 +2397,7 @@
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
             rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>';
         }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.') +
-        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
+        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” This document does not create a special needs trust, except as a backup if the trust you name no longer exists. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     assets: function () {
       function assetBlock(flagKey, label, listKey, cols, ph) {

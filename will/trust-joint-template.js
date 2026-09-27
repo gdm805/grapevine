@@ -938,6 +938,66 @@ No beneficiary shall be required to execute a release as a condition of receivin
 
 Upon completing the distribution of a trust or separate share, the Trustee shall complete any remaining administrative acts reasonably necessary to close that trust or share.
 
+[[if has_trust_gift]]
+# GIFTS TO A TRUST
+
+## Gifts to a Trust {#sec_trust_gifts}
+
+Notwithstanding any other provision of this Trust Agreement, a gift, share, or other distribution that this Trust Agreement directs to a trust, or to the trustee of a trust, is given to the trustee of that trust serving when the gift becomes distributable, to be added to that trust and held, administered, and distributed under its terms, including any amendments made to it.
+
+The Required Survivorship Period does not apply to a gift to a trust. A gift to a trust fails only if that trust is not in existence when the gift becomes distributable or its trustee does not accept the gift.
+
+[[if has_snt_gift]]
+If a gift to a special needs or supplemental needs trust fails, it shall be held as provided in [[ref art_snt]].
+
+[[end]]
+Any other failed gift to a trust passes under the alternate disposition designated for it, if any. A direction to distribute a failed gift to a beneficiary's descendants does not apply to a trust; in that case the gift becomes part of the remaining Trust Estate, or, if the gift is a share of the remaining Trust Estate, it passes under the provision of this Trust Agreement that governs property no designated beneficiary is entitled to receive.
+
+[[end]]
+[[if has_snt_gift]]
+# STANDBY SUPPLEMENTAL NEEDS TRUST {#art_snt}
+
+## Establishment
+
+If a gift to a special needs or supplemental needs trust fails as provided in [[ref sec_trust_gifts]], the gift shall not be distributed outright to the person for whose primary benefit that trust was established. Instead, the Trustee shall hold the gift in a separate trust under this Article for the benefit of that person (the "**Supplemental Needs Beneficiary**").
+
+If the Supplemental Needs Beneficiary is not living when the gift becomes distributable, this Article does not apply to that gift, and the gift passes as this Trust Agreement provides for other failed gifts.
+
+## Trustee
+
+The trustee of each trust under this Article is the Trustee of this Trust then serving, including any Successor Trustee, who shall hold it as a separate trust. A trustee may resign by written notice to the Supplemental Needs Beneficiary or that beneficiary's legal representative.
+
+The trustee shall serve without bond to the extent permitted by law. If no trustee is able and willing to serve, a court of competent jurisdiction may appoint one.
+
+## Purpose
+
+The purpose of each trust under this Article is to supplement, and not to replace, reduce, or supplant, any public benefits or other assistance for which the Supplemental Needs Beneficiary is or may become eligible, including needs-based benefits such as Supplemental Security Income and Medicaid. This Article shall be interpreted and administered to carry out that purpose.
+
+## Distributions
+
+The trustee may distribute as much of the income and principal as the trustee, in the trustee's sole and absolute discretion, considers advisable for the Supplemental Needs Beneficiary's supplemental needs, meaning needs not otherwise provided for by public benefits or other sources, such as medical and dental care, equipment, education, training, recreation, travel, transportation, and personal care.
+
+Before making a distribution, the trustee shall consider its effect on the Supplemental Needs Beneficiary's eligibility for public benefits. The trustee may pay providers of goods and services directly instead of making a distribution to the Supplemental Needs Beneficiary. Income not distributed shall be added to principal.
+
+## No Right to Compel Distributions
+
+The Supplemental Needs Beneficiary has no right to compel a distribution, and no part of the trust shall be considered available to the Supplemental Needs Beneficiary for any purpose, including eligibility for public benefits.
+
+No interest in the trust may be assigned, anticipated, or reached by a creditor of the Supplemental Needs Beneficiary, or by any governmental agency, before actual distribution.
+
+## Third-Party Trust
+
+The trust is funded only with property from the Trust Estate and not with property belonging to the Supplemental Needs Beneficiary. No property belonging to the Supplemental Needs Beneficiary may be added to it.
+
+## Administrative Amendments
+
+The trustee may amend the administrative provisions of this Article, without court approval, only as needed to preserve the Supplemental Needs Beneficiary's eligibility for public benefits, and without changing the beneficial interests stated in this Article.
+
+## Termination
+
+When the Supplemental Needs Beneficiary dies, the trustee may pay the reasonable expenses of the Supplemental Needs Beneficiary's final illness and funeral to the extent not paid from other sources. The trustee shall then distribute the remaining property to the Supplemental Needs Beneficiary's then-living descendants, by right of representation, or if there are none, to the persons who would then be the surviving Trustmaker's heirs under the intestacy laws of the state whose law governs the administration of the Trust, in the shares they would receive under those laws.
+
+[[end]]
 # DEFINITIONS
 
 ## Trustmaker

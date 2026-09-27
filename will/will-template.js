@@ -148,6 +148,21 @@ If it cannot be established by sufficient evidence that a beneficiary survived m
 
 This Section does not alter any mandatory rule of applicable law.
 
+[[if has_trust_gift]]
+## Gifts to a Trust {#sec_trust_gifts}
+
+A gift, share, or other interest that this Will gives to a trust, or to the trustee of a trust, is given to the trustee of that trust serving at my death, to be added to that trust and held, administered, and distributed under its terms, including any amendments made to it before my death.
+
+The Required Survivorship Period does not apply to a gift to a trust. A gift to a trust fails only if that trust is not in existence at my death or its trustee does not accept the gift.
+
+[[if has_snt_gift]]
+If a gift to a special needs or supplemental needs trust fails, it shall be held as provided in [[ref art_snt]].
+
+[[end]]
+Any other failed gift to a trust passes under the contingent disposition designated for it, if any. A direction to distribute a failed gift to a beneficiary's descendants does not apply to a trust; in that case the gift passes as if no contingent disposition had been designated.
+
+[[end]]
+
 ## Descendants by Right of Representation
 
 Whenever this Will directs property to a person's then-living descendants by right of representation, the property shall be divided into shares at the nearest generation having at least one living descendant.
@@ -382,7 +397,7 @@ If a minor rounding or calculation discrepancy prevents the stated percentages f
 
 **Contingent Disposition for {{beneficiary}}:**
 
-[[if cont_descendants]]To that beneficiary's then-living descendants, by right of representation.[[end]][[if cont_named]]To {{cont_name}}.[[end]][[if cont_charity]]To {{cont_name}}, a charitable organization.[[end]][[if cont_others]]Among the other residuary beneficiaries then entitled to receive shares under this Article, in proportion to their respective shares.[[end]]
+[[if is_snt]]If that trust is not in existence at my death, as provided in [[ref art_snt]].[[end]][[if cont_remote]]Under [[ref remote]].[[end]][[if cont_descendants]]To that beneficiary's then-living descendants, by right of representation.[[end]][[if cont_named]]To {{cont_name}}.[[end]][[if cont_charity]]To {{cont_name}}, a charitable organization.[[end]][[if cont_others]]Among the other residuary beneficiaries then entitled to receive shares under this Article, in proportion to their respective shares.[[end]]
 
 [[end]]
 ## Failure of a Residuary Gift
@@ -417,6 +432,50 @@ To the persons who would then be my heirs under the intestacy laws governing the
 
 After payment or reasonable provision for the lawful obligations of my estate and completion of the distributions required by this Will, my Personal Representative shall distribute any remaining property as part of my Residuary Estate and complete the administration of my estate.
 
+[[if has_snt_gift]]
+# Standby Supplemental Needs Trust {#art_snt}
+
+## Establishment
+
+If a gift to a special needs or supplemental needs trust fails as provided in [[ref sec_trust_gifts]], the gift shall not be distributed outright to the person for whose primary benefit that trust was established. Instead, the Personal Representative shall hold the gift in a separate trust under this Article for the benefit of that person (the "**Supplemental Needs Beneficiary**").
+
+If the Supplemental Needs Beneficiary is not living at my death, this Article does not apply to that gift, and the gift passes as this Will provides for other failed gifts.
+
+## Trustee
+
+The trustee of each trust under this Article is my Personal Representative, and after that the persons named as successors to my Personal Representative, in the order named. A trustee may resign by written notice to the Supplemental Needs Beneficiary or that beneficiary's legal representative.
+
+The trustee shall serve without bond to the extent permitted by law. If no trustee is able and willing to serve, a court of competent jurisdiction may appoint one.
+
+## Purpose
+
+The purpose of each trust under this Article is to supplement, and not to replace, reduce, or supplant, any public benefits or other assistance for which the Supplemental Needs Beneficiary is or may become eligible, including needs-based benefits such as Supplemental Security Income and Medicaid. This Article shall be interpreted and administered to carry out that purpose.
+
+## Distributions
+
+The trustee may distribute as much of the income and principal as the trustee, in the trustee's sole and absolute discretion, considers advisable for the Supplemental Needs Beneficiary's supplemental needs, meaning needs not otherwise provided for by public benefits or other sources, such as medical and dental care, equipment, education, training, recreation, travel, transportation, and personal care.
+
+Before making a distribution, the trustee shall consider its effect on the Supplemental Needs Beneficiary's eligibility for public benefits. The trustee may pay providers of goods and services directly instead of making a distribution to the Supplemental Needs Beneficiary. Income not distributed shall be added to principal.
+
+## No Right to Compel Distributions
+
+The Supplemental Needs Beneficiary has no right to compel a distribution, and no part of the trust shall be considered available to the Supplemental Needs Beneficiary for any purpose, including eligibility for public benefits.
+
+No interest in the trust may be assigned, anticipated, or reached by a creditor of the Supplemental Needs Beneficiary, or by any governmental agency, before actual distribution.
+
+## Third-Party Trust
+
+The trust is funded only with property from my estate and not with property belonging to the Supplemental Needs Beneficiary. No property belonging to the Supplemental Needs Beneficiary may be added to it.
+
+## Administrative Amendments
+
+The trustee may amend the administrative provisions of this Article, without court approval, only as needed to preserve the Supplemental Needs Beneficiary's eligibility for public benefits, and without changing the beneficial interests stated in this Article.
+
+## Termination
+
+When the Supplemental Needs Beneficiary dies, the trustee may pay the reasonable expenses of the Supplemental Needs Beneficiary's final illness and funeral to the extent not paid from other sources. The trustee shall then distribute the remaining property to the Supplemental Needs Beneficiary's then-living descendants, by right of representation, or if there are none, to the persons who would then be my heirs under the intestacy laws governing the distribution of my probate estate, in the shares they would receive under those laws.
+
+[[end]]
 # Definitions {#definitions}
 
 ## Beneficiary
