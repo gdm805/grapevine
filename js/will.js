@@ -3438,15 +3438,14 @@
           var actionsEl = stepEl.querySelector('.actions');
           if (actionsEl) insertHtmlBefore(renderPkgComplete(flow, kindKey), actionsEl);
           addPaywallBanner();
-        } else if (!paidUp()) {
-          /* Not paid yet: hide this document's own download buttons and point to the next
-             document instead -- downloading unlocks once the whole package is answered and paid
-             for, at the last document's review screen. Already paid (for example someone who
-             bought the plan before, revisiting)? Leave this document's own buttons showing, since
-             there's nothing left to wait for. */
+        } else if (nextKind) {
+          /* Not the last document: ALWAYS point to the next one. Not paid yet -> the download buttons are
+             replaced by the Continue button (downloading unlocks for the whole package at the end). Already
+             paid (e.g. bought the plan earlier) -> keep this document's download buttons AND show Continue. */
           var actionsEl2 = stepEl.querySelector('.actions');
-          if (actionsEl2 && nextKind) {
-            actionsEl2.outerHTML = renderPkgContinue(nextKind);
+          if (actionsEl2) {
+            if (!paidUp()) actionsEl2.outerHTML = renderPkgContinue(nextKind);
+            else actionsEl2.insertAdjacentHTML('afterend', renderPkgContinue(nextKind));
             /* the Continue button goes BELOW the "How to sign" instructions, so nobody skips past them */
             var cont = stepEl.querySelector('.pkg-continue'), instrEl = stepEl.querySelector('.instr');
             if (cont && instrEl) instrEl.parentNode.insertBefore(cont, instrEl.nextSibling);
