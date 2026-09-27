@@ -1327,7 +1327,7 @@
     name: '', county: '',
     agent: '', successors: [{ name: '' }],
     agentMode: 'single', coAgents: [{ name: '' }],
-    effective: '', determiner: '', facility: '', trustPowers: ''
+    effective: '', determiner: '', facility: '', trustPowers: '', dpRoute: ''
   };
   var ROWS_DP = { successors: { name: '' }, coAgents: { name: '' } };
   var DP_CACHE = {}, DP_FAIL = {}, DP_PENDING = {};
@@ -1362,6 +1362,7 @@
     { id: 'more', label: 'One more thing', show: function (a) { return (dpSet(a, 'ask_determiner') === 'yes' && a.effective === 'incapacity') || dpSet(a, 'ask_facility') === 'yes'; } },
     /* Minnesota's statutory form can't be added to, so it can't grant trust powers: not asked there */
     { id: 'trustpower', label: 'Your trust', show: function (a) { return dpSet(a, 'trust_power_ok') !== 'no'; } },
+    { id: 'dproute', label: 'How you\u2019ll sign', show: function (a) { return !!dpSet(a, 'exec_routes'); } },
     { id: 'review', label: 'Review and sign' }
   ];
   function buildVarsDP(a, states, settings) {
@@ -1395,6 +1396,11 @@
     v.state_note = (v.has_co_agents && dpSet(a, 'sign_note_co_agents')) || dpSet(a, 'sign_note') || (gs ? gs.note : '');
     /* trust powers: carried from the living trust made here, or answered on the "Your trust" screen */
     v.trust_powers_yes = a.trustPowers === 'yes';
+    /* Washington's form can be signed before a notary OR two witnesses: only the chosen one is printed */
+    if (dpSet(a, 'exec_routes')) {
+      v.dp_route = a.dpRoute || 'NOTARY';
+      v.has_notary = v.dp_route === 'NOTARY'; v.has_witness = v.dp_route === 'WITNESSES'; v.exec_choice = false;
+    }
     if (v.trust_powers_yes) { v.trust_power_amend = v.trust_power_restate = v.trust_power_revoke = v.trust_power_withdraw = true; v.any_special_trust_power = true; v.advanced_powers = true; }
     if (window.__dpoaForce) Object.assign(v, window.__dpoaForce);   /* used only for testing */
     return v;
@@ -1422,6 +1428,10 @@
       return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Choose someone you trust completely. Many people choose the same person they named to carry out their will. Your document calls this person your Agent.') +
         field('Your agent’s full name', text('agent', '')) +
         dpBackups();
+    },
+    dproute: function () {
+      return stepHead('How do you plan to sign?', 'In ' + esc(answers.state) + ', you can sign your power of attorney in front of a notary public or in front of two qualified witnesses. Your document will include the section for the way you choose.') +
+        field('Choose one', pills('dpRoute', [['NOTARY', 'A notary public'], ['WITNESSES', 'Two witnesses']], true));
     },
     trustpower: function () {
       return stepHead('Your revocable living trust', 'If you have a revocable living trust, your agent can change it only if this power of attorney says so, and your trust also allows it.') +
@@ -1484,6 +1494,8 @@
     } else if (id === 'agent') {
       if (!clean(a.agent)) e.push('Enter the name of your agent.');
       otherAgentErrors(a, e, false);
+    } else if (id === 'dproute') {
+      if (!a.dpRoute) e.push('Choose how you plan to sign.');
     } else if (id === 'trustpower') {
       if (!a.trustPowers) e.push('Answer the question about your trust.');
     } else if (id === 'effective') {

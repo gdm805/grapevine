@@ -11,7 +11,7 @@ window.DPOA_STATES["Wyoming"] = String.raw`
 @set ask_facility = no
 @set has_notary = yes
 @set has_witness = no
-@set exec_choice = yes
+@set exec_choice = no
 
 @dropempty
 

@@ -9,24 +9,25 @@ window.FINALWISHES_SIGNING = String.raw`
 // ==========================================================================
 #! HOW TO SIGN YOUR FINAL WISHES
 
-- Print this document on plain white paper. Do not staple anything to it or write on it.
-- Read the "State Execution" section near the end -- it's the part written specifically for {{state}}, and it tells you exactly what your state needs: your signature alone, one or two witnesses, a notary, or some combination.
-- If your state needs witnesses, they should not be the person you've named to control disposition, and should meet your state's usual witness qualifications (typically an adult who isn't a beneficiary).
-- If your state needs a notary, sign in front of the notary, not beforehand -- a notary can't acknowledge a signature made outside their presence.
-- If your state's page includes a separate declaration (Indiana, Iowa, and Kentucky do this), sign and complete that section too -- it's a second, independently valid document living inside this same file.
-- Keep the signed original somewhere easy to find, and tell your executor, agent, or family where it is. A document no one can find can't help anyone.
+**Who must be there:** follow the signing section at the end of your document, written for {{state}}. It shows whether you need witnesses, a notary, or neither. A witness should not be the person you named to handle your arrangements.
+[[if signing_state=INDIANA]]
 
-#! THIS DOESN'T REPLACE YOUR ESTATE PLAN
+**Also sign the separate declaration** included in your document.
+[[end]]
+[[if signing_state=IOWA]]
 
-Final Wishes states your preferences and, where your state allows it, names who's in charge of carrying them out -- it doesn't distribute property, and it doesn't replace a will or trust.
+**Also sign the separate declaration** included in your document.
+[[end]]
+[[if signing_state=KENTUCKY]]
 
-- If any of your wishes change, sign a new Final Wishes document rather than crossing anything out on a signed original.
-- Give a copy to whoever you've named to handle arrangements, and consider giving one to close family too.
+**Also sign the separate declaration** included in your document.
+[[end]]
+
+**Afterward:** keep it where your family can find it, and give a copy to the person handling your arrangements.
 
 [[if state_note]]
 {{state_note}}
 
 [[end]]
-
 If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

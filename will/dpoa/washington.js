@@ -12,6 +12,7 @@ window.DPOA_STATES["Washington"] = String.raw`
 @set has_notary = yes
 @set has_witness = yes
 @set exec_choice = yes
+@set exec_routes = NOTARY,WITNESSES
 
 @dropempty
 
@@ -457,19 +458,8 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Execution Alternative A - Acknowledgment
-
-@line STATE OF WASHINGTON
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
-@line My commission expires: ____________________
-
-@sub Execution Alternative B - Two Qualified Witnesses
+[[if dp_route=WITNESSES]]
+@sub Two Qualified Witnesses
 
 The Principal signed or acknowledged this Power of Attorney in our presence and at the Principal’s direction or request. Each witness is competent, is not a home care provider for the Principal or a care provider at an adult family home or long-term care facility in which the Principal resides, and is not related to the Principal or Agent by blood, marriage, or state registered domestic partnership.
 
@@ -484,4 +474,17 @@ The Principal signed or acknowledged this Power of Attorney in our presence and 
 @line Date: ____________________
 
 @line Printed Name: __________________________________
+[[else]]
+@sub Acknowledgment
+
+@line STATE OF WASHINGTON
+
+@line COUNTY OF ____________________
+
+The foregoing instrument was acknowledged before me by {{name}} on ____________________.
+
+@sign Notary Public / Authorized Officer
+
+@line My commission expires: ____________________
+[[end]]
 `;

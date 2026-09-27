@@ -6,16 +6,7 @@ window.CONTACTS_SIGNING = String.raw`
 // ==========================================================================
 #! WHAT TO DO WITH THIS LIST
 
-- Print it and keep it with your will, trust, and other estate planning documents.
-- Give a copy to your executor, agent, or successor trustee -- whoever will actually need to make these calls.
-- Update it whenever someone's number, email, or role changes. There's nothing to re-sign -- just print a new copy.
+**Nothing to sign.** Keep it with your other estate planning documents, and give a copy to your executor, agent or successor trustee.
 
-#! WHO TO INCLUDE
-
-A few roles people often forget:
-
-- Your estate attorney, financial advisor, accountant, and insurance agent
-- Your executor, successor trustee, and any agents named in your power of attorney or health care directive
-- Your primary doctor and any specialists managing an ongoing condition
-- Close family who should be notified, even if they aren't named anywhere else in your documents
+**Keep it current.** When a number or role changes, update your answers and print a new copy.
 `;

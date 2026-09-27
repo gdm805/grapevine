@@ -5,12 +5,9 @@ window.DEMENTIA_SIGNING = String.raw`
 // ==========================================================================
 #! HOW TO SIGN YOUR CARE PREFERENCES
 
-This document is meant to be attached to your Advance Health Care Directive (sometimes called a living will or health-care power of attorney), not signed on its own as a separate legal instrument.
+**When you sign:** sign it the same way, and at the same time, as your health care directive.
 
-- Sign and date it at the same time you sign your health-care directive, if you can.
-- Some states want a supplement like this witnessed or notarized along with the health-care directive itself. Follow whatever your health-care directive's signing instructions say, or ask a local attorney if you are not sure.
-- Give a copy to your health-care agent, and keep it with your health-care directive so they are found together.
-- You can change your mind about any of this at any time while you are able to make your own decisions. Your current, capable wishes always come first.
+**Afterward:** keep it with your health care directive, and give a copy to your health care agent.
 
 If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

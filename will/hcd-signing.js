@@ -6,29 +6,13 @@ window.HCD_SIGNING = String.raw`
 // ==========================================================================
 #! HOW TO SIGN YOUR HEALTH CARE DIRECTIVE
 
-Your health care directive is not valid until it is signed correctly, and the rules are different in every state. In {{state}}, please check these before you sign:
+**Who must be there:** [[if exec_route_label]]{{exec_route_label}}, the way you chose to sign.[[else]][[if has_notary]]a notary public[[if has_witness]] and the witnesses shown on your form[[end]].[[else]][[if has_witness]]the witnesses shown on your form.[[else]]no one; just sign and date it.[[end]][[end]][[end]][[if has_witness]] A witness should be an adult who is not your agent and won't inherit from you.[[end]][[if has_notary]] Bring photo ID.[[end]]
 
-[[if exec_route_label]]
-- You chose to sign in front of {{exec_route_label}}. Your document is set up for that way of signing only.
-
-[[end]]
-[[if has_witness]]
-- Your document has witness lines. Your witnesses should read the statement above their lines before they sign, and should meet whatever your state requires of a witness (often: an adult who is not your agent and does not stand to inherit from you).
-
-[[end]]
-[[if has_notary]]
-- Your document has a notary section. Bring photo ID for the notary.
-
-[[end]]
-- Date the document when you sign it.
-- Give a copy to your health care agent, and keep the original somewhere your family or caregivers can find it. Hospitals and doctors' offices may also want a copy on file.
-- Do not add, cross out, or change anything after you sign. To make a change, sign a new document.
+**Afterward:** give a copy to your health care agent and your doctors, and keep the original where your family can find it. To change it, sign a new document.
 
 [[if state_note]]
 {{state_note}}
 
 [[end]]
-You can cancel your health care directive at any time while you have capacity. Review it after a marriage, divorce, new diagnosis, or a move to a new state.
-
 If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;
