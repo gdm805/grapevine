@@ -410,3 +410,6 @@ a { color: var(--grape); }
   .compare thead th:first-child { width: 38%; }
   .compare .yes { width: 26px; height: 26px; }
 }
+/* "Welcome back" strip: continue an unfinished package (js/nav.js) */
+.resume-bar { background: var(--leaf-tint, #e7efd9); color: var(--ink); font-size: 14.5px; line-height: 1.4; padding: 9px 0; text-align: center; border-bottom: 1px solid var(--line); }
+.resume-bar a { color: var(--grape); font-weight: 700; margin-left: 6px; white-space: nowrap; }

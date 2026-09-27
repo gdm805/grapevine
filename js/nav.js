@@ -38,3 +38,35 @@
   bar.innerHTML = '<div class="container"><strong>Beta tester?</strong> Questions, problems or ideas: email <a href="mailto:' + EMAIL + '?subject=Grapevine%20beta">' + EMAIL + '</a>. Thank you for helping!</div>';
   header.parentNode.insertBefore(bar, header);
 })();
+
+/* WELCOME BACK: someone who closed the site in the middle of a package sees a strip at the top of the home,
+   pricing and other pages that takes them straight back to the next unfinished document (or, when every
+   document is answered, to the package summary). Answers are saved in this browser as they go. Not shown
+   on the document pages themselves, which already restore the answers. */
+(function () {
+  'use strict';
+  if (document.querySelector('[data-kind]') || /package\.html$/.test(location.pathname)) return;
+  var f = null;
+  try { f = JSON.parse(localStorage.getItem('grapevine.flow.v1') || 'null'); } catch (e) { f = null; }
+  if (!f || !f.docs || !f.docs.length) return;
+  var PAGES = { will: 'will.html', pourover: 'pour-over.html', dpoa: 'dpoa.html', hcd: 'hcd.html', dementia: 'dementia.html', hipaa: 'hipaa.html',
+    trust: 'trust.html', trustjoint: 'trust-joint.html', cert: 'cert.html', affidavit: 'affidavit.html', assignment: 'assignment.html',
+    finalwishes: 'finalwishes.html', contacts: 'contacts.html', schedulea: 'schedulea.html' };
+  var NAMES = { will: 'Will', essentials: 'Essentials', complete: 'Complete', health: 'Health Care', trustpaper: 'Trust Paperwork' };
+  var done = f.done || [];
+  var nextId = f.docs.filter(function (k) { return done.indexOf(k) === -1; })[0];
+  var href = 'package.html';
+  if (nextId) {
+    var base = String(nextId).split(':')[0];
+    href = (PAGES[base] || 'package.html') + (/:2$/.test(nextId) ? '?spouse=2' : '');
+  }
+  if (window.GVUrl) href = window.GVUrl(href.split('?')[0]) + (href.indexOf('?') > -1 ? href.slice(href.indexOf('?')) : '');
+  var what = f.plan === 'doc' ? 'your document' : 'your ' + (NAMES[f.plan] || '') + ' package';
+  var header = document.querySelector('.site-header');
+  if (!header) return;
+  var bar = document.createElement('div');
+  bar.className = 'resume-bar';
+  bar.innerHTML = '<div class="container"><span>Welcome back. Your answers are saved in this browser (' + done.length + ' of ' + f.docs.length + ' documents answered).</span> ' +
+    '<a href="' + href + '">' + (nextId ? 'Continue ' + what : 'Review ' + what) + ' &rarr;</a></div>';
+  header.parentNode.insertBefore(bar, header);
+})();
