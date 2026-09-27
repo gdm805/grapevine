@@ -265,7 +265,7 @@
         children: a.hasChildren === 'yes' ? kidsShared(a.children, willRelToShared) : (a.hasChildren === 'no' ? [] : undefined) });
     } else if (k === 'trust') {
       writeShared({ marital: a.maritalStatus ? (a.maritalStatus === 'UNMARRIED' ? 'unmarried' : 'married') : '',
-        spouse: clean(a.spouse || a.partner), children: kidNames(a.children).length ? kidsShared(a.children, function () { return ''; }) : undefined });
+        spouse: clean(a.spouse || a.partner), children: kidNames(a.children).length ? kidsShared(a.children, willRelToShared) : undefined });
     } else if (k === 'trustjoint') {
       writeShared({ marital: 'married', spouse: clean(a.name2), children: kidNames(a.children).length ? kidsShared(a.children, function (r) { return r || ''; }) : undefined });
     } else if (k === 'hcd') {
@@ -287,7 +287,7 @@
     } else if (k === 'trust') {
       if (!a.maritalStatus && sh.marital) a.maritalStatus = sh.marital === 'married' ? 'MARRIED' : 'UNMARRIED';
       if (a.maritalStatus === 'MARRIED') fill('spouse', sh.spouse);
-      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return { name: typeof n === 'string' ? n : n.name }; });
+      if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return typeof n === 'string' ? { name: n } : { name: n.name, rel: sharedRelToWill(n.rel) }; });
     } else if (k === 'trustjoint') {
       if (kids && kids.length && !kidNames(a.children).length) a.children = kids.map(function (n) { return typeof n === 'string' ? { name: n } : { name: n.name, rel: n.rel || '' }; });
     } else if (k === 'hcd') {
@@ -908,6 +908,7 @@
      'spouse' = my spouse's or partner's from a prior relationship (my stepchild). Recorded so the will says
      plainly which children are the will-maker's own, and a stepchild is named as a stepchild. */
   var CHILD_REL_WILL = [['both', 'Ours (both of us)'], ['mine', 'Only mine (prior relationship)'], ['spouse', 'Only my spouse’s (prior relationship)']];
+  var CHILD_REL_TRUST = [['both', 'Ours (both of us)'], ['mine', 'Only mine (prior relationship)'], ['spouse', 'Only my spouse\u2019s or partner\u2019s (prior relationship)']];
   function relSelect(list, i, current, opts) {
     return '<select class="input child-rel" data-list="' + list + '" data-i="' + i + '" data-f="rel" aria-label="Whose child is this?">' +
       '<option value="">Whose child?</option>' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (current === o[0] ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
@@ -2041,8 +2042,12 @@
     v.marital_status = a.maritalStatus === 'MARRIED' ? 'MARRIED' : (a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'UNMARRIED');
     v.spouse = clean(a.spouse); v.partner = clean(a.partner);
     v.is_married = v.marital_status !== 'UNMARRIED';
-    v.children = (a.children || []).map(function (c) { return { child: clean(c.name) }; }).filter(function (c) { return c.child; });
+    var paired = v.marital_status !== 'UNMARRIED';
+    var kidsAll = (a.children || []).map(function (c) { return { name: clean(c.name), rel: paired ? (c.rel || '') : 'both' }; }).filter(function (c) { return c.name; });
+    v.children = kidsAll.filter(function (c) { return c.rel !== 'spouse'; }).map(function (c) { return { child: c.name + (c.rel === 'mine' ? ' (the Trustmaker\u2019s child from a prior relationship)' : '') }; });
     v.has_children = v.children.length > 0;
+    v.stepchildren = kidsAll.filter(function (c) { return c.rel === 'spouse'; }).map(function (c) { return { stepchild: c.name }; });
+    v.has_stepchildren = v.stepchildren.length > 0;
     v.excluded = (a.excluded || []).map(function (x) { return { excluded_name: clean(x.name), excluded_relationship: clean(x.relationship) }; }).filter(function (x) { return x.excluded_name; });
     v.has_excluded = v.excluded.length > 0;
     v.trustee_mode = a.trusteeMode === 'COTRUSTEES' ? 'COTRUSTEES' : 'SUCCESSIVE';
@@ -2107,7 +2112,14 @@
         field('Marital status', pills('maritalStatus', [['UNMARRIED', 'Unmarried'], ['MARRIED', 'Married'], ['PARTNER', 'Registered domestic partner']], true));
       if (answers.maritalStatus === 'MARRIED') h += field('Spouse’s full name', text('spouse', ''));
       if (answers.maritalStatus === 'PARTNER') h += field('Partner’s full name', text('partner', ''));
-      h += field('Children', nameRows('children', 'Child', 0) + addBtn('children', '+ Add a child'), 'Leave blank if you have no children.');
+      /* married or partnered: ask whose child each one is, so a stepchild is named as a stepchild */
+      var paired = answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER';
+      var krows = '<div class="rowset">' + answers.children.map(function (c, i) {
+        return '<div class="rowitem"><input class="input" data-list="children" data-i="' + i + '" data-f="name" value="' + val(c.name) + '" placeholder="Child ' + (i + 1) + ' full name" aria-label="Child ' + (i + 1) + '">' +
+          (paired ? relSelect('children', i, c.rel, CHILD_REL_TRUST) : '') +
+          rm('children', i, 'child ' + (i + 1), answers.children.length > 0) + '</div>';
+      }).join('') + '</div>';
+      h += field('Children', krows + addBtn('children', '+ Add a child'), 'Leave blank if you have no children.' + (paired ? ' Include your spouse\u2019s or partner\u2019s children from a prior relationship, and choose \u201cOnly my spouse\u2019s or partner\u2019s\u201d for them.' : ''));
       h += field('Anyone you want to intentionally exclude? (optional)', '<div class="rowset">' + answers.excluded.map(function (x, i) {
         return '<div class="rowitem two"><input class="input" data-list="excluded" data-i="' + i + '" data-f="name" value="' + val(x.name) + '" placeholder="Full name">' +
           '<input class="input" data-list="excluded" data-i="' + i + '" data-f="relationship" value="' + val(x.relationship) + '" placeholder="Relationship">' +
@@ -2213,6 +2225,7 @@
       if (!a.maritalStatus) e.push('Choose your marital status.');
       if (a.maritalStatus === 'MARRIED' && !clean(a.spouse)) e.push('Enter your spouse’s name.');
       if (a.maritalStatus === 'PARTNER' && !clean(a.partner)) e.push('Enter your partner’s name.');
+      if ((a.maritalStatus === 'MARRIED' || a.maritalStatus === 'PARTNER') && (a.children || []).some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
     } else if (id === 'trustee') {
       var list = a.trusteeMode === 'COTRUSTEES' ? a.cotrustees : a.successors;
       if (!(list || []).some(function (x) { return clean(x.name); })) e.push('Name at least one successor trustee.');

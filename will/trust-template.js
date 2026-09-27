@@ -134,6 +134,22 @@ The Trustmaker has no children.
 
 [[end]]
 
+[[if has_stepchildren]]
+
+## Stepchildren
+
+The children of the Trustmaker's spouse or registered domestic partner from a prior relationship, who are the Trustmaker's stepchildren, are:
+
+[[each stepchildren]]
+
+{{stepchild}}
+
+[[end]]
+
+Unless this Trust Agreement expressly provides otherwise, a stepchild of the Trustmaker is not treated as the Trustmaker's child for purposes of this Trust Agreement. A stepchild may receive property under this Trust Agreement as a named beneficiary.
+
+[[end]]
+
 [[if has_excluded]]
 
 ## Intentionally Excluded Person(s)
