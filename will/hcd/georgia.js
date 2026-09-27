@@ -20,7 +20,7 @@ window.HCD_STATES["Georgia"] = String.raw`
 @set ask_sc_optional_notary = no
 @set ask_vt_facility_explanation = no
 @set has_witness = yes
-@set has_notary = yes
+@set has_notary = no
 
 @center **ADVANCE DIRECTIVE FOR HEALTH CARE**
 

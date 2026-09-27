@@ -20,7 +20,7 @@ window.HCD_STATES["Michigan"] = String.raw`
 @set ask_sc_optional_notary = no
 @set ask_vt_facility_explanation = no
 @set has_witness = yes
-@set has_notary = yes
+@set has_notary = no
 
 @center **PATIENT ADVOCATE DESIGNATION WITH HEALTH CARE INSTRUCTIONS**
 
