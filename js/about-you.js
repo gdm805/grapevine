@@ -68,7 +68,8 @@
       field('Full legal name', input('name' + n, 'text', 'As it appears on your ID')) +
       field('Phone', input('phone' + n, 'tel', 'Phone number', 'off')) +
       field('Date of birth', input('dob' + n, 'date', '')) +
-      '<label class="check"><input type="checkbox" data-k="ageOk' + n + '"' + (p['ageOk' + n] ? ' checked' : '') + '><span>' + (n ? 'They are' : 'I am') + ' 18 or older.</span></label>';
+      '<label class="check"><input type="checkbox" data-k="ageOk' + n + '"' + (p['ageOk' + n] ? ' checked' : '') + '><span>' + (n ? 'They are' : 'I am') + ' 18 or older.</span></label>' +
+      '<label class="check"><input type="checkbox" data-k="freeOk' + n + '"' + (p['freeOk' + n] ? ' checked' : '') + '><span>' + (n ? 'They are making their documents of their own free will.' : 'I am making my documents of my own free will.') + '</span></label>';
   }
   function draw() {
     var err = errors.length ? '<div class="errs" role="alert"><strong>Almost there.</strong><ul>' + errors.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>' : '';
@@ -93,6 +94,7 @@
     if (clean(p.phone) && String(p.phone).replace(/\D/g, '').length < 10) e.push('Your phone number looks incomplete.');
     need('dob', 'Enter your date of birth.');
     if (!p.ageOk) e.push('Confirm that you are 18 or older.');
+    if (!p.freeOk) e.push('Confirm that you are making your documents of your own free will.');
     need('street', 'Enter your street address.');
     need('city', 'Enter your city.');
     need('state', 'Choose your state.');
@@ -105,6 +107,7 @@
       if (clean(p.phone2) && String(p.phone2).replace(/\D/g, '').length < 10) e.push('Your spouse or partner’s phone number looks incomplete.');
       need('dob2', 'Enter your spouse or partner’s date of birth.');
       if (!p.ageOk2) e.push('Confirm that your spouse or partner is 18 or older.');
+      if (!p.freeOk2) e.push('Confirm that your spouse or partner is making their documents of their own free will.');
     }
     return e;
   }
