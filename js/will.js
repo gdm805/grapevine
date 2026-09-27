@@ -2054,7 +2054,7 @@
        never reads "...FOR THE THE Smith..." and never reads "...FOR Smith..." either */
     v.trust_starts_with_the = /^the\s/i.test(v.trust_name) ? 'YES' : 'NO';
     v.trust_type = a.trustType === 'RESTATEMENT' ? 'RESTATEMENT' : 'NEW';
-    v.orig_trust_name = clean(a.origTrustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
+    v.orig_trust_name = clean(a.trustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'MARRIED' ? 'MARRIED' : (a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'UNMARRIED');
     v.spouse = clean(a.spouse); v.partner = clean(a.partner);
@@ -2112,9 +2112,11 @@
       }).join('');
       return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
-        field('Name your trust', text('trustName', 'For example, Maria Elena Alvarez Living Trust'), 'You can change this later. Many people use their own name.') +
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
-        (answers.trustType === 'RESTATEMENT' ? field('Name of your original trust', text('origTrustName', '')) + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') : '') +
+        /* a restatement keeps the original trust's name: that is the only name asked for */
+        (answers.trustType === 'RESTATEMENT' ?
+          field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
+          field('Name your trust', text('trustName', 'For example, Maria Elena Alvarez Living Trust'), 'You can change this later. Many people use their own name.')) +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am creating this trust of my own free will.</span></label>' +
@@ -2233,9 +2235,8 @@
     if (id === 'start') {
       if (!st) e.push('Choose your state.');
       else if (!st.supported) e.push(st.note || 'We can’t offer a trust in that state yet.');
-      if (!clean(a.trustName)) e.push('Name your trust.');
+      if (!clean(a.trustName)) e.push(a.trustType === 'RESTATEMENT' ? 'Enter the name of your original trust.' : 'Name your trust.');
       if (a.trustType === 'RESTATEMENT') {
-        if (!clean(a.origTrustName)) e.push('Enter the name of your original trust.');
         if (!a.origTrustDate) e.push('Enter the date your original trust was signed.');
       }
       if (!a.ageOk) e.push('Confirm that you are 18 or older.');
@@ -2326,7 +2327,7 @@
        never reads "...FOR THE THE Smith..." and never reads "...FOR Smith..." either */
     v.trust_starts_with_the = /^the\s/i.test(v.trust_name) ? 'YES' : 'NO';
     v.trust_type = a.trustType === 'RESTATEMENT' ? 'RESTATEMENT' : 'NEW';
-    v.orig_trust_name = clean(a.origTrustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
+    v.orig_trust_name = clean(a.trustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'MARRIED';
     /* whose child: a child from a prior relationship is identified as the child of that Trustmaker only */
@@ -2383,9 +2384,11 @@
       }).join('');
       return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
-        field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'You can change this later.') +
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
-        (answers.trustType === 'RESTATEMENT' ? field('Name of your original trust', text('origTrustName', '')) + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') : '') +
+        /* a restatement keeps the original trust's name: that is the only name asked for */
+        (answers.trustType === 'RESTATEMENT' ?
+          field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
+          field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'You can change this later.')) +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>We are both 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>We are creating this trust of our own free will.</span></label>' +
@@ -2515,9 +2518,8 @@
     if (id === 'start') {
       if (!st) e.push('Choose your state.');
       else if (!st.supported) e.push(st.note || 'We can’t offer a trust in that state yet.');
-      if (!clean(a.trustName)) e.push('Name your trust.');
+      if (!clean(a.trustName)) e.push(a.trustType === 'RESTATEMENT' ? 'Enter the name of your original trust.' : 'Name your trust.');
       if (a.trustType === 'RESTATEMENT') {
-        if (!clean(a.origTrustName)) e.push('Enter the name of your original trust.');
         if (!a.origTrustDate) e.push('Enter the date your original trust was signed.');
       }
       if (!a.ageOk) e.push('Confirm that you are both 18 or older.');
