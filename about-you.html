@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Checkout | Grapevine</title>
-<meta name="description" content="Pay once for your Grapevine plan, then download and print your documents.">
+<title>About you | Grapevine</title>
+<meta name="description" content="Your personal information, entered once and used in every Grapevine document.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#fefdf2">
 <link rel="icon" href="images/favicon.ico?v=20260929f" sizes="48x48">
@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Nunito+Sans:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap">
 <link rel="stylesheet" href="css/styles.css?v=20260929f">
-<link rel="stylesheet" href="css/checkout.css?v=20260929f">
+<link rel="stylesheet" href="css/will.css?v=20260929f">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -22,7 +22,6 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></symbol>
   <symbol id="i-check" viewBox="0 0 16 16"><path d="M3 8.500l3.200 3L13 4.500"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 16 16"><path d="M4 7V5a4 4 0 0 1 8 0v2M3.5 7h9a1 1 0 0 1 1 1v5.5a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/></symbol>
 </svg>
 
 <header class="site-header">
@@ -32,7 +31,7 @@
     </a>
     <nav class="primary" id="site-menu" aria-label="Main">
       <a href="index.html">Home</a>
-      <a href="pricing.html" aria-current="page">Pricing</a>
+      <a href="pricing.html">Pricing</a>
       <a href="learn.html">Learn</a>
       <a href="questions.html">Questions</a>
     </nav>
@@ -41,19 +40,16 @@
 </header>
 
 <main id="main">
-<section class="checkout-wrap">
-  <div class="container checkout-grid">
-    <div id="checkout" class="checkout-main" aria-live="polite"></div>
-    <aside class="checkout-side">
-      <h2>Why people trust Grapevine</h2>
-      <ul class="every">
-        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>One-time price</strong>Never a subscription.</span></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Plain-language documents</strong>Built from state-specific legal text, in words you understand.</span></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Signing steps for your state</strong>What to sign, who needs to witness, and where to keep it.</span></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg><span><strong>Keep your answers</strong>Come back and change your document any time.</span></li>
-      </ul>
-      <p class="side-legal"><strong>Grapevine is not a law firm.</strong> We provide document preparation tools and general information, not legal advice.</p>
-    </aside>
+<section class="will-hero">
+  <div class="container">
+    <p class="overline">Step 1 &middot; Personal information</p>
+    <h1>First, a little about you</h1>
+    <p class="lead">Enter this once. Every document uses it, so you won&rsquo;t be asked again. Your answers stay in this browser.</p>
+  </div>
+</section>
+<section class="will-work">
+  <div class="container">
+    <div class="wizard about-you" id="about-you" aria-live="polite"></div>
   </div>
 </section>
 </main>
@@ -79,7 +75,8 @@
 <script src="js/plans.js?v=20260929f"></script>
 <script src="js/entitlements.js?v=20260929f"></script>
 <script src="js/flow.js?v=20260929f"></script>
-<script src="js/checkout.js?v=20260929f"></script>
+<script src="will/counties.js?v=20260929f"></script>
+<script src="js/about-you.js?v=20260929f"></script>
 <script src="js/nav.js?v=20260929f"></script>
 </body>
 </html>

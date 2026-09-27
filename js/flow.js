@@ -118,7 +118,8 @@ window.GVFlow = (function () {
        whatever page the link itself names, keeping its ?household= and other settings */
     if (f && f.docs.length && a.getAttribute('href')) {
       try {
-        var to = new URL(pageFor(f.docs[0]), location.href), from = new URL(a.getAttribute('href'), location.href);
+        /* every package and single-document purchase starts with "About you" (about-you.html) */
+        var to = new URL('about-you.html', location.href), from = new URL(a.getAttribute('href'), location.href);
         from.searchParams.forEach(function (v, k) { to.searchParams.set(k, v); });
         a.setAttribute('href', to.href);
       } catch (err) { /* keep the link as it was */ }

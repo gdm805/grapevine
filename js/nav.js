@@ -45,7 +45,7 @@
    on the document pages themselves, which already restore the answers. */
 (function () {
   'use strict';
-  if (document.querySelector('[data-kind]') || /package\.html$/.test(location.pathname)) return;
+  if (document.querySelector("[data-kind]") || /(package|about-you)\.html$/.test(location.pathname)) return;
   var f = null;
   try { f = JSON.parse(localStorage.getItem('grapevine.flow.v1') || 'null'); } catch (e) { f = null; }
   if (!f || !f.docs || !f.docs.length) return;
@@ -55,8 +55,11 @@
   var NAMES = { will: 'Will', essentials: 'Essentials', complete: 'Complete', health: 'Health Care', trustpaper: 'Trust Paperwork' };
   var done = f.done || [];
   var nextId = f.docs.filter(function (k) { return done.indexOf(k) === -1; })[0];
-  var href = 'package.html';
-  if (nextId) {
+  var href = 'package.html', prof = {};
+  try { prof = JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { prof = {}; }
+  if (!prof.aboutDone) nextId = nextId || 'about';
+  if (!prof.aboutDone) href = 'about-you.html';
+  else if (nextId) {
     var base = String(nextId).split(':')[0];
     href = (PAGES[base] || 'package.html') + (/:2$/.test(nextId) ? '?spouse=2' : '');
   }

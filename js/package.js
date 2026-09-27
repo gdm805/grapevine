@@ -73,6 +73,12 @@
       '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Continue &mdash; it’s free' : 'Continue to payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>';
   }
 
+  var prof = {};
+  try { prof = JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { prof = {}; }
+  var aboutRow = '<div class="pkg-sum-row"><span class="pkg-check">' + (prof.aboutDone ? '✓' : '•') + '</span>' +
+    '<span class="pkg-doc-name">Personal information<small>' + esc([prof.name, prof.name2].filter(Boolean).join(' and ') || 'Not finished yet') + '</small></span>' +
+    '<a class="btn btn-secondary btn-sm" href="' + esc(url('about-you.html') + '?next=package.html') + '">' + (prof.aboutDone ? 'Review or change' : 'Finish it') + '</a></div>';
+  rows = aboutRow + rows;
   root.innerHTML = '<div class="pkg-summary">' +
     '<p class="overline">Your ' + esc(pkg) + ' package' + (f.couple ? ' for both of you' : '') + '</p>' +
     '<h1>Review your package</h1>' +

@@ -122,6 +122,7 @@
       if (f === 'name') out.name2 = m[f];
       else if (f === 'county' || f === 'address' || f === 'state') out[f] = m[f];   /* same household */
       else if (f === 'ageOk' || f === 'freeOk') out[f + '2'] = m[f];              /* the second person's own confirmations */
+      else if (f === 'phone' || f === 'dob') out[f + '2'] = m[f];                 /* the second person's own phone and birth date */
     });
     return out;
   }
@@ -1751,7 +1752,7 @@
   function buildVarsHCD(a, states, settings) {
     var v = {}, st = states.map[a.state] || null;
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase();
-    v.dob = clean(a.dob); v.phone = clean(a.phone); v.address = clean(a.address);
+    v.dob = longDate(a.dob) || clean(a.dob); v.phone = clean(a.phone); v.address = clean(a.address);
     v.state = st ? st.name : '';
     v.county = clean(a.signingCounty).replace(/\s+county$/i, '');
     v.agent = clean(a.agent);
@@ -2007,7 +2008,7 @@
   function buildVarsHipaa(a, states, settings) {
     var v = {}, st = states.map[a.state] || null;
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase();
-    v.dob = clean(a.dob); v.address = clean(a.address);
+    v.dob = longDate(a.dob) || clean(a.dob); v.address = clean(a.address);
     v.state = st ? st.name : '';
     v.recipients = (a.recipients || []).map(function (r) {
       var contact = clean(r.contact);
@@ -3657,6 +3658,13 @@
      doesn't ask where you live eleven times. A pour-over will inside Complete comes after the trust, so its
      "I have created my trust" box is ticked for them. */
   var startSkip = null;
+  (function () {
+    var fl = window.GVFlow && window.GVFlow.current();
+    if (!fl || window.top !== window || /[?&]export=1\b/.test(location.search)) return;
+    if (readProfile().aboutDone) return;
+    var here = location.pathname.split('/').pop() + location.search;
+    location.replace(window.GVUrl('about-you.html') + '?next=' + encodeURIComponent(here.replace(/^\//, '')));
+  })();
   (function () {
     var fl = window.GVFlow && window.GVFlow.current();
     if (!fl || restored) return;
