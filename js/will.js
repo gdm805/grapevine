@@ -3620,14 +3620,16 @@
   }
   /* Two spellings count as the same person when the first and last names match, ignoring capitals,
      punctuation, and middle names or initials -- "Lisa Merrill", "lisa l. merrill" and "Lisa L. Merrill" are
-     one person, but "Allyson Merrill" is not. A single word only matches the same single word. */
+     one person, but "Allyson Merrill" is not. A first name typed alone matches that first name. */
   function nameTokens(x) {
     return String(x || '').toLowerCase().replace(/[^a-z0-9\s'-]/g, ' ').split(/\s+/).filter(Boolean);
   }
   function sameName(a, b) {
     var x = nameTokens(a), y = nameTokens(b);
     if (!x.length || !y.length) return false;
-    if (x.length === 1 || y.length === 1) return x.join(' ') === y.join(' ');
+    /* a first name alone ("Angela") counts as the spouse or partner whose first name it is ("Angela B. Merrill") --
+       in a couple's documents that is who a lone first name means */
+    if (x.length === 1 || y.length === 1) return x[0] === y[0];
     /* drop single-letter middle initials, then compare first and last */
     var xi = x.filter(function (t, i) { return t.length > 1 || i === 0 || i === x.length - 1; });
     var yi = y.filter(function (t, i) { return t.length > 1 || i === 0 || i === y.length - 1; });
