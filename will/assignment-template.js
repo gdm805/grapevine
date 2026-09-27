@@ -215,8 +215,6 @@ The Assignors execute this Assignment on {{signing_date}} in {{county}} {{county
 
 [[end]]
 
-No state requires a witness, notary, or sworn oath for this Assignment -- a signature alone is enough everywhere in the United States. Some banks, brokerages, or title companies ask for a notarized signature anyway before they'll accept it. If yours does, or you'd simply like one, a general notary acknowledgment is included below; otherwise this Assignment is complete once signed.
-
 [[if wants_notary]]
 
 @sub Notary Acknowledgment
