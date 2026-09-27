@@ -2061,10 +2061,11 @@
         gift_contingent: g.contingent || 'DESCENDANTS', gift_contingent_name: clean(g.contingentName)
       };
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
+    if (a.wantsGifts === 'no') v.gifts = [];
     v.has_gifts = v.gifts.length > 0;
     v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
-    trustGiftFlags(v, [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.beneficiary; })
-      .concat([].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
+    trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.beneficiary; })
+      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_ownership: clean(p.ownership), real_property_county_state: clean(p.countyState), real_property_deed_reference: clean(p.deedReference) };
@@ -2139,12 +2140,15 @@
         field('If you also sign a power of attorney, should that agent be able to amend, revoke, or restate this trust on your behalf?', pills('poaReservedPowers', [['yes', 'Yes'], ['no', 'No — only I can amend or revoke my trust']], true), 'Your successor trustee can still manage trust property either way — this is only about changing the trust’s terms.');
     },
     gifts: function () {
-      var h = stepHead('Specific gifts', 'Leave specific items or amounts to specific people before everything else is divided. This is optional.') +
-        field('Gifts', '<div class="rowset">' + answers.gifts.map(function (g, i) {
+      if (!answers.wantsGifts && (answers.gifts || []).some(function (g) { return clean(g.description) || clean(g.beneficiary); })) answers.wantsGifts = 'yes';
+      var h = stepHead('Do you want to leave any specific gifts?', 'For example, jewelry, a car, or a sum of money to a specific person, before everything else is divided. You can skip this.') +
+        pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true);
+      if (answers.wantsGifts !== 'yes') return h;
+      h += field('Gifts', '<div class="rowset">' + answers.gifts.map(function (g, i) {
           return '<div class="rowitem two"><input class="input" data-list="gifts" data-i="' + i + '" data-f="description" value="' + val(g.description) + '" placeholder="What (e.g., $5,000, or my piano)">' +
             '<input class="input" data-list="gifts" data-i="' + i + '" data-f="beneficiary" value="' + val(g.beneficiary) + '" placeholder="To whom">' +
             rm('gifts', i, 'gift ' + (i + 1), answers.gifts.length > 1) + '</div>';
-        }).join('') + '</div>' + addBtn('gifts', '+ Add another gift'), 'If a gift’s recipient doesn’t survive you, it goes to that person’s descendants by default — you can change that per gift below.');
+        }).join('') + '</div>' + addBtn('gifts', '+ Add another gift'), 'If a gift’s recipient doesn’t survive you, the gift goes to that person’s descendants.');
       h += '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
       return h;
     },
@@ -2231,6 +2235,13 @@
       if (!(list || []).some(function (x) { return clean(x.name); })) e.push('Name at least one successor trustee.');
     } else if (id === 'powers') {
       if (!a.poaReservedPowers) e.push('Answer the power-of-attorney question.');
+    } else if (id === 'gifts') {
+      if (!a.wantsGifts) e.push('Choose whether you want to leave any specific gifts.');
+      else if (a.wantsGifts === 'yes') {
+        var gs = (a.gifts || []).filter(function (g) { return clean(g.description) || clean(g.beneficiary); });
+        if (!gs.length) e.push('Add at least one gift, or choose \u201cNo, skip this.\u201d');
+        else if (gs.some(function (g) { return !clean(g.description) || !clean(g.beneficiary); })) e.push('Each gift needs both what it is and who receives it.');
+      }
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
     } else if (id === 'signing') {
@@ -2320,10 +2331,11 @@
       return { gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_contingent: g.contingent || 'DESCENDANTS', gift_contingent_name: clean(g.contingentName) };
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
     v.has_survivor_death_gifts = v.survivor_death_gifts.length > 0;
+    if (a.wantsGifts === 'no') { v.first_death_gifts = []; v.survivor_death_gifts = []; v.has_first_death_gifts = v.has_survivor_death_gifts = false; }
     v.has_any_gifts = v.has_first_death_gifts || v.has_survivor_death_gifts;
     v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
-    trustGiftFlags(v, [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.beneficiary; })
-      .concat([].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || []).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
+    trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.beneficiary; })
+      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], a.firstDeathGifts || [], a.survivorDeathGifts || [])).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_reference: clean(p.reference), real_property_ownership: clean(p.ownership) };
@@ -2398,7 +2410,11 @@
             rm(listKey, i, 'gift ' + (i + 1), answers[listKey].length > 1) + '</div>';
         }).join('') + '</div>' + addBtn(listKey, '+ Add another gift'), hint);
       }
-      return stepHead('Specific gifts', 'When the first of you dies, everything stays in the trust for the surviving spouse or partner, who keeps using and controlling it. You don’t need to name each other anywhere. Specific gifts are optional: they leave particular items or amounts to other people.') +
+      if (!answers.wantsGifts && [].concat(answers.firstDeathGifts || [], answers.survivorDeathGifts || []).some(function (g) { return clean(g.description) || clean(g.beneficiary); })) answers.wantsGifts = 'yes';
+      var top = stepHead('Do you want to leave any specific gifts?', 'When the first of you dies, everything stays in the trust for the surviving spouse or partner, who keeps using and controlling it. You don’t need to name each other anywhere. Specific gifts are optional: they leave particular items or amounts to other people.') +
+        pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true);
+      if (answers.wantsGifts !== 'yes') return top;
+      return top +
         giftBlock('firstDeathGifts', 'Gifts when the first of you dies', 'To someone other than your spouse or partner, distributed before the rest stays in the trust for the survivor.') +
         giftBlock('survivorDeathGifts', 'Gifts after both of you have died', 'Distributed before everything else is divided among your final beneficiaries.') +
         '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
@@ -2483,6 +2499,13 @@
     } else if (id === 'trustee') {
       var list = a.trusteeMode === 'COTRUSTEES' ? a.cotrustees : a.successors;
       if (!(list || []).some(function (x) { return clean(x.name); })) e.push('Name at least one successor trustee.');
+    } else if (id === 'gifts') {
+      if (!a.wantsGifts) e.push('Choose whether you want to leave any specific gifts.');
+      else if (a.wantsGifts === 'yes') {
+        var gs = ([].concat(a.firstDeathGifts || [], a.survivorDeathGifts || [])).filter(function (g) { return clean(g.description) || clean(g.beneficiary); });
+        if (!gs.length) e.push('Add at least one gift, or choose \u201cNo, skip this.\u201d');
+        else if (gs.some(function (g) { return !clean(g.description) || !clean(g.beneficiary); })) e.push('Each gift needs both what it is and who receives it.');
+      }
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
     } else if (id === 'signing') {
