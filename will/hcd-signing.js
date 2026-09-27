@@ -8,8 +8,8 @@ window.HCD_SIGNING = String.raw`
 
 Your health care directive is not valid until it is signed correctly, and the rules are different in every state. In {{state}}, please check these before you sign:
 
-[[if exec_choice]]
-- Your document offers more than one way to sign. Use the one you chose on the review page.
+[[if exec_route_label]]
+- You chose to sign in front of {{exec_route_label}}. Your document is set up for that way of signing only.
 
 [[end]]
 [[if has_witness]]
