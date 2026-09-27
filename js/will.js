@@ -26,7 +26,7 @@
      (no "[address]" placeholder). Only use these on lines that say nothing else. */
   var DROP_IF_EMPTY = { address: 1, dob: 1, phone: 1, email: 1, agent_address: 1, trustee_address: 1, expiration_text: 1, limitations: 1, agent_contact: 1 };
   /* dates people may leave blank on purpose: printed as a line to fill in by hand */
-  var HAND_BLANK = { signing_date: 1, certification_date: 1 };
+  var HAND_BLANK = { signing_date: 1, certification_date: 1, orig_trust_date: 1, restatement_date: 1, trust_date: 1 };
   var ARTICLES = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN'];
   var WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   var SURVIVAL = { 30: 'thirty', 45: 'forty-five', 60: 'sixty', 90: 'ninety', 120: 'one hundred twenty' };
@@ -217,6 +217,11 @@
     return old.length ? old : (a.jointGifts || []);
   }
   function firstName(n) { return clean(n).split(' ')[0] || ''; }
+  /* the trust made here left its signing date blank (to write in by hand): the trust paperwork doesn't ask
+     for that date again -- it prints a blank line to fill in with the same date */
+  function handOrig(a) { var f = readTrustFacts(); return madeHere(a) && !!f && !f.restated && !f.origDate; }
+  function handRest(a) { var f = readTrustFacts(); return madeHere(a) && !!f && f.restated && !f.restatementDate; }
+  var HAND_DATE_NOTE = '<p class="hint"><strong>Trust date:</strong> you left the signing date blank in your trust, to write in by hand. It prints as a blank line here too. Write in the same date you sign your trust.</p>';
   var CARRY_CONFIRMED = {};
   function applyTrustFacts(a, kind) {
     var f = readTrustFacts();
@@ -1022,7 +1027,7 @@
     trust: function () {
       return stepHead('Tell us about your trust', 'Your pour-over will sends anything left outside your trust into it. Copy these details from your signed trust document.') +
         field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust.') +
-        field('Date your trust was first signed', '<input class="input" type="date" data-k="trustDate" value="' + val(answers.trustDate) + '">', 'Use the original date, not the date of any later amendment.') +
+        (handOrig(answers) ? HAND_DATE_NOTE : field('Date your trust was first signed', '<input class="input" type="date" data-k="trustDate" value="' + val(answers.trustDate) + '">', 'Use the original date, not the date of any later amendment.')) +
         field('Is it a joint trust, one that you and another person made together (for example, with your spouse)?', pills('jointTrust', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.jointTrust === 'yes' ? field('The other person’s full legal name', text('otherTrustmaker', '')) : '');
     },
@@ -1105,7 +1110,7 @@
       if (a.hasChildren === 'yes' && a.marital === 'married' && a.children.some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
     } else if (id === 'trust') {
       if (!clean(a.trustName)) e.push('Enter the name of your trust.');
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(a.trustDate || '')) e.push('Enter the date your trust was first signed.');
+      if (!handOrig(a) && !/^\d{4}-\d{2}-\d{2}$/.test(a.trustDate || '')) e.push('Enter the date your trust was first signed.');
       if (!a.jointTrust) e.push('Tell us whether it is a joint trust.');
       if (a.jointTrust === 'yes' && !clean(a.otherTrustmaker)) e.push('Enter the other person’s name.');
     } else if (id === 'executor') {
@@ -2624,9 +2629,9 @@
       return stepHead('First, tell us about your trust', 'This is the state whose law governs your trust, and where you’ll sign this Certification in front of a notary.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust.') +
-        field('Date your trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
+        (handOrig(answers) ? HAND_DATE_NOTE : field('Date your trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has your trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
-        (answers.trustRestated === 'yes' ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '') +
+        (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '') +
         field('Has your trust been amended, without a full restatement?', pills('hasAmendments', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.hasAmendments === 'yes' ? field('Amendments', '<div class="rowset">' + answers.amendments.map(function (a, i) {
           return '<div class="rowitem two"><input class="input" data-list="amendments" data-i="' + i + '" data-f="title" value="' + val(a.title) + '" placeholder="Title (e.g., First Amendment)">' +
@@ -2709,9 +2714,9 @@
       if (!st) e.push('Choose your state.');
       else if (!st.supported) e.push(st.note || 'We can’t offer a Certification of Trust in that state yet.');
       if (!clean(a.trustName)) e.push('Name your trust.');
-      if (!a.origTrustDate) e.push('Enter the date your trust was originally signed.');
+      if (!a.origTrustDate && !handOrig(a)) e.push('Enter the date your trust was originally signed.');
       if (!a.trustRestated) e.push('Answer whether your trust has been restated.');
-      if (a.trustRestated === 'yes' && !a.restatementDate) e.push('Enter the date of the most recent restatement.');
+      if (a.trustRestated === 'yes' && !a.restatementDate && !handRest(a)) e.push('Enter the date of the most recent restatement.');
       if (!a.hasAmendments) e.push('Answer whether your trust has been amended.');
     } else if (id === 'trustmakers') {
       if (!(a.trustmakers || []).some(function (t) { return clean(t.name); })) e.push('Name at least one Trustmaker.');
@@ -2802,9 +2807,9 @@
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
         field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
-        field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
+        (handOrig(answers) ? HAND_DATE_NOTE : field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has the trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
-        (answers.trustRestated === 'yes' ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
+        (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
     },
     trustmakers: function () {
       var h = stepHead('Trustmakers', '');
@@ -2883,9 +2888,9 @@
       if (!st) e.push('Choose your state.');
       else if (!st.supported) e.push(st.note || 'We can’t offer an Affidavit of Trustee in that state yet.');
       if (!clean(a.trustName)) e.push('Name the trust.');
-      if (!a.origTrustDate) e.push('Enter the date the trust was originally signed.');
+      if (!a.origTrustDate && !handOrig(a)) e.push('Enter the date the trust was originally signed.');
       if (!a.trustRestated) e.push('Answer whether the trust has been restated.');
-      if (a.trustRestated === 'yes' && !a.restatementDate) e.push('Enter the date of the most recent restatement.');
+      if (a.trustRestated === 'yes' && !a.restatementDate && !handRest(a)) e.push('Enter the date of the most recent restatement.');
     } else if (id === 'trustmakers') {
       if (!clean(a.tm1Name)) e.push(a.trustType === 'JOINT' ? 'Enter the first Trustmaker’s full legal name.' : 'Enter the Trustmaker’s full legal name.');
       if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
@@ -2961,9 +2966,9 @@
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
         field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
-        field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
+        (handOrig(answers) ? HAND_DATE_NOTE : field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has the trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
-        (answers.trustRestated === 'yes' ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
+        (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
     },
     trustmakers: function () {
       var h = stepHead('Trustmakers', '');
@@ -3023,9 +3028,9 @@
     if (id === 'start') {
       if (!st) e.push('Choose your state.');
       if (!clean(a.trustName)) e.push('Name the trust.');
-      if (!a.origTrustDate) e.push('Enter the date the trust was originally signed.');
+      if (!a.origTrustDate && !handOrig(a)) e.push('Enter the date the trust was originally signed.');
       if (!a.trustRestated) e.push('Answer whether the trust has been restated.');
-      if (a.trustRestated === 'yes' && !a.restatementDate) e.push('Enter the date of the most recent restatement.');
+      if (a.trustRestated === 'yes' && !a.restatementDate && !handRest(a)) e.push('Enter the date of the most recent restatement.');
     } else if (id === 'trustmakers') {
       if (!clean(a.tm1Name)) e.push(a.trustType === 'JOINT' ? 'Enter the first Trustmaker’s full legal name.' : 'Enter the Trustmaker’s full legal name.');
       if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
@@ -3345,9 +3350,9 @@
       return stepHead('First, tell us about your trust', 'Schedule A belongs to a trust you already have, so we need its name and date to identify it.') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
         field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
-        field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
+        (handOrig(answers) ? HAND_DATE_NOTE : field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has the trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
-        (answers.trustRestated === 'yes' ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
+        (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
     },
     trustmakers: function () {
       var h = stepHead('Trustmakers', '');
@@ -3411,9 +3416,9 @@
     var a = answers, e = [];
     if (id === 'start') {
       if (!clean(a.trustName)) e.push('Name the trust.');
-      if (!a.origTrustDate) e.push('Enter the date the trust was originally signed.');
+      if (!a.origTrustDate && !handOrig(a)) e.push('Enter the date the trust was originally signed.');
       if (!a.trustRestated) e.push('Answer whether the trust has been restated.');
-      if (a.trustRestated === 'yes' && !a.restatementDate) e.push('Enter the date of the most recent restatement.');
+      if (a.trustRestated === 'yes' && !a.restatementDate && !handRest(a)) e.push('Enter the date of the most recent restatement.');
     } else if (id === 'trustmakers') {
       if (!clean(a.tm1Name)) e.push(a.trustType === 'JOINT' ? 'Enter the first Trustmaker’s full legal name.' : 'Enter the Trustmaker’s full legal name.');
       if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
