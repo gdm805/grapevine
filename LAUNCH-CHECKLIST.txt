@@ -109,7 +109,7 @@ B. GOING LIVE (taking real money)
         accept the Terms if possible.
 
 
-[ ] 6b. Anti-spoofing records for the 4 forwarding-only domains (grapevinewills.com, grapevinewill.com,
+[x] 6b. (DONE 27 Sep 2026: SPF + DMARC reject added to all four; checked, and forwarding still works) Anti-spoofing records for the 4 forwarding-only domains (grapevinewills.com, grapevinewill.com,
         grapevinetrusts.com, grapevinetrust.com), at Cloudflare > each domain > DNS > Records. They never send
         email, so say so (stops scammers sending fake mail "from" them). Add to EACH domain:
           TXT  name @       content  v=spf1 -all
