@@ -802,7 +802,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have \u201cPage X of Y\u201d at the bottom of every page. If you print straight from the browser, some browsers leave the page numbers off, so the PDF is the better choice.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can\u2019t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -1035,7 +1035,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have \u201cPage X of Y\u201d at the bottom of every page. If you print straight from the browser, some browsers leave the page numbers off, so the PDF is the better choice.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -1255,7 +1255,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page. If you print straight from the browser, some browsers leave the page numbers off, so the PDF is the better choice.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -1438,7 +1438,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -1677,7 +1677,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -1910,7 +1910,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -2154,7 +2154,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -2406,7 +2406,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -2587,7 +2587,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -2758,7 +2758,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -2899,7 +2899,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -3063,7 +3063,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
@@ -3155,7 +3155,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -3288,7 +3288,7 @@
         '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
-        '<p class="hint export-status" id="export-status" role="status">The PDF and Word files have “Page X of Y” at the bottom of every page.</p>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a sample version, so it can’t be signed yet.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
