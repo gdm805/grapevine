@@ -2099,7 +2099,7 @@
     v.business_interests = (a.businessInterests || []).map(function (p) {
       return { business_name: clean(p.name), business_interest: clean(p.interest), business_state: clean(p.state), business_ownership: clean(p.ownership) };
     }).filter(function (p) { return p.business_name; });
-    v.asset_tangible = a.assetTangible === 'yes';
+    v.asset_tangible = true;   /* household goods are always listed on Schedule A */
     v.has_witness = !!TRUST_WITNESS_STATES[v.state];
     v.state_note = st ? st.note : '';
     return v;
@@ -2196,7 +2196,7 @@
         assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., checking or savings' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
         assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., individual brokerage' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
         assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', lab: 'Business name', ph: '' }, { f: 'interest', lab: 'Your interest', ph: 'e.g., 50% member' }, { f: 'state', lab: 'State where it was formed', ph: '' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
-        field('Household goods and other tangible personal property', pills('assetTangible', [['yes', 'Yes'], ['no', 'No']], true), 'Furniture, jewelry, art, and similar belongings, as a group.');
+        '<p class="hint"><strong>Household goods and other tangible personal property</strong> (furniture, jewelry, art, and similar belongings) are always included in Schedule A as a group.</p>';
     },
     signing: function () {
       return stepHead('Signing', '') +
@@ -2371,7 +2371,7 @@
     v.business_interests = (a.businessInterests || []).map(function (p) {
       return { business_name: clean(p.name), business_interest: clean(p.interest), business_ownership: clean(p.ownership) };
     }).filter(function (p) { return p.business_name; });
-    v.asset_tangible = a.assetTangible === 'yes';
+    v.asset_tangible = true;   /* household goods are always listed on Schedule A */
     v.has_witness = !!TRUST_WITNESS_STATES[v.state];
     v.state_note = st ? st.note : '';
     return v;
@@ -2478,7 +2478,7 @@
         assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., checking or savings' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., joint, or community property' }]) +
         assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., individual brokerage' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., joint, or community property' }]) +
         assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', lab: 'Business name', ph: '' }, { f: 'interest', lab: 'Your interest', ph: 'e.g., 50% member' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., joint, or community property' }]) +
-        field('Household goods and other tangible personal property', pills('assetTangible', [['yes', 'Yes'], ['no', 'No']], true), 'Furniture, jewelry, art, and similar belongings, as a group.');
+        '<p class="hint"><strong>Household goods and other tangible personal property</strong> (furniture, jewelry, art, and similar belongings) are always included in Schedule A as a group.</p>';
     },
     signing: function () {
       return stepHead('Signing', '') +
@@ -3335,7 +3335,7 @@
     v.business_interests = (a.businessInterests || []).map(function (p) {
       return { business_name: clean(p.name), business_interest: clean(p.interest), business_state: clean(p.state), business_ownership: clean(p.ownership) };
     }).filter(function (p) { return p.business_name; });
-    v.asset_tangible = a.assetTangible === 'yes';
+    v.asset_tangible = true;   /* household goods are always listed on Schedule A */
     return v;
   }
   var RENDER_SCHEDA = {
@@ -3375,7 +3375,7 @@
         assetBlock('assetBank', 'Bank or credit union accounts', 'bankAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., checking or savings' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
         assetBlock('assetBrokerage', 'Investment or brokerage accounts', 'brokerageAccounts', [{ f: 'institution', lab: 'Bank or company', ph: '' }, { f: 'type', lab: 'Account type', ph: 'e.g., individual brokerage' }, { f: 'last4', lab: 'Last 4 digits only', ph: 'never the full number' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
         assetBlock('assetBusiness', 'Business interests', 'businessInterests', [{ f: 'name', lab: 'Business name', ph: '' }, { f: 'interest', lab: 'Your interest', ph: 'e.g., 50% member' }, { f: 'state', lab: 'State where it was formed', ph: '' }, { f: 'ownership', lab: 'Ownership', ph: 'e.g., sole owner' }]) +
-        field('Household goods and other tangible personal property', pills('assetTangible', [['yes', 'Yes'], ['no', 'No']], true), 'Furniture, jewelry, art, and similar belongings, as a group.');
+        '<p class="hint"><strong>Household goods and other tangible personal property</strong> (furniture, jewelry, art, and similar belongings) are always included in Schedule A as a group.</p>';
     },
     review: function () {
       var v = buildVarsScheduleA(answers, states, tpl.settings);
@@ -3417,7 +3417,7 @@
       if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
     } else if (id === 'assets') {
       var groups = [['assetRealProperty', 'realProperty', 'address', 'real estate'], ['assetBank', 'bankAccounts', 'institution', 'bank account'], ['assetBrokerage', 'brokerageAccounts', 'institution', 'investment account'], ['assetBusiness', 'businessInterests', 'name', 'business']];
-      var any = a.assetTangible === 'yes';
+      var any = true;
       groups.forEach(function (g) {
         if (a[g[0]] === 'yes') {
           any = true;
@@ -3425,7 +3425,6 @@
         }
         if (!a[g[0]]) e.push('Answer whether you have a ' + g[3] + ' to list.');
       });
-      if (!a.assetTangible) e.push('Answer whether to include household goods.');
       if (!any && !e.length) e.push('Choose at least one kind of property to list.');
     }
     return e;
