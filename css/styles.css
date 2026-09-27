@@ -242,6 +242,8 @@ a { color: var(--grape); }
 .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
 .plan { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); padding: clamp(26px, 3vw, 38px); display: flex; flex-direction: column; gap: 18px; }
 .plan.best { background: var(--grape-tint); border: 2px solid var(--grape); box-shadow: var(--shadow-lift); }
+/* pricing page: every plan card gets the light purple look, so none stands out over the others */
+.plans > .plan { background: var(--grape-tint); border: 2px solid var(--grape); box-shadow: var(--shadow-lift); }
 .plan h2 { font-size: 34px; line-height: 1.1; }
 .plan-tag { margin-top: 8px; color: var(--ink-soft); font-size: 16px; line-height: 1.5; min-height: 3em; }
 .badge { display: inline-block; font: 700 12px/1 var(--sans); letter-spacing: 0.08em; text-transform: uppercase; background: var(--grape); color: #fff; padding: 7px 12px; border-radius: var(--r-pill); margin-bottom: 14px; }
@@ -327,7 +329,7 @@ a { color: var(--grape); }
      a plain flex column (its base style) rather than a row-by-row subgrid, because the "What's
      included" details can be open on one card and collapsed on another -- subgrid would force every
      card's row heights to match the tallest one, badly stretching collapsed cards' buttons. */
-  .plan:not(.best) > header::before { content: ""; display: block; height: 40px; }
+  .plan:not(.best) > header:not(:has(.badge))::before { content: ""; display: block; height: 40px; }
 }
 
 .compare tr.group th { text-align: left; font: 700 12px/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-mute); background: var(--sand); padding: 12px 20px; border-bottom: 1px solid var(--line); }
