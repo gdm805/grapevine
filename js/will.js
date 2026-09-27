@@ -549,6 +549,7 @@
     v.guardian = clean(a.guardian); v.alt_guardian = clean(a.altGuardian); v.has_alt_guardian = !!v.alt_guardian;
     v.executor = clean(a.executor);
     v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
+    if (a.wantsBackups === 'no') v.successors = [];
     v.has_successors = v.successors.length > 0;
     v.gifts = (a.gifts || []).map(function (g) { return { gift: clean(g.item), recipient: clean(g.recipient) }; }).filter(function (g) { return g.gift && g.recipient; });
     v.has_gifts = a.wantsGifts === 'yes' && v.gifts.length > 0;
@@ -783,7 +784,15 @@
       }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="successors">+ Add another backup</button>';
       return stepHead('Who should carry out your will?', 'This person pays your debts, handles the paperwork, and gives your property to the people you name. Your will calls this person your Personal Representative. Some states call it an executor.') +
         field('Personal representative\u2019s full name', text('executor', '')) +
-        field('Backups <em>(optional)</em>', rows, 'If your first choice can\u2019t serve, the first backup takes over, then the next.');
+        (function () {
+          if (!answers.wantsBackups && answers.successors.some(function (x) { return clean(x.name); })) answers.wantsBackups = 'yes';
+          var h = anotherPerson('personal representative', '');
+          if (answers.wantsBackups === 'yes') {
+            if (!answers.successors.length) answers.successors = [{ name: '' }];
+            h += field('Backup personal representative(s), in order', rows, 'If your first choice can\u2019t serve, the first backup takes over, then the next.');
+          }
+          return h;
+        })();
     },
     gifts: function () {
       var rows = '';
@@ -885,6 +894,7 @@
       if (!clean(a.guardian)) e.push('Enter the name of the person who should be guardian.');
     } else if (id === 'executor') {
       if (!clean(a.executor)) e.push('Enter the name of your personal representative.');
+      anotherErrors(a, e, 'personal representative', false, (a.successors || []).some(function (x) { return clean(x.name); }), 0);
     } else if (id === 'gifts') {
       if (!a.wantsGifts) e.push('Choose whether to add a special gift.');
       if (a.wantsGifts === 'yes') {
@@ -918,6 +928,61 @@
     propFid: '', propFidName: '', propAlt1: ''
   };
   var ROWS_PO = { children: { name: '', minor: false }, successors: { name: '' }, coPRs: { name: '' } };
+  /* ANOTHER PERSON (will, pour-over will, trusts): the same pattern as the agent screens -- the first
+     person's name, then "Do you want to name another ...?" Yes/No, and only after Yes, how that person
+     serves (a backup, or alongside the first). wantsBackups = yes/no, otherRole = backup/co. */
+  /* successor trustees (single and joint trust): the first successor trustee is always successors[0];
+     "another" is a backup (successors[1..], one at a time) or a Co-Trustee (cotrustees, serving together
+     with the first). */
+  function trusteeFields() {
+    var a = answers;
+    if (!a.successors.length) a.successors = [{ name: '' }];
+    /* answers saved before this screen changed: the Co-Trustees were all in cotrustees */
+    if (a.trusteeMode === 'COTRUSTEES' && !clean(a.successors[0].name) && (a.cotrustees || []).some(function (x) { return clean(x.name); })) { a.successors[0].name = clean(a.cotrustees[0].name); a.cotrustees = a.cotrustees.slice(1); }
+    if (!a.wantsBackups && (a.trusteeMode === 'COTRUSTEES' || a.successors.slice(1).some(function (x) { return clean(x.name); }))) { a.wantsBackups = 'yes'; a.otherRole = a.trusteeMode === 'COTRUSTEES' ? 'co' : 'backup'; }
+    var h = field('Successor trustee’s full name', '<input class="input" data-list="successors" data-i="0" data-f="name" value="' + val(a.successors[0].name) + '" placeholder="Full legal name" autocomplete="off" aria-label="Successor trustee">') +
+      anotherPerson('successor trustee', 'Alongside my first choice, serving together as Co-Trustees');
+    if (a.wantsBackups !== 'yes') { a.trusteeMode = 'SUCCESSIVE'; return h; }
+    if (a.otherRole === 'backup') {
+      a.trusteeMode = 'SUCCESSIVE';
+      if (a.successors.length < 2) a.successors.push({ name: '' });
+      h += field('Backup successor trustee(s), in order', extraRows('successors', 1, 'Backup') + addBtn('successors', '+ Add another backup'), 'If your first choice can’t serve, the first backup takes over, then the next.');
+    } else if (a.otherRole === 'co') {
+      a.trusteeMode = 'COTRUSTEES';
+      if (!a.cotrustees.length) a.cotrustees = [{ name: '' }];
+      h += field('Other Co-Trustee(s)', nameRows('cotrustees', 'Co-Trustee', 1) + addBtn('cotrustees', '+ Add another'));
+    }
+    return h;
+  }
+  function trusteeVars(a, v) {
+    var first = clean(((a.successors || [])[0] || {}).name);
+    if (a.wantsBackups === 'no') { v.trustee_mode = 'SUCCESSIVE'; v.is_cotrustees = false; v.successors = first ? [{ successor: first }] : []; }
+    if (v.is_cotrustees && first && !v.cotrustees.some(function (x) { return x.cotrustee === first; })) v.cotrustees.unshift({ cotrustee: first });
+  }
+  function extraRows(list, from, ph) {
+    var rows = '';
+    for (var i = from; i < answers[list].length; i++) {
+      rows += '<div class="rowitem"><input class="input" data-list="' + list + '" data-i="' + i + '" data-f="name" value="' + val(answers[list][i].name) + '" placeholder="' + ph + ' ' + (i - from + 1) + ' full name" aria-label="' + ph + ' ' + (i - from + 1) + '">' +
+        rm(list, i, ph.toLowerCase() + ' ' + (i - from + 1), answers[list].length > from + 1) + '</div>';
+    }
+    return '<div class="rowset">' + rows + '</div>';
+  }
+  function anotherPerson(noun, coLabel) {
+    var a = answers;
+    var h = field('Do you want to name another ' + noun + '?', pills('wantsBackups', [['yes', 'Yes'], ['no', 'No']], true),
+      coLabel ? 'Another ' + noun + ' can be a backup, or can serve alongside your first choice.' : 'Another ' + noun + ' serves only if your first choice can’t.');
+    if (a.wantsBackups !== 'yes') return h;
+    if (coLabel) h += field('How should the other ' + noun + ' serve?', pills('otherRole', [['backup', 'As a backup, only if my first choice can’t serve'], ['co', coLabel]], true));
+    return h;
+  }
+  function anotherErrors(a, e, noun, hasCo, backups, coCount) {
+    if (!a.wantsBackups) { e.push('Answer whether you want to name another ' + noun + '.'); return; }
+    if (a.wantsBackups !== 'yes') return;
+    var role = hasCo ? a.otherRole : 'backup';
+    if (!role) { e.push('Choose how the other ' + noun + ' should serve.'); return; }
+    if (role === 'backup' && !backups) e.push('Enter the backup ' + noun + '’s name, or answer No.');
+    if (role === 'co' && !coCount) e.push('Enter the other ' + noun + '’s name, or answer No.');
+  }
   var STEPS_PO = [
     { id: 'start', label: 'Where you live' },
     { id: 'about', label: 'About you' },
@@ -972,6 +1037,9 @@
     v.executor = clean(a.executor);
     v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
     v.co_prs = (a.coPRs || []).map(function (x) { return { co_pr: clean(x.name) }; }).filter(function (x) { return x.co_pr; });
+    /* the first person named is always "executor"; together, they head the co-personal representative list */
+    if (v.pr_co && v.executor && !v.co_prs.some(function (x) { return x.co_pr === v.executor; })) v.co_prs.unshift({ co_pr: v.executor });
+    if (a.wantsBackups === 'no') { v.successors = []; v.pr_co = false; v.pr_successive = true; }
     if (a.guardianMode === 'each' && minors.length > 1) {
       v.guardian_nominations = minors.map(function (m) {
         var g = (a.eachGuardian || {})[m.idx] || {};
@@ -1038,12 +1106,25 @@
         (answers.jointTrust === 'yes' ? field('The other person’s full legal name', text('otherTrustmaker', '')) : '');
     },
     executor: function () {
-      var co = answers.prMode === 'co';
-      return stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn’t in your trust. Your will calls this person your Personal Representative. Some states call it an executor. You can name one person or more than one. If you name more than one, choose below whether they take turns (one at a time) or serve together.') +
-        cards('prMode', [['successive', 'One at a time', 'Your first choice serves. If they can’t, the next person on your list steps in.'], ['co', 'Two or more together', 'They serve together as co-personal representatives.']]) +
-        (co ? field('Co-personal representatives', nameRows('coPRs', 'Co-personal representative', 2) + addBtn('coPRs', '+ Add another'), 'Enter at least two people.')
-            : field('Personal representative’s full name', text('executor', ''))) +
-        field('Backups <em>(optional)</em>', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can’t serve, the first backup takes over, then the next.');
+      var a = answers;
+      /* answers saved before this screen changed kept every co-personal representative in coPRs */
+      if (a.prMode === 'co' && !clean(a.executor) && (a.coPRs || []).some(function (x) { return clean(x.name); })) { a.executor = clean(a.coPRs[0].name); a.coPRs = a.coPRs.slice(1); if (!a.coPRs.length) a.coPRs = [{ name: '' }]; }
+      if (!a.wantsBackups && (a.prMode === 'co' || a.successors.some(function (x) { return clean(x.name); }))) { a.wantsBackups = 'yes'; a.otherRole = a.prMode === 'co' ? 'co' : 'backup'; }
+      var h = stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn\u2019t in your trust. Your will calls this person your Personal Representative. Some states call it an executor.') +
+        field('Personal representative\u2019s full name', text('executor', '')) +
+        anotherPerson('personal representative', 'Alongside my first choice, serving together as co-personal representatives');
+      if (a.wantsBackups !== 'yes') { a.prMode = 'successive'; return h; }
+      if (a.otherRole === 'backup') {
+        a.prMode = 'successive';
+        if (!a.successors.length) a.successors = [{ name: '' }];
+        h += field('Backup personal representative(s), in order', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can\u2019t serve, the first backup takes over, then the next.');
+      } else if (a.otherRole === 'co') {
+        a.prMode = 'co';
+        if (!a.coPRs.length) a.coPRs = [{ name: '' }];
+        h += field('Other co-personal representative(s)', nameRows('coPRs', 'Co-personal representative', 1) + addBtn('coPRs', '+ Add another'));
+        h += field('Backups <em>(optional)</em>', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'Backups step in only if the people above can\u2019t serve, in the order you list them.');
+      }
+      return h;
     },
     guardian: function () {
       var minors = minorsOf(answers), multi = minors.length > 1, each = multi && answers.guardianMode === 'each';
@@ -1119,9 +1200,8 @@
       if (!a.jointTrust) e.push('Tell us whether it is a joint trust.');
       if (a.jointTrust === 'yes' && !clean(a.otherTrustmaker)) e.push('Enter the other person’s name.');
     } else if (id === 'executor') {
-      if (a.prMode === 'co') {
-        if (a.coPRs.filter(function (x) { return clean(x.name); }).length < 2) e.push('Enter at least two co-personal representatives, or choose “One at a time.”');
-      } else if (!clean(a.executor)) e.push('Enter the name of your personal representative.');
+      if (!clean(a.executor)) e.push('Enter the name of your personal representative.');
+      anotherErrors(a, e, 'personal representative', true, (a.successors || []).some(function (x) { return clean(x.name); }), (a.coPRs || []).filter(function (x) { return clean(x.name); }).length);
     } else if (id === 'guardian') {
       var minors = minorsOf(a);
       if (a.guardianMode === 'each' && minors.length > 1) {
@@ -2147,6 +2227,7 @@
     v.is_cotrustees = v.trustee_mode === 'COTRUSTEES';
     v.successors = (a.successors || []).map(function (s) { return { successor: clean(s.name) }; }).filter(function (s) { return s.successor; });
     v.cotrustees = (a.cotrustees || []).map(function (s) { return { cotrustee: clean(s.name) }; }).filter(function (s) { return s.cotrustee; });
+    trusteeVars(a, v);
     v.poa_reserved_powers = a.poaReservedPowers === 'yes';
     v.gifts = (a.gifts || []).map(function (g) {
       return {
@@ -2224,11 +2305,7 @@
       return h;
     },
     trustee: function () {
-      var h = stepHead('Who should manage your trust if you can’t?', 'Your successor trustee takes over if you resign, become incapacitated, or die. You are the initial Trustee.') +
-        field('If you name more than one, should they serve one at a time, or together?', pills('trusteeMode', [['SUCCESSIVE', 'One at a time'], ['COTRUSTEES', 'Together, as Co-Trustees']], true));
-      if (answers.trusteeMode === 'COTRUSTEES') h += field('Co-Trustees', nameRows('cotrustees', 'Co-Trustee', 0) + addBtn('cotrustees', '+ Add another'));
-      else h += field('Successor Trustees, in order', nameRows('successors', 'Successor', 0) + addBtn('successors', '+ Add another'));
-      return h;
+      return stepHead('Who should manage your trust if you can’t?', 'Your successor trustee takes over if you resign, become incapacitated, or die. You are the initial Trustee.') + trusteeFields();
     },
     powers: function () {
       return stepHead('If you become incapacitated', 'You already have full control over your trust while you’re able to manage your own affairs. This is about someone else acting for you if you can’t.') +
@@ -2326,8 +2403,8 @@
       if (a.maritalStatus === 'PARTNER' && !clean(a.partner)) e.push('Enter your partner’s name.');
       if ((a.maritalStatus === 'MARRIED' || a.maritalStatus === 'PARTNER') && (a.children || []).some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
     } else if (id === 'trustee') {
-      var list = a.trusteeMode === 'COTRUSTEES' ? a.cotrustees : a.successors;
-      if (!(list || []).some(function (x) { return clean(x.name); })) e.push('Name at least one successor trustee.');
+      if (!clean(((a.successors || [])[0] || {}).name)) e.push('Enter the name of your successor trustee.');
+      anotherErrors(a, e, 'successor trustee', true, (a.successors || []).slice(1).some(function (x) { return clean(x.name); }), (a.cotrustees || []).filter(function (x) { return clean(x.name); }).length);
     } else if (id === 'powers') {
       if (!a.poaReservedPowers) e.push('Answer the power-of-attorney question.');
     } else if (id === 'gifts') {
@@ -2420,6 +2497,7 @@
     v.is_cotrustees = v.trustee_mode === 'COTRUSTEES';
     v.successors = (a.successors || []).map(function (s) { return { successor: clean(s.name) }; }).filter(function (s) { return s.successor; });
     v.cotrustees = (a.cotrustees || []).map(function (s) { return { cotrustee: clean(s.name) }; }).filter(function (s) { return s.cotrustee; });
+    trusteeVars(a, v);
     var jg = (a.wantsGifts === 'no' ? [] : jointGiftList(a)).map(function (g) {
       return { when: g.when || '', gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_contingent: g.contingent || 'DESCENDANTS', gift_contingent_name: clean(g.contingentName) };
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
@@ -2495,11 +2573,7 @@
       return h;
     },
     trustee: function () {
-      var h = stepHead('Who should manage your trust if neither of you can?', 'Each of you serves as an initial Trustee, and while both of you can, you act together. Your successor trustee takes over once neither of you is able to serve.') +
-        field('If you name more than one, should they serve one at a time, or together?', pills('trusteeMode', [['SUCCESSIVE', 'One at a time'], ['COTRUSTEES', 'Together, as Co-Trustees']], true));
-      if (answers.trusteeMode === 'COTRUSTEES') h += field('Co-Trustees', nameRows('cotrustees', 'Co-Trustee', 0) + addBtn('cotrustees', '+ Add another'));
-      else h += field('Successor Trustees, in order', nameRows('successors', 'Successor', 0) + addBtn('successors', '+ Add another'));
-      return h;
+      return stepHead('Who should manage your trust if neither of you can?', 'Each of you serves as an initial Trustee, and while both of you can, you act together. Your successor trustee takes over once neither of you is able to serve.') + trusteeFields();
     },
     firstdeath: function () {
       return stepHead('When the first of you dies, what happens to that person\u2019s share?', 'Either way, the survivor keeps full control of their own share, and everything is provided for the survivor first. The difference is what happens to the share of the one who died.') +
@@ -2612,8 +2686,8 @@
       if ((a.children || []).some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
       if (!a.maritalStatus) e.push('Choose whether you are married or registered domestic partners.');
     } else if (id === 'trustee') {
-      var list = a.trusteeMode === 'COTRUSTEES' ? a.cotrustees : a.successors;
-      if (!(list || []).some(function (x) { return clean(x.name); })) e.push('Name at least one successor trustee.');
+      if (!clean(((a.successors || [])[0] || {}).name)) e.push('Enter the name of your successor trustee.');
+      anotherErrors(a, e, 'successor trustee', true, (a.successors || []).slice(1).some(function (x) { return clean(x.name); }), (a.cotrustees || []).filter(function (x) { return clean(x.name); }).length);
     } else if (id === 'firstdeath') {
       if (!a.firstDeathPlan) e.push('Choose what happens to the first share.');
     } else if (id === 'gifts') {
