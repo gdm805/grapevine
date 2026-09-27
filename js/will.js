@@ -3508,7 +3508,7 @@
     var j = 1, labels = [vis[0].label];
     while (j < vis.length - 1 && stepAllCarried(vis[j].id)) { labels.push(vis[j].label); j++; }
     stepId = vis[j].id;
-    startSkip = { id: 'start', text: 'We filled in ' + labels.join(', ') + ' from your earlier answers.' };
+    startSkip = { id: 'start', landing: stepId, text: 'We filled in ' + labels.join(', ') + ' from your earlier answers.' };
   })();
   function save() {
     if ((KIND.key === 'trust' || KIND.key === 'trustjoint') && answers.county && !answers.signingCounty) answers.signingCounty = answers.county;
@@ -3558,7 +3558,7 @@
     var nav = stepId === 'review' ? '<div class="nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button></div>' :
       '<div class="nav-row">' + (idx > 0 ? '<button type="button" class="btn btn-secondary" data-back>Back</button>' : '<span></span>') +
       '<button type="button" class="btn btn-primary" data-next>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>';
-    stepEl.innerHTML = note + err + (SPOUSE2 && stepId === 'start' ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
+    stepEl.innerHTML = note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
     if (stepId === 'review') {
       if (inFlow) {
         window.GVFlow.markDone(docId);
