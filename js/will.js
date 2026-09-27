@@ -128,6 +128,8 @@
   function applyProfile(a, kind) {
     var map = profileMapFor(kind); if (!map) return;
     var p = readProfile();
+    if ('signingCounty' in a && !a.signingCounty) a.signingCounty = p.signingCounty || p.county || '';
+    if ('signingDate' in a && !a.signingDate && p.signingDate) a.signingDate = p.signingDate;
     /* Important Contacts is a household list: for a couple it starts as "First & Second" */
     if (kind.key === 'contacts' && p.name2 && p.name && !a.name) { a.name = p.name + ' & ' + p.name2; return; }
     Object.keys(map).forEach(function (profileField) {
@@ -136,6 +138,8 @@
   }
   function saveProfile(a, kind) {
     if (kind.key === 'contacts') return; /* a household list must never overwrite one person's own name */
+    /* where and when the documents are signed: usually one sitting, so each later document starts with the same */
+    writeProfile({ signingCounty: a.signingCounty || '', signingDate: a.signingDate || '' });
     var map = profileMapFor(kind); if (!map) return;
     var patch = {};
     Object.keys(map).forEach(function (profileField) {
@@ -1563,13 +1567,16 @@
     { id: 'signing', label: 'Signing' },
     { id: 'review', label: 'Review and sign' }
   ];
+  function countyKey(x) { return clean(x).toLowerCase().replace(/\s+(county|parish|borough|census area|municipality)$/, ''); }
   function countySelect(k, disabledHint) {
     var abbr = (window.HCD_STATE_ABBR || {})[answers.state];
     var list = (window.HCD_COUNTY_DATA || {})[abbr] || [];
     if (!list.length) return '<select class="input" data-k="' + k + '" autocomplete="off" disabled><option>' + esc(disabledHint || 'Choose your state first') + '</option></select>';
     var opts = '<option value="">Choose your county</option>' + list.map(function (c) {
       var label = c.replace(/ County$/, '');
-      return '<option value="' + esc(c) + '"' + (answers[k] === c ? ' selected' : '') + '>' + esc(label) + '</option>';
+      var hit = answers[k] === c || (answers[k] && countyKey(answers[k]) === countyKey(c));
+      if (hit && answers[k] !== c) answers[k] = c;   /* an older "King" becomes the list's "King County" */
+      return '<option value="' + esc(c) + '"' + (hit ? ' selected' : '') + '>' + esc(label) + '</option>';
     }).join('');
     return '<select class="input" data-k="' + k + '" autocomplete="off">' + opts + '</select>';
   }
@@ -1717,7 +1724,7 @@
         field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
       if (hcdSet(answers, 'exec_choice') === 'yes') {
         var routes = (hcdSet(answers, 'exec_routes') || '').split(',').filter(Boolean);
-        h += field('How do you plan to sign?', pills('execRoute', routes.map(function (r) { return [r, HCD_ROUTE_LABELS[r] || r]; })), 'Your state offers more than one way. You can decide for sure when you sit down to sign.');
+        h += field('How do you plan to sign?', pills('execRoute', routes.map(function (r) { return [r, HCD_ROUTE_LABELS[r] || r]; })), 'Your state offers more than one way.');
       }
       return h;
     },
