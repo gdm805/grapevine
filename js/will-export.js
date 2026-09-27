@@ -253,8 +253,8 @@
       function nlines(text, left, right, first) { return layout(toWords(runs(text)), 12, W - left - right - first, W - left - right).length; }
       function est(b) {
         switch (b.k) {
-          case 'sign': return 48;
-          case 'line': return 18;
+          case 'sign': return 58;
+          case 'line': return /_{6}/.test(b.t) ? 40 : 20;
           case 'row': return 22;
           case 'ul': return b.items.length * 24;
           case 'hang': return nlines(b.t, 36, 0, -24) * 16.1 + 8;
@@ -315,9 +315,13 @@
           }
           case 'hang': para(b.t, { left: 36, first: -24, justify: false }); break;
           case 'line': {
+            /* a line with a blank to write on (signature, date, notary) gets room above it to sign in;
+               the caption lines under it stay close; a gap follows the whole signature block */
             var nk2 = blocks[bi + 1] && blocks[bi + 1].k;
+            var writeOn = /_{6}/.test(b.t);
+            if (writeOn) { y += 20; space(40); }
             if (nk2 === 'sign') space(80);
-            para(b.t, { justify: false, after: 1 }); break;
+            para(b.t, { justify: false, after: nk2 === 'line' ? 4 : 12 }); break;
           }
           case 'item': para(b.t, { left: 36, right: 36 }); break;
           case 'row': {
@@ -336,7 +340,7 @@
             y += 16; space(Math.max(40 + signs * 54, groupNeed(bi))); font(true, 10.5); doc.text(unbold(b.t).toUpperCase(), M, base(10.5), { charSpace: 1 }); y += 18; break;
           }
           case 'sign':
-            y += 26; space(48);
+            y += 36; space(58);
             doc.setLineWidth(0.7); doc.line(M, y, M + 270, y);
             font(false, 9.5); doc.setTextColor(85, 85, 85); doc.text(unbold(b.t), M, y + 12); doc.setTextColor(0, 0, 0);
             y += 22; break;

@@ -501,7 +501,7 @@
         case 'break': return '<div class="pagebreak"></div>';
         case 'center': return '<p class="c">' + inline(b.t) + '</p>';
         case 'sub': return '<p class="subh">' + inline(b.t) + '</p>';
-        case 'line': return '<p class="ln">' + inline(b.t) + '</p>';
+        case 'line': return '<p class="ln' + (/_{6}/.test(b.t) ? ' ln-sign' : '') + '">' + inline(b.t) + '</p>';
         case 'item': return '<p class="item">' + inline(b.t) + '</p>';
         case 'row': return '<div class="row2"><span class="l">' + inline(b.l) + '</span>' + (b.r ? '<span class="dots"></span><span class="r">' + inline(b.r) + '</span>' : '') + '</div>';
         case 'sign': return '<div class="sig"><span class="sigline"></span><span class="siglabel">' + inline(b.t) + '</span></div>';

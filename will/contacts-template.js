@@ -10,7 +10,7 @@ window.CONTACTS_TEMPLATE = String.raw`
 
 @center **IMPORTANT CONTACTS**
 
-Prepared for {{name}}. Keep this with your other estate planning documents, and give a copy to your executor, agent, or successor trustee. Update it whenever a contact changes.
+Prepared for {{name}}.
 
 [[if has_contacts]]
 

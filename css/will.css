@@ -117,8 +117,8 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .doc .hang { padding-left: 2.4em; text-indent: -1.7em; text-align: left; }
 .doc .subh { font: 700 12.5px/1.3 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; margin: 28px 0 10px; color: #252429; break-after: avoid; }
 .doc ul { margin: 0 0 12px; padding-left: 24px; }
-.doc .sig { margin-top: 36px; max-width: 380px; break-inside: avoid; }
-.doc .sigline { display: block; border-bottom: 1px solid #252429; height: 26px; }
+.doc .sig { margin-top: 46px; max-width: 380px; break-inside: avoid; }
+.doc .sigline { display: block; border-bottom: 1px solid #252429; height: 34px; }
 .doc .siglabel { display: block; font: 400 12.5px/1.4 var(--sans); color: #6b6570; margin-top: 4px; }
 .doc .pagebreak { height: 2px; background: repeating-linear-gradient(90deg, rgba(37,36,41,.25) 0 6px, transparent 6px 12px); margin: 30px 0; }
 .fill { background: rgba(181, 217, 122, 0.38); border-radius: 3px; padding: 0 1px; }
@@ -258,3 +258,7 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .back-to-sum { margin: 0 0 14px; }
 .back-to-sum a { display: inline-block; font-weight: 700; color: var(--grape); text-decoration: none; background: var(--grape-tint); border: 1px solid var(--grape); border-radius: 999px; padding: 8px 16px; }
 .back-to-sum a:hover { text-decoration: underline; }
+
+/* signature, date and notary lines: room above each blank to write on (screen and print) */
+.doc p.ln-sign { margin-top: 26px; }
+.doc p.ln + p:not(.ln) { margin-top: 14px; }
