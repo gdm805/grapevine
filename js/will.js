@@ -951,6 +951,8 @@
       a.trusteeMode = 'COTRUSTEES';
       if (!a.cotrustees.length) a.cotrustees = [{ name: '' }];
       h += field('Other Co-Trustee(s)', nameRows('cotrustees', 'Co-Trustee', 1) + addBtn('cotrustees', '+ Add another'));
+      if (a.successors.length < 2) a.successors.push({ name: '' });
+      h += field('Backups <em>(optional)</em>', extraRows('successors', 1, 'Backup') + addBtn('successors', '+ Add another backup'), 'Backups step in only if none of the Co-Trustees can serve, in the order you list them.');
     }
     return h;
   }
@@ -958,6 +960,9 @@
     var first = clean(((a.successors || [])[0] || {}).name);
     if (a.wantsBackups === 'no') { v.trustee_mode = 'SUCCESSIVE'; v.is_cotrustees = false; v.successors = first ? [{ successor: first }] : []; }
     if (v.is_cotrustees && first && !v.cotrustees.some(function (x) { return x.cotrustee === first; })) v.cotrustees.unshift({ cotrustee: first });
+    /* Co-Trustees can have backups too: the names after the first successor trustee */
+    v.backup_trustees = v.is_cotrustees ? (a.successors || []).slice(1).map(function (x) { return { backup_trustee: clean(x.name) }; }).filter(function (x) { return x.backup_trustee; }) : [];
+    v.has_backup_trustees = v.backup_trustees.length > 0;
   }
   function extraRows(list, from, ph) {
     var rows = '';

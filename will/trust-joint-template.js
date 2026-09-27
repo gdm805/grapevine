@@ -188,7 +188,7 @@ The following Successor Trustees shall serve, one at a time, in the order listed
 
 [[else]]
 
-## The following Successor Co-Trustees shall serve together:
+The following Successor Co-Trustees shall serve together:
 
 [[each cotrustees]]
 
@@ -197,6 +197,17 @@ The following Successor Trustees shall serve, one at a time, in the order listed
 [[end]]
 
 If any Co-Trustee ceases to serve, the remaining Co-Trustee or Co-Trustees shall continue to serve while willing and able to serve.
+
+[[if has_backup_trustees]]
+If no Co-Trustee is able and willing to serve, the following Successor Trustees shall serve, one at a time, in the order listed:
+
+[[each backup_trustees]]
+
+{{backup_trustee}}
+
+[[end]]
+
+[[end]]
 
 The Co-Trustees shall administer the Trust in accordance with [[ref sec_cotrustees]] through [[ref sec_written_dissent]].
 
