@@ -689,7 +689,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'Your state\u2019s rules decide how a will must be signed.') +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this will of my own free will.</span></label>' +
@@ -697,7 +697,7 @@
     },
     about: function () {
       return stepHead('About you', 'Use your name as it appears on your ID.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married' ? field('Your spouse\u2019s or domestic partner\u2019s full legal name', text('spouse', '')) : '');
@@ -752,6 +752,9 @@
       if (v.has_children) opts.push(['children', 'Equally to my children', 'Each child receives the same share.']);
       opts.push(['named', 'To specific people or organizations', 'You choose who receives it and what share each gets.']);
       if (a.residuary && !opts.some(function (o) { return o[0] === a.residuary; })) a.residuary = '';
+      /* only one possible choice (no spouse, no children): don't make them click it -- go straight to naming people */
+      var onlyNamed = opts.length === 1;
+      if (onlyNamed) a.residuary = 'named';
       var table = '';
       if (a.residuary) {
         var total = a.beneficiaries.reduce(function (t, b) { return t + (parseFloat(b.share) || 0); }, 0);
@@ -772,6 +775,7 @@
         }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="beneficiaries">+ Add another</button>' +
           '<p class="hint" id="pct-total">Shares add up to ' + fmtShare(total) + '%. They need to add up to 100%.</p>';
       }
+      if (onlyNamed) return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Name each person or organization and the share each receives.') + table;
       return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Start with a choice below, then adjust it.') +
         cards('residuary', opts) + table;
     },
@@ -951,7 +955,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'Your state’s rules decide how a will must be signed.') +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this will of my own free will.</span></label>' +
@@ -960,7 +964,7 @@
     },
     about: function () {
       return stepHead('About you', 'Use your name as it appears on your ID.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married'
@@ -1195,8 +1199,8 @@
         }).join('');
       }
       return stepHead('First, where do you live?', 'A power of attorney is governed by state law. Each state has its own form, its own required notices and its own signing rules.') +
-        field('State where you live', '<select class="input" data-k="state" data-rerender>' + opts(answers.state, 'Choose your state') + '</select>') +
-        field('Which state’s power of attorney should we use?', '<select class="input" data-k="govState" data-rerender>' + opts(answers.govState, answers.state ? 'The state where I live (' + esc(answers.state) + ')' : 'The state where I live') + '</select>', 'This is normally the state where you live. You can choose a different state’s form, for example if you own property there or plan to move there.') +
+        field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts(answers.state, 'Choose your state') + '</select>') +
+        field('Which state’s power of attorney should we use?', '<select class="input" data-k="govState" autocomplete="off" data-rerender>' + opts(answers.govState, answers.state ? 'The state where I live (' + esc(answers.state) + ')' : 'The state where I live') + '</select>', 'This is normally the state where you live. You can choose a different state’s form, for example if you own property there or plan to move there.') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>' +
@@ -1204,7 +1208,7 @@
     },
     about: function () {
       return stepHead('About you', 'Use your name as it appears on your ID.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county'));
     },
     agent: function () {
@@ -1348,8 +1352,8 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       var h = stepHead('Let’s start with the basics', 'This document goes with your health-care directive. It doesn’t appoint anyone or change any powers on its own.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
-        field('State where you live', '<select class="input" data-k="state">' + opts + '</select>') +
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
+        field('State where you live', '<select class="input" data-k="state" autocomplete="off">' + opts + '</select>') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="capableOk"' + (answers.capableOk ? ' checked' : '') + '><span>I am 18 or older, and I am making this of my own free will.</span></label>' +
         '</div>' +
@@ -1511,12 +1515,12 @@
   function countySelect(k, disabledHint) {
     var abbr = (window.HCD_STATE_ABBR || {})[answers.state];
     var list = (window.HCD_COUNTY_DATA || {})[abbr] || [];
-    if (!list.length) return '<select class="input" data-k="' + k + '" disabled><option>' + esc(disabledHint || 'Choose your state first') + '</option></select>';
+    if (!list.length) return '<select class="input" data-k="' + k + '" autocomplete="off" disabled><option>' + esc(disabledHint || 'Choose your state first') + '</option></select>';
     var opts = '<option value="">Choose your county</option>' + list.map(function (c) {
       var label = c.replace(/ County$/, '');
       return '<option value="' + esc(c) + '"' + (answers[k] === c ? ' selected' : '') + '>' + esc(label) + '</option>';
     }).join('');
-    return '<select class="input" data-k="' + k + '">' + opts + '</select>';
+    return '<select class="input" data-k="' + k + '" autocomplete="off">' + opts + '</select>';
   }
   function buildVarsHCD(a, states, settings) {
     var v = {}, st = states.map[a.state] || null;
@@ -1556,7 +1560,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'A health care directive is governed by your state’s law, and the wording your state requires is different from every other state’s.') +
-        field('State where you live', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>' +
@@ -1564,7 +1568,7 @@
     },
     about: function () {
       return stepHead('About you', 'This information identifies you on the document.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('Date of birth', '<input class="input" type="date" data-k="dob" value="' + val(answers.dob) + '">') +
         field('Phone', text('phone', '', { auto: 'tel' })) +
         field('Home address', textarea('address', 'Street, city, state, ZIP'));
@@ -1808,7 +1812,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'A HIPAA authorization is governed by your state’s law as well as federal law, and a few states ask for more than HIPAA alone requires.') +
-        field('State where you live', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this authorization of my own free will.</span></label>' +
@@ -1816,7 +1820,7 @@
     },
     about: function () {
       var h = stepHead('About you', 'This information identifies you on the document.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' }));
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' }));
       if (hipaaIsB(answers)) {
         h += field('Date of birth', '<input class="input" type="date" data-k="dob" value="' + val(answers.dob) + '">') +
           field('Home address', textarea('address', 'Street, city, state, ZIP'));
@@ -2048,7 +2052,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Name your trust', text('trustName', 'For example, Maria Elena Alvarez Living Trust'), 'You can change this later. Many people use their own name.') +
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
         (answers.trustType === 'RESTATEMENT' ? field('Name of your original trust', text('origTrustName', '')) + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') : '') +
@@ -2059,7 +2063,7 @@
     },
     about: function () {
       return stepHead('About you', 'You’re the Trustmaker — the person creating the trust.') +
-        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county'), 'Your other documents use this too, so you won’t be asked again.');
     },
     family: function () {
@@ -2294,7 +2298,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'You can change this later.') +
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
         (answers.trustType === 'RESTATEMENT' ? field('Name of your original trust', text('origTrustName', '')) + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') : '') +
@@ -2305,7 +2309,7 @@
     },
     about: function () {
       return stepHead('About you both', 'You’re both Trustmakers — the people creating the trust together.') +
-        field('First Trustmaker’s full legal name', text('name1', 'For example, Maria Elena Alvarez', { auto: 'name' })) +
+        field('First Trustmaker’s full legal name', text('name1', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('Second Trustmaker’s full legal name', text('name2', 'For example, John Michael Alvarez')) +
         field('County where you live', countySelect('county'), 'Your other documents use this too, so you won’t be asked again.');
     },
@@ -2503,7 +2507,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, tell us about your trust', 'This is the state whose law governs your trust, and where you’ll sign this Certification in front of a notary.') +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust.') +
         field('Date your trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
         field('Has your trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
@@ -2679,7 +2683,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, tell us about your trust', 'This is the state whose law governs your trust, and where you’ll sign this Affidavit in front of a notary.') +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
         field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
         field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
@@ -2704,7 +2708,7 @@
     },
     affiant: function () {
       return stepHead('About you', 'You’re the Affiant — the Trustee swearing to the facts in this Affidavit.') +
-        field('Your full legal name', text('affiantName', '', { auto: 'name' })) +
+        field('Your full legal name', text('affiantName', '', { auto: 'off' })) +
         field('Are you a successor trustee (did you step in after the original Trustee)?', pills('affiantIsSuccessor', [['yes', 'Yes'], ['no', 'No']], true));
     },
     trustees: function () {
@@ -2836,7 +2840,7 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, tell us about your trust', 'No state requires anything special to sign this document, so this is just for the header and the execution line.') +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
         field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
         field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
@@ -2989,12 +2993,12 @@
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'This is the state whose law governs how these Final Wishes are signed.') +
-        field('State', '<select class="input" data-k="state" data-rerender>' + opts + '</select>') +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         (UNOFFERED_FINALWISHES_STATES[answers.state] ? '<p class="hint">We can’t offer Final Wishes in ' + esc(answers.state) + ' yet — that state’s own rules for this kind of document need a specific state-prescribed form or route that isn’t available here. Talk to a local attorney, or a funeral home familiar with ' + esc(answers.state) + ' law, about your options.</p>' : '');
     },
     you: function () {
       return stepHead('About you', '') +
-        field('Your full legal name', text('name', '', { auto: 'name' }));
+        field('Your full legal name', text('name', '', { auto: 'off' }));
     },
     disposition: function () {
       return stepHead('Disposition of remains', 'What happens to your body. This is optional — you can leave it to whoever is authorized to decide.') +
@@ -3124,7 +3128,7 @@
   var RENDER_CONTACTS = {
     contacts: function () {
       return stepHead('Your important contacts', 'Anyone who handles your affairs might need to reach them — professionals, people named in your documents, and close family.') +
-        field('Prepared for', text('name', '', { auto: 'name' })) +
+        field('Prepared for', text('name', '', { auto: 'off' })) +
         field('Contacts', '<div class="rowset">' + answers.contacts.map(function (c, i) {
           var ph = CONTACT_PLACEHOLDERS[i % CONTACT_PLACEHOLDERS.length];
           return '<div class="rowitem grid4"><input class="input" data-list="contacts" data-i="' + i + '" data-f="name" value="' + val(c.name) + '" placeholder="Name (' + ph + ')">' +
@@ -3599,7 +3603,8 @@
     }).join('<span class="pkg-sep">→</span>');
     var trackLabel = f.plan === 'doc' ? 'One document for each of you — ' + (idx + 1) + ' of ' + f.docs.length : pkgName(f) + ' package — document ' + (idx + 1) + ' of ' + f.docs.length;
     return '<div class="pkg-track"><span class="pkg-label">' + esc(trackLabel) + '</span>' +
-      '<div class="pkg-steps">' + steps + '</div></div>';
+      '<div class="pkg-steps">' + steps + '</div>' +
+      (f.plan !== 'doc' ? '<button type="button" class="link pkg-restart" data-reset-pkg>Start the whole package over</button>' : '') + '</div>';
   }
   function renderPkgContinue(nextKind) {
     var label = window.GVFlow.labelFor(nextKind), page = pageUrl(nextKind);
@@ -3669,7 +3674,7 @@
      from an earlier document -- are skipped on the way forward, with a note and a Change link on the next
      screen, so a name is never asked twice. A step with anything still unanswered (a spouse, a date of
      birth) is shown as usual. */
-  var skipNote = null;
+  var skipNote = null, resetPkgArmed = false;
   /* a screen is skipped when every answer on it was carried over from an earlier document and it's complete */
   function stepAllCarried(id) {
     var h = '';
@@ -3757,6 +3762,19 @@
       if (f) downloadPackagePdf(f);
     }
     else if (b.hasAttribute('data-pane')) { setPane(b.getAttribute('data-pane')); }
+    else if (b.hasAttribute('data-reset-pkg')) {
+      /* start the WHOLE package over: erase every document's answers and the details carried between them
+         (purchases and the beta-tester flag are kept), then go to the package's first document */
+      if (!resetPkgArmed) { resetPkgArmed = true; b.textContent = 'Click again to erase all answers in this package'; setTimeout(function () { resetPkgArmed = false; if (b.isConnected) b.textContent = 'Start the whole package over'; }, 5000); return; }
+      var fl0 = window.GVFlow && window.GVFlow.current(), planKey = fl0 ? fl0.plan : '';
+      try {
+        Object.keys(localStorage).forEach(function (k) {
+          if (k.indexOf('grapevine.') === 0 && k.indexOf('grapevine.paid.') !== 0 && k.indexOf('grapevine.beta') !== 0) localStorage.removeItem(k);
+        });
+      } catch (x) { /* ignore */ }
+      var fl1 = planKey && window.GVFlow ? window.GVFlow.start(planKey) : null;
+      location.href = fl1 && fl1.docs.length ? pageUrl(fl1.docs[0]) : window.GVUrl('pricing.html');
+    }
     else if (b.hasAttribute('data-reset')) {
       if (!resetArmed) { resetArmed = true; b.textContent = 'Click again to erase your answers'; setTimeout(function () { resetArmed = false; if (b.isConnected) b.textContent = 'Start over'; }, 4000); }
       else { answers = clone(KIND.empty); resetArmed = false; restored = false; try { localStorage.removeItem(LS_KEY); } catch (x) { /* ignore */ } go('start'); }

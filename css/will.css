@@ -226,3 +226,6 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 
 /* the one next-step button at the end of a document or package (pay, or download everything) */
 .pay-btn { width: 100%; justify-content: center; margin: 4px 0 14px; white-space: nowrap; }
+
+/* package track: start the whole package over */
+.pkg-restart { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--ink-mute, #6b6570); }
