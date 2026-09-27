@@ -52,7 +52,7 @@
     return '<div class="pkg-sum-row' + (isDone ? '' : ' pkg-sum-open') + '">' +
       '<span class="pkg-check">' + (isDone ? '✓' : '•') + '</span>' +
       '<span class="pkg-doc-name">' + esc(F.labelFor(k)) + '<small>' + (isDone ? 'Answered' : 'Not finished yet') + '</small></span>' +
-      '<a class="btn btn-secondary btn-sm" href="' + esc(docHref(k, isDone ? 'review=1' : '')) + '">' + (isDone ? (paid ? 'Open &amp; download' : 'Review or change') : 'Finish it') + '</a>' +
+      '<a class="btn btn-secondary btn-sm" href="' + esc(docHref(k, isDone ? 'review=1' : '')) + '">' + (isDone ? (paid ? 'View, download or print' : 'Review or change') : 'Finish it') + '</a>' +
       '</div>';
   }).join('');
 
@@ -62,7 +62,7 @@
   var action;
   if (paid) {
     action = '<div class="pkg-sum-pay"><h2>Download your documents</h2>' +
-      '<p>Everything is unlocked. Download all ' + f.docs.length + ' documents in one PDF, or open any one to download it on its own. Save your files now: your purchase is remembered only in this browser.</p>' +
+      '<p>Everything is unlocked. Download all ' + f.docs.length + ' documents in one PDF below. To get just one document, choose \u201cView, download or print\u201d next to it: it opens with its own Download PDF and Print buttons. Save your files now: your purchase is remembered only in this browser.</p>' +
       '<button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + f.docs.length + ' documents (PDF)</button>' +
       '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
   } else {

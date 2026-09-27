@@ -3585,9 +3585,14 @@
       /* and at the very top of the page, above the package heading, so it's seen without scrolling */
       var heroEl = document.querySelector('.will-hero .container') || document.querySelector('.will-hero');
       if (seenSum && heroEl && !heroEl.querySelector('.back-to-sum')) {
-        var top = document.createElement('p'); top.className = 'back-to-sum';
-        top.innerHTML = '<a href="' + esc(window.GVUrl('package.html')) + '">&larr; Back to your package summary</a>';
+        var top = document.createElement('div'); top.className = 'back-to-sum';
+        top.innerHTML = '<a href="' + esc(window.GVUrl('package.html')) + '">&larr; Back to your package summary</a>' +
+          (paidUp() ? '<button type="button" class="btn btn-primary btn-sm" data-top-pdf>Download this document (PDF)</button><button type="button" class="btn btn-secondary btn-sm" data-top-print>Print this document</button><span class="pkg-status" id="pkg-status" role="status"></span>' : '');
         heroEl.insertBefore(top, heroEl.firstChild);
+        /* these sit above the app, so they get their own clicks */
+        var tp = top.querySelector('[data-top-pdf]'), tr = top.querySelector('[data-top-print]');
+        if (tp) tp.addEventListener('click', function () { runExport('pdf'); });
+        if (tr) tr.addEventListener('click', function () { printViaPdf(); });
       }
     }
     stepEl.innerHTML = backToSum + note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
@@ -3814,7 +3819,7 @@
     var rows = f.docs.map(function (k) {
       var label = window.GVFlow.labelFor(k);
       if (k === thisKind) return '<div class="pkg-done-row pkg-current-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><span class="pkg-here">You’re here</span></div>';
-      return '<div class="pkg-done-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><a class="link" href="' + esc(pageUrl(k)) + '">' + (paid ? 'Open &amp; download' : 'Open') + '</a></div>';
+      return '<div class="pkg-done-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><a class="link" href="' + esc(pageUrl(k)) + '">' + (paid ? 'View, download or print' : 'Open') + '</a></div>';
     }).join('');
     var n = f.docs.length, o = payOffer(f);
     if (paid) {
