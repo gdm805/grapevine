@@ -3,14 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Build your important contacts list | Grapevine</title>
-<meta name="description" content="A simple printable list of the people your executor, agent, or family might need to reach — name, relationship, phone, and email.">
+<title>Your package | Grapevine</title>
+<meta name="description" content="Review every document in your Grapevine package, change any answers, then pay and download.">
+<meta name="robots" content="noindex">
 <meta name="theme-color" content="#fefdf2">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Build your important contacts list | Grapevine">
-<meta property="og:description" content="Answer a few plain questions and get a printable Important Contacts list.">
-<meta property="og:image" content="https://www.grapevinedocs.com/images/og-image.png?v=20260928i">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/favicon.ico?v=20260928i" sizes="48x48">
 <link rel="icon" href="images/favicon.svg?v=20260928i" type="image/svg+xml">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png?v=20260928i">
@@ -25,6 +21,7 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-arrow" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 16 16"><path d="M3 8.500l3.200 3L13 4.500"/></symbol>
 </svg>
 
 <header class="site-header">
@@ -38,41 +35,16 @@
       <a href="learn.html">Learn</a>
       <a href="questions.html">Questions</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="index.html#finder">Get started</a>
     <button class="menu-btn" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <main id="main">
-
-<section class="will-hero">
+<section class="pkg-summary-wrap">
   <div class="container">
-    <p class="overline">Important contacts</p>
-    <h1>Let&rsquo;s build your important contacts list</h1>
-    <p class="lead">A simple, printable list of the people someone might need to call while handling your affairs &mdash; name, relationship, phone, and email. Nothing here needs to be signed or notarized; it's just a reference to keep with the rest of your documents. Your answers stay in this browser.</p>
-    <p class="kind-switch">Don&rsquo;t have a will yet? <a href="will.html">Start your will</a>. Setting up a trust? <a href="trust.html">Write your living trust</a>.</p>
+    <div id="pkg-summary" aria-live="polite"></div>
   </div>
 </section>
-
-<section class="will-work">
-  <div class="container">
-    <div class="pane-tabs" role="group" aria-label="Choose a view">
-      <button type="button" aria-pressed="true" data-pane="q">Questions</button>
-      <button type="button" aria-pressed="false" data-pane="p">Your document</button>
-    </div>
-    <div class="will-layout" id="will-layout" data-pane="q">
-      <div class="wizard" id="will-app" data-kind="contacts">
-        <div class="progress" id="will-progress"></div>
-        <div id="will-step"></div>
-      </div>
-      <aside class="preview" aria-label="Your important contacts">
-        <div class="preview-head"><h2>Your list, taking shape</h2></div>
-        <article class="paper doc" id="will-doc" aria-live="polite"></article>
-      </aside>
-    </div>
-  </div>
-</section>
-
 </main>
 
 <footer class="site-footer">
@@ -93,14 +65,11 @@
   <div class="container foot-base"><span class="foot-contact">Questions? Email <a href="mailto:support@grapevinedocs.com">support@grapevinedocs.com</a></span><span>© 2026 Grapevine Docs, LLC. All rights reserved.</span></div>
 </footer>
 
-<script src="will/contacts-template.js?v=20260928i"></script>
-<script src="will/contacts-signing.js?v=20260928i"></script>
-<script src="will/states.js?v=20260928i"></script>
 <script src="js/will-export.js?v=20260928i"></script>
 <script src="js/plans.js?v=20260928i"></script>
 <script src="js/entitlements.js?v=20260928i"></script>
 <script src="js/flow.js?v=20260928i"></script>
-<script src="js/will.js?v=20260928i"></script>
+<script src="js/package.js?v=20260928i"></script>
 <script src="js/nav.js?v=20260928i"></script>
 </body>
 </html>

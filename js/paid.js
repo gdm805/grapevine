@@ -15,7 +15,7 @@
   if (!root) return;
 
   var GV = window.GV_PLANS || { plans: {} };
-  var KNOWN_PAGES = ['will.html', 'pour-over.html', 'dpoa.html', 'dementia.html', 'hcd.html', 'hipaa.html', 'trust.html', 'trust-joint.html', 'cert.html', 'affidavit.html', 'assignment.html', 'finalwishes.html', 'contacts.html', 'schedulea.html'];
+  var KNOWN_PAGES = ['package.html', 'will.html', 'pour-over.html', 'dpoa.html', 'dementia.html', 'hcd.html', 'hipaa.html', 'trust.html', 'trust-joint.html', 'cert.html', 'affidavit.html', 'assignment.html', 'finalwishes.html', 'contacts.html', 'schedulea.html'];
   var plan = qs('plan');
   var session = qs('session_id') || '';
   var ret = qs('return');
@@ -97,7 +97,9 @@
     window.GVPay.markPaid(plan, { session: session, doc: docKey, verified: verified });
 
     var p = GV.plans[plan];
-    var goTo = ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : p.goesTo);
+    /* inside a package, "Download your documents" goes to the package summary, which has the Download all button */
+    var fl = window.GVFlow && window.GVFlow.current();
+    var goTo = (fl && fl.plan === plan && plan !== 'doc') ? 'package.html' : (ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : p.goesTo));
     var unlockedNames = { will: 'your will', pourover: 'your pour-over will', dpoa: 'your power of attorney', dementia: 'your care preferences', hcd: 'your health care directive', hipaa: 'your HIPAA authorization', trust: 'your living trust', trustjoint: 'your joint living trust', cert: 'your certification of trust', affidavit: 'your affidavit of trustee', assignment: 'your assignment of personal property', finalwishes: 'your final wishes', contacts: 'your important contacts', schedulea: 'your Schedule A' };
     var unlocked = (plan === 'doc' ? [docKey] : (p.unlocks || [])).map(function (k) { return unlockedNames[k] || k; });
 

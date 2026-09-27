@@ -3508,6 +3508,7 @@
     var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
     if (saved && saved.answers) { answers = Object.assign(clone(KIND.empty), saved.answers); stepId = saved.step || 'start'; restored = stepId !== 'start' || !!answers.state; }
   } catch (e) { /* storage unavailable: carry on without saving */ }
+  if (/[?&]review=1\b/.test(location.search) && saved && saved.answers) stepId = 'review';
   var beforeCarry = JSON.parse(JSON.stringify(answers));
   applyProfile(answers, KIND);
   applyTrustFacts(answers, KIND);
@@ -3522,8 +3523,6 @@
      doesn't ask where you live eleven times. A pour-over will inside Complete comes after the trust, so its
      "I have created my trust" box is ticked for them. */
   var startSkip = null;
-  /* switched between the single and joint trust inside a Complete package: keep the package going */
-  if (window.GVFlow && window.GVFlow.useTrust) window.GVFlow.useTrust(KIND.key);
   (function () {
     var fl = window.GVFlow && window.GVFlow.current();
     if (!fl || restored) return;
@@ -3590,9 +3589,15 @@
       if (inFlow) {
         window.GVFlow.markDone(docId);
         if (isLastInFlow) {
-          var actionsEl = stepEl.querySelector('.actions');
-          if (actionsEl) insertHtmlBefore(renderPkgComplete(flow, kindKey), actionsEl);
-          addPaywallBanner();
+          /* the last document: next stop is the package summary, where everything can be reviewed before
+             paying and downloading */
+          var actionsL = stepEl.querySelector('.actions');
+          if (actionsL) {
+            var sumHtml = renderPkgSummaryLink(flow);
+            if (!paidUp()) actionsL.outerHTML = sumHtml; else actionsL.insertAdjacentHTML('afterend', sumHtml);
+            var contL = stepEl.querySelector('.pkg-continue'), instrL = stepEl.querySelector('.instr');
+            if (contL && instrL) instrL.parentNode.insertBefore(contL, instrL.nextSibling);
+          }
         } else if (nextKind) {
           /* Not the last document: ALWAYS point to the next one. Not paid yet -> the download buttons are
              replaced by the Continue button (downloading unlocks for the whole package at the end). Already
@@ -3745,7 +3750,7 @@
     if (finished) {
       if (over) over.textContent = 'All ' + f.docs.length + ' documents answered';
       if (h1) h1.textContent = f.plan === 'doc' ? 'Your documents are ready' : 'Your ' + pkgName(f) + ' package is ready';
-      if (lead) lead.textContent = paidUp() ? 'Everything is unlocked. Download all your documents below, then follow each one\u2019s signing steps.' : 'Every document is answered. Pay once, then download and print them all.';
+      if (lead) lead.textContent = 'Every document is answered. Review them all on the next page, change anything you like, then ' + (paidUp() ? 'download them.' : 'pay once and download them all.');
       if (sw) sw.hidden = true;
       return;
     }
@@ -3762,11 +3767,17 @@
       var cls = i < idx ? 'pkg-done' : (i === idx ? 'pkg-current' : 'pkg-upcoming');
       var label = (i < idx ? '✓ ' : '') + esc(window.GVFlow.labelFor(k));
       return '<a class="pkg-step ' + cls + '" href="' + esc(pageUrl(k)) + '">' + label + '</a>';
-    }).join('<span class="pkg-sep">→</span>');
+    }).join('<span class="pkg-sep">→</span>') + (f.plan !== 'doc' ? '<span class="pkg-sep">→</span><a class="pkg-step pkg-summary-step" href="' + esc(window.GVUrl('package.html')) + '">Review &amp; download</a>' : '');
     var trackLabel = f.plan === 'doc' ? 'One document for each of you — ' + (idx + 1) + ' of ' + f.docs.length : pkgName(f) + ' package — document ' + (idx + 1) + ' of ' + f.docs.length;
     return '<div class="pkg-track"><span class="pkg-label">' + esc(trackLabel) + '</span>' +
       '<div class="pkg-steps">' + steps + '</div>' +
       (f.plan !== 'doc' ? '<button type="button" class="link pkg-restart" data-reset-pkg>Start the whole package over</button>' : '') + '</div>';
+  }
+  function renderPkgSummaryLink(f) {
+    return '<div class="actions pkg-continue">' +
+      '<p class="pkg-continue-note">This is the last document in your package. Next, review all ' + f.docs.length + ' documents in one place, change anything you like, then ' + (paidUp() ? 'download them.' : 'pay and download.') + '</p>' +
+      '<a class="btn btn-primary btn-lg" href="' + esc(window.GVUrl('package.html')) + '">Review your whole package <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
+      '</div>';
   }
   function renderPkgContinue(nextKind) {
     var label = window.GVFlow.labelFor(nextKind), page = pageUrl(nextKind);
@@ -3802,7 +3813,7 @@
       var allPdfBtn = n > 1 ? '<button type="button" class="btn btn-primary pay-btn" data-pkg-pdf>Download all ' + n + ' documents (PDF)</button>' : '';
       return '<div class="pkg-complete" id="pkg-complete"><h3>' + (f.plan === 'doc' ? 'Your documents are unlocked' : 'Your ' + esc(pkgName(f)) + ' package is unlocked') + '</h3>' +
         '<p>Download everything in one PDF, or open any document to download it for Word or print it on its own. Save your files now: your purchase is remembered only in this browser.</p>' +
-        allPdfBtn + '<div class="pkg-done-list">' + rows + '</div></div>';
+        allPdfBtn + (n > 1 ? '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div>' : '') + '<div class="pkg-done-list">' + rows + '</div></div>';
     }
     return '<div class="pkg-complete" id="pkg-complete"><h3>All ' + n + ' documents are ready</h3>' +
       '<p>' + (o.beta ? 'As a beta tester, you get them free: answer the short survey at checkout, then download and print them all.' : 'Pay ' + (o.priceText || '') + ' once to download and print them all.') + ' Previewing and changing your answers stay free.</p>' +
@@ -3962,6 +3973,18 @@
   function status(msg, bad) {
     var el = document.getElementById('export-status');
     if (el) { el.textContent = msg; el.className = 'hint export-status' + (bad ? ' bad' : ''); }
+    /* the package box has its own line right under its button, so the message is where the person is looking */
+    var pk = document.getElementById('pkg-status');
+    if (pk) { pk.textContent = msg; pk.className = 'pkg-status' + (bad ? ' bad' : ''); }
+  }
+  /* after a long build some browsers (Safari) quietly ignore an automatic download, so the package box also
+     offers a plain "Save" link the person clicks themselves -- that always downloads */
+  function offerSave(blob, filename) {
+    var box = document.getElementById('pkg-save'); if (!box) return;
+    var url = URL.createObjectURL(blob);
+    box.innerHTML = '<a class="btn btn-secondary" href="' + url + '" download="' + esc(filename) + '">Save the PDF again</a>' +
+      '<span>If nothing downloaded, click this. The file is named <strong>' + esc(filename) + '</strong> and goes to your Downloads folder.</span>';
+    box.hidden = false;
   }
   function anchorSave(blob, filename) {
     var url = URL.createObjectURL(blob), a = document.createElement('a');
@@ -4058,9 +4081,9 @@
         var who = clean(readProfile().name || footerName());
         var file = who.replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
         var opts = { footer: (allBlocks[0] && allBlocks[0].footer) || (pkgName(f) + ' Package of ' + (who || 'Your Documents')), draftLabel: draft ? draftLabel : '', title: pkgName(f) + ' Package', base: 'Grapevine-' + pkgName(f) + '-Package' + (file ? '-' + file : '') };
-        return window.GVExport.pdf(combined, opts).then(function (blob) { return deliver(blob, opts.base + '.pdf'); });
+        return window.GVExport.pdf(combined, opts).then(function (blob) { offerSave(blob, opts.base + '.pdf'); return deliver(blob, opts.base + '.pdf'); });
       })
-      .then(function () { status('Done. Your package PDF has every document, with page numbers running all the way through.'); })
+      .then(function () { status('Done. Your package PDF is downloading to your Downloads folder. It has every document, with page numbers running all the way through.'); })
       .catch(function () { status('We could not build the combined PDF. Try downloading each document instead.', true); });
   }
 
@@ -4074,7 +4097,9 @@
 
   draw(null);
   /* arriving from the "payment received" page (?download=all): bring the download box into view */
-  if (/[?&]download=all\b/.test(location.search)) {
+  if (/[?&]download=all\b/.test(location.search) && window.GVFlow && window.GVFlow.current() && !/[?&]export=1\b/.test(location.search)) {
+    location.replace(window.GVUrl('package.html') + '?download=all');
+  } else if (/[?&]download=all\b/.test(location.search)) {
     setTimeout(function () {
       var box = document.getElementById('pkg-complete');
       if (box) { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); var b = box.querySelector('[data-pkg-pdf]'); if (b) b.focus(); }

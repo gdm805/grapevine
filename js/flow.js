@@ -73,7 +73,7 @@ window.GVFlow = (function () {
   /* Someone in a Complete package who switches between the single and joint trust (the "Write the joint
      version instead" link) is still in their package: the flow is rebuilt for that household -- a joint
      trust means a couple (personal documents twice, couple pricing), a single trust means one person --
-     keeping every document already finished. Called by js/will.js on the trust pages. */
+     keeping every document already finished. Called when one of those switch links is clicked (below). */
   function useTrust(kind) {
     var f = read();
     if (!f || (kind !== 'trust' && kind !== 'trustjoint')) return f;
@@ -105,6 +105,9 @@ window.GVFlow = (function () {
   /* Start (or clear) a flow the moment someone clicks a plan's "Start" button, before the browser
      follows the link. */
   document.addEventListener('click', function (e) {
+    /* "Write the joint version instead" / "the single-trustmaker trust instead": keep the package, for that household */
+    var sw = e.target.closest('[data-trust-switch]');
+    if (sw) { useTrust(sw.getAttribute('data-trust-switch')); return; }
     var a = e.target.closest('[data-plan]');
     if (!a) return;
     var plan = a.getAttribute('data-plan');
