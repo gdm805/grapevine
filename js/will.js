@@ -437,8 +437,8 @@
   function toBlocks(text) {
     text = text.replace(/\n{3,}/g, '\n\n').trim();
     var lines = text.split('\n');
-    /* "@dropempty" (used by the power of attorney): a heading with nothing under it is left out */
-    if (lines.some(function (l) { return l.trim() === '@dropempty'; })) lines = dropEmptyHeadings(lines.filter(function (l) { return l.trim() !== '@dropempty'; }));
+        /* a section or article heading with nothing under it (an unanswered optional question) is left out of every document */
+    lines = dropEmptyHeadings(lines.filter(function (l) { return l.trim() !== '@dropempty'; }));
 
     /* pass 1: work out every number, so [[ref x]] can say "Article Six" or "Section 6.05" */
     var refs = {}, a = 0, s = 0;
@@ -852,7 +852,6 @@
         row('Everything else', bens, 'residuary') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -1086,7 +1085,6 @@
         (v.minor_children_yes ? row('Manages a minor’s property', v.prop_fid_yes ? esc(v.prop_fid) : 'Not chosen', 'propfid') : '') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -1314,7 +1312,6 @@
         row('Starts', starts, dpSet(answers, 'effective_choice') === 'no' ? 'start' : 'effective') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -1499,7 +1496,6 @@
         row('Hospital transfer', answers.hospitalization === 'beneficial' ? 'Hospitalize when it helps' : (answers.hospitalization === 'limit' ? 'Treat me where I am when possible' : ''), 'choices') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -1754,7 +1750,6 @@
         row('Life-sustaining treatment', { DO_NOT_PROLONG: 'Let me go naturally', PROLONG: 'Prolong my life', AGENT_DECIDES: 'Let my agent decide' }[answers.lifeSupport] || '', 'treatment') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -1990,7 +1985,6 @@
         row('Recipients', hipaaIsB(answers) ? esc(v.agent_name) : v.recipients.map(function (r) { return esc(r.recip_name); }).join(', '), 'recipients') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -2253,7 +2247,6 @@
         row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -2536,7 +2529,6 @@
         row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -2726,7 +2718,6 @@
         row('Current trustee(s)', v.trustees.map(function (t) { return esc(t.trustee_name); }).join(', '), 'trustees') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -2900,7 +2891,6 @@
         row('Current trustee(s)', v.trustees.map(function (t) { return esc(t.trustee_name); }).join(', '), 'trustees') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -3041,7 +3031,6 @@
         row('Trustmaker(s)', [v.tm1_name, v.tm2_name].filter(Boolean).map(esc).join(' and '), 'trustmakers') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -3205,7 +3194,6 @@
         row('Disposition preference', esc(v.disposition || ''), 'disposition') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -3297,7 +3285,6 @@
         '<div class="sum-row"><div><span class="sum-l">Contacts listed</span><span class="sum-v">' + v.contacts.length + '</span></div><button type="button" class="link" data-goto="contacts">Change</button></div></div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -3430,7 +3417,6 @@
         row('Property listed', esc(counts.join(', ')), 'assets') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-word>Download for Word</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
@@ -3812,7 +3798,7 @@
     if (paid) {
       var allPdfBtn = n > 1 ? '<button type="button" class="btn btn-primary pay-btn" data-pkg-pdf>Download all ' + n + ' documents (PDF)</button>' : '';
       return '<div class="pkg-complete" id="pkg-complete"><h3>' + (f.plan === 'doc' ? 'Your documents are unlocked' : 'Your ' + esc(pkgName(f)) + ' package is unlocked') + '</h3>' +
-        '<p>Download everything in one PDF, or open any document to download it for Word or print it on its own. Save your files now: your purchase is remembered only in this browser.</p>' +
+        '<p>Download everything in one PDF, or open any document to download or print it on its own. Save your files now: your purchase is remembered only in this browser.</p>' +
         allPdfBtn + (n > 1 ? '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div>' : '') + '<div class="pkg-done-list">' + rows + '</div></div>';
     }
     return '<div class="pkg-complete" id="pkg-complete"><h3>All ' + n + ' documents are ready</h3>' +
