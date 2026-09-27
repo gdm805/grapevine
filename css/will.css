@@ -253,3 +253,8 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .pkg-sum-pay h2 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
 .pkg-summary-step { font-weight: 700; }
 @media (max-width: 560px) { .pkg-sum-row { grid-template-columns: 20px minmax(0, 1fr); } .pkg-sum-row .btn { grid-column: 2; justify-self: start; } }
+
+/* "Back to your package summary" at the top of a document opened from the summary */
+.back-to-sum { margin: 0 0 14px; }
+.back-to-sum a { display: inline-block; font-weight: 700; color: var(--grape); text-decoration: none; background: var(--grape-tint); border: 1px solid var(--grape); border-radius: 999px; padding: 8px 16px; }
+.back-to-sum a:hover { text-decoration: underline; }

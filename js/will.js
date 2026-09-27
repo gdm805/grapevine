@@ -3570,7 +3570,20 @@
     var nav = stepId === 'review' ? '<div class="nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button></div>' :
       '<div class="nav-row">' + (idx > 0 ? '<button type="button" class="btn btn-secondary" data-back>Back</button>' : '<span></span>') +
       '<button type="button" class="btn btn-primary" data-next>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>';
-    stepEl.innerHTML = note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
+    var backToSum = '';
+    if (inFlow && flow.plan !== 'doc') {
+      var seenSum = false;
+      try { seenSum = /[?&]review=1\b/.test(location.search) || sessionStorage.getItem('gv.fromSummary') === '1'; } catch (e) { seenSum = /[?&]review=1\b/.test(location.search); }
+      if (seenSum) backToSum = '<p class="back-to-sum"><a href="' + esc(window.GVUrl('package.html')) + '">&larr; Back to your package summary</a></p>';
+      /* and at the very top of the page, above the package heading, so it's seen without scrolling */
+      var heroEl = document.querySelector('.will-hero .container') || document.querySelector('.will-hero');
+      if (seenSum && heroEl && !heroEl.querySelector('.back-to-sum')) {
+        var top = document.createElement('p'); top.className = 'back-to-sum';
+        top.innerHTML = '<a href="' + esc(window.GVUrl('package.html')) + '">&larr; Back to your package summary</a>';
+        heroEl.insertBefore(top, heroEl.firstChild);
+      }
+    }
+    stepEl.innerHTML = backToSum + note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
     if (stepId === 'review') {
       if (inFlow) {
         window.GVFlow.markDone(docId);
@@ -3750,8 +3763,10 @@
   }
   function renderPkgTrack(f, idx) {
     var steps = f.docs.map(function (k, i) {
-      var cls = i < idx ? 'pkg-done' : (i === idx ? 'pkg-current' : 'pkg-upcoming');
-      var label = (i < idx ? '✓ ' : '') + esc(window.GVFlow.labelFor(k));
+      /* green with a check = answered (even ones after this document, when coming back from the summary) */
+      var isDone = (f.done || []).indexOf(k) > -1 || i < idx;
+      var cls = i === idx ? 'pkg-current' : (isDone ? 'pkg-done' : 'pkg-upcoming');
+      var label = (i !== idx && isDone ? '✓ ' : '') + esc(window.GVFlow.labelFor(k));
       return '<a class="pkg-step ' + cls + '" href="' + esc(pageUrl(k)) + '">' + label + '</a>';
     }).join('<span class="pkg-sep">→</span>') + (f.plan !== 'doc' ? '<span class="pkg-sep">→</span><a class="pkg-step pkg-summary-step" href="' + esc(window.GVUrl('package.html')) + '">Review &amp; download</a>' : '');
     var trackLabel = f.plan === 'doc' ? 'One document for each of you — ' + (idx + 1) + ' of ' + f.docs.length : pkgName(f) + ' package — document ' + (idx + 1) + ' of ' + f.docs.length;

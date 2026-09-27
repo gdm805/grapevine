@@ -24,6 +24,8 @@
     return url(p) + (all ? '?' + all : '');
   }
 
+  /* documents opened from here show a "Back to your package summary" link (js/will.js) */
+  try { sessionStorage.setItem('gv.fromSummary', '1'); } catch (e) { /* ignore */ }
   var f = F && F.current();
   if (!f || !f.docs || !f.docs.length) {
     root.innerHTML = '<div class="pkg-summary"><h1>No package in progress</h1>' +
