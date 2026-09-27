@@ -291,7 +291,7 @@
     } else if (k === 'trustjoint') {
       writeShared({ marital: 'married', spouse: clean(a.name2), children: kidNames(a.children).length ? kidsShared(a.children, function (r) { return r || ''; }) : undefined });
     } else if (k === 'hcd') {
-      var succ = (a.successors || []).map(function (x) { return clean(x.name); }).filter(Boolean);
+      var succ = (a.wantsBackups === 'no' ? [] : (a.successors || [])).map(function (x) { return clean(x.name); }).filter(Boolean);
       writeShared({ hcAgent: clean(a.agent), hcAgentContact: [clean(a.agentPhone), clean(a.agentEmail)].filter(Boolean).join(' | '), hcAlt1: succ[0] || '', hcAlt2: succ[1] || '' });
     }
   }
@@ -1146,12 +1146,12 @@
     v.has_co_agents = list.length > 0;
     v.co_separate = mode === 'separate';
   }
-  function coAgentFields(withContact) {
+  function coAgentFields(withContact, backupsNext) {
     var h = field('Will more than one person serve as your agent at the same time?', pills('agentMode', [
       ['single', 'No — one agent, with backups if needed'],
       ['separate', 'Yes — any one of them may act alone'],
       ['together', 'Yes — they must act together']
-    ], true), 'Backups, listed below, only step in if the person before them can’t serve, in the order you list them.');
+    ], true), backupsNext ? 'You\u2019ll name backups on the next screen. Backups only step in if the person before them can\u2019t serve, in the order you list them.' : 'Backups, listed below, only step in if the person before them can\u2019t serve, in the order you list them.');
     if (answers.agentMode === 'separate' || answers.agentMode === 'together') {
       h += field('Your other agent(s)', '<div class="rowset">' + answers.coAgents.map(function (b, i) {
         return '<div class="ben"><input class="input" data-list="coAgents" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Agent ' + (i + 2) + ' full name" aria-label="Agent ' + (i + 2) + ' full name">' +
@@ -1182,7 +1182,8 @@
   };
   var ROWS_DP = { successors: { name: '' }, coAgents: { name: '' } };
   var DP_CACHE = {}, DP_FAIL = {}, DP_PENDING = {};
-  function dpGov(a) { return a.govState || a.state || ''; }
+  /* the power of attorney always uses the law of the state where the person lives */
+  function dpGov(a) { return a.state || ''; }
   function dpSlug(n) { return String(n).toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, ''); }
   function dpLoad(name, done) {
     if (!name || DP_CACHE[name] || DP_FAIL[name]) { if (done) done(); return; }
@@ -1251,7 +1252,6 @@
       }
       return stepHead('First, where do you live?', 'A power of attorney is governed by state law. Each state has its own form, its own required notices and its own signing rules.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts(answers.state, 'Choose your state') + '</select>') +
-        field('Which state’s power of attorney should we use?', '<select class="input" data-k="govState" autocomplete="off" data-rerender>' + opts(answers.govState, answers.state ? 'The state where I live (' + esc(answers.state) + ')' : 'The state where I live') + '</select>', 'This is normally the state where you live. You can choose a different state’s form, for example if you own property there or plan to move there.') +
         '<div class="checks">' +
         '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>' +
@@ -1312,7 +1312,7 @@
     }
   };
   function validateDP(id) {
-    var a = answers, e = [], st = states.map[a.state], gs = a.govState ? states.map[a.govState] : null;
+    var a = answers, e = [], st = states.map[a.state], gs = null;
     if (id === 'start') {
       if (!st) e.push('Choose the state where you live.');
       else if (!st.supported) e.push(st.note || 'We can’t offer this document in that state yet.');
@@ -1581,7 +1581,7 @@
     v.county = clean(a.signingCounty).replace(/\s+county$/i, '');
     v.agent = clean(a.agent);
     v.agent_contact = [clean(a.agentPhone), clean(a.agentEmail)].filter(Boolean).join(' | ');
-    v.successors = (a.successors || []).map(function (x) {
+    v.successors = (a.wantsBackups === 'no' ? [] : (a.successors || [])).map(function (x) {
       return { successor: clean(x.name), successor_contact: [clean(x.phone), clean(x.email)].filter(Boolean).join(' | ') };
     }).filter(function (x) { return x.successor; });
     v.has_successors = v.successors.length > 0;
@@ -1635,10 +1635,15 @@
         field('Your agent’s full name', text('agent', '')) +
         field('Agent’s phone', text('agentPhone', '', { auto: 'tel' })) +
         field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' })) +
-        coAgentFields(true);
+        coAgentFields(true, true);
     },
     successor: function () {
-      return stepHead('Backup agents', 'If your first choice can’t serve, the first backup takes over, then the next. This is optional.') +
+      if (!answers.wantsBackups && (answers.successors || []).some(function (b) { return clean(b.name); })) answers.wantsBackups = 'yes';
+      var top = stepHead('Backup agents', 'If your first choice can’t serve, the first backup takes over, then the next.') +
+        field('Do you want to name a backup agent?', pills('wantsBackups', [['yes', 'Yes, name a backup'], ['no', 'No backup']], true));
+      if (answers.wantsBackups !== 'yes') return top;
+      if (!answers.successors.length) answers.successors = [{ name: '', phone: '', email: '' }];
+      return top +
         field('Backups', '<div class="rowset">' + answers.successors.map(function (b, i) {
           return '<div class="ben"><input class="input" data-list="successors" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Backup ' + (i + 1) + ' full name" aria-label="Backup ' + (i + 1) + ' full name">' +
             '<input class="input" type="tel" data-list="successors" data-i="' + i + '" data-f="phone" value="' + val(b.phone) + '" placeholder="Phone" aria-label="Backup ' + (i + 1) + ' phone">' +
@@ -1756,7 +1761,9 @@
       if (!a.agentMode) e.push('Answer whether more than one person will serve as your health care agent.');
       coAgentErrors(a, e, true);
     } else if (id === 'successor') {
-      (a.successors || []).forEach(function (b, i) {
+      if (!a.wantsBackups) e.push('Choose whether you want to name a backup agent.');
+      if (a.wantsBackups === 'yes' && !(a.successors || []).some(function (b) { return clean(b.name); })) e.push('Enter a backup agent\u2019s name, or choose \u201cNo backup.\u201d');
+      if (a.wantsBackups === 'yes') (a.successors || []).forEach(function (b, i) {
         var who = clean(b.name) || 'backup ' + (i + 1);
         if (clean(b.phone) && !isCompletePhone(b.phone)) e.push('The phone number for ' + who + ' looks incomplete.');
         if (clean(b.email) && !isCompleteEmail(b.email)) e.push('The email address for ' + who + ' looks incomplete.');
