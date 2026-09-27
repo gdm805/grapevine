@@ -3568,7 +3568,7 @@
     var pct = Math.round((idx / (vis.length - 1)) * 100);
     if (inFlow) paintPkgHero(flow, flowIdx);
     progEl.innerHTML = (inFlow ? renderPkgTrack(flow, flowIdx) : '') +
-      '<div class="p-top"><span>' + esc(vis[idx].label) + '</span><span>Step ' + (idx + 1) + ' of ' + vis.length + '</span></div>' +
+      '<div class="p-top"><span>' + esc(vis[idx].label) + '</span><span>' + (inFlow ? 'This document: step ' : 'Step ') + (idx + 1) + ' of ' + vis.length + '</span></div>' +
       '<div class="pbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><i style="width:' + Math.max(pct, 6) + '%"></i></div>';
     var err = errors.length ? '<div class="errs" role="alert"><strong>Almost there.</strong><ul>' + errors.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>' : '';
     var note = (restored && stepId !== 'start') ? '<p class="restored">Welcome back. We restored your answers from this browser.</p>' : '';
