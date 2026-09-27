@@ -1207,6 +1207,14 @@
     document.head.appendChild(s);
   }
   function dpSet(a, key) { var t = DP_CACHE[dpGov(a)]; return t ? t.settings[key] : undefined; }
+  /* power of attorney backups: a Yes/No first, then the names (on the agent screen) */
+  function dpBackups() {
+    if (!answers.wantsBackups && (answers.successors || []).some(function (b) { return clean(b.name); })) answers.wantsBackups = 'yes';
+    var h = field('Do you want to name a backup agent?', pills('wantsBackups', [['yes', 'Yes, name a backup'], ['no', 'No backup']], true));
+    if (answers.wantsBackups !== 'yes') return h;
+    if (!answers.successors.length) answers.successors = [{ name: '' }];
+    return h + field('Backups', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can\u2019t serve, the first backup takes over, then the next.');
+  }
   var STEPS_DP = [
     { id: 'start', label: 'Where you live' },
     { id: 'about', label: 'About you' },
@@ -1227,7 +1235,7 @@
     v.residence = v.state === 'District of Columbia' ? 'the District of Columbia'
       : [place ? (/\b(county|parish|borough|area|city|municipality)$/i.test(place) || v.state === 'Alaska' ? place : place + ' County') : '____________________ County', v.state].filter(Boolean).join(', ');
     v.agent = clean(a.agent);
-    v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
+    v.successors = (a.wantsBackups === 'no' ? [] : (a.successors || [])).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
     v.has_successors = v.successors.length > 0;
     coAgentVars(a, v);
     var choice = dpSet(a, 'effective_choice') !== 'no';
@@ -1270,7 +1278,7 @@
       return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Choose someone you trust completely. Many people choose the same person they named to carry out their will. Your document calls this person your Agent.') +
         field('Your agent’s full name', text('agent', '')) +
         coAgentFields(false) +
-        field('Backups <em>(optional)</em>', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can’t serve, the first backup takes over, then the next.');
+        dpBackups();
     },
     effective: function () {
       return stepHead('When should your agent’s power start?', 'You can cancel this document at any time while you have capacity.') +
@@ -1330,6 +1338,8 @@
       if (!clean(a.agent)) e.push('Enter the name of your agent.');
       if (!a.agentMode) e.push('Answer whether more than one person will serve as your agent.');
       coAgentErrors(a, e, false);
+      if (!a.wantsBackups) e.push('Choose whether you want to name a backup agent.');
+      if (a.wantsBackups === 'yes' && !(a.successors || []).some(function (b) { return clean(b.name); })) e.push('Enter a backup agent\u2019s name, or choose \u201cNo backup.\u201d');
     } else if (id === 'effective') {
       if (!a.effective) e.push('Choose when your agent’s power should start.');
     } else if (id === 'more') {
@@ -1554,11 +1564,24 @@
     return ['ca_skilled_nursing', 'ct_dmhas', 'ct_dds', 'ct_pregnancy', 'az_unable_to_sign', 'az_psych_admission',
       'az_funeral_authority', 'ne_second_physician', 'oh_unconscious_anh'].some(function (f) { return hcdSet(a, 'ask_' + f) === 'yes'; });
   }
+  function hcdBackups() {
+      if (!answers.wantsBackups && (answers.successors || []).some(function (b) { return clean(b.name); })) answers.wantsBackups = 'yes';
+      var top = field('Do you want to name a backup agent?', pills('wantsBackups', [['yes', 'Yes, name a backup'], ['no', 'No backup']], true));
+      if (answers.wantsBackups !== 'yes') return top;
+      if (!answers.successors.length) answers.successors = [{ name: '', phone: '', email: '' }];
+      return top +
+        field('Backups', '<div class="rowset">' + answers.successors.map(function (b, i) {
+          return '<div class="ben"><input class="input" data-list="successors" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Backup ' + (i + 1) + ' full name" aria-label="Backup ' + (i + 1) + ' full name">' +
+            '<input class="input" type="tel" data-list="successors" data-i="' + i + '" data-f="phone" value="' + val(b.phone) + '" placeholder="Phone" aria-label="Backup ' + (i + 1) + ' phone">' +
+            '<input class="input" type="email" data-list="successors" data-i="' + i + '" data-f="email" value="' + val(b.email) + '" placeholder="Email (optional)" aria-label="Backup ' + (i + 1) + ' email">' +
+            rm('successors', i, 'backup ' + (i + 1), answers.successors.length > 0) + '</div>';
+        }).join('') + '</div>' + addBtn('successors', '+ Add another backup'));
+    }
   var STEPS_HCD = [
     { id: 'start', label: 'Where you live' },
     { id: 'about', label: 'About you' },
     { id: 'agent', label: 'Your health care agent' },
-    { id: 'successor', label: 'Successor agent' },
+    { id: 'successor', label: 'Successor agent', show: function () { return false; } },   /* now asked on the agent screen */
     { id: 'treatment', label: 'Life-sustaining treatment' },
     { id: 'nutrition', label: 'Nutrition and hydration' },
     { id: 'gifts', label: 'Anatomical gifts' },
@@ -1642,21 +1665,10 @@
         field('Your agent’s full name', text('agent', '')) +
         field('Agent’s phone', text('agentPhone', '', { auto: 'tel' })) +
         field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' })) +
-        coAgentFields(true, true);
+        coAgentFields(true) + hcdBackups();
     },
     successor: function () {
-      if (!answers.wantsBackups && (answers.successors || []).some(function (b) { return clean(b.name); })) answers.wantsBackups = 'yes';
-      var top = stepHead('Backup agents', 'If your first choice can’t serve, the first backup takes over, then the next.') +
-        field('Do you want to name a backup agent?', pills('wantsBackups', [['yes', 'Yes, name a backup'], ['no', 'No backup']], true));
-      if (answers.wantsBackups !== 'yes') return top;
-      if (!answers.successors.length) answers.successors = [{ name: '', phone: '', email: '' }];
-      return top +
-        field('Backups', '<div class="rowset">' + answers.successors.map(function (b, i) {
-          return '<div class="ben"><input class="input" data-list="successors" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Backup ' + (i + 1) + ' full name" aria-label="Backup ' + (i + 1) + ' full name">' +
-            '<input class="input" type="tel" data-list="successors" data-i="' + i + '" data-f="phone" value="' + val(b.phone) + '" placeholder="Phone" aria-label="Backup ' + (i + 1) + ' phone">' +
-            '<input class="input" type="email" data-list="successors" data-i="' + i + '" data-f="email" value="' + val(b.email) + '" placeholder="Email (optional)" aria-label="Backup ' + (i + 1) + ' email">' +
-            rm('successors', i, 'backup ' + (i + 1), answers.successors.length > 0) + '</div>';
-        }).join('') + '</div>' + addBtn('successors', '+ Add another backup'));
+      return stepHead('Backup agents', '') + hcdBackups();
     },
     treatment: function () {
       return stepHead('If you had a condition your directive covers, what should happen with life-sustaining treatment?', 'This is the central choice in your directive. “Life-sustaining treatment” means medical care that would sustain or prolong life, such as a ventilator, CPR, or dialysis.') +
@@ -1767,6 +1779,7 @@
       if (clean(a.agentEmail) && !isCompleteEmail(a.agentEmail)) e.push('Your agent’s email address looks incomplete.');
       if (!a.agentMode) e.push('Answer whether more than one person will serve as your health care agent.');
       coAgentErrors(a, e, true);
+      e.push.apply(e, validateHCD('successor'));
     } else if (id === 'successor') {
       if (!a.wantsBackups) e.push('Choose whether you want to name a backup agent.');
       if (a.wantsBackups === 'yes' && !(a.successors || []).some(function (b) { return clean(b.name); })) e.push('Enter a backup agent\u2019s name, or choose \u201cNo backup.\u201d');
