@@ -911,7 +911,7 @@ The Trustmaker assigns, transfers, and delivers to the Trustee the property desc
 @row Ownership|{{real_property_ownership}}
 @row County / State|{{real_property_county_state}}
 [[if real_property_deed_reference]]
-@row Reference|{{real_property_deed_reference}}
+@row Description|{{real_property_deed_reference}}
 [[end]]
 
 [[end]]
