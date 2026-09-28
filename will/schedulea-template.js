@@ -9,7 +9,7 @@ window.SCHEDULEA_TEMPLATE = String.raw`
 //  This is starter text for attorney review, like everything else in this folder.
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **SCHEDULE A**
 

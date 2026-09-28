@@ -12,7 +12,7 @@ window.DPOA_TEMPLATE = String.raw`
 //    [[include shared_incapacity]]                      drops in the shared text kept in this file (see the bottom)
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 `;
 
 /* Shared language, used in every state. It is copied in after "Determination of Incapacity" and "Restoration of

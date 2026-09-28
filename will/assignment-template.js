@@ -9,7 +9,7 @@ window.ASSIGNMENT_TEMPLATE = String.raw`
 //  See will/NOTES-ON-YOUR-ASSIGNMENT-OF-PERSONAL-PROPERTY.txt for what was left out and why.
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **GENERAL ASSIGNMENT OF PERSONAL PROPERTY TO TRUST**
 

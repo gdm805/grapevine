@@ -20,7 +20,7 @@
    the one seam the preview-builder needs to patch, instead of chasing every href by hand. */
 window.GVUrl = function (path) { return path; };
 
-/* THE SAMPLE WATERMARK: "SAMPLE - NOT FOR SIGNING" across a document (in the preview, the PDF, and Word) plus the
+/* THE SAMPLE WATERMARK: "Preview - Not for Signing" across a document (in the preview, the PDF, and Word) plus the
    "sample version" notices. Three settings:
      'unpaid'  the free preview is watermarked; once someone has paid for a document, it comes out clean (current)
      true      every document is watermarked, paid or not (use while the legal text is still being reviewed)

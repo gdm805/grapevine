@@ -23,7 +23,7 @@ window.WILL_POUR_OVER_TEMPLATE = String.raw`
 // ==========================================================================
 @set survival_days = 30
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **LAST WILL AND TESTAMENT**
 @center **OF {{name_caps}}**

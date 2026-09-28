@@ -8,7 +8,7 @@ window.CERT_TEMPLATE = String.raw`
 //  for why this uses one shared body instead of 51 separate documents.
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **CERTIFICATION OF TRUST**
 

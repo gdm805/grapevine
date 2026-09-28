@@ -10,7 +10,7 @@ window.FINALWISHES_TEMPLATE = String.raw`
 //  two states your own source material flags as needing a form Grapevine doesn't have on file).
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **FINAL WISHES**
 

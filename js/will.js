@@ -665,7 +665,7 @@
   var wmSetting = window.GV_SAMPLE_WATERMARK;
   var wmOn = wmSetting === 'unpaid' ? !(window.GVPay && window.GVPay.hasPaid(kindKey)) : wmSetting !== false;
   var draft = wmOn && /^y/i.test(tpl.settings.draft_watermark || 'yes');
-  var draftLabel = tpl.settings.draft_label || 'SAMPLE - NOT FOR SIGNING';
+  var draftLabel = tpl.settings.draft_label || 'Preview - Not for Signing';
 
   var stepEl = document.getElementById('will-step');
   var progEl = document.getElementById('will-progress');
@@ -677,7 +677,7 @@
      page's built-in "starter text, can't be signed" notice (which is right only when every copy is a sample) */
   if (draftBar && draft && wmSetting === 'unpaid') {
     var barBox = draftBar.querySelector('.container') || draftBar;
-    barBox.innerHTML = '<strong>Sample preview:</strong> this preview is marked SAMPLE and isn\u2019t for signing. Once you pay for this document, your download and print copies come out clean, ready to sign.';
+    barBox.innerHTML = '<strong>Preview - Not for Signing.</strong> Once you pay for this document, your download and print copies come out clean, ready to sign.';
   }
 
   /* ---------- the document ---------- */
@@ -945,7 +945,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -1257,7 +1257,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -1555,7 +1555,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -1740,7 +1740,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -1982,7 +1982,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -2215,7 +2215,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -2479,7 +2479,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -2768,7 +2768,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -2964,7 +2964,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -3142,7 +3142,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -3282,7 +3282,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -3445,7 +3445,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
@@ -3668,7 +3668,7 @@
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
-        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the SAMPLE mark, downloads after checkout.</p>' : '') +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }

@@ -36,11 +36,11 @@ window.WILL_TEMPLATE = String.raw`
 //      curly brace anywhere in this file. Everything else is fine.
 //
 //  SETTINGS (change the word after the equals sign):
-//     draft_watermark = yes   shows "SAMPLE - NOT FOR SIGNING". Change to "no" when you approve the text.
+//     draft_watermark = yes   shows "Preview - Not for Signing". Change to "no" when you approve the text.
 // ==========================================================================
 @set survival_days = 30
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **LAST WILL AND TESTAMENT**
 @center **OF {{name_caps}}**

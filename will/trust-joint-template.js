@@ -7,7 +7,7 @@ window.TRUST_JOINT_TEMPLATE = String.raw`
 //  The state-specific signing page is shared with the single trust: will/trust-state-text.js.
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 [[if trust_starts_with_the=YES]]
 @center **TRUST AGREEMENT FOR**

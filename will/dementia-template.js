@@ -28,7 +28,7 @@ window.DEMENTIA_TEMPLATE = String.raw`
 //  a short optional field for it, grouped with the similar artificial-nutrition question.
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **DEMENTIA AND COGNITIVE DECLINE CARE PREFERENCES**
 

@@ -9,5 +9,5 @@ window.HCD_TEMPLATE = String.raw`
 //  will/dpoa-template.js.
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 `;

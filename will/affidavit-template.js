@@ -8,7 +8,7 @@ window.AFFIDAVIT_TEMPLATE = String.raw`
 //  will/NOTES-ON-YOUR-AFFIDAVIT-OF-TRUSTEE.txt for what was left out and why.
 // ==========================================================================
 @set draft_watermark = yes
-@set draft_label = SAMPLE - NOT FOR SIGNING
+@set draft_label = Preview - Not for Signing
 
 @center **AFFIDAVIT OF TRUSTEE**
 
