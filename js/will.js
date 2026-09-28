@@ -4187,17 +4187,33 @@
   function printViaPdf() {
     function pageFallback() { setFooter(); setPane('p'); setTimeout(function () { window.print(); }, 50); }
     if (!window.GVExport) { pageFallback(); return; }
+    /* Print goes straight to the print window, printing the finished PDF (footer and page numbers included).
+       Chrome, Edge and Firefox print it from a hidden frame. Safari can't print a PDF from a hidden frame, so
+       there the PDF opens in a new tab and the person presses Command-P. */
+    var safari = /^((?!chrome|chromium|android|crios|fxios|edg).)*safari/i.test(navigator.userAgent);
     var w = null;
-    try { w = window.open('', '_blank'); } catch (e) { w = null; }
+    if (safari) { try { w = window.open('', '_blank'); } catch (e) { w = null; } }
     var opts = exportOptions();
-    status('Preparing your printable PDF...');
+    status('Preparing your document to print...');
     window.GVExport.pdf(toBlocks(docText()), opts).then(function (blob) {
-      if (w && !w.closed) {
-        w.location.href = URL.createObjectURL(blob);
-        status('Your PDF opened in a new tab. Choose Print there.');
-        return null;
+      var url = URL.createObjectURL(blob);
+      if (safari) {
+        if (w && !w.closed) { w.location.href = url; status('Your document opened in a new tab. Press Command-P (\u2318P) there to print it.'); return null; }
+        return deliver(blob, opts.base + '.pdf').then(function () { status('Your PDF was saved to your Downloads folder. Open it and choose Print.'); });
       }
-      return deliver(blob, opts.base + '.pdf').then(function () { status('Your PDF was saved. Open it and choose Print.'); });
+      var old = document.getElementById('gv-print-frame'); if (old) old.remove();
+      var fr = document.createElement('iframe');
+      fr.id = 'gv-print-frame'; fr.setAttribute('aria-hidden', 'true');
+      fr.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0;';
+      fr.onload = function () {
+        setTimeout(function () {
+          try { fr.contentWindow.focus(); fr.contentWindow.print(); status('The print window is open.'); }
+          catch (e) { window.open(url, '_blank'); status('Your document opened in a new tab. Choose Print there.'); }
+        }, 400);
+      };
+      fr.src = url;
+      document.body.appendChild(fr);
+      return null;
     }).catch(function () { if (w && !w.closed) w.close(); status('', false); pageFallback(); });
   }
   function runExport(kind) {
