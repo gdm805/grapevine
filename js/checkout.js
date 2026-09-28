@@ -130,8 +130,10 @@
         '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
         (perTrust ? '<p class="per-trust">Priced per trust. One purchase covers one trust, including a married couple’s joint trust. If you and your spouse or partner each have your own separate trust, you’ll need one for each trust.</p>' : '') +
         (link
-          ? betaSurvey() + termsFold() + (betaTester() && !surveyDone()
+          ? betaSurvey() + caNotice(p, price, includes) + termsFold() + (betaTester() && !surveyDone()
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Complete the survey above to continue</button>'
+            : isCA() && !caAck
+            ? '<button class="btn btn-primary btn-lg" type="button" disabled>Confirm you\u2019ve read the California notice above</button>'
             : '<a class="btn btn-primary btn-lg" href="' + payHref + '">' + (betaTester() ? 'Continue &mdash; your documents are free' : 'Continue to secure payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>')
           : '<div class="pay-off"><p><strong>Payments aren’t turned on yet.</strong> Add a Stripe Payment Link for the ' + esc(p.name) + ' plan (' + household + ') in <code>js/checkout.js</code>, or open <code>paid.html?plan=' + plan + '&household=' + household + '</code> to try the unlocked view.</p></div>') +
         '<p class="secure-note"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Handled by Stripe on their own secure page. We never see or store your card details.</p>' +
@@ -184,6 +186,32 @@
       var done = root.querySelector('.beta-box.done');
       if (done && done.scrollIntoView) done.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+  });
+
+  /* CALIFORNIA NOTICE (Cal. Bus. & Prof. Code 6410): shown when the customer's state (from "About you") is
+     California. The bold statements are the ones 6410(b) requires in 12-point bold; (b)(3) and (b)(5) -- the
+     county clerk's details -- appear only once GV_CA_LDA.registered is true (js/plans.js). */
+  var caAck = false;
+  function isCA() {
+    try { return ((JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || '') === 'California'; } catch (e) { return false; }
+  }
+  function caNotice(p, price, includes) {
+    if (!isCA()) return '';
+    var r = window.GV_CA_LDA || {};
+    var reg = r.registered ? '<p>Grapevine Docs, LLC is registered as a legal document assistant in ' + esc(r.county) + ' County. County clerk: ' + esc(r.clerkAddress) + (r.clerkPhone ? ', ' + esc(r.clerkPhone) : '') + (r.clerkWebsite ? ', ' + esc(r.clerkWebsite) : '') + '.</p>' +
+      '<p class="ca-bold">The county clerk has not evaluated or approved the registrant\u2019s knowledge or experience, or the quality of the registrant\u2019s services.</p>' : '';
+    return '<div class="ca-notice" id="ca-notice"><h3>Notice to California customers</h3>' +
+      '<p><strong>Services:</strong> software you use to prepare your own ' + esc(p.name) + ' documents (' + esc(includes.join(', ')) + '). <strong>Cost:</strong> ' + money(price) + ', one time.</p>' +
+      reg +
+      '<p class="ca-bold">Grapevine is not an attorney and may not perform the legal services that an attorney performs.</p>' +
+      '<p class="ca-bold">You may obtain information about free or low-cost representation through a local bar association or legal aid foundation. If you believe you have been a victim of fraud, the unauthorized practice of law, or any other injury, you may contact local law enforcement, a district attorney, or a legal aid foundation.</p>' +
+      '<p class="ca-bold">Grapevine is not permitted to engage in the practice of law, including providing any kind of advice, explanation, opinion, or recommendation to you about possible legal rights, remedies, defenses, options, selection of forms, or strategies.</p>' +
+      '<p>Under California Business and Professions Code section 6409.1, the venue for an action arising out of a dispute between you and Grapevine is the county where you have your primary residence.</p>' +
+      '<p class="ca-cancel"><strong>Your right to cancel:</strong> you may cancel this purchase within 24 hours by giving us any written statement that you are canceling, by email to <a href="mailto:support@grapevinedocs.com">support@grapevinedocs.com</a> or by mail to Grapevine Docs, LLC at the address in our Terms. A mailed cancellation is effective on its postmark date. We will then promptly return your payment, except fees for services actually, necessarily, and reasonably performed for you with your knowing and express written consent.</p>' +
+      '<label class="check ca-ack"><input type="checkbox" id="ca-ack"' + (caAck ? ' checked' : '') + '><span>I have read the California notice above.</span></label></div>';
+  }
+  root.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'ca-ack') { caAck = e.target.checked; render(); var n = document.getElementById('ca-notice'); if (n && caAck) { var b = root.querySelector('.order-card .btn-primary'); if (b && b.scrollIntoView) b.scrollIntoView({ block: 'center' }); } }
   });
 
   /* the Terms and Conditions, readable right here before paying. The text itself lives only in terms.html

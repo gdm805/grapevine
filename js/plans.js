@@ -43,6 +43,11 @@ window.GV_PAYMENT_CHECK_URL = 'https://grapevine-payment-check.gdm805.workers.de
      code    the Stripe PROMOTION CODE (the customer-facing code, e.g. BETA2026), 100% off; in Stripe give
              it a maximum number of redemptions and an expiry date
      survey  the Tally form's ID (the part after tally.so/r/ in its share link) */
+/* CALIFORNIA (Cal. Bus. & Prof. Code 6410): California customers see the required notice at checkout and must
+   tick that they've read it before paying. Once Grapevine is registered as a Legal Document Assistant, set
+   registered to true and fill in the county clerk's details -- then the two registration statements appear too. */
+window.GV_CA_LDA = { registered: false, county: '', clerkAddress: '', clerkPhone: '', clerkWebsite: '' };
+
 window.GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' };
 (function () {
   try {
