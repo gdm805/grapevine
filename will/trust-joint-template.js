@@ -150,9 +150,17 @@ The Trustmakers have no children.
 
 [[end]]
 
+## After-Born and Later-Adopted Children {#sec_afterborn}
+
+Any child of either Trustmaker born or legally adopted after the execution of this Trust Agreement shall be treated as though specifically identified as a child of that Trustmaker under this Article.
+
+## Intentional Omission of Other Descendants
+
+Except as otherwise provided in this Trust Agreement, and except for a child born to or legally adopted by either Trustmaker after the execution of this Trust Agreement, who is treated as provided in [[ref sec_afterborn]], the Trustmakers have intentionally, and not as a result of accident or mistake, made no provision in this Trust Agreement for any descendant of either Trustmaker who is living at that Trustmaker's death and is not named or otherwise provided for in this Trust Agreement. This Section does not limit any gift to a class of beneficiaries, such as the Trustmakers' descendants, that includes that person.
+
 [[if has_excluded]]
 
-## Intentional Omission
+## Intentionally Excluded Person(s)
 
 The Trustmakers intentionally exclude the following person or persons from receiving any benefit under this Trust:
 
@@ -163,10 +171,6 @@ The Trustmakers intentionally exclude the following person or persons from recei
 [[end]]
 
 [[end]]
-
-## After-Born and Later-Adopted Children
-
-Any child of either Trustmaker born or legally adopted after the execution of this Trust Agreement shall be treated as though specifically identified as a child of that Trustmaker under this Article.
 
 # SUCCESSOR TRUSTEE
 
