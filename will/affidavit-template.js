@@ -110,6 +110,11 @@ The applicable decision rule is: a majority of the currently acting Trustees may
 
 [[end]]
 
+[[if own_trust_rule]]
+As provided in the Trust Agreement, any one currently acting co-Trustee may perform Routine Administrative Acts, as defined in the Trust Agreement, without the joinder of the other co-Trustee or co-Trustees.
+
+[[end]]
+
 The fact that this Affidavit is signed by fewer than all currently acting Trustees does not itself establish that fewer than all Trustees may complete the underlying transaction; the transaction-specific decision rule controls.
 
 [[end]]

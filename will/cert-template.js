@@ -97,6 +97,11 @@ A majority of the currently acting co-Trustees may bind the Trust. At least {{mi
 
 [[end]]
 
+[[if own_trust_rule]]
+As provided in the Trust Agreement, any one currently acting co-Trustee may perform Routine Administrative Acts, as defined in the Trust Agreement, without the joinder of the other co-Trustee or co-Trustees.
+
+[[end]]
+
 # REVOCABILITY AND RESERVED POWERS
 
 ## Revocability Status

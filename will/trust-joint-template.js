@@ -345,7 +345,7 @@ A Successor Trustee has no duty to investigate the acts or omissions of a predec
 
 The provisions of this Section govern persons acting in the capacity of Co-Trustee and do not limit any power held by a Trustmaker in the capacity of Trustmaker under [[ref art_reserved_powers]].
 
-Any Co-Trustee may perform Routine Administrative Acts independently.
+Any Co-Trustee may perform Routine Administrative Acts, as defined in [[ref def_routine]], independently.
 
 Except for Routine Administrative Acts, as defined in [[ref def_routine]], no Co-Trustee may take unilateral action affecting the administration, investment, distribution, or ownership of the Trust Estate unless approved by a majority of the Co-Trustees then serving. If only two Co-Trustees are serving, both Co-Trustees must approve the action.
 

@@ -228,6 +228,19 @@
   function handOrig(a) { var f = readTrustFacts(); return madeHere(a) && !!f && !f.restated && !f.origDate; }
   function handRest(a) { var f = readTrustFacts(); return madeHere(a) && !!f && f.restated && !f.restatementDate; }
   var HAND_DATE_NOTE = '<p class="hint"><strong>Trust date:</strong> you left the signing date blank in your trust, to write in by hand. It prints as a blank line here too. Write in the same date you sign your trust.</p>';
+  /* co-trustees of the trust made here act as that trust says: by majority, and both of them when there are
+     two (routine administrative acts aside). The Certification and Affidavit must say the same, so for that
+     trust the rule is filled in, not chosen. */
+  function ownTrustRule(a) {
+    if (!madeHere(a)) return null;
+    var n = (a.trustees || []).filter(function (t) { return clean(t.name); }).length;
+    if (n <= 1) return null;
+    return n === 2 ? { rule: 'ALL', min: '' } : { rule: 'MAJORITY', min: String(Math.floor(n / 2) + 1) };
+  }
+  function ownTrustRuleNote(r) {
+    return '<p class="hint">Your trust requires ' + (r.rule === 'ALL' ? 'both Co-Trustees to act together' : 'a majority of the Co-Trustees (at least ' + r.min + ') to act') +
+      ', except for routine administrative acts. This document says the same, so there is nothing to choose here.</p>';
+  }
   var CARRY_CONFIRMED = {};
   function applyTrustFacts(a, kind) {
     var f = readTrustFacts();
@@ -2753,7 +2766,7 @@
     hasAmendments: '', amendments: [{ title: '', date: '' }],
     trustmakers: [{ name: '' }],
     trustees: [{ name: '', address: '' }],
-    trusteeRule: 'ANY_ONE', minSignatures: '',
+    trusteeRule: '', minSignatures: '',
     revocability: 'REVOCABLE', revocablePortion: '', irrevocablePortion: '',
     hasLimitations: '', limitationsSummary: '',
     titleFormat: '',
@@ -2794,6 +2807,8 @@
     v.single_trustee = v.trustees.length <= 1;
     v.trustee_rule = a.trusteeRule || 'ANY_ONE';
     v.min_signatures = clean(a.minSignatures);
+    var ownC = ownTrustRule(a); if (ownC) { v.trustee_rule = ownC.rule; v.min_signatures = ownC.min; }
+    v.own_trust_rule = !!ownC;
     v.trustee_count = String(v.trustees.length);
     v.revocability = a.revocability === 'IRREVOCABLE' ? 'IRREVOCABLE' : (a.revocability === 'PARTIAL' ? 'PARTIAL' : 'REVOCABLE');
     /* the power to revoke is held by the Trustmaker(s) themselves, same as Grapevine's own trust builders --
@@ -2845,6 +2860,8 @@
       if (answers.trustees.filter(function (t) { return clean(t.name); }).length <= 1) {
         return stepHead('Trustee authority', '') + '<p class="hint">With a single Trustee, that Trustee may act alone. There’s nothing else to answer here.</p>';
       }
+      var own = ownTrustRule(answers);
+      if (own) { answers.trusteeRule = own.rule; answers.minSignatures = own.min; return stepHead('Trustee authority', '') + ownTrustRuleNote(own); }
       var h = stepHead('Trustee authority', 'With more than one Trustee currently serving, how do they act together?') +
         field('Action and signature rule', pills('trusteeRule', [['ANY_ONE', 'Any one may act alone'], ['ALL', 'All must act jointly'], ['MAJORITY', 'A majority may act']], true));
       if (answers.trusteeRule === 'MAJORITY') h += field('Minimum number of Trustees required to act', text('minSignatures', 'For example, 2'));
@@ -2935,7 +2952,7 @@
     jointPhase: 'BOTH_LIVING', adminShare: '', adminShareType: 'SURVIVORS_TRUST',
     affiantName: '', affiantIsSuccessor: '',
     trustees: [{ name: '' }],
-    trusteeRule: 'ANY_ONE',
+    trusteeRule: '',
     hasTransaction: '', transactionAuthority: '', hasRestriction: '', transactionRestriction: '',
     signingCity: '', signingCounty: '', signingDate: ''
   };
@@ -2980,6 +2997,8 @@
     v.single_trustee = v.trustees.length <= 1;
     v.trustee_name = v.trustees[0] ? v.trustees[0].trustee_name : '';
     v.trustee_rule = a.trusteeRule || 'ANY_ONE';
+    var ownA = ownTrustRule(a); if (ownA) v.trustee_rule = ownA.rule;
+    v.own_trust_rule = !!ownA;
     v.has_transaction = a.hasTransaction === 'yes' && !!clean(a.transactionAuthority);
     v.transaction_authority = clean(a.transactionAuthority);
     v.has_restriction = a.hasRestriction === 'yes' && !!clean(a.transactionRestriction);
@@ -3032,6 +3051,8 @@
       if (count <= 1) {
         return stepHead('Trustee authority', '') + '<p class="hint">With a single Trustee, that Trustee may act alone. There’s nothing else to answer here.</p>';
       }
+      var own = ownTrustRule(answers);
+      if (own) { answers.trusteeRule = own.rule; return stepHead('Trustee authority', '') + ownTrustRuleNote(own); }
       return stepHead('Trustee authority', 'With more than one Trustee currently serving, how do they act together?') +
         field('Action and decision rule', pills('trusteeRule', [['ANY_ONE', 'Any one may act alone'], ['ALL', 'All must act jointly'], ['MAJORITY', 'A majority may act']], true));
     },
