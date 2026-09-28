@@ -133,6 +133,8 @@
   }
   var btn = document.getElementById('dl-all');
   if (btn) btn.addEventListener('click', function () {
+    /* California: written consent before the first delivery (js/ca-consent.js) */
+    if (window.GVCaConsent && window.GVCaConsent.needed()) { window.GVCaConsent.require(function () { btn.click(); }); return; }
     if (!window.GVExport) { status('The download tools did not load. Open each document to download it instead.', true); return; }
     btn.disabled = true;
     status('Preparing your package PDF... this can take up to a minute for a large package.');

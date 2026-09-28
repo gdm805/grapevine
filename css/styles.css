@@ -413,3 +413,13 @@ a { color: var(--grape); }
 /* "Welcome back" strip: continue an unfinished package (js/nav.js) */
 .resume-bar { background: var(--leaf-tint, #e7efd9); color: var(--ink); font-size: 14.5px; line-height: 1.4; padding: 9px 0; text-align: center; border-bottom: 1px solid var(--line); }
 .resume-bar a { color: var(--grape); font-weight: 700; margin-left: 6px; white-space: nowrap; }
+
+/* California consent before delivery (js/ca-consent.js) */
+.ca-consent-wrap { position: fixed; inset: 0; background: rgba(20, 18, 30, 0.45); display: grid; place-items: center; padding: 16px; z-index: 1000; }
+.ca-consent { background: var(--white); border-radius: 18px; padding: 24px; max-width: 520px; width: 100%; display: grid; gap: 12px; box-shadow: var(--shadow-lift); }
+.ca-consent h2 { font-family: var(--serif); font-weight: 500; font-size: 26px; line-height: 1.2; }
+.ca-consent p { font-size: 15px; line-height: 1.5; margin: 0; color: var(--ink-soft); }
+.ca-consent .check span { font-weight: 600; color: var(--ink); }
+.ca-consent-name { font-size: 14px; font-weight: 600; }
+.ca-consent-err { color: #9b2c2c; min-height: 1em; }
+.ca-consent-btns { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }

@@ -3834,8 +3834,8 @@
         heroEl.insertBefore(top, heroEl.firstChild);
         /* these sit above the app, so they get their own clicks */
         var tp = top.querySelector('[data-top-pdf]'), tr = top.querySelector('[data-top-print]');
-        if (tp) tp.addEventListener('click', function () { runExport('pdf'); });
-        if (tr) tr.addEventListener('click', function () { printViaPdf(); });
+        if (tp) tp.addEventListener('click', function () { caGate(function () { runExport('pdf'); }); });
+        if (tr) tr.addEventListener('click', function () { caGate(function () { printViaPdf(); }); });
       }
     }
     stepEl.innerHTML = backToSum + note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
@@ -4181,14 +4181,13 @@
       var k2 = b.getAttribute('data-remove'); answers[k2].splice(+b.getAttribute('data-i'), 1); draw();
     } else if (b.hasAttribute('data-print') || b.hasAttribute('data-word') || b.hasAttribute('data-pdf')) {
       if (!paidUp()) { location.href = checkoutHref(); return; }
-      if (b.hasAttribute('data-print')) printViaPdf();
-      else if (b.hasAttribute('data-word')) runExport('docx');
-      else runExport('pdf');
+      var isPrint = b.hasAttribute('data-print');
+      caGate(function () { if (isPrint) printViaPdf(); else runExport('pdf'); });
     }
     else if (b.hasAttribute('data-pkg-pdf')) {
       if (!paidUp()) { location.href = checkoutHref(); return; }
       var f = window.GVFlow && window.GVFlow.current();
-      if (f) downloadPackagePdf(f);
+      if (f) caGate(function () { downloadPackagePdf(f); });
     }
     else if (b.hasAttribute('data-pane')) { setPane(b.getAttribute('data-pane')); }
     else if (b.hasAttribute('data-reset-pkg')) {
@@ -4261,6 +4260,8 @@
   /* Print opens the finished PDF (footer, "Page X of Y" and all) instead of printing the web page: browsers
      like Safari and DuckDuckGo ignore the page-footer instructions the web page's own print mode relies on,
      so a printout straight from the page came out with no footer. The PDF always has it. */
+  /* California: written consent before the first delivery (js/ca-consent.js) */
+  function caGate(fn) { if (window.GVCaConsent) window.GVCaConsent.require(fn); else fn(); }
   function printViaPdf() {
     function pageFallback() { setFooter(); setPane('p'); setTimeout(function () { window.print(); }, 50); }
     if (!window.GVExport) { pageFallback(); return; }
