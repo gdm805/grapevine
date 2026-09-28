@@ -237,8 +237,6 @@ If no Co-Trustee is able and willing to serve, the following Successor Trustees 
 
 [[end]]
 
-The Co-Trustees shall administer the Trust in accordance with this Article.
-
 [[end]]
 
 ## Removal and Appointment by the Trustmaker
@@ -251,7 +249,7 @@ If no Trustee is serving and no designated Successor Trustee is willing and able
 
 If the Trustee being replaced was an Independent Trustee, any Successor Trustee appointed under this Section must satisfy the same requirement.
 
-If the Vested Beneficiaries do not appoint a Successor Trustee within a reasonable time, any interested person may petition a court of competent jurisdiction to appoint a Trustee.
+If the Vested Beneficiaries do not appoint a Successor Trustee within thirty (30) days after the office of Trustee becomes vacant, any interested person may petition a court of competent jurisdiction to appoint a Trustee.
 
 For purposes of this Section, a charitable organization shall not be considered a beneficiary.
 

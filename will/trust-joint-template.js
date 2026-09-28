@@ -213,8 +213,6 @@ If no Co-Trustee is able and willing to serve, the following Successor Trustees 
 
 [[end]]
 
-The Co-Trustees shall administer the Trust in accordance with [[ref sec_cotrustees]] through [[ref sec_written_dissent]].
-
 [[end]]
 
 ## Removal and Appointment by Trustmakers
@@ -233,7 +231,7 @@ If no Trustee is then serving and no designated Successor Trustee is willing and
 
 If the Trustee being replaced was required to satisfy Section 672(c) of the Internal Revenue Code, any Successor Trustee appointed under this Section must satisfy the same requirement.
 
-If the Vested Beneficiaries fail to appoint a Successor Trustee within a reasonable time, any interested person may petition a court of competent jurisdiction to appoint a Trustee.
+If the Vested Beneficiaries fail to appoint a Successor Trustee within thirty (30) days after the office of Trustee becomes vacant, any interested person may petition a court of competent jurisdiction to appoint a Trustee.
 
 For purposes of this Section, charitable organizations shall not be considered beneficiaries.
 
