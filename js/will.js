@@ -576,6 +576,7 @@
     v.is_louisiana = a.state === 'Louisiana';   /* Louisiana civil-law provisions: tutor, executor, independent administration, forced heirship */
     v.no_contest_yes = sx ? sx.no_contest !== 'no' : true;
     v.__tail = sx ? (sx.tailWill || sx.tail) : [];
+    petVars(a, v);
     return v;
   }
 
@@ -603,6 +604,7 @@
     { id: 'guardian', label: 'Guardian', show: hasMinor },
     { id: 'executor', label: 'Personal representative' },
     { id: 'gifts', label: 'Special gifts' },
+    { id: 'pets', label: 'Pets' },
     { id: 'residuary', label: 'Everything else' },
     { id: 'review', label: 'Review and sign' }
   ];
@@ -744,6 +746,7 @@
 
   /* ---------- the questions ---------- */
   var RENDER_WILL = {
+    pets: function () { return petsScreen(); },
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
@@ -910,6 +913,8 @@
         if (!rows.length) e.push('Add a gift, or choose \u201cNo, skip this.\u201d');
         if (rows.some(function (g) { return !clean(g.item) || !clean(g.recipient); })) e.push('Each gift needs both what it is and who receives it.');
       }
+    } else if (id === 'pets') {
+      petsErrors(a, e);
     } else if (id === 'residuary') {
       if (!a.residuary) e.push('Choose who gets everything else.');
       else {
@@ -2215,6 +2220,7 @@
     { id: 'trustee', label: 'Successor trustee' },
     { id: 'powers', label: 'While you’re incapacitated' },
     { id: 'gifts', label: 'Specific gifts' },
+    { id: 'pets', label: 'Pets' },
     { id: 'residuary', label: 'Everything else' },
     { id: 'assets', label: 'Trust property' },
     { id: 'signing', label: 'Signing' },
@@ -2284,10 +2290,12 @@
     v.asset_tangible = true;   /* household goods are always listed on Schedule A */
     v.has_witness = !!TRUST_WITNESS_STATES[v.state];
     v.state_note = st ? st.note : '';
+    petVars(a, v);
     return v;
   }
   var GIFT_CONTINGENT_LABELS = { DESCENDANTS: 'To that beneficiary’s descendants', NAMED: 'To another named person', CHARITY: 'To a charity', LAPSE: 'Becomes part of everything else' };
   var RENDER_TRUST = {
+    pets: function () { return petsScreen(); },
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
@@ -2439,6 +2447,8 @@
         if (!gs.length) e.push('Add at least one gift, or choose \u201cNo, skip this.\u201d');
         else if (gs.some(function (g) { return !clean(g.description) || !clean(g.beneficiary); })) e.push('Each gift needs both what it is and who receives it.');
       }
+    } else if (id === 'pets') {
+      petsErrors(a, e);
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
     } else if (id === 'signing') {
@@ -2485,6 +2495,7 @@
     { id: 'trustee', label: 'Successor trustee' },
     { id: 'firstdeath', label: 'At the first death' },
     { id: 'gifts', label: 'Specific gifts' },
+    { id: 'pets', label: 'Pets' },
     { id: 'residuary', label: 'Everything else' },
     { id: 'assets', label: 'Trust property' },
     { id: 'signing', label: 'Signing' },
@@ -2555,9 +2566,11 @@
     v.asset_tangible = true;   /* household goods are always listed on Schedule A */
     v.has_witness = !!TRUST_WITNESS_STATES[v.state];
     v.state_note = st ? st.note : '';
+    petVars(a, v);
     return v;
   }
   var RENDER_TRUST_JOINT = {
+    pets: function () { return petsScreen(); },
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
@@ -2723,6 +2736,8 @@
         else if (gs.some(function (g) { return !clean(g.description) || !clean(g.beneficiary); })) e.push('Each gift needs both what it is and who receives it.');
         if (gs.some(function (g) { return !g.when; })) e.push('For each gift, choose when it is made.');
       }
+    } else if (id === 'pets') {
+      petsErrors(a, e);
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
     } else if (id === 'signing') {
@@ -3612,6 +3627,37 @@
   function laPageSign() { return answers && answers.state === 'Louisiana' ? 'Testator\u2019s signature: ____________________   ' : ''; }
 
   /* ---------- put the chosen kind together ---------- */
+  /* PETS (will, single trust, joint trust): an optional caretaker for the person's pets, a backup, and an
+     optional sum of money given to whoever takes them -- with a request, not a requirement, that it be used
+     for their care (no pet trust, nothing enforceable). */
+  var PET_EMPTY = { hasPets: '', petDescription: '', petCaretaker: '', petAltCaretaker: '', petGiftYes: '', petGift: '' };
+  function petsScreen() {
+    var a = answers;
+    var h = stepHead('Do you want to name someone to care for your pets?', 'This names a person to take your pets. You can also leave that person some money and ask that it be used for the pets’ care. It is a request, not a requirement.') +
+      pills('hasPets', [['yes', 'Yes'], ['no', 'No']], true);
+    if (a.hasPets !== 'yes') return h;
+    h += field('Your pets <em>(optional)</em>', text('petDescription', 'For example, a dog named Max and a cat named Luna'), 'Leave blank to cover any pets you have at the time.') +
+      field('Who should take your pets?', text('petCaretaker', 'Full name')) +
+      field('A backup, if that person can’t <em>(optional)</em>', text('petAltCaretaker', 'Full name')) +
+      field('Do you want to leave the caretaker some money for the pets’ care?', pills('petGiftYes', [['yes', 'Yes'], ['no', 'No']], true));
+    if (a.petGiftYes === 'yes') h += field('How much?', text('petGift', 'For example, $5,000'), 'It goes to whoever takes your pets, with a request that it be used for their care.');
+    return h + '<p class="hint">If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
+  }
+  function petsErrors(a, e) {
+    if (!a.hasPets) { e.push('Answer whether you want to name someone to care for your pets.'); return; }
+    if (a.hasPets !== 'yes') return;
+    if (!clean(a.petCaretaker)) e.push('Enter the name of the person who should take your pets.');
+    if (!a.petGiftYes) e.push('Answer whether you want to leave the caretaker some money.');
+    if (a.petGiftYes === 'yes' && !clean(a.petGift)) e.push('Enter the amount for the pets’ care, or answer No.');
+  }
+  function petVars(a, v) {
+    v.has_pets = a.hasPets === 'yes' && !!clean(a.petCaretaker);
+    v.pet_caretaker = clean(a.petCaretaker);
+    v.pet_description = clean(a.petDescription); v.has_pet_description = !!v.pet_description;
+    v.pet_alt_caretaker = clean(a.petAltCaretaker); v.has_pet_alt = !!v.pet_alt_caretaker;
+    v.pet_gift = clean(a.petGift); v.has_pet_gift = v.has_pets && a.petGiftYes === 'yes' && !!v.pet_gift;
+  }
+  Object.assign(EMPTY_WILL, PET_EMPTY); Object.assign(EMPTY_TRUST, PET_EMPTY); Object.assign(EMPTY_TRUST_JOINT, PET_EMPTY);
   var KINDS = {
     will: { key: 'will', ls: 'grapevine.will.v2', file: 'Last-Will-and-Testament', footer: function (n) { return laPageSign() + 'Last Will and Testament of ' + n; },
       empty: EMPTY_WILL, rows: ROWS_WILL, steps: STEPS_WILL, render: RENDER_WILL, validate: validateWill, buildVars: buildVarsWill },

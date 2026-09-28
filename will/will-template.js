@@ -374,6 +374,24 @@ I give {{gift}} to {{recipient}}.
 
 [[end]]
 [[end]]
+[[if has_pets]]
+# Care of My Pets {#pets}
+
+## Gift of My Pets
+
+I give any pets I own at my death[[if has_pet_description]], including {{pet_description}},[[end]] to {{pet_caretaker}}, if {{pet_caretaker}} survives me and is willing to accept them.[[if has_pet_alt]] If not, I give them to {{pet_alt_caretaker}}, if {{pet_alt_caretaker}} survives me and is willing to accept them.[[end]]
+
+[[if has_pet_gift]]
+## Gift for Their Care
+
+I give {{pet_gift}} to the person who accepts my pets under this Article. I request, but do not require, that this gift be used for the care of my pets. This request creates no trust and no legally enforceable obligation, and the gift belongs to that person outright.
+
+[[end]]
+## If No One Named Accepts My Pets
+
+If no person named in this Article accepts my pets, my Personal Representative may place them with a person or organization my Personal Representative believes will give them a good home, and may pay the reasonable costs of doing so from my estate.
+
+[[end]]
 # Residuary Estate {#residuary}
 
 ## Residuary Estate

@@ -951,6 +951,24 @@ If a beneficiary of a Specific Gift fails to survive the applicable Trustmaker b
 
 [[end]]
 
+[[if has_pets]]
+# CARE OF PETS
+
+## Gift of Pets
+
+Upon the death of the surviving Trustmaker, the Trustee shall distribute any pets then held by the Trust or owned by either Trustmaker[[if has_pet_description]], including {{pet_description}},[[end]] to {{pet_caretaker}}, if {{pet_caretaker}} is then living and willing to accept them.[[if has_pet_alt]] If not, the Trustee shall distribute them to {{pet_alt_caretaker}}, if {{pet_alt_caretaker}} is then living and willing to accept them.[[end]]
+
+[[if has_pet_gift]]
+## Gift for Their Care
+
+The Trustee shall distribute {{pet_gift}} from the Trust Estate to the person who accepts the pets under this Article. The Trustmakers request, but do not require, that this gift be used for the care of the pets. This request creates no trust and no legally enforceable obligation, and the gift belongs to that person outright.
+
+[[end]]
+## If No One Named Accepts the Pets
+
+If no person named in this Article accepts the pets, the Trustee may place them with a person or organization the Trustee believes will give them a good home, and may pay the reasonable costs of doing so from the Trust Estate.
+
+[[end]]
 # DISTRIBUTION PROVISIONS
 
 ## Method of Distribution
