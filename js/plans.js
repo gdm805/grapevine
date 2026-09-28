@@ -106,7 +106,7 @@ window.GV_PLANS = {
       name: 'Complete',
       tag: 'Everything in Essentials, plus a trust for your home and savings.',
       lead: 'Everything in Essentials, plus these additional documents:',
-      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust', 'Pour-Over Will', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
+      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust', 'Pour-Over Will', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts', 'Companion animal protection (a caretaker for your pets, with money for their care)'],
       cta: 'Start with Complete',
       why: 'Adds a trust and the paperwork that supports it, so your home and savings can pass on privately.',
       /* Complete customers get the pour-over will instead of the plain will, but nothing stops them from also
