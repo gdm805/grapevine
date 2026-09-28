@@ -12,7 +12,7 @@ window.WILL_STATES = String.raw`
 // ==========================================================================
 Alabama | 2 | yes | yes | 
 Alaska | 2 | yes | yes | 
-Arizona | 2 | yes | yes | 
+Arizona | 2 | yes | no | Grapevine isn't available in Arizona yet. We're confirming Arizona's rules for online document services and hope to offer Arizona documents soon.
 Arkansas | 2 | yes | yes | 
 California | 2 | no | yes | 
 Colorado | 2 | yes | yes | 

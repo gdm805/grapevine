@@ -77,7 +77,7 @@
     if (kicker) kicker.hidden = !done;
     if (cta) cta.style.display = done ? '' : 'none';
     if (!done) {
-      title.textContent = answered ? 'Answer all six to see your suggestion (' + answered + ' of 6 answered).' : 'Answer all six questions to see your suggestion.';
+      title.textContent = answered ? 'Answer all six to see the package that matches your answers (' + answered + ' of 6 answered).' : 'Answer all six questions to see the package that matches your answers.';
       if (why) why.textContent = '';
       list.innerHTML = '';
       return;

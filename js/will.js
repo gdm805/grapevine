@@ -702,9 +702,10 @@
       docEl.style.setProperty('--wm', 'url("data:image/svg+xml,' + encodeURIComponent(svg).replace(/'/g, '%27') + '")');
     }
   }
-  /* UNPAID PREVIEW: the opening of the document stays readable, the rest is blurred -- except the person's own
-     answers (highlighted), so they still see a preview as you go -- and the preview can't be selected, copied,
-     dragged or printed. Everything is clear once paid. Not on the blank template, which is generic text. */
+  /* UNPAID PREVIEW: the opening of the document stays readable. After that, every heading and every paragraph
+     built from the person's own answers stays readable too, so they can check what their answers say; only the
+     standard wording that doesn't change from person to person is blurred. The preview can't be selected,
+     copied, dragged or printed. Everything is clear once paid. Not on the blank template, which is generic text. */
   var PV_CLEAR = 12;
   function lockPreview() {
     var locked = !BLANK && !paidUp();
@@ -719,10 +720,11 @@
     if (!locked) return;
     var blocks = Array.prototype.filter.call(docEl.children, function (el) { return !el.classList.contains('wm-print'); });
     if (blocks.length <= PV_CLEAR) return;
-    blocks.forEach(function (el, i) { if (i >= PV_CLEAR) el.classList.add('pv-blur'); });
+    function mine(el) { return /^H[1-6]$/.test(el.tagName) || el.classList.contains('subh') || !!el.querySelector('.fill'); }
+    blocks.forEach(function (el, i) { if (i >= PV_CLEAR && !mine(el)) el.classList.add('pv-blur'); });
     var note = document.createElement('div');
     note.className = 'pv-note';
-    note.innerHTML = '<strong>The rest of your document is blurred until checkout.</strong> Your own answers stay visible, highlighted, so you can check them. Pay once to read, download and print the full text.';
+    note.innerHTML = '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text.';
     docEl.insertBefore(note, blocks[PV_CLEAR]);
   }
   ['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (ev) {
@@ -4143,6 +4145,8 @@
   }
   function next() {
     errors = KIND.validate(stepId);
+    var stOff = states.map[answers.state];
+    if (stepId === 'start' && stOff && !stOff.supported && errors.indexOf(stOff.note) === -1) errors.push(stOff.note || 'Grapevine isn\u2019t available in that state yet.');
     if (errors.length) { draw(); return; }
     var vis = visibleSteps(answers), i = vis.map(function (s) { return s.id; }).indexOf(stepId);
     var j = Math.min(i + 1, vis.length - 1), skipped = [];

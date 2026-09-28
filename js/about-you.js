@@ -98,6 +98,7 @@
     need('street', 'Enter your street address.');
     need('city', 'Enter your city.');
     need('state', 'Choose your state.');
+    if (p.state === 'Arizona') e.push("Grapevine isn't available in Arizona yet. We're confirming Arizona's rules for online document services and hope to offer Arizona documents soon.");
     need('county', 'Choose your county.');
     need('zip', 'Enter your ZIP code.');
     if (clean(p.zip) && !/^\d{5}(-\d{4})?$/.test(clean(p.zip))) e.push('Your ZIP code should be 5 digits.');
