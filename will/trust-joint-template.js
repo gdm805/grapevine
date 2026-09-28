@@ -431,7 +431,7 @@ The Trustee may acquire, protect, register, license, assign, enforce, compromise
 
 ## Digital Assets
 
-## The Trustee may:
+The Trustee may:
 
 (a) access, obtain, control, manage, use, preserve, archive, copy, transfer, sell, distribute, abandon, delete, close, or otherwise administer Digital Assets;
 
@@ -1124,7 +1124,7 @@ Required Survivorship Period means thirty (30) days unless a different period is
 
 Restoration of Capacity means the restoration of an individual's ability to effectively manage the individual's property or financial affairs after the individual has previously been determined to be incapacitated.
 
-## An individual's capacity shall be considered restored if:
+An individual's capacity shall be considered restored if:
 
 (a) two licensed physicians who have examined the individual provide written statements that, in their professional opinions, the individual is able to effectively manage the individual's property or financial affairs; or
 
