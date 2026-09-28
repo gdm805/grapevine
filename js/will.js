@@ -703,7 +703,7 @@
     }
   }
   /* UNPAID PREVIEW: the opening of the document stays readable, the rest is blurred -- except the person's own
-     answers (highlighted), so they still watch it take shape -- and the preview can't be selected, copied,
+     answers (highlighted), so they still see a preview as you go -- and the preview can't be selected, copied,
      dragged or printed. Everything is clear once paid. Not on the blank template, which is generic text. */
   var PV_CLEAR = 12;
   function lockPreview() {
@@ -4036,7 +4036,7 @@
       return;
     }
     if (h1) h1.textContent = 'Let\u2019s write your ' + pkgName(f) + ' package';
-    if (lead) lead.textContent = 'You\u2019ll answer a few plain questions for each of the ' + f.docs.length + ' documents, one after another, and watch each take shape. Names and details you\u2019ve already given carry over, so you only type them once. Your answers stay in this browser.';
+    if (lead) lead.textContent = 'You\u2019ll answer a few plain questions for each of the ' + f.docs.length + ' documents, one after another, and see a preview of each as you go. Names and details you\u2019ve already given carry over, so you only type them once. Your answers stay in this browser.';
     if (sw) sw.hidden = true;
   }
   function pkgName(f) {
