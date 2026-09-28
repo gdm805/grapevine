@@ -479,7 +479,7 @@ While the Trustmaker has legal capacity, the Trustee may rely upon the Trustmake
 
 The Trustee shall not be liable for acting in good faith in accordance with those instructions.
 
-## Incapacity {#def_incapacity}
+## Incapacity
 
 If the Trustmaker becomes incapacitated as determined under [[ref def_incapacity]], the Successor Trustee shall assume the office of Trustee and administer the Trust for the benefit of the Trustmaker.
 
@@ -505,7 +505,7 @@ A health care provider, health plan, medical professional, facility, or other pe
 
 The Trustee may expend Trust assets to provide for the Trustmaker's housing, health care, personal care, transportation, companionship, recreation, safety, and quality of life, even though those expenditures may reduce or eliminate the interests of remainder beneficiaries.
 
-## Restoration of Capacity {#def_restoration}
+## Restoration of Capacity
 
 Upon Restoration of Capacity as determined under [[ref def_restoration]], the Trustmaker shall immediately resume the office of Trustee if legally entitled to serve.
 
@@ -747,7 +747,7 @@ Descendants mean all lineal descendants of an individual, regardless of generati
 
 Descendants include adopted persons and their descendants. Descendants do not include stepchildren, foster children, or persons related only by marriage unless specifically identified in this Trust Agreement.
 
-## Digital Assets {#sec_digital_assets}
+## Digital Assets {#def_digital_assets}
 
 Digital Assets means electronically stored information, property, rights, records, accounts, and communications in which an individual has a right or interest, including:
 

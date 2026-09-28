@@ -281,7 +281,7 @@ The Trustmaker having legal capacity may exercise powers with respect to jointly
 
 A reserved power belonging to an incapacitated Trustmaker may be exercised on behalf of that Trustmaker only to the extent authorized by this Trust Agreement and applicable law. No person acting on behalf of an incapacitated Trustmaker may amend, revoke, or restate this Trust Agreement unless the authority to exercise that power is expressly granted by a valid legal instrument and its exercise is permitted by applicable law.
 
-## Restoration of Capacity {#def_restoration}
+## Restoration of Capacity
 
 If an incapacitated Trustmaker regains legal capacity, that Trustmaker's reserved powers shall resume to the extent the Trust remains revocable, and those powers have not otherwise terminated.
 
@@ -537,7 +537,7 @@ A health care provider, health plan, medical professional, facility, or other pe
 
 During a Trustmaker's incapacity, the Trustee may expend Trust assets available for that Trustmaker's benefit to provide for that Trustmaker's housing, health care, personal care, transportation, companionship, recreation, safety, and quality of life, even though those expenditures may reduce or eliminate the interests of remainder beneficiaries.
 
-## Restoration of Capacity {#def_restoration}
+## Restoration of Capacity
 
 Upon a Trustmaker's Restoration of Capacity as determined under [[ref def_restoration]], that Trustmaker shall resume the office of Trustee if legally entitled to serve.
 
@@ -679,7 +679,7 @@ The Trustee may make distributions directly to the surviving Trustmaker or apply
 
 The Trustee may consider other financial resources reasonably available to the surviving Trustmaker but is not required to do so.
 
-## Restoration of Capacity {#def_restoration}
+## Restoration of Capacity
 
 If the surviving Trustmaker's legal capacity is restored as determined under [[ref def_restoration]], the surviving Trustmaker shall resume the rights and powers provided under this Article.
 
