@@ -21,7 +21,10 @@
     child: 'child\u2019s name', trust_name: 'name of your trust', the_trust_name: 'the name of your trust', trust_date: 'date of your trust', other_trustmaker: 'other trustmaker',
     co_pr: 'co-personal representative', applies_to: 'child', alternate: 'alternate guardian', prop_fid: 'property fiduciary', prop_alt: 'alternate'
   };
-  var MARK = { fill: '\u0001', close: '\u0002', blank: '\u0003', refOpen: '\u0004', refClose: '\u0005', drop: '\u0006' };
+  var MARK = { fill: '\u0001', close: '\u0002', blank: '\u0003', refOpen: '\u0004', refClose: '\u0005', drop: '\u0006', ans: '\u0007' };
+  /* MARK.ans tags each line that is in the document because of an answer ([[if]] / [[each]]), so the unpaid
+     preview can keep it readable (lockPreview). toBlocks strips it and sets the block's "ans" flag. */
+  function markAns(s) { return s.replace(/(\S)([ \t]*)$/gm, '$1' + MARK.ans + '$2'); }
   /* optional answers: when left empty, the whole line they sit on is left out of the document
      (no "[address]" placeholder). Only use these on lines that say nothing else. */
   var DROP_IF_EMPTY = { address: 1, dob: 1, phone: 1, email: 1, agent_address: 1, trustee_address: 1, expiration_text: 1, limitations: 1, agent_contact: 1 };
@@ -420,9 +423,9 @@
       } else if (n.t === 'ref') {
         out += MARK.refOpen + n.k + MARK.refClose;
       } else if (n.t === 'if') {
-        out += renderNodes(cond(n.c, scope) ? n.a : n.b, scope);
+        out += markAns(renderNodes(cond(n.c, scope) ? n.a : n.b, scope));
       } else if (n.t === 'each') {
-        (scope[n.l] || []).forEach(function (item) { out += renderNodes(n.body, Object.assign({}, scope, item)); });
+        (scope[n.l] || []).forEach(function (item) { out += markAns(renderNodes(n.body, Object.assign({}, scope, item))); });
       }
     });
     return out;
@@ -461,7 +464,11 @@
   }
   function toBlocks(text) {
     text = text.replace(/\n{3,}/g, '\n\n').trim();
-    var lines = text.split('\n');
+    /* headings and bare @-codes never carry the answer tag (headings are always readable in the preview) */
+    var lines = text.split('\n').map(function (l) {
+      var bare = l.split(MARK.ans).join('');
+      return HEAD.test(bare.trim()) || /^\s*@\w+\s*$/.test(bare) ? bare : l;
+    });
         /* a section or article heading with nothing under it (an unanswered optional question) is left out of every document */
     lines = dropEmptyHeadings(lines.filter(function (l) { return l.trim() !== '@dropempty'; }));
 
@@ -511,6 +518,12 @@
       else { if (ul.length) flush(); para.push(line); }
     });
     flush();
+    /* move the answer tag from the text onto the block */
+    var AR = new RegExp(MARK.ans, 'g');
+    blocks.forEach(function (b) {
+      ['t', 'l', 'r'].forEach(function (f) { if (typeof b[f] === 'string' && b[f].indexOf(MARK.ans) > -1) { b.ans = true; b[f] = b[f].replace(AR, ''); } });
+      if (b.items) b.items = b.items.map(function (x) { if (x.indexOf(MARK.ans) > -1) { b.ans = true; x = x.replace(AR, ''); } return x; });
+    });
     return blocks;
   }
   function blocksToHtml(blocks) {
@@ -519,6 +532,10 @@
       return h.replace(//g, '<span class="fill">').replace(//g, '<span class="blank">').replace(//g, '</span>');
     }
     return blocks.map(function (b) {
+      var h = one(b);
+      return b.ans ? h.replace(/^<(\w+)/, '<$1 data-ans="1"') : h;
+    }).join('');
+    function one(b) {
       switch (b.k) {
         case 'plain': return '<h2 class="art-h plain"><span class="art-t">' + inline(b.t) + '</span></h2>';
         case 'article': return '<h2 class="art-h"><span class="art-n">' + b.n + '</span><span class="art-t">' + inline(b.t) + '</span></h2>';
@@ -534,7 +551,7 @@
         case 'hang': return '<p class="hang">' + inline(b.t) + '</p>';
         default: return '<p>' + inline(b.t) + '</p>';
       }
-    }).join('');
+    }
   }
   function toHtml(text) { return blocksToHtml(toBlocks(text)); }
 
@@ -720,7 +737,7 @@
     if (!locked) return;
     var blocks = Array.prototype.filter.call(docEl.children, function (el) { return !el.classList.contains('wm-print'); });
     if (blocks.length <= PV_CLEAR) return;
-    function mine(el) { return /^H[1-6]$/.test(el.tagName) || el.classList.contains('subh') || !!el.querySelector('.fill'); }
+    function mine(el) { return /^H[1-6]$/.test(el.tagName) || el.classList.contains('subh') || el.hasAttribute('data-ans') || !!el.querySelector('.fill'); }
     blocks.forEach(function (el, i) { if (i >= PV_CLEAR && !mine(el)) el.classList.add('pv-blur'); });
     var note = document.createElement('div');
     note.className = 'pv-note';
