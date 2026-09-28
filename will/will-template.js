@@ -117,16 +117,13 @@ If {{guardian}} is unwilling, unable, or ineligible to serve or ceases to serve,
 No guardian nominated by me shall be required to furnish a bond or other security, to the extent permitted by applicable law.
 
 [[end]]
-[[if has_children]]
-// Your draft has this section. It is shown only when the person has children. Move or remove it as you see fit.
 ## After-Born and Later-Adopted Children {#sec_afterborn}
 
-Any child of mine born or legally adopted after I execute this Will shall not be treated as my Child for purposes of this Will unless I later execute a valid testamentary instrument specifically including that child, subject to rights that cannot lawfully be waived or defeated under applicable law.
+Any child of mine born or legally adopted after I execute this Will shall be treated as though specifically identified as my child in this Will.
 
-[[end]]
 ## Intentional Omission of Other Descendants
 
-Except as otherwise provided in this Will, I have intentionally, and not as a result of accident or mistake, made no provision in this Will for any descendant of mine who is living at my death and is not named or otherwise provided for in this Will.[[if has_children]] A child born to or legally adopted by me after I execute this Will is treated as provided in [[ref sec_afterborn]].[[end]] This Section does not limit any gift to a class of beneficiaries, such as my descendants, that includes that person.
+Except as otherwise provided in this Will, and except for a child born to or legally adopted by me after I execute this Will, who is treated as provided in [[ref sec_afterborn]], I have intentionally, and not as a result of accident or mistake, made no provision in this Will for any descendant of mine who is living at my death and is not named or otherwise provided for in this Will. This Section does not limit any gift to a class of beneficiaries, such as my descendants, that includes that person.
 
 ## Construction of Family References
 
