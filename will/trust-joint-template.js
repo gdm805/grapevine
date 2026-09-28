@@ -349,9 +349,11 @@ The provisions of this Section govern persons acting in the capacity of Co-Trust
 
 Any Co-Trustee may perform Routine Administrative Acts, as defined in [[ref def_routine]], independently.
 
-Except for Routine Administrative Acts, as defined in [[ref def_routine]], no Co-Trustee may take unilateral action affecting the administration, investment, distribution, or ownership of the Trust Estate unless approved by a majority of the Co-Trustees then serving. If only two Co-Trustees are serving, both Co-Trustees must approve the action.
+While both Trustmakers are serving as Co-Trustees, each Trustmaker may act alone as Co-Trustee with respect to that Trustmaker's separate property held in the Trust, without the approval of the other Co-Trustee. This does not apply to jointly owned property or to community, quasi-community, or marital property.
 
-If the two Co-Trustees cannot agree on an action requiring their joint approval, they shall first attempt to resolve the disagreement through mediation. If mediation is unsuccessful, either Co-Trustee may petition a court having jurisdiction over the Trust for appropriate instructions.
+Except for Routine Administrative Acts, as defined in [[ref def_routine]], and except as provided in the preceding paragraph, no Co-Trustee may take unilateral action affecting the administration, investment, distribution, or ownership of the Trust Estate unless approved by a majority of the Co-Trustees then serving. If only two Co-Trustees are serving, both Co-Trustees must approve the action.
+
+If the Co-Trustees cannot reach the approval required by this Section, they shall first attempt to resolve the disagreement through mediation. If mediation is unsuccessful, any Co-Trustee may petition a court having jurisdiction over the Trust for appropriate instructions.
 
 ## Delegation of Duties
 
@@ -1134,9 +1136,9 @@ An individual's capacity shall be considered restored if:
 
 ## Routine Administrative Acts {#def_routine}
 
-Routine Administrative Acts means ordinary actions reasonably necessary for the day-to-day administration of the Trust that do not materially alter the beneficial interests of any beneficiary or involve a material exercise of discretion.
+Routine Administrative Acts means ordinary actions reasonably necessary for the day-to-day administration of the Trust that do not materially alter the beneficial interests of any beneficiary or involve a material exercise of Trustee discretion.
 
-Routine Administrative Acts include depositing and transferring funds, paying ordinary expenses, maintaining records, obtaining information, communicating with financial institutions and professionals, signing routine administrative documents, and taking similar ministerial actions.
+Routine Administrative Acts include depositing and transferring funds, paying ordinary expenses, maintaining financial accounts, maintaining records, obtaining information, communicating with financial institutions and professionals, obtaining routine professional services, maintaining insurance, preserving Trust property, preparing or filing ordinary tax or administrative documents, signing routine administrative documents (including a Certification of Trust), and taking similar ministerial actions reasonably necessary for the Trust's ongoing administration.
 
 ## Trust Estate
 

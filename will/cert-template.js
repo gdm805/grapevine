@@ -101,6 +101,10 @@ A majority of the currently acting co-Trustees may bind the Trust. At least {{mi
 As provided in the Trust Agreement, any one currently acting co-Trustee may perform Routine Administrative Acts, as defined in the Trust Agreement, without the joinder of the other co-Trustee or co-Trustees.
 
 [[end]]
+[[if own_joint_spouses]]
+As provided in the Trust Agreement, while both Trustmakers are serving as co-Trustees, each Trustmaker may act alone with respect to that Trustmaker's separate property held in the Trust. This does not apply to jointly owned property or to community, quasi-community, or marital property.
+
+[[end]]
 
 # REVOCABILITY AND RESERVED POWERS
 

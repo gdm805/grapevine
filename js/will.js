@@ -237,6 +237,14 @@
     if (n <= 1) return null;
     return n === 2 ? { rule: 'ALL', min: '' } : { rule: 'MAJORITY', min: String(Math.floor(n / 2) + 1) };
   }
+  /* a joint trust made here, with both Trustmakers as the current Co-Trustees: each may act alone on
+     that Trustmaker's separate property (the joint trust's Co-Trustee section says so) */
+  function ownJointSpouses(a) {
+    var f = readTrustFacts();
+    if (!ownTrustRule(a) || !f || !f.joint) return false;
+    var names = (a.trustees || []).map(function (t) { return clean(t.name); }).filter(Boolean);
+    return names.length === 2 && names.some(function (n) { return sameName(n, f.name1); }) && names.some(function (n) { return sameName(n, f.name2); });
+  }
   function ownTrustRuleNote(r) {
     return '<p class="hint">Your trust requires ' + (r.rule === 'ALL' ? 'both Co-Trustees to act together' : 'a majority of the Co-Trustees (at least ' + r.min + ') to act') +
       ', except for routine administrative acts. This document says the same, so there is nothing to choose here.</p>';
@@ -2809,6 +2817,7 @@
     v.min_signatures = clean(a.minSignatures);
     var ownC = ownTrustRule(a); if (ownC) { v.trustee_rule = ownC.rule; v.min_signatures = ownC.min; }
     v.own_trust_rule = !!ownC;
+    v.own_joint_spouses = ownJointSpouses(a);
     v.trustee_count = String(v.trustees.length);
     v.revocability = a.revocability === 'IRREVOCABLE' ? 'IRREVOCABLE' : (a.revocability === 'PARTIAL' ? 'PARTIAL' : 'REVOCABLE');
     /* the power to revoke is held by the Trustmaker(s) themselves, same as Grapevine's own trust builders --
@@ -2999,6 +3008,7 @@
     v.trustee_rule = a.trusteeRule || 'ANY_ONE';
     var ownA = ownTrustRule(a); if (ownA) v.trustee_rule = ownA.rule;
     v.own_trust_rule = !!ownA;
+    v.own_joint_spouses = ownJointSpouses(a);
     v.has_transaction = a.hasTransaction === 'yes' && !!clean(a.transactionAuthority);
     v.transaction_authority = clean(a.transactionAuthority);
     v.has_restriction = a.hasRestriction === 'yes' && !!clean(a.transactionRestriction);

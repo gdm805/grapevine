@@ -343,11 +343,11 @@ Any Co-Trustee may perform Routine Administrative Acts, as defined in [[ref def_
 
 Except for Routine Administrative Acts, as defined in [[ref def_routine]], no Co-Trustee may take unilateral action affecting the administration, investment, distribution, or ownership of the Trust Estate unless approved by a majority of the Co-Trustees then serving. If only two Co-Trustees are serving, both Co-Trustees must approve the action.
 
-If the two Co-Trustees cannot agree on an action requiring their joint approval, they shall first attempt to resolve the disagreement through mediation. If mediation is unsuccessful, either Co-Trustee may petition a court having jurisdiction over the Trust for appropriate instructions.
+If the Co-Trustees cannot reach the approval required by this Section, they shall first attempt to resolve the disagreement through mediation. If mediation is unsuccessful, any Co-Trustee may petition a court having jurisdiction over the Trust for appropriate instructions.
 
 ## Delegation of Duties
 
-The Co-Trustees may, by the approval required under this Section, delegate specific Routine Administrative Acts, as defined in [[ref def_routine]], to one or more Co-Trustees.
+The Co-Trustees may, by the approval required under this Section, delegate specific administrative duties to one or more Co-Trustees.
 
 A delegation does not relieve any delegating Co-Trustee of the duty to act prudently, reasonably supervise the delegated duties, or take appropriate action to prevent or remedy a breach of trust.
 
@@ -803,9 +803,9 @@ Required Survivorship Period means the period a beneficiary must survive the Tru
 
 ## Routine Administrative Acts {#def_routine}
 
-Routine Administrative Acts means routine actions taken in the ordinary administration of the Trust that do not materially affect the beneficiaries' beneficial interests or involve an extraordinary exercise of Trustee discretion.
+Routine Administrative Acts means ordinary actions reasonably necessary for the day-to-day administration of the Trust that do not materially alter the beneficial interests of any beneficiary or involve a material exercise of Trustee discretion.
 
-Routine Administrative Acts may include paying ordinary expenses, depositing or transferring funds, maintaining financial accounts, obtaining routine professional services, maintaining insurance, preserving Trust property, preparing or filing ordinary tax or administrative documents, and taking similar actions reasonably necessary for the Trust's ongoing administration.
+Routine Administrative Acts include depositing and transferring funds, paying ordinary expenses, maintaining financial accounts, maintaining records, obtaining information, communicating with financial institutions and professionals, obtaining routine professional services, maintaining insurance, preserving Trust property, preparing or filing ordinary tax or administrative documents, signing routine administrative documents (including a Certification of Trust), and taking similar ministerial actions reasonably necessary for the Trust's ongoing administration.
 
 ## Trustmaker
 
