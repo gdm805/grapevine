@@ -270,3 +270,11 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 /* "See the blank template" link above the document preview */
 .preview-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px; }
 .blank-link { font-size: 14px; font-weight: 600; color: var(--grape); }
+
+/* unpaid preview: no selecting or copying; everything after the opening blurred except the person's own answers */
+.doc.pv-locked { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.doc .pv-blur { color: transparent !important; text-shadow: 0 0 7px rgba(37, 36, 41, 0.55); }
+.doc .pv-blur .fill, .doc .pv-blur .blank { color: #252429 !important; text-shadow: none; }
+.doc .pv-blur .sigline { opacity: 0.4; }
+.doc .pv-note { margin: 18px 0; padding: 12px 14px; border-radius: 12px; background: var(--grape-tint); border: 1px solid var(--grape); font: 400 14px/1.45 var(--sans); color: var(--ink); }
+@media print { .doc.pv-locked { display: none !important; } }

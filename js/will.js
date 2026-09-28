@@ -696,11 +696,38 @@
   function renderDoc() {
     docEl.innerHTML = (draft ? '<div class="wm-print" aria-hidden="true">' + esc(draftLabel) + '</div>' : '') + toHtml(docText(), 'screen');
     docEl.classList.toggle('draft', draft);
+    lockPreview();
     if (draft) {
       var svg = "<svg xmlns='http://www.w3.org/2000/svg' width='460' height='300'><text x='230' y='150' text-anchor='middle' transform='rotate(-28 230 150)' font-family='Arial,sans-serif' font-weight='700' font-size='24' fill='%23583785' fill-opacity='0.24'>" + esc(draftLabel) + "</text></svg>";
       docEl.style.setProperty('--wm', 'url("data:image/svg+xml,' + encodeURIComponent(svg).replace(/'/g, '%27') + '")');
     }
   }
+  /* UNPAID PREVIEW: the opening of the document stays readable, the rest is blurred -- except the person's own
+     answers (highlighted), so they still watch it take shape -- and the preview can't be selected, copied,
+     dragged or printed. Everything is clear once paid. Not on the blank template, which is generic text. */
+  var PV_CLEAR = 12;
+  function lockPreview() {
+    var locked = !BLANK && !paidUp();
+    docEl.classList.toggle('pv-locked', locked);
+    /* the heading says what the person is looking at: a preview before payment, the document itself after */
+    var ph = document.querySelector('.preview-head h2');
+    if (ph && !BLANK) {
+      if (!ph.getAttribute('data-doc')) ph.setAttribute('data-doc', ph.textContent.replace(/^Your\s+/i, '').replace(/,\s*taking shape\s*$/i, ''));
+      var what = ph.getAttribute('data-doc');
+      ph.textContent = locked ? 'A preview of your ' + what : 'Your ' + what;
+    }
+    if (!locked) return;
+    var blocks = Array.prototype.filter.call(docEl.children, function (el) { return !el.classList.contains('wm-print'); });
+    if (blocks.length <= PV_CLEAR) return;
+    blocks.forEach(function (el, i) { if (i >= PV_CLEAR) el.classList.add('pv-blur'); });
+    var note = document.createElement('div');
+    note.className = 'pv-note';
+    note.innerHTML = '<strong>The rest of your document is blurred until checkout.</strong> Your own answers stay visible, highlighted, so you can check them. Pay once to read, download and print the full text.';
+    docEl.insertBefore(note, blocks[PV_CLEAR]);
+  }
+  ['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (ev) {
+    docEl.addEventListener(ev, function (e) { if (docEl.classList.contains('pv-locked')) e.preventDefault(); });
+  });
   var timer = null;
   function schedulePreview() { clearTimeout(timer); timer = setTimeout(renderDoc, 60); }
 
