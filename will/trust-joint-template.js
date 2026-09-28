@@ -433,7 +433,7 @@ The Trustee may employ and compensate attorneys, accountants, investment adviser
 
 The Trustee may acquire, protect, register, license, assign, enforce, compromise, or dispose of copyrights, trademarks, patents, trade names, domain names, royalties, and other intellectual property rights.
 
-## Digital Assets
+## Digital Assets {#sec_digital_assets}
 
 The Trustee may:
 
@@ -1090,9 +1090,25 @@ Descendants mean all lineal descendants of an individual, regardless of generati
 
 Descendants include adopted persons and their descendants. Descendants do not include stepchildren, foster children, or persons related only by marriage unless specifically identified in this Trust Agreement.
 
-## Digital Assets
+## Digital Assets {#def_digital_assets}
 
-Digital Assets include electronically stored information, online accounts, electronic communications, digital files, cryptocurrencies, digital wallets, domain names, websites, software, intellectual property, and other electronically maintained property or rights.
+Digital Assets means electronically stored information, property, rights, records, accounts, and communications in which an individual has a right or interest, including:
+
+(a) electronic communications, email accounts, text messages, messaging accounts, and social media accounts;
+
+(b) digital files, photographs, videos, audio recordings, documents, databases, and other electronically stored information;
+
+(c) online financial, banking, investment, payment, merchant, subscription, rewards, loyalty, gaming, and similar accounts;
+
+(d) cryptocurrencies, virtual currencies, digital tokens, digital wallets, private keys, seed phrases, and other digital or blockchain-based assets or rights;
+
+(e) domain names, websites, blogs, online businesses, cloud-storage accounts, and electronically maintained business records;
+
+(f) software, source code, electronically maintained intellectual property, licenses, and other digital rights; and
+
+(g) any other electronically stored property, account, record, information, communication, or right existing now or created in the future.
+
+Digital Assets include the content of electronic communications to the extent authorized under [[ref sec_digital_assets]] and permitted by applicable law.
 
 ## Heirs
 
