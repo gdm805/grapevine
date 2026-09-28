@@ -663,6 +663,13 @@
     }
     return renderNodes(tpl.nodes, buildVars(answers, states, tpl.settings));
   }
+  function blankPanel() {
+    var opts = '<option value="">Choose a state</option>' + states.list.map(function (st) { return '<option' + (answers.state === st.name ? ' selected' : '') + '>' + esc(st.name) + '</option>'; }).join('');
+    var docName = window.GVFlow ? window.GVFlow.baseLabel(kindKey) : KIND.file.replace(/-/g, ' ');
+    return stepHead('Blank template: ' + esc(docName), 'This is the ' + esc(docName) + ' with nothing filled in yet. Words in [brackets] are filled in from your answers, and optional sections appear only when you choose them. Nothing you do on this page is saved.') +
+      field('Show the template for', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>', 'Each state has its own version.') +
+      '<div class="nav-row"><span></span><a class="btn btn-primary" href="' + esc(location.pathname.split('/').pop()) + (SPOUSE2 ? '?spouse=2' : '') + '">Start filling it in <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>';
+  }
   function renderDoc() {
     docEl.innerHTML = (draft ? '<div class="wm-print" aria-hidden="true">' + esc(draftLabel) + '</div>' : '') + toHtml(docText(), 'screen');
     docEl.classList.toggle('draft', draft);
@@ -3638,16 +3645,24 @@
   KIND = KINDS[kindKey];
   buildVars = KIND.buildVars; LS_KEY = KIND.ls + (SPOUSE2 ? '.s2' : '');
 
+  /* BLANK TEMPLATE (?blank=1): the document with nothing filled in, so anyone can see what they are buying
+     before they pay (North Carolina requires this: N.C. Gen. Stat. 84-2.2). Nothing is loaded or saved. */
+  var BLANK = /[?&]blank=1\b/.test(location.search);
   var answers = clone(KIND.empty), stepId = 'start', errors = [], restored = false;
   try {
-    var saved = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    var saved = BLANK ? null : JSON.parse(localStorage.getItem(LS_KEY) || 'null');
     if (saved && saved.answers) { answers = Object.assign(clone(KIND.empty), saved.answers); stepId = saved.step || 'start'; restored = stepId !== 'start' || !!answers.state; }
   } catch (e) { /* storage unavailable: carry on without saving */ }
   if (/[?&]review=1\b/.test(location.search) && saved && saved.answers) stepId = 'review';
   var beforeCarry = JSON.parse(JSON.stringify(answers));
-  applyProfile(answers, KIND);
-  applyTrustFacts(answers, KIND);
-  applyShared(answers, KIND);
+  if (BLANK) {
+    var qsState = new URLSearchParams(location.search).get('state');
+    answers.state = (qsState && states.map[qsState]) ? qsState : (readProfile().state || '');
+  } else {
+    applyProfile(answers, KIND);
+    applyTrustFacts(answers, KIND);
+    applyShared(answers, KIND);
+  }
   /* CARRIED: every answer that was filled in from an earlier document. A screen whose answers are ALL carried
      is skipped (see next() and the start-screen skip below) -- never ask again what was already answered. */
   var CARRIED = {};
@@ -3661,7 +3676,7 @@
   (function () {
     var fl = window.GVFlow && window.GVFlow.current();
     if (!fl || window.top !== window || /[?&]export=1\b/.test(location.search)) return;
-    if (readProfile().aboutDone) return;
+    if (BLANK || readProfile().aboutDone) return;
     var here = location.pathname.split('/').pop() + location.search;
     location.replace(window.GVUrl('about-you.html') + '?next=' + encodeURIComponent(here.replace(/^\//, '')));
   })();
@@ -3679,6 +3694,7 @@
     startSkip = { id: 'start', landing: stepId, text: 'We filled in ' + labels.join(', ') + ' from your earlier answers.' };
   })();
   function save() {
+    if (BLANK) return;
     if ((KIND.key === 'trust' || KIND.key === 'trustjoint') && answers.county && !answers.signingCounty) answers.signingCounty = answers.county;
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
@@ -3698,6 +3714,7 @@
     if (kindKey === 'hipaa') {
       if (answers.state && !HIPAA_CACHE[answers.state] && !HIPAA_FAIL[answers.state] && !HIPAA_PENDING[answers.state]) hipaaLoad(answers.state, function () { draw(focusSel); });
     }
+    if (BLANK) { progEl.innerHTML = ''; stepEl.innerHTML = blankPanel(); renderDoc(); return; }
     var flow = window.GVFlow && window.GVFlow.current();
     var inFlow = !!(flow && flow.docs.indexOf(docId) > -1 && !(flow.plan === 'doc' && flow.docs.length === 1));
     var flowIdx = inFlow ? flow.docs.indexOf(docId) : -1;
@@ -4256,6 +4273,27 @@
     text: docText, html: function () { return toHtml(docText()); }, blocks: function () { return toBlocks(docText()); }, exportOptions: exportOptions,
     vars: function () { return buildVars(answers, states, tpl.settings); }, validate: function (id) { return KIND.validate(id); }, applyPreset: applyPreset
   };
+
+  /* a "See the blank template" link above every document preview; on the blank page itself, the heading says so */
+  (function () {
+    var head = document.querySelector('.preview-head'), hero = document.querySelector('.will-hero');
+    if (BLANK) {
+      var h1 = hero && hero.querySelector('h1'), over = hero && hero.querySelector('.overline'), sw = hero && hero.querySelector('.kind-switch');
+      if (over) over.textContent = 'Blank template';
+      if (h1) h1.textContent = 'See it before you buy';
+      var ld = hero && hero.querySelector('.lead'); if (ld) ld.textContent = 'This is the full document with nothing filled in yet, so you can see exactly what you would be getting before you pay.';
+      if (sw) sw.hidden = true;
+      var ph = head && head.querySelector('h2'); if (ph) ph.textContent = 'The blank template';
+      return;
+    }
+    if (head && !head.querySelector('.blank-link')) {
+      var a = document.createElement('a');
+      a.className = 'blank-link'; a.target = '_blank'; a.rel = 'noopener';
+      a.href = location.pathname.split('/').pop() + '?blank=1' + (SPOUSE2 ? '&spouse=2' : '') + (answers.state ? '&state=' + encodeURIComponent(answers.state) : '');
+      a.textContent = 'See the blank template';
+      head.appendChild(a);
+    }
+  })();
 
   draw(null);
   /* arriving from the "payment received" page (?download=all): bring the download box into view */
