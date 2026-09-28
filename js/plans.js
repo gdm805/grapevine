@@ -55,7 +55,7 @@ window.GV_PLANS = {
   prices: {
     will: { single: 119, couple: 199 },
     essentials: { single: 249, couple: 399 },
-    complete: { single: 499, couple: 649 },
+    complete: { single: 429, couple: 549 },
     /* the smaller offers: any one document, and two short packages (see also `extra` below) */
     doc: { single: 49, couple: 79 },
     /* trust-side single documents (Schedule A, Certification, Affidavit, Assignment) are priced per TRUST: the
