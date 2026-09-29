@@ -821,8 +821,8 @@
       return stepHead('First, where do you live?', 'Your state\u2019s rules decide how a will must be signed.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this will of my own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this will of my own free will.</span></label>') +
         '</div>';
     },
     about: function () {
@@ -1167,8 +1167,8 @@
       return stepHead('First, where do you live?', 'Your state’s rules decide how a will must be signed.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this will of my own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this will of my own free will.</span></label>') +
         '<label class="check"><input type="checkbox" data-k="trustOk"' + (answers.trustOk ? ' checked' : '') + '><span>I have already created my living trust, or I will sign it at the same time as this will.</span></label>' +
         '</div>';
     },
@@ -1495,8 +1495,8 @@
       return stepHead('First, where do you live?', 'A power of attorney is governed by state law. Each state has its own form, its own required notices and its own signing rules.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts(answers.state, 'Choose your state') + '</select>') +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>') +
         '</div>';
     },
     about: function () {
@@ -1658,7 +1658,7 @@
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off">' + opts + '</select>') +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="capableOk"' + (answers.capableOk ? ' checked' : '') + '><span>I am 18 or older, and I am making this of my own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="capableOk"' + (answers.capableOk ? ' checked' : '') + '><span>I am 18 or older, and I am making this of my own free will.</span></label>') +
         '</div>' +
         field('Right now, are you able to understand this document and communicate your own wishes?', pills('capacityCheck', [['yes', 'Yes'], ['unsure', 'I’m not sure']], true));
       if (answers.capacityCheck === 'unsure') {
@@ -1874,8 +1874,8 @@
       return stepHead('First, where do you live?', 'A health care directive is governed by your state’s law, and the wording your state requires is different from every other state’s.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this document of my own free will.</span></label>') +
         '</div>';
     },
     about: function () {
@@ -2120,8 +2120,8 @@
       return stepHead('First, where do you live?', 'A HIPAA authorization is governed by your state’s law as well as federal law, and a few states ask for more than HIPAA alone requires.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this authorization of my own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this authorization of my own free will.</span></label>') +
         '</div>';
     },
     about: function () {
@@ -2375,8 +2375,8 @@
           field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
           field('Name your trust', text('trustName', 'For example, Maria Elena Alvarez Living Trust'), 'You can change this later. Many people use their own name.')) +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am creating this trust of my own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am creating this trust of my own free will.</span></label>') +
         '</div>';
     },
     about: function () {
@@ -2650,8 +2650,8 @@
           field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
           field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'You can change this later.')) +
         '<div class="checks">' +
-        '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>We are both 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>We are creating this trust of our own free will.</span></label>' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>We are both 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>We are creating this trust of our own free will.</span></label>') +
         '</div>';
     },
     about: function () {
@@ -3786,6 +3786,16 @@
     applyTrustFacts(answers, KIND);
     applyShared(answers, KIND);
   }
+  /* "I am 18 or older" and "of my own free will" are confirmed ONCE, on the About you screen, under the names.
+     When they're confirmed there (for a joint trust, by both people), no document asks them again: the boxes
+     are left off its first screen and counted as ticked. Without an About you answer, the document asks. */
+  var ABOUT_OK = (function () {
+    if (BLANK) return false;
+    var p = readProfile();
+    return !!(SPOUSE2 ? p.ageOk2 && p.freeOk2 : kindKey === 'trustjoint' ? p.ageOk && p.freeOk && p.ageOk2 && p.freeOk2 : p.ageOk && p.freeOk);
+  })();
+  function confirmAbout(a) { if (!ABOUT_OK) return; ['ageOk', 'freeOk', 'capableOk'].forEach(function (k) { if (k in a) a[k] = true; }); }
+  confirmAbout(answers);
   /* CARRIED: every answer that was filled in from an earlier document. A screen whose answers are ALL carried
      is skipped (see next() and the start-screen skip below) -- never ask again what was already answered. */
   var CARRIED = {};
@@ -4002,6 +4012,7 @@
     ['dob', 'phone'].forEach(function (k) { if (k in src) src[k] = ''; });
     ['ageOk', 'freeOk', 'trustOk'].forEach(function (k) { if (k in src) src[k] = false; });
     answers = Object.assign(clone(KIND.empty), src);
+    confirmAbout(answers);
     answers._mirroredFrom = n1;
     errors = []; mirrorOpen = false;
     go('start', { quiet: true });

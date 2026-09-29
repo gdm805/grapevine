@@ -1,7 +1,8 @@
 /* "Find a lawyer" links: wherever the site says "If you have any legal questions about your particular
    circumstances we recommend that you seek a qualified attorney to assist you.", this adds one link to the
    person's OWN state's bar lawyer referral service (or, where the state bar runs none, its public
-   find-a-lawyer page), using the state saved on the "About you" screen. A neutral pointer to the bar --
+   find-a-lawyer page), using the state saved on the "About you" screen. Before a state is chosen (the home page comes first), it
+   links to the American Bar Association's directory of bar referral services instead. A neutral pointer to the bar --
    Grapevine doesn't pick, recommend or get paid for any lawyer. Never added inside a document itself.
    Links checked 2026-09-28. To fix one, change its line below: 'State': ['What the link says', 'address']. */
 (function () {
@@ -59,13 +60,16 @@
     'Wisconsin': ['State Bar of Wisconsin I Need a Lawyer', 'https://www.wisbar.org/forPublic/INeedaLawyer/pages/i-need-a-lawyer.aspx'],
     'Wyoming': ['Wyoming State Bar Hire a Lawyer', 'https://www.wyomingbar.org/for-the-public/hire-a-lawyer/']
   };
+  var ANY = ['the American Bar Association\u2019s directory of lawyer referral services', 'https://www.americanbar.org/groups/lawyer_referral/resources/lawyer-referral-directory/'];
   var SENTENCE = 'seek a qualified attorney to assist you';
   function state() {
     try { return (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || ''; } catch (e) { return ''; }
   }
   function decorate(root) {
     var st = state(), hit = LINKS[st];
-    if (!hit || !root || !document.createTreeWalker) return;
+    /* state not chosen yet (the home page comes before "About you"): the ABA's directory of bar referral services */
+    if (!hit) hit = ANY;
+    if (!root || !document.createTreeWalker) return;
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), found = [], n;
     while ((n = walker.nextNode())) if (n.nodeValue.indexOf(SENTENCE) > -1) found.push(n);
     found.forEach(function (t) {
@@ -73,7 +77,7 @@
       if (!el || el.closest('.doc, #will-doc, script, style, a') || el.querySelector('.gv-lawyer-link')) return;
       var span = document.createElement('span');
       span.className = 'gv-lawyer-link';
-      span.appendChild(document.createTextNode(' To find one in ' + st + ': '));
+      span.appendChild(document.createTextNode(' To find one in ' + (LINKS[st] ? st : 'your state') + ': '));
       var a = document.createElement('a');
       a.href = hit[1]; a.target = '_blank'; a.rel = 'noopener';
       a.textContent = hit[0];

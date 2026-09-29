@@ -1250,7 +1250,7 @@ The Trustmakers execute this Trust Agreement as of the date stated below, in {{c
 
 Each Trustmaker acknowledges having read this Trust Agreement, or having had it read and explained to that Trustmaker, and declares that it accurately reflects that Trustmaker's intentions.
 
-Each Trustmaker further acknowledges executing this Trust Agreement voluntarily and with the intent that it be legally effective according to its terms.
+Each Trustmaker further acknowledges executing this Trust Agreement with the intent that it be legally effective according to its terms.
 
 @line Date: ______
 
