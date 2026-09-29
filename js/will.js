@@ -204,6 +204,60 @@
     if (kind.key !== 'trust' && kind.key !== 'trustjoint') return;
     try { localStorage.setItem(TRUST_FACTS_KEY, JSON.stringify(factsFrom(a, kind.key))); } catch (e) { /* ignore */ }
   }
+  /* TRUST PAPERWORK shared answers (grapevine.trustpaper.v1). Schedule A, the Certification of Trust, the
+     Affidavit of Trustee and the Assignment all describe the same trust. What one of them has answered -- the
+     trust's name and dates, who made it, the current trustees and how they act, the state, and where and when
+     it's signed -- fills in the others (only where still empty), and a screen whose answers are all filled in
+     is skipped, so the Trust Paperwork package asks each question once. Kept apart from the trust facts above
+     (a trust written HERE), so an outside trust's answers never make it look like Grapevine's own trust. */
+  var PAPER_KEY = 'grapevine.trustpaper.v1', PAPER_DOCS = ['schedulea', 'cert', 'affidavit', 'assignment'];
+  function readPaper() { try { return JSON.parse(localStorage.getItem(PAPER_KEY) || '{}') || {}; } catch (e) { return {}; } }
+  function paperNames(a, key) {
+    if (key === 'cert') return (a.trustmakers || []).map(function (t) { return clean(t.name); }).filter(Boolean);
+    return [clean(a.tm1Name), a.trustType === 'JOINT' ? clean(a.tm2Name) : ''].filter(Boolean);
+  }
+  function savePaper(a, kind) {
+    var k = kind.key;
+    if (PAPER_DOCS.indexOf(k) === -1 || !clean(a.trustName)) return;
+    var names = paperNames(a, k), trustees = (a.trustees || []).map(function (t) { return clean(t.name); }).filter(Boolean);
+    var patch = {
+      state: a.state, trustName: clean(a.trustName), origTrustDate: a.origTrustDate, trustRestated: a.trustRestated, restatementDate: a.restatementDate,
+      tm1: names[0], tm2: names[1], trustType: k === 'cert' ? (names.length > 1 ? 'JOINT' : (names.length ? 'SINGLE' : '')) : (names.length ? a.trustType : ''),
+      trustees: trustees.length ? trustees : undefined, trusteeRule: a.trusteeRule, minSignatures: a.minSignatures,
+      signingCounty: a.signingCounty, signingDate: a.signingDate
+    };
+    try {
+      var o = readPaper();
+      Object.keys(patch).forEach(function (f) { if (patch[f] !== undefined && patch[f] !== '' && patch[f] !== null) o[f] = patch[f]; });
+      localStorage.setItem(PAPER_KEY, JSON.stringify(o));
+    } catch (e) { /* ignore */ }
+  }
+  function applyPaper(a, kind) {
+    var k = kind.key;
+    if (PAPER_DOCS.indexOf(k) === -1) return;
+    var p = readPaper();
+    if (!p.trustName) return;
+    var fresh = !clean(a.trustName);
+    function fill(f, v) { if (!(f in a) || !v) return; if (a[f] === '' || a[f] === undefined) a[f] = v; if (a[f] === v) CARRY_CONFIRMED[f] = 1; }
+    ['state', 'trustName', 'origTrustDate', 'trustRestated', 'restatementDate', 'trusteeRule', 'minSignatures', 'signingCounty', 'signingDate'].forEach(function (f) { fill(f, p[f]); });
+    if (k === 'cert') {
+      if (!(a.trustmakers || []).some(function (t) { return clean(t.name); }) && p.tm1) a.trustmakers = [p.tm1, p.tm2].filter(Boolean).map(function (n) { return { name: n }; });
+      if ((a.trustmakers || []).some(function (t) { return clean(t.name); })) CARRY_CONFIRMED.trustmakers = 1;
+    } else {
+      if (fresh && p.trustType) a.trustType = p.trustType;
+      if (a.trustType === p.trustType) CARRY_CONFIRMED.trustType = 1;
+      fill('tm1Name', p.tm1); if (a.trustType === 'JOINT') fill('tm2Name', p.tm2); else CARRY_CONFIRMED.tm2Name = 1;
+    }
+    /* the Affidavit is signed by the person using Grapevine (their name from About you), when they're a trustee */
+    if (k === 'affidavit' && !clean(a.affiantName)) {
+      var me = clean(readProfile().name);
+      if (me && (p.trustees || []).some(function (t) { return sameName(t, me); })) a.affiantName = me;
+    }
+    if ('trustees' in a && (p.trustees || []).length) {
+      if (!(a.trustees || []).some(function (t) { return clean(t.name); })) a.trustees = p.trustees.map(function (n) { return k === 'cert' ? { name: n, address: '' } : { name: n }; });
+      CARRY_CONFIRMED.trustees = 1;
+    }
+  }
   /* the saved facts -- or, for a trust written before facts were saved, worked out from the trust's own
      saved answers (joint trust first if both exist and it has a name) */
   function readTrustFacts() {
@@ -3818,6 +3872,7 @@
   } else {
     applyProfile(answers, KIND);
     applyTrustFacts(answers, KIND);
+    applyPaper(answers, KIND);
     applyShared(answers, KIND);
   }
   /* "I am 18 or older" and "of my own free will" are confirmed ONCE, on the About you screen, under the names.
@@ -3888,6 +3943,7 @@
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
     saveTrustFacts(answers, KIND);
+    savePaper(answers, KIND);
     saveShared(answers, KIND);
   }
 
