@@ -770,8 +770,15 @@
   /* the joint trust has two Trustmakers instead of one answers.name, and the Certification of
      Trust is named for the trust itself rather than a person -- handle both for the printed
      footer and the export filename/footer below */
+  /* "The Merrill Living Trust" -> "The Merrill Living Trust Agreement"; no name yet -> the generic title */
+  function trustFooter(n) {
+    n = clean(n);
+    if (!n || n === 'Testator' || n === 'Principal') return 'Revocable Living Trust Agreement';
+    return /\bagreement$/i.test(n) ? n : n + ' Agreement';
+  }
   function footerName() {
-    if (KIND.key === 'trustjoint') return [clean(answers.name1), clean(answers.name2)].filter(Boolean).join(' and ').replace(/["\\]/g, '');
+    /* a trust's footer names the document itself: "The Merrill Living Trust Agreement" */
+    if (KIND.key === 'trust' || KIND.key === 'trustjoint') return clean(answers.trustName).replace(/["\\]/g, '');
     if (KIND.key === 'cert') return clean(answers.trustName).replace(/["\\]/g, '');
     if (KIND.key === 'affidavit') return clean(answers.affiantName).replace(/["\\]/g, '');
     if (KIND.key === 'assignment' || KIND.key === 'schedulea') return clean(answers.trustName).replace(/["\\]/g, '');
@@ -3765,7 +3772,7 @@
   var KINDS = {
     will: { key: 'will', ls: 'grapevine.will.v2', file: 'Last-Will-and-Testament', footer: function (n) { return laPageSign() + 'Last Will and Testament of ' + n; },
       empty: EMPTY_WILL, rows: ROWS_WILL, steps: STEPS_WILL, render: RENDER_WILL, validate: validateWill, buildVars: buildVarsWill },
-    pourover: { key: 'pourover', ls: 'grapevine.pourover.v1', file: 'Pour-Over-Will', footer: function (n) { return laPageSign() + 'Pour-Over Will For ' + n; },
+    pourover: { key: 'pourover', ls: 'grapevine.pourover.v1', file: 'Pour-Over-Will', footer: function (n) { return laPageSign() + 'Pour-Over Will of ' + n; },
       empty: EMPTY_PO, rows: ROWS_PO, steps: STEPS_PO, render: RENDER_PO, validate: validatePO, buildVars: buildVarsPO },
     dpoa: { key: 'dpoa', ls: 'grapevine.dpoa.v1', file: 'Durable-Power-of-Attorney', footer: function (n) { return 'Durable Power of Attorney of ' + n; },
       empty: EMPTY_DP, rows: ROWS_DP, steps: STEPS_DP, render: RENDER_DP, validate: validateDP, buildVars: buildVarsDP },
@@ -3775,19 +3782,19 @@
       empty: EMPTY_HCD, rows: ROWS_HCD, steps: STEPS_HCD, render: RENDER_HCD, validate: validateHCD, buildVars: buildVarsHCD },
     hipaa: { key: 'hipaa', ls: 'grapevine.hipaa.v1', file: 'HIPAA-Authorization', footer: function (n) { return 'HIPAA Authorization of ' + n; },
       empty: EMPTY_HIPAA, rows: ROWS_HIPAA, steps: STEPS_HIPAA, render: RENDER_HIPAA, validate: validateHipaa, buildVars: buildVarsHipaa },
-    trust: { key: 'trust', ls: 'grapevine.trust.v1', file: 'Revocable-Living-Trust', footer: function (n) { return 'Revocable Living Trust of ' + n; },
+    trust: { key: 'trust', ls: 'grapevine.trust.v1', file: 'Revocable-Living-Trust', footer: function (n) { return trustFooter(n); },
       empty: EMPTY_TRUST, rows: ROWS_TRUST, steps: STEPS_TRUST, render: RENDER_TRUST, validate: validateTrust, buildVars: buildVarsTrust },
-    trustjoint: { key: 'trustjoint', ls: 'grapevine.trustjoint.v1', file: 'Joint-Revocable-Living-Trust', footer: function (n) { return 'Revocable Living Trust of ' + n; },
+    trustjoint: { key: 'trustjoint', ls: 'grapevine.trustjoint.v1', file: 'Joint-Revocable-Living-Trust', footer: function (n) { return trustFooter(n); },
       empty: EMPTY_TRUST_JOINT, rows: ROWS_TRUST_JOINT, steps: STEPS_TRUST_JOINT, render: RENDER_TRUST_JOINT, validate: validateTrustJoint, buildVars: buildVarsTrustJoint },
-    cert: { key: 'cert', ls: 'grapevine.cert.v1', file: 'Certification-of-Trust', footer: function (n) { return 'Certification of Trust of ' + n; },
+    cert: { key: 'cert', ls: 'grapevine.cert.v1', file: 'Certification-of-Trust', footer: function (n) { return 'Certification of Trust for ' + n; },
       empty: EMPTY_CERT, rows: ROWS_CERT, steps: STEPS_CERT, render: RENDER_CERT, validate: validateCert, buildVars: buildVarsCert },
     affidavit: { key: 'affidavit', ls: 'grapevine.affidavit.v1', file: 'Affidavit-of-Trustee', footer: function (n) { return 'Affidavit of Trustee of ' + n; },
       empty: EMPTY_AFFIDAVIT, rows: ROWS_AFFIDAVIT, steps: STEPS_AFFIDAVIT, render: RENDER_AFFIDAVIT, validate: validateAffidavit, buildVars: buildVarsAffidavit },
-    assignment: { key: 'assignment', ls: 'grapevine.assignment.v1', file: 'Assignment-of-Personal-Property-to-Trust', footer: function (n) { return 'General Assignment of Personal Property to Trust of ' + n; },
+    assignment: { key: 'assignment', ls: 'grapevine.assignment.v1', file: 'Assignment-of-Personal-Property-to-Trust', footer: function (n) { return 'General Assignment of Personal Property to ' + n; },
       empty: EMPTY_ASSIGNMENT, rows: ROWS_ASSIGNMENT, steps: STEPS_ASSIGNMENT, render: RENDER_ASSIGNMENT, validate: validateAssignment, buildVars: buildVarsAssignment },
     finalwishes: { key: 'finalwishes', ls: 'grapevine.finalwishes.v1', file: 'Final-Wishes', footer: function (n) { return 'Final Wishes of ' + n; },
       empty: EMPTY_FINALWISHES, rows: ROWS_FINALWISHES, steps: STEPS_FINALWISHES, render: RENDER_FINALWISHES, validate: validateFinalWishes, buildVars: buildVarsFinalWishes },
-    schedulea: { key: 'schedulea', ls: 'grapevine.schedulea.v1', file: 'Schedule-A-Trust-Property', footer: function (n) { return 'Schedule A to ' + n; },
+    schedulea: { key: 'schedulea', ls: 'grapevine.schedulea.v1', file: 'Schedule-A-Trust-Property', footer: function (n) { return 'Schedule A to ' + trustFooter(n); },
       empty: EMPTY_SCHEDA, rows: ROWS_SCHEDA, steps: STEPS_SCHEDA, render: RENDER_SCHEDA, validate: validateScheduleA, buildVars: buildVarsScheduleA },
     contacts: { key: 'contacts', ls: 'grapevine.contacts.v1', file: 'Important-Contacts', footer: function (n) { return 'Important Contacts for ' + n; },
       empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts }
@@ -4346,7 +4353,7 @@
   /* ---------- download the PDF or the Word file ---------- */
   function exportInfo() {
     var n = footerName();
-    var who = (KIND.key === 'trustjoint' ? clean(answers.name1) : n).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
+    var who = (KIND.key === 'trustjoint' ? clean(answers.name1) : KIND.key === 'trust' ? clean(answers.name) : n).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
     return { base: KIND.file + (who ? '-' + who : ''), footer: KIND.footer(n || (KIND.key === 'dpoa' ? 'Principal' : 'Testator')) };
   }
   function status(msg, bad) {
