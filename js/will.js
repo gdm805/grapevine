@@ -3806,6 +3806,16 @@
      doesn't ask where you live eleven times. A pour-over will inside Complete comes after the trust, so its
      "I have created my trust" box is ticked for them. */
   var startSkip = null;
+  /* A couple's joint trust always belongs to a couple's package. If the package was started as one person's
+     (for example, "Just me" was still selected on the Pricing page) but the joint trust is being written, the
+     package is switched to the couple's version here -- the same as clicking "Write the joint version
+     instead" -- keeping every document already finished. Otherwise the joint trust wasn't part of the
+     package and its review screen offered only payment, with no way on to the next document. */
+  (function () {
+    var fl = window.GVFlow && window.GVFlow.current();
+    if (kindKey !== 'trustjoint' || BLANK || /[?&]export=1\b/.test(location.search) || !fl || fl.plan !== 'complete') return;
+    if (fl.docs.indexOf('trustjoint') === -1 && fl.docs.indexOf('trust') > -1) window.GVFlow.useTrust('trustjoint');
+  })();
   (function () {
     var fl = window.GVFlow && window.GVFlow.current();
     if (!fl || window.top !== window || /[?&]export=1\b/.test(location.search)) return;
