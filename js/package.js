@@ -65,7 +65,8 @@
       '<p>Everything is unlocked. Download or print all ' + f.docs.length + ' documents at once below. To get just one document, choose \u201cView, download or print\u201d next to it: it opens with its own Download PDF and Print buttons. Save your files now: your purchase is remembered only in this browser.</p>' +
       '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + f.docs.length + ' documents (PDF)</button>' +
       '<button type="button" class="btn btn-secondary" id="print-all">Print all ' + f.docs.length + ' documents</button></div>' +
-      '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
+      '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div>' +
+      '<p class="pkg-sign-link"><a href="#how-to-sign">How to sign your documents</a> is below.</p></div>';
   } else {
     var b = beta();
     action = '<div class="pkg-sum-pay"><h2>Ready to download?</h2>' +
@@ -80,11 +81,26 @@
     '<span class="pkg-doc-name">Personal information<small>' + esc([prof.name, prof.name2].filter(Boolean).join(' and ') || 'Not finished yet') + '</small></span>' +
     '<a class="btn btn-secondary btn-sm" href="' + esc(url('about-you.html') + '?next=package.html') + '">' + (prof.aboutDone ? 'Review or change' : 'Finish it') + '</a></div>';
   rows = aboutRow + rows;
+  /* HOW TO SIGN: each document's signing steps, saved by that document's review screen (js/will.js), shown once
+     here in package order. The "seek a qualified attorney" sentence is taken out of each and said once at the end. */
+  var signing = {};
+  try { signing = JSON.parse(localStorage.getItem('grapevine.signing.v1') || '{}') || {}; } catch (e) { signing = {}; }
+  var ATTY = 'If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.';
+  var signParts = f.docs.filter(function (k) { return signing[k] && signing[k].html; }).map(function (k) {
+    var box = document.createElement('div');
+    box.innerHTML = signing[k].html;
+    Array.prototype.forEach.call(box.querySelectorAll('p'), function (p) { if (p.textContent.indexOf('seek a qualified attorney') > -1) p.remove(); });
+    var h = box.querySelector('h2'); if (h) h.remove();
+    return '<div class="pkg-sign-doc"><h3>' + esc(F.labelFor(k)) + '</h3>' + box.innerHTML + '</div>';
+  });
+  var signHtml = signParts.length ? '<section class="pkg-sign" id="how-to-sign"><h2>How to sign your documents</h2>' +
+    '<p class="lead">Read these before you sign. Each one says who must be there when you sign that document.</p>' +
+    signParts.join('') + '<p class="pkg-sign-atty">' + ATTY + '</p></section>' : '';
   root.innerHTML = '<div class="pkg-summary">' +
     '<p class="overline">Your ' + esc(pkg) + ' package' + (f.couple ? ' for both of you' : '') + '</p>' +
     '<h1>Review your package</h1>' +
     '<p class="lead">Here is every document in your package. Open any one to read it again or change an answer, then come back here. Your answers are saved in this browser.</p>' +
-    note + '<div class="pkg-sum-list">' + rows + '</div>' + action + '</div>';
+    note + '<div class="pkg-sum-list">' + rows + '</div>' + action + signHtml + '</div>';
 
   /* ---------- Download all: one PDF built from every document ---------- */
   function status(msg, bad) {
@@ -187,6 +203,7 @@
       status('We could not build the combined PDF. Open each document to print it instead.', true);
     }).then(function () { busy(false); });
   });
+  if (location.hash === '#how-to-sign') { var hs = document.getElementById('how-to-sign'); if (hs) setTimeout(function () { hs.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
   /* arriving from the payment page: bring the download box into view */
   if (/[?&]download=all\b/.test(location.search)) {
     var box = root.querySelector('.pkg-sum-pay');

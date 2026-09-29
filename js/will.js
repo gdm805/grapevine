@@ -3981,6 +3981,7 @@
       } else {
         addPaywallBanner();
       }
+      if (inFlow) packageSigning();
     }
     if (focusSel) { var f = stepEl.querySelector(focusSel); if (f) f.focus(); }
     renderDoc(); save();
@@ -4140,6 +4141,21 @@
       '<p class="pkg-continue-note">This is the last document in your package. Next, review all ' + f.docs.length + ' documents in one place, change anything you like, then ' + (paidUp() ? 'download them.' : 'pay and download.') + '</p>' +
       '<a class="btn btn-primary btn-lg" href="' + esc(window.GVUrl('package.html')) + '">Review your whole package <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
       '</div>';
+  }
+  /* Inside a package, each document's "How to sign" steps are shown ONCE, all together, on the package summary
+     (package.html), instead of at the bottom of every document. Here the steps are saved for that page and left
+     off this screen; a single-document purchase keeps them on its own screen. */
+  function packageSigning() {
+    var box = stepEl.querySelector('.instr'); if (!box) return;
+    try {
+      var all = JSON.parse(localStorage.getItem('grapevine.signing.v1') || '{}') || {};
+      all[docId] = { label: window.GVFlow.labelFor(docId), html: box.innerHTML };
+      localStorage.setItem('grapevine.signing.v1', JSON.stringify(all));
+    } catch (e) { return; /* storage blocked: keep the steps here */ }
+    var p = document.createElement('p');
+    p.className = 'hint pkg-sign-note';
+    p.innerHTML = 'How to sign this document is on your <a href="' + esc(window.GVUrl('package.html')) + '#how-to-sign">package summary</a>, with the signing steps for every document in one place.';
+    box.parentNode.replaceChild(p, box);
   }
   function renderPkgContinue(nextKind) {
     var label = window.GVFlow.labelFor(nextKind), page = pageUrl(nextKind);

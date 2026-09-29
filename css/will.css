@@ -252,6 +252,16 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .pkg-sum-pay { background: var(--grape-tint); border: 2px solid var(--grape); border-radius: 20px; padding: clamp(20px, 3vw, 30px); display: grid; gap: 12px; }
 .pkg-sum-btns { display: flex; flex-wrap: wrap; gap: 10px; }
 .pkg-sum-pay h2 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
+/* "How to sign your documents": every document's signing steps, once, on the package summary */
+.pkg-sign { margin-top: 28px; padding: clamp(20px, 3vw, 30px); background: var(--sand); border: 2px solid var(--grape); border-radius: 20px; }
+.pkg-sign > h2 { font-family: var(--serif); font-weight: 500; font-size: 28px; margin-bottom: 6px; }
+.pkg-sign-doc { border-top: 1px solid rgba(0, 0, 0, 0.1); padding-top: 14px; margin-top: 14px; }
+.pkg-sign-doc h3 { font: 600 13px/1.3 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--grape-deep); margin-bottom: 8px; }
+.pkg-sign-doc p { margin-bottom: 8px; font-size: 15.5px; }
+.pkg-sign-doc ul { margin: 0 0 10px; padding-left: 20px; display: grid; gap: 6px; font-size: 15.5px; }
+.pkg-sign-atty { margin-top: 16px; font-size: 15px; }
+.pkg-sign-link { font-size: 15px; }
+.pkg-sign-link a, .pkg-sign-note a { color: var(--grape); font-weight: 600; }
 .pkg-summary-step { font-weight: 700; }
 @media (max-width: 560px) { .pkg-sum-row { grid-template-columns: 20px minmax(0, 1fr); } .pkg-sum-row .btn { grid-column: 2; justify-self: start; } }
 
