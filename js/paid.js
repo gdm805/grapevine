@@ -97,8 +97,24 @@
     window.GVPay.markPaid(plan, { session: session, doc: docKey, verified: verified });
 
     var p = GV.plans[plan];
-    /* inside a package, "Download your documents" goes to the package summary, which has the Download all button */
+    /* inside a package, "Download your documents" goes to the package summary, which has the Download all button.
+       The package is normally still saved in this browser. If it isn't, or it's saved as a different plan or
+       household than the one Stripe says was bought (say, the package was restarted, or "Just me" was still
+       selected), it's rebuilt here from Stripe's answer, and every document already answered counts as done --
+       so this button never sends someone back to the start of their first document. */
     var fl = window.GVFlow && window.GVFlow.current();
+    if (plan !== 'doc' && window.GVFlow && (!fl || fl.plan !== plan || !!fl.couple !== (household === 'couple'))) {
+      try { sessionStorage.setItem('gv.household', household); } catch (e) { /* ignore */ }
+      var nf = window.GVFlow.start(plan);
+      if (nf) {
+        nf.docs.forEach(function (id) {
+          var base = window.GVFlow.baseOf(id);
+          var key = 'grapevine.' + base + (base === 'will' ? '.v2' : '.v1') + (/:2$/.test(id) ? '.s2' : '');
+          try { if ((JSON.parse(localStorage.getItem(key) || 'null') || {}).step === 'review') window.GVFlow.markDone(id); } catch (e) { /* not answered */ }
+        });
+        fl = window.GVFlow.current();
+      }
+    }
     var goTo = (fl && fl.plan === plan && plan !== 'doc') ? 'package.html' : (ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : p.goesTo));
     var unlockedNames = { will: 'your will', pourover: 'your pour-over will', dpoa: 'your power of attorney', dementia: 'your care preferences', hcd: 'your health care directive', hipaa: 'your HIPAA authorization', trust: 'your living trust', trustjoint: 'your joint living trust', cert: 'your certification of trust', affidavit: 'your affidavit of trustee', assignment: 'your assignment of personal property', finalwishes: 'your final wishes', contacts: 'your important contacts', schedulea: 'your Schedule A' };
     var unlocked = (plan === 'doc' ? [docKey] : (p.unlocks || [])).map(function (k) { return unlockedNames[k] || k; });
