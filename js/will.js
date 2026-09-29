@@ -3838,6 +3838,18 @@
      package is switched to the couple's version here -- the same as clicking "Write the joint version
      instead" -- keeping every document already finished. Otherwise the joint trust wasn't part of the
      package and its review screen offered only payment, with no way on to the next document. */
+  /* No package saved in this browser, but a package that includes this document was bought here: the package
+     is rebuilt from that purchase (answered documents count as done), so this document's review screen leads on
+     to the next document instead of stopping at Download and Print. A joint trust, or a second spouse's copy,
+     means a couple's package. */
+  (function () {
+    if (BLANK || /[?&]export=1\b/.test(location.search) || !window.GVFlow || !window.GVPay || window.GVFlow.current()) return;
+    var flows = window.GVFlow.plans || {}, bought = window.GVPay.paidPlans();
+    var plan = ['complete', 'essentials', 'will', 'health', 'trustpaper'].filter(function (p) {
+      return bought.indexOf(p) > -1 && (flows[p] || []).some(function (k) { return k === kindKey || (k === 'trust' && kindKey === 'trustjoint'); });
+    })[0];
+    if (plan) window.GVFlow.rebuild(plan, kindKey === 'trustjoint' || SPOUSE2 ? 'couple' : '');
+  })();
   (function () {
     var fl = window.GVFlow && window.GVFlow.current();
     if (kindKey !== 'trustjoint' || BLANK || /[?&]export=1\b/.test(location.search) || !fl || fl.plan !== 'complete') return;

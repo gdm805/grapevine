@@ -87,6 +87,22 @@ window.GVFlow = (function () {
     write(nf);
     return nf;
   }
+  /* rebuild(plan, household): start that package again and count every document already answered in this
+     browser (saved at its review screen) as done. Used when a package has gone missing from this browser but
+     the answers or the purchase are still here (js/paid.js, js/will.js). */
+  function answered(id) {
+    var base = baseOf(id);
+    var key = 'grapevine.' + base + (base === 'will' ? '.v2' : '.v1') + (/:2$/.test(id) ? '.s2' : '');
+    try { return (JSON.parse(localStorage.getItem(key) || 'null') || {}).step === 'review'; } catch (e) { return false; }
+  }
+  function rebuild(plan, hh) {
+    if (hh === 'couple' || hh === 'single') { try { sessionStorage.setItem('gv.household', hh); } catch (e) { /* ignore */ } }
+    var f = start(plan);
+    if (!f) return null;
+    f.done = f.docs.filter(answered);
+    write(f);
+    return f;
+  }
   function markDone(kind) {
     var f = read(); if (!f || f.docs.indexOf(kind) === -1) return;
     if (f.done.indexOf(kind) === -1) { f.done.push(kind); write(f); }
@@ -126,5 +142,5 @@ window.GVFlow = (function () {
     }
   });
 
-  return { start: start, current: current, useTrust: useTrust, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
+  return { start: start, rebuild: rebuild, current: current, useTrust: useTrust, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
 })();
