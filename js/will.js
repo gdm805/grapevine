@@ -258,6 +258,18 @@
       CARRY_CONFIRMED.trustees = 1;
     }
   }
+  /* AFFIDAVIT OF TRUSTEE, joint trust: who signs. P1 / P2 = one of the Trustmakers; BOTH = each co-trustee
+     signs an affidavit of their own (the document holds two complete affidavits, each with its own jurat, so
+     each person swears only to their own statements); OTHER (or a single trust) = the name typed in. */
+  function affiantBothOk(a) { return a.trustType === 'JOINT' && !!clean(a.tm1Name) && !!clean(a.tm2Name) && (a.jointPhase || 'BOTH_LIVING') === 'BOTH_LIVING'; }
+  function affiantList(a) {
+    if (a.trustType === 'JOINT' && clean(a.tm1Name) && clean(a.tm2Name)) {
+      if (a.affiantWho === 'P1') return [clean(a.tm1Name)];
+      if (a.affiantWho === 'P2') return [clean(a.tm2Name)];
+      if (a.affiantWho === 'BOTH' && affiantBothOk(a)) return [clean(a.tm1Name), clean(a.tm2Name)];
+    }
+    return clean(a.affiantName) ? [clean(a.affiantName)] : [];
+  }
   /* the saved facts -- or, for a trust written before facts were saved, worked out from the trust's own
      saved answers (joint trust first if both exist and it has a name) */
   function readTrustFacts() {
@@ -775,6 +787,14 @@
       if (!hpst) return '@center ' + (HIPAA_FAIL[answers.state] ? 'We could not load the ' + answers.state + ' document. Please refresh the page.' : 'Loading the ' + answers.state + ' document...');
       return renderNodes(hpst.nodes, buildVars(answers, states, tpl.settings));
     }
+    if (kindKey === 'affidavit') {
+      var who = affiantList(answers);
+      if (who.length > 1) return who.map(function (n) {
+        var v = buildVars(answers, states, tpl.settings);
+        v.affiant_name = n; v.affiants = [n];
+        return renderNodes(tpl.nodes, v);
+      }).join('\n\n@pagebreak\n\n');
+    }
     return renderNodes(tpl.nodes, buildVars(answers, states, tpl.settings));
   }
   function blankPanel() {
@@ -848,7 +868,7 @@
     /* a trust's footer names the document itself: "The Merrill Living Trust Agreement" */
     if (KIND.key === 'trust' || KIND.key === 'trustjoint') return clean(answers.trustName).replace(/["\\]/g, '');
     if (KIND.key === 'cert') return clean(answers.trustName).replace(/["\\]/g, '');
-    if (KIND.key === 'affidavit') return clean(answers.affiantName).replace(/["\\]/g, '');
+    if (KIND.key === 'affidavit') return affiantList(answers).join(' and ').replace(/["\\]/g, '');
     if (KIND.key === 'assignment' || KIND.key === 'schedulea') return clean(answers.trustName).replace(/["\\]/g, '');
     return clean(answers.name).replace(/["\\]/g, '');
   }
@@ -3107,7 +3127,7 @@
     tm1Name: '', tm2Name: '',
     trustmakerStatus: 'LIVING',
     jointPhase: 'BOTH_LIVING', adminShare: '', adminShareType: 'SURVIVORS_TRUST',
-    affiantName: '', affiantIsSuccessor: '',
+    affiantName: '', affiantWho: '', affiantIsSuccessor: '',
     trustees: [{ name: '' }],
     trusteeRule: '',
     hasTransaction: '', transactionAuthority: '', hasRestriction: '', transactionRestriction: '',
@@ -3148,7 +3168,8 @@
     v.admin_share = clean(a.adminShare) || (a.adminShareType === 'FAMILY_TRUST' ? 'Family Trust' : (a.adminShareType === 'SURVIVORS_TRUST' ? "Survivor's Trust" : ''));
     v.admin_share_type = a.adminShareType || 'SURVIVORS_TRUST';
     v.affiant_is_successor = a.affiantIsSuccessor === 'yes';
-    v.affiant_name = clean(a.affiantName);
+    v.affiant_name = affiantList(a)[0] || '';
+    v.affiants = affiantList(a);
     v.affiant_capacity = v.affiant_is_successor ? 'Successor Trustee' : 'Trustee';
     v.trustees = (a.trustees || []).map(function (t) { return { trustee_name: clean(t.name) }; }).filter(function (t) { return t.trustee_name; });
     v.single_trustee = v.trustees.length <= 1;
@@ -3196,9 +3217,16 @@
       return h;
     },
     affiant: function () {
-      return stepHead('About you', 'You’re the Affiant — the Trustee swearing to the facts in this Affidavit.') +
-        field('Your full legal name', text('affiantName', '', { auto: 'off' })) +
-        field('Are you a successor trustee (did you step in after the original Trustee)?', pills('affiantIsSuccessor', [['yes', 'Yes'], ['no', 'No']], true));
+      var a = answers, joint = a.trustType === 'JOINT' && clean(a.tm1Name) && clean(a.tm2Name);
+      if (joint && !a.affiantWho && clean(a.affiantName)) a.affiantWho = sameName(a.affiantName, a.tm1Name) ? 'P1' : (sameName(a.affiantName, a.tm2Name) ? 'P2' : 'OTHER');
+      if (a.affiantWho === 'BOTH' && !affiantBothOk(a)) a.affiantWho = '';
+      var both = a.affiantWho === 'BOTH';
+      var who = joint ? field('Who is signing this affidavit?', pills('affiantWho', [['P1', clean(a.tm1Name)], ['P2', clean(a.tm2Name)]]
+        .concat(affiantBothOk(a) ? [['BOTH', 'Both of us (one affidavit each)']] : []).concat([['OTHER', 'Someone else']]), true),
+        both ? 'Your document will hold two complete affidavits, one for each of you, each with its own notary section. Each of you swears to your own.' : '') : '';
+      return stepHead('About you', 'The Affiant is the Trustee swearing to the facts in this Affidavit.') + who +
+        (!joint || a.affiantWho === 'OTHER' ? field('Full legal name of the person signing', text('affiantName', '', { auto: 'off' })) : '') +
+        field(both ? 'Are you signing as successor trustees (did you step in after the original Trustees)?' : 'Is the person signing a successor trustee (did they step in after the original Trustee)?', pills('affiantIsSuccessor', [['yes', 'Yes'], ['no', 'No']], true));
     },
     trustees: function () {
       return stepHead('Current trustees', 'Everyone currently serving as Trustee right now — not a successor trustee who hasn’t stepped in yet.') +
@@ -3237,7 +3265,7 @@
         '<div class="sum">' +
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
-        row('Affiant', esc(v.affiant_name), 'affiant') +
+        row(v.affiants.length > 1 ? 'Affiants (one affidavit each)' : 'Affiant', esc(v.affiants.join(' and ')), 'affiant') +
         row('Current trustee(s)', v.trustees.map(function (t) { return esc(t.trustee_name); }).join(', '), 'trustees') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
@@ -3262,10 +3290,15 @@
       if (!clean(a.tm1Name)) e.push(a.trustType === 'JOINT' ? 'Enter the first Trustmaker’s full legal name.' : 'Enter the Trustmaker’s full legal name.');
       if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
     } else if (id === 'affiant') {
-      if (clean(a.affiantName).length < 2) e.push('Enter your full legal name.');
+      var jointA = a.trustType === 'JOINT' && clean(a.tm1Name) && clean(a.tm2Name);
+      if (jointA && !a.affiantWho) e.push('Choose who is signing this affidavit.');
+      else if ((!jointA || a.affiantWho === 'OTHER') && clean(a.affiantName).length < 2) e.push('Enter the full legal name of the person signing.');
       if (!a.affiantIsSuccessor) e.push('Answer whether you are a successor trustee.');
     } else if (id === 'trustees') {
       if (!(a.trustees || []).some(function (t) { return clean(t.name); })) e.push('Name at least one currently acting Trustee.');
+      else affiantList(a).forEach(function (n) {
+        if (!(a.trustees || []).some(function (t) { return sameName(t.name, n); })) e.push(n + ' is signing this affidavit, so list ' + n + ' as a current trustee.');
+      });
     } else if (id === 'authority') {
       var count = (a.trustees || []).filter(function (t) { return clean(t.name); }).length;
       if (count > 1 && !a.trusteeRule) e.push('Choose how your Trustees act together.');
