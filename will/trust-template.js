@@ -577,7 +577,7 @@ The Trustee shall distribute the Specific Gifts described in this Article as pro
 
 {{gift_description}} to {{gift_beneficiary}}
 
-If {{gift_beneficiary}} does not survive the Trustmaker by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:
+[[if gift_entity]]If {{gift_beneficiary}} is not in existence at the Trustmaker's death, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[else]]If {{gift_beneficiary}} does not survive the Trustmaker by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[end]]
 
 [[if gift_contingent=DESCENDANTS]]
 

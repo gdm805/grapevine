@@ -833,7 +833,7 @@ Upon the death of {{name1}}, whether {{name1}} is the first or the surviving Tru
 
 {{gift_description}} to {{gift_beneficiary}}
 
-If {{gift_beneficiary}} does not survive {{name1}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:
+[[if gift_entity]]If {{gift_beneficiary}} is not in existence at {{name1}}'s death, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[else]]If {{gift_beneficiary}} does not survive {{name1}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[end]]
 
 [[if gift_contingent=DESCENDANTS]]
 
@@ -867,7 +867,7 @@ Upon the death of {{name2}}, whether {{name2}} is the first or the surviving Tru
 
 {{gift_description}} to {{gift_beneficiary}}
 
-If {{gift_beneficiary}} does not survive {{name2}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:
+[[if gift_entity]]If {{gift_beneficiary}} is not in existence at {{name2}}'s death, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[else]]If {{gift_beneficiary}} does not survive {{name2}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[end]]
 
 [[if gift_contingent=DESCENDANTS]]
 
@@ -901,7 +901,7 @@ Upon the death of the surviving Trustmaker, the Trustee shall make the following
 
 {{gift_description}} to {{gift_beneficiary}}
 
-If {{gift_beneficiary}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:
+[[if gift_entity]]If {{gift_beneficiary}} is not in existence at the surviving Trustmaker's death, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[else]]If {{gift_beneficiary}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[end]]
 
 [[if gift_contingent=DESCENDANTS]]
 

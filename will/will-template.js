@@ -368,7 +368,7 @@ My Personal Representative may take any other administrative action reasonably n
 
 ## Specific Gifts
 
-I make the following gifts (each, a "**Specific Gift**"). Each Specific Gift is made only if the recipient survives me for the Required Survivorship Period. A Specific Gift that fails shall become part of my Residuary Estate.
+I make the following gifts (each, a "**Specific Gift**"). [[if has_entity_gift]]Each Specific Gift to a person is made only if that person survives me for the Required Survivorship Period, and each Specific Gift to a charity or trust is made only if that charity or trust is in existence at my death.[[else]]Each Specific Gift is made only if the recipient survives me for the Required Survivorship Period.[[end]] A Specific Gift that fails shall become part of my Residuary Estate.
 
 [[each gifts]]
 I give {{gift}} to {{recipient}}.
