@@ -9,7 +9,7 @@ window.TRUST_SIGNING = String.raw`
 
 **When you sign:** sign and date the trust in front of the notary[[if has_witness]] and witnesses[[end]]. The notary completes the acknowledgment.
 
-**Afterward:** keep the signed original somewhere safe and tell your successor trustee where it is. To change it later, sign a written amendment or restatement.
+**Afterward:** [[if trust_type = RESTATEMENT]]keep the signed restatement together with the original trust and any amendments, somewhere safe, and tell your successor trustee where they are.[[else]]keep the signed original somewhere safe and tell your successor trustee where it is.[[end]] To change it later, sign a written amendment or restatement.
 
 If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;
