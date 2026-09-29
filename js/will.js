@@ -307,6 +307,17 @@
     return old.length ? old : (a.jointGifts || []);
   }
   function firstName(n) { return clean(n).split(' ')[0] || ''; }
+  /* couples: how the roles fit together across a package. In the joint trust the surviving spouse keeps
+     serving and the successor trustee steps in after both; in the other documents the spouse can be named
+     first, with backups after -- such as the successor trustee from the trust. Information only: nothing is
+     filled in for them. */
+  function coupleRoleNote(role) {
+    var p = readProfile(), sh = readShared();
+    if (!(p.name2 || sh.marital === 'married' || SPOUSE2)) return '';
+    var other = SPOUSE2 ? firstName(p.name) : firstName(p.name2 || sh.spouse);
+    return '<p class="hint couple-note"><strong>Spouses and partners:</strong> you can name ' + esc(other || 'your spouse or partner') + ' as your ' + role + ', and name backups after that.' +
+      (readTrustFacts() ? ' The successor trustee named in your trust can also be named as a backup here, so the same person steps in under each of your documents.' : '') + '</p>';
+  }
   /* the trust made here left its signing date blank (to write in by hand): the trust paperwork doesn't ask
      for that date again -- it prints a blank line to fill in with the same date */
   function handOrig(a) { var f = readTrustFacts(); return madeHere(a) && !!f && !f.restated && !f.origDate; }
@@ -972,7 +983,7 @@
         return '<div class="rowitem"><input class="input" data-list="successors" data-i="' + i + '" data-f="name" value="' + val(s.name) + '" placeholder="Backup ' + (i + 1) + ' full name" aria-label="Backup ' + (i + 1) + '">' +
           rm('successors', i, 'backup ' + (i + 1), answers.successors.length > 1) + '</div>';
       }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="successors">+ Add another backup</button>';
-      return stepHead('Who should carry out your will?', 'This person pays your debts, handles the paperwork, and gives your property to the people you name. Your will calls this person your Personal Representative. Some states call it an executor.') +
+      return stepHead('Who should carry out your will?', 'This person pays your debts, handles the paperwork, and gives your property to the people you name. Your will calls this person your Personal Representative. Some states call it an executor.') + coupleRoleNote('Personal Representative') +
         field('Personal representative\u2019s full name', text('executor', '')) +
         (function () {
           if (!answers.wantsBackups && answers.successors.some(function (x) { return clean(x.name); })) answers.wantsBackups = 'yes';
@@ -1309,7 +1320,7 @@
       /* answers saved before this screen changed kept every co-personal representative in coPRs */
       if (a.prMode === 'co' && !clean(a.executor) && (a.coPRs || []).some(function (x) { return clean(x.name); })) { a.executor = clean(a.coPRs[0].name); a.coPRs = a.coPRs.slice(1); if (!a.coPRs.length) a.coPRs = [{ name: '' }]; }
       if (!a.wantsBackups && (a.prMode === 'co' || a.successors.some(function (x) { return clean(x.name); }))) { a.wantsBackups = 'yes'; a.otherRole = a.prMode === 'co' ? 'co' : 'backup'; }
-      var h = stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn\u2019t in your trust. Your will calls this person your Personal Representative. Some states call it an executor.') +
+      var h = stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn\u2019t in your trust. Your will calls this person your Personal Representative. Some states call it an executor.') + coupleRoleNote('Personal Representative') +
         field('Personal representative\u2019s full name', text('executor', '')) +
         anotherPerson('personal representative', 'Alongside my first choice, serving together as co-personal representatives');
       if (a.wantsBackups !== 'yes') { a.prMode = 'successive'; return h; }
@@ -1619,7 +1630,7 @@
         field('County where you live', countySelect('county'));
     },
     agent: function () {
-      return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Choose someone you trust completely. Many people choose the same person they named to carry out their will. Your document calls this person your Agent.') +
+      return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Choose someone you trust completely. Many people choose the same person they named to carry out their will. Your document calls this person your Agent.') + coupleRoleNote('Agent') +
         field('Your agent’s full name', text('agent', '')) +
         dpBackups();
     },
@@ -2000,7 +2011,7 @@
         field('Home address', textarea('address', 'Street, city, state, ZIP'));
     },
     agent: function () {
-      return stepHead('Who should make health care decisions for you?', 'Your health care agent can see your medical information and make treatment decisions if you’re unable to. Choose someone you trust completely.') +
+      return stepHead('Who should make health care decisions for you?', 'Your health care agent can see your medical information and make treatment decisions if you’re unable to. Choose someone you trust completely.') + coupleRoleNote('health care agent') +
         field('Your agent’s full name', text('agent', '')) +
         field('Agent’s phone', text('agentPhone', '', { auto: 'tel' })) +
         field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' })) +
@@ -2798,7 +2809,7 @@
       return h;
     },
     trustee: function () {
-      return stepHead('Who should manage your trust if neither of you can?', 'Each of you serves as an initial Trustee, and while both of you can, you act together. Your successor trustee takes over once neither of you is able to serve.') + trusteeFields();
+      return stepHead('Who should manage your trust if neither of you can?', 'Each of you serves as an initial Trustee, and while both of you can, you act together. When one of you dies or can no longer serve, the other continues as the sole Trustee. Your successor trustee takes over only after neither of you is able to serve.') + trusteeFields();
     },
     firstdeath: function () {
       return stepHead('When the first of you dies, what happens to that person\u2019s share?', 'Either way, the survivor keeps full control of their own share, and everything is provided for the survivor first. The difference is what happens to the share of the one who died.') +
