@@ -131,7 +131,7 @@
         (perTrust ? '<p class="per-trust">Priced per trust. One purchase covers one trust, including a married couple’s joint trust. If you and your spouse or partner each have your own separate trust, you’ll need one for each trust.</p>' : '') +
         (link
           ? betaSurvey() + caNotice(p, price, includes) + termsFold() + (betaTester() && !surveyDone()
-            ? '<button class="btn btn-primary btn-lg" type="button" disabled>Complete the survey above to continue</button>'
+            ? '<button class="btn btn-primary btn-lg" type="button" disabled>Submit the survey above to unlock this button</button>'
             : isCA() && !caAck
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Confirm you\u2019ve read the California notice above</button>'
             : '<a class="btn btn-primary btn-lg" href="' + payHref + '">' + (betaTester() ? 'Continue &mdash; your documents are free' : 'Continue to secure payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>')
@@ -159,8 +159,8 @@
     if (surveyDone()) return '<div class="beta-box done"><p><strong>Thank you for your feedback.</strong> As a beta tester your documents are free: the discount is applied for you on the payment page, so the total shows $0.00.</p></div>';
     var src = 'https://tally.so/embed/' + encodeURIComponent(window.GV_BETA.survey) + '?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1';
     return '<div class="beta-box"><p class="beta-kicker">Beta tester</p>' +
-      '<h3>One step before your free documents</h3>' +
-      '<p>Please answer our short feedback survey (about 5 minutes). When you submit it, the button below unlocks and your documents are free.</p>' +
+      '<h3>Last step: answer a few questions</h3>' +
+      '<ol class="beta-steps"><li>Answer the short survey below (about 5 minutes) and click <strong>Submit</strong> at the end.</li><li>Then click the purple button under the survey. Your total will be $0.00.</li><li>Download and print your documents.</li></ol>' +
       '<iframe class="beta-survey" data-tally-src="' + src + '" loading="lazy" width="100%" height="700" frameborder="0" title="Grapevine beta tester survey"></iframe></div>';
   }
   /* Tally's own embed script sizes the survey to its full height (no scrolling inside the box). If it can't

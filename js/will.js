@@ -4100,7 +4100,7 @@
   }
   function payButton(o) {
     return '<a class="btn btn-primary pay-btn" href="' + checkoutHref() + '">' +
-      (o.beta ? 'Continue &mdash; it’s free' : 'Continue to payment') +
+      (o.beta ? 'Take the survey' : 'Continue to payment') +
       ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>';
   }
   function renderPkgComplete(f, thisKind) {
@@ -4118,7 +4118,7 @@
         allPdfBtn + (n > 1 ? '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div>' : '') + '<div class="pkg-done-list">' + rows + '</div></div>';
     }
     return '<div class="pkg-complete" id="pkg-complete"><h3>All ' + n + ' documents are ready</h3>' +
-      '<p>' + (o.beta ? 'As a beta tester, you get them free: answer the short survey at checkout, then download and print them all.' : 'Pay ' + (o.priceText || '') + ' once to download and print them all.') + ' Previewing and changing your answers stay free.</p>' +
+      '<p>' + (o.beta ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your documents are free to download and print.' : 'Pay ' + (o.priceText || '') + ' once to download and print them all.') + ' Previewing and changing your answers stay free.</p>' +
       payButton(o) + '<div class="pkg-done-list">' + rows + '</div></div>';
   }
   function insertHtmlBefore(html, ref) {
@@ -4133,7 +4133,7 @@
       var o = payOffer(fl && fl.docs.indexOf(docId) > -1 ? fl : null);
       var banner = document.createElement('div');
       banner.className = 'unlock-banner';
-      banner.innerHTML = '<p><strong>Your document is ready.</strong> ' + (o.beta ? 'As a beta tester, you get it free: answer the short survey at checkout.' : 'Pay ' + (o.priceText || '') + ' once to download and print it.') + ' Previewing and changing your answers stay free.</p>' + payButton(o);
+      banner.innerHTML = '<p><strong>Your document is ready.</strong> ' + (o.beta ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your document is free to download and print.' : 'Pay ' + (o.priceText || '') + ' once to download and print it.') + ' Previewing and changing your answers stay free.</p>' + payButton(o);
       actions.parentNode.insertBefore(banner, actions);
     }
     /* not paid yet: the download buttons stay out of sight (they would only bounce to checkout) so the
@@ -4312,35 +4312,14 @@
   function caGate(fn) { if (window.GVCaConsent) window.GVCaConsent.require(fn); else fn(); }
   function printViaPdf() {
     function pageFallback() { setFooter(); setPane('p'); setTimeout(function () { window.print(); }, 50); }
-    if (!window.GVExport) { pageFallback(); return; }
-    /* Print goes straight to the print window, printing the finished PDF (footer and page numbers included).
-       Chrome, Edge and Firefox print it from a hidden frame. Safari can't print a PDF from a hidden frame, so
-       there the PDF opens in a new tab and the person presses Command-P. */
-    var safari = /^((?!chrome|chromium|android|crios|fxios|edg).)*safari/i.test(navigator.userAgent);
-    var w = null;
-    if (safari) { try { w = window.open('', '_blank'); } catch (e) { w = null; } }
-    var opts = exportOptions();
+    if (!window.GVExport || !window.GVExport.printStart) { pageFallback(); return; }
+    /* the new tab (where one is needed) must open inside this click, before the PDF is built */
+    var job = window.GVExport.printStart(), opts = exportOptions();
     status('Preparing your document to print...');
-    window.GVExport.pdf(toBlocks(docText()), opts).then(function (blob) {
-      var url = URL.createObjectURL(blob);
-      if (safari) {
-        if (w && !w.closed) { w.location.href = url; status('Your document opened in a new tab. Press Command-P (\u2318P) there to print it.'); return null; }
-        return deliver(blob, opts.base + '.pdf').then(function () { status('Your PDF was saved to your Downloads folder. Open it and choose Print.'); });
-      }
-      var old = document.getElementById('gv-print-frame'); if (old) old.remove();
-      var fr = document.createElement('iframe');
-      fr.id = 'gv-print-frame'; fr.setAttribute('aria-hidden', 'true');
-      fr.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0;';
-      fr.onload = function () {
-        setTimeout(function () {
-          try { fr.contentWindow.focus(); fr.contentWindow.print(); status('The print window is open.'); }
-          catch (e) { window.open(url, '_blank'); status('Your document opened in a new tab. Choose Print there.'); }
-        }, 400);
-      };
-      fr.src = url;
-      document.body.appendChild(fr);
-      return null;
-    }).catch(function () { if (w && !w.closed) w.close(); status('', false); pageFallback(); });
+    window.GVExport.pdf(toBlocks(docText()), opts)
+      .then(function (blob) { return job.show(blob, opts.base + '.pdf', deliver); })
+      .then(function (msg) { status(msg); })
+      .catch(function () { job.cancel(); status('', false); pageFallback(); });
   }
   function runExport(kind) {
     if (!window.GVExport) { status('The export tools did not load. Try Print instead.', true); return; }

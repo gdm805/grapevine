@@ -62,15 +62,16 @@
   var action;
   if (paid) {
     action = '<div class="pkg-sum-pay"><h2>Download your documents</h2>' +
-      '<p>Everything is unlocked. Download all ' + f.docs.length + ' documents in one PDF below. To get just one document, choose \u201cView, download or print\u201d next to it: it opens with its own Download PDF and Print buttons. Save your files now: your purchase is remembered only in this browser.</p>' +
-      '<button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + f.docs.length + ' documents (PDF)</button>' +
+      '<p>Everything is unlocked. Download or print all ' + f.docs.length + ' documents at once below. To get just one document, choose \u201cView, download or print\u201d next to it: it opens with its own Download PDF and Print buttons. Save your files now: your purchase is remembered only in this browser.</p>' +
+      '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + f.docs.length + ' documents (PDF)</button>' +
+      '<button type="button" class="btn btn-secondary" id="print-all">Print all ' + f.docs.length + ' documents</button></div>' +
       '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
   } else {
     var b = beta();
     action = '<div class="pkg-sum-pay"><h2>Ready to download?</h2>' +
-      '<p>' + (b ? 'As a beta tester, you get them free: answer the short survey at checkout, then download and print them all.' : 'Pay ' + (price ? '$' + price : '') + ' once to download and print all ' + f.docs.length + ' documents.') +
+      '<p>' + (b ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your documents are free to download and print.' : 'Pay ' + (price ? '$' + price : '') + ' once to download and print all ' + f.docs.length + ' documents.') +
       ' Previewing and changing your answers stay free, before and after.</p>' +
-      '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Continue &mdash; it’s free' : 'Continue to payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>';
+      '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Take the survey' : 'Continue to payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>';
   }
 
   var prof = {};
@@ -131,16 +132,12 @@
     a.href = u; a.download = filename; document.body.appendChild(a); a.click();
     setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 1500);
   }
-  var btn = document.getElementById('dl-all');
-  if (btn) btn.addEventListener('click', function () {
-    /* California: written consent before the first delivery (js/ca-consent.js) */
-    if (window.GVCaConsent && window.GVCaConsent.needed()) { window.GVCaConsent.require(function () { btn.click(); }); return; }
-    if (!window.GVExport) { status('The download tools did not load. Open each document to download it instead.', true); return; }
-    btn.disabled = true;
-    status('Preparing your package PDF... this can take up to a minute for a large package.');
+  /* build one PDF from every document, one document at a time (so a phone or older computer isn't asked to
+     build all of them at once); resolves to { blob, filename } */
+  function buildPackage() {
+    if (!window.GVExport) return Promise.reject(new Error('no export'));
     var out = [];
-    /* one document at a time, so a phone or older computer isn't asked to build all of them at once */
-    f.docs.reduce(function (p, id, i) {
+    return f.docs.reduce(function (p, id, i) {
       return p.then(function () {
         status('Preparing your package PDF... document ' + (i + 1) + ' of ' + f.docs.length + '.');
         return loadKindBlocks(id).then(function (r) { out.push(r); });
@@ -152,14 +149,43 @@
       try { who = (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).name || ''; } catch (e) { who = ''; }
       var file = String(who).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
       var opts = { footer: (out[0] && out[0].footer) || (pkg + ' Package'), draftLabel: '', title: pkg + ' Package', base: 'Grapevine-' + pkg.replace(/\s+/g, '-') + '-Package' + (file ? '-' + file : '') };
-      return window.GVExport.pdf(combined, opts).then(function (blob) {
-        offerSave(blob, opts.base + '.pdf');
-        autoSave(blob, opts.base + '.pdf');
-        status('Done. Your package PDF is downloading to your Downloads folder. It has every document, with page numbers running all the way through.');
-      });
+      return window.GVExport.pdf(combined, opts).then(function (blob) { return { blob: blob, filename: opts.base + '.pdf' }; });
+    });
+  }
+  function busy(on) { ['dl-all', 'print-all'].forEach(function (id) { var b = document.getElementById(id); if (b) b.disabled = on; }); }
+  /* California: written consent before the first delivery (js/ca-consent.js) */
+  function consent(el) {
+    if (window.GVCaConsent && window.GVCaConsent.needed()) { window.GVCaConsent.require(function () { el.click(); }); return false; }
+    return true;
+  }
+  var btn = document.getElementById('dl-all');
+  if (btn) btn.addEventListener('click', function () {
+    if (!consent(btn)) return;
+    if (!window.GVExport) { status('The download tools did not load. Open each document to download it instead.', true); return; }
+    busy(true);
+    status('Preparing your package PDF... this can take up to a minute for a large package.');
+    buildPackage().then(function (r) {
+      offerSave(r.blob, r.filename);
+      autoSave(r.blob, r.filename);
+      status('Done. Your package PDF is downloading to your Downloads folder. It has every document, with page numbers running all the way through.');
     }).catch(function () {
       status('We could not build the combined PDF. Open each document to download it instead.', true);
-    }).then(function () { btn.disabled = false; });
+    }).then(function () { busy(false); });
+  });
+  var pbtn = document.getElementById('print-all');
+  if (pbtn) pbtn.addEventListener('click', function () {
+    if (!consent(pbtn)) return;
+    if (!window.GVExport || !window.GVExport.printStart) { status('The print tools did not load. Open each document to print it instead.', true); return; }
+    /* the new tab (where one is needed) must open inside this click, before the PDF is built */
+    var job = window.GVExport.printStart();
+    busy(true);
+    status('Preparing your package to print... this can take up to a minute for a large package.');
+    buildPackage().then(function (r) {
+      return job.show(r.blob, r.filename, function (blob, name) { offerSave(blob, name); autoSave(blob, name); });
+    }).then(function (msg) { status(msg); }).catch(function () {
+      job.cancel();
+      status('We could not build the combined PDF. Open each document to print it instead.', true);
+    }).then(function () { busy(false); });
   });
   /* arriving from the payment page: bring the download box into view */
   if (/[?&]download=all\b/.test(location.search)) {

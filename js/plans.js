@@ -116,7 +116,7 @@ window.GV_PLANS = {
       why: 'Adds a trust and the paperwork that supports it, so your home and savings can pass on privately.',
       /* Complete customers get the pour-over will instead of the plain will, but nothing stops them from also
          wanting the plain one, so the top plan unlocks every builder that exists today. */
-      unlocks: ['will', 'pourover', 'dpoa', 'dementia', 'hcd', 'hipaa', 'trust', 'trustjoint', 'cert', 'affidavit', 'assignment', 'finalwishes', 'contacts'],
+      unlocks: ['will', 'pourover', 'dpoa', 'dementia', 'hcd', 'hipaa', 'trust', 'trustjoint', 'schedulea', 'cert', 'affidavit', 'assignment', 'finalwishes', 'contacts'],
       goesTo: 'trust.html'
     },
     doc: {

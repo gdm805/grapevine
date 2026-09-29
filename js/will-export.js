@@ -383,5 +383,55 @@
     });
   }
 
-  window.GVExport = { docx: docx, pdf: pdf, runs: runs };
+  /* PRINTING the finished PDF (footer and page numbers included). Call printStart() inside the click itself,
+     BEFORE building the PDF: browsers only allow opening a new tab straight from a click. Then give the built
+     PDF to .show(blob, filename, save); it returns the message to show the person.
+     - Desktop Chrome and Edge: the PDF prints from a hidden frame and the print window opens by itself.
+     - Everything else (Safari, Firefox, and every phone or tablet) can't print a PDF from a hidden frame, so
+       the PDF opens in a new tab and the person prints from there.
+     - If the new tab was blocked, the PDF is saved instead (save = the page's own download function). */
+  function printStart() {
+    var ua = navigator.userAgent || '';
+    var mobile = /android|iphone|ipad|ipod|mobile/i.test(ua) || (/macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+    var frameOk = !mobile && /(chrome|chromium|edg)\//i.test(ua) && !/firefox|fxios|crios/i.test(ua);
+    var w = null;
+    if (!frameOk) {
+      try { w = window.open('', '_blank'); } catch (e) { w = null; }
+      try { if (w) w.document.write('<p style="font:16px/1.5 sans-serif;margin:40px">Preparing your document to print\u2026</p>'); } catch (e) { /* ignore */ }
+    }
+    function saved(blob, filename, save) {
+      return Promise.resolve(save(blob, filename)).then(function () { return 'Your PDF was saved to your Downloads folder. Open it and choose Print.'; });
+    }
+    return {
+      show: function (blob, filename, save) {
+        var url = URL.createObjectURL(blob);
+        if (frameOk) {
+          return new Promise(function (resolve) {
+            var old = document.getElementById('gv-print-frame'); if (old) old.remove();
+            var fr = document.createElement('iframe');
+            fr.id = 'gv-print-frame'; fr.setAttribute('aria-hidden', 'true');
+            fr.style.cssText = 'position:fixed;right:0;bottom:0;width:1px;height:1px;border:0;opacity:0;';
+            fr.onload = function () {
+              setTimeout(function () {
+                try { fr.contentWindow.focus(); fr.contentWindow.print(); resolve('The print window is open. If it didn\u2019t appear, use Download PDF, then open the file and choose Print.'); }
+                catch (e) { saved(blob, filename, save).then(resolve); }
+              }, 400);
+            };
+            fr.src = url;
+            document.body.appendChild(fr);
+          });
+        }
+        if (w && !w.closed) {
+          w.location.href = url;
+          return Promise.resolve(mobile
+            ? 'Your document opened in a new tab. Print it from there with your browser\u2019s Share or menu button. If your device saved the PDF instead, open it from your downloads and print it.'
+            : 'Your document opened in a new tab. Choose Print there (on a Mac, press Command-P).');
+        }
+        return saved(blob, filename, save);
+      },
+      cancel: function () { try { if (w && !w.closed) w.close(); } catch (e) { /* ignore */ } }
+    };
+  }
+
+  window.GVExport = { docx: docx, pdf: pdf, runs: runs, printStart: printStart };
 })();

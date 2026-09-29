@@ -250,6 +250,7 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .pkg-sum-row .pkg-doc-name small { display: block; font-weight: 400; font-size: 13.5px; color: var(--ink-mute); }
 .pkg-sum-open { border-style: dashed; }
 .pkg-sum-pay { background: var(--grape-tint); border: 2px solid var(--grape); border-radius: 20px; padding: clamp(20px, 3vw, 30px); display: grid; gap: 12px; }
+.pkg-sum-btns { display: flex; flex-wrap: wrap; gap: 10px; }
 .pkg-sum-pay h2 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
 .pkg-summary-step { font-weight: 700; }
 @media (max-width: 560px) { .pkg-sum-row { grid-template-columns: 20px minmax(0, 1fr); } .pkg-sum-row .btn { grid-column: 2; justify-self: start; } }
