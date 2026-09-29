@@ -278,3 +278,6 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .doc .pv-blur .sigline { opacity: 0.4; }
 .doc .pv-note { margin: 18px 0; padding: 12px 14px; border-radius: 12px; background: var(--grape-tint); border: 1px solid var(--grape); font: 400 14px/1.45 var(--sans); color: var(--ink); }
 @media print { .doc.pv-locked { display: none !important; } }
+
+/* "To find one in [state]: [bar referral service]" after the see-an-attorney sentence (js/lawyer-links.js) */
+.gv-lawyer-link a { color: var(--grape); font-weight: 600; }
