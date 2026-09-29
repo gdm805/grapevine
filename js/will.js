@@ -22,7 +22,7 @@
     co_pr: 'co-personal representative', applies_to: 'child', alternate: 'alternate guardian', prop_fid: 'property fiduciary', prop_alt: 'alternate'
   };
   var MARK = { fill: '\u0001', close: '\u0002', blank: '\u0003', refOpen: '\u0004', refClose: '\u0005', drop: '\u0006', ans: '\u0007' };
-  /* MARK.ans tags each line that is in the document because of an answer ([[if]] / [[each]]), so the unpaid
+  /* MARK.ans tags each line that is in the document because of an answer (an optional [[if]], or [[each]]), so the unpaid
      preview can keep it readable (lockPreview). toBlocks strips it and sets the block's "ans" flag. */
   function markAns(s) { return s.replace(/(\S)([ \t]*)$/gm, '$1' + MARK.ans + '$2'); }
   /* optional answers: when left empty, the whole line they sit on is left out of the document
@@ -492,7 +492,10 @@
       } else if (n.t === 'ref') {
         out += MARK.refOpen + n.k + MARK.refClose;
       } else if (n.t === 'if') {
-        out += markAns(renderNodes(cond(n.c, scope) ? n.a : n.b, scope));
+        /* only an OPTIONAL section an answer switched on (an [[if]] with no [[else]]) counts as the person's own
+           text; choosing between two versions of standard wording (single or joint, and so on) does not */
+        var yes = cond(n.c, scope), part = renderNodes(yes ? n.a : n.b, scope);
+        out += yes && !n.b.length ? markAns(part) : part;
       } else if (n.t === 'each') {
         (scope[n.l] || []).forEach(function (item) { out += markAns(renderNodes(n.body, Object.assign({}, scope, item))); });
       }
@@ -807,13 +810,24 @@
     }
     if (!locked) return;
     var blocks = Array.prototype.filter.call(docEl.children, function (el) { return !el.classList.contains('wm-print'); });
-    if (blocks.length <= PV_CLEAR) return;
-    function mine(el) { return /^H[1-6]$/.test(el.tagName) || el.classList.contains('subh') || el.hasAttribute('data-ans') || !!el.querySelector('.fill'); }
-    blocks.forEach(function (el, i) { if (i >= PV_CLEAR && !mine(el)) el.classList.add('pv-blur'); });
+    /* the readable opening: up to 12 blocks, but only about the first tenth of a short document (at least the
+       title), so a short one like Schedule A isn't left entirely readable */
+    var open = Math.min(PV_CLEAR, Math.max(3, Math.round(blocks.length * 0.1)));
+    if (blocks.length <= open) return;
+    /* stays readable: headings; anything holding the person's own answers; and whole paragraphs an answer
+       switched on. Signature, date, witness and notary lines (blank lines to fill in) and one-line labels are
+       standard form wording, even when a state rule puts them there, so they stay blurred. */
+    function formLine(el) { return /_{4}/.test(el.textContent) || el.classList.contains('ln') || el.classList.contains('c') || el.classList.contains('sig') || el.classList.contains('row2'); }
+    function mine(el) {
+      if (/^H[1-6]$/.test(el.tagName) || el.classList.contains('subh')) return true;
+      if (el.querySelector('.fill')) return true;
+      return el.hasAttribute('data-ans') && !formLine(el) && el.textContent.trim().length > 40;
+    }
+    blocks.forEach(function (el, i) { if (i >= open && !mine(el)) el.classList.add('pv-blur'); });
     var note = document.createElement('div');
     note.className = 'pv-note';
     note.innerHTML = '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text.';
-    docEl.insertBefore(note, blocks[PV_CLEAR]);
+    docEl.insertBefore(note, blocks[open]);
   }
   ['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (ev) {
     docEl.addEventListener(ev, function (e) { if (docEl.classList.contains('pv-locked')) e.preventDefault(); });
