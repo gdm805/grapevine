@@ -73,3 +73,33 @@
     '<a href="' + href + '">' + (nextId ? 'Continue ' + what : 'Review ' + what) + ' &rarr;</a></div>';
   header.parentNode.insertBefore(bar, header);
 })();
+
+/* "Need help?" button, bottom-right of every page: opens a small panel with the Questions page and our support
+   email. No outside chat service (so nothing new for the Privacy Policy). It helps with using the site, not with
+   anyone's legal situation -- the panel says so. When live chat is added after launch (launch checklist), it can
+   replace the email line here. */
+(function () {
+  'use strict';
+  if (document.getElementById('gv-help')) return;
+  function url(p) { return window.GVUrl ? window.GVUrl(p) : p; }
+  var wrap = document.createElement('div');
+  wrap.id = 'gv-help';
+  wrap.className = 'gv-help';
+  wrap.innerHTML =
+    '<button type="button" class="gv-help-btn" aria-expanded="false" aria-controls="gv-help-panel">Need help?</button>' +
+    '<div class="gv-help-panel" id="gv-help-panel" role="dialog" aria-label="Help" hidden>' +
+      '<button type="button" class="gv-help-x" aria-label="Close">&times;</button>' +
+      '<p class="gv-help-h">How can we help?</p>' +
+      '<a class="gv-help-link" href="' + url('questions.html') + '">Common questions &rarr;</a>' +
+      '<a class="gv-help-link" href="mailto:support@grapevinedocs.com?subject=Grapevine%20help">Email support@grapevinedocs.com &rarr;</a>' +
+      '<p class="gv-help-note">We help with using Grapevine, such as finding your documents, downloading and printing. We can’t give legal advice about your situation.</p>' +
+    '</div>';
+  function mount() { document.body.appendChild(wrap); }
+  if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
+  var btn = wrap.querySelector('.gv-help-btn'), panel = wrap.querySelector('.gv-help-panel');
+  function set(open) { panel.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); if (open) { var l = panel.querySelector('a'); if (l) l.focus(); } }
+  btn.addEventListener('click', function () { set(panel.hidden); });
+  wrap.querySelector('.gv-help-x').addEventListener('click', function () { set(false); btn.focus(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
+  document.addEventListener('click', function (e) { if (!panel.hidden && !wrap.contains(e.target)) set(false); });
+})();
