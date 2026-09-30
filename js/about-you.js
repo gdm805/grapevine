@@ -112,14 +112,21 @@
     }
     return e;
   }
+  /* every answer is saved as it's typed, so nothing is lost if the person leaves this page before finishing
+     (Back button, a menu link, a reload). "aboutDone" is still set only by Continue, once everything is filled in. */
   root.addEventListener('input', function (e) {
     var k = e.target.getAttribute('data-k'); if (!k) return;
     p[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    write(p);
   });
+  var shownState = p.state || '';
   root.addEventListener('change', function (e) {
     var k = e.target.getAttribute('data-k'); if (!k) return;
     p[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
-    if (k === 'state') { p.county = ''; draw(); }
+    /* the county list depends on the state: only when the state really changes is the county cleared and the
+       list redrawn (browser autofill can report a "change" to the same state) */
+    if (k === 'state' && p.state !== shownState) { shownState = p.state; p.county = ''; write(p); draw(); return; }
+    write(p);
   });
   root.addEventListener('click', function (e) {
     if (!e.target.closest('[data-save]')) return;
