@@ -4102,7 +4102,13 @@
       } else {
         addPaywallBanner();
       }
-      if (inFlow) packageSigning();
+      if (inFlow) {
+        packageSigning();
+        /* inside a package, nothing is printed or signed document by document: one plain line says what happens */
+        var sub = stepEl.querySelector('.q-sub');
+        if (sub) sub.textContent = paidUp() ? 'Read it over. Download or print it below, or get every document at once from your package summary.'
+          : 'Read it over. When your package is finished, you\u2019ll pay once, then download and print everything.';
+      }
     }
     if (focusSel) { var f = stepEl.querySelector(focusSel); if (f) f.focus(); }
     renderDoc(); save();
@@ -4259,8 +4265,8 @@
   }
   function renderPkgSummaryLink(f) {
     return '<div class="actions pkg-continue">' +
-      '<p class="pkg-continue-note">This is the last document in your package. Next, review all ' + f.docs.length + ' documents in one place, change anything you like, then ' + (paidUp() ? 'download them.' : 'pay and download.') + '</p>' +
-      '<a class="btn btn-primary btn-lg" href="' + esc(window.GVUrl('package.html')) + '">Review your whole package <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
+      '<p class="pkg-continue-note">That\u2019s the last document. ' + (paidUp() ? 'Next: download or print all ' + f.docs.length + ' at once.' : 'Next: pay once, then download and print all ' + f.docs.length + '.') + '</p>' +
+      '<a class="btn btn-primary btn-lg" href="' + esc(window.GVUrl('package.html')) + '">' + (paidUp() ? 'Go to your downloads' : 'Finish: pay and download') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
       '</div>';
   }
   /* Inside a package, each document's "How to sign" steps are shown ONCE, all together, on the package summary

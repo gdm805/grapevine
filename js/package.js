@@ -52,34 +52,35 @@
     return '<div class="pkg-sum-row' + (isDone ? '' : ' pkg-sum-open') + '">' +
       '<span class="pkg-check">' + (isDone ? '✓' : '•') + '</span>' +
       '<span class="pkg-doc-name">' + esc(F.labelFor(k)) + '<small>' + (isDone ? 'Answered' : 'Not finished yet') + '</small></span>' +
-      '<a class="btn btn-secondary btn-sm" href="' + esc(docHref(k, isDone ? 'review=1' : '')) + '">' + (isDone ? (paid ? 'View, download or print' : 'Review or change') : 'Finish it') + '</a>' +
+      '<a class="btn btn-secondary btn-sm" href="' + esc(docHref(k, isDone ? 'review=1' : '')) + '">' + (isDone ? (paid ? 'Open' : 'Check or change') : 'Finish it') + '</a>' +
       '</div>';
   }).join('');
 
   var note = open.length ?
     '<p class="pkg-sum-warn"><strong>' + open.length + (open.length === 1 ? ' document still needs' : ' documents still need') + ' answers.</strong> Choose “Finish it” next to ' + (open.length === 1 ? 'it' : 'each one') + '.</p>' : '';
 
-  var action;
+  /* the one next step, at the TOP of the page: pay, then download (or, once paid, download) */
+  var n = f.docs.length, action;
   if (paid) {
     action = '<div class="pkg-sum-pay"><h2>Download your documents</h2>' +
-      '<p>Everything is unlocked. Download or print all ' + f.docs.length + ' documents at once below. To get just one document, choose \u201cView, download or print\u201d next to it: it opens with its own Download PDF and Print buttons. Save your files now: your purchase is remembered only in this browser.</p>' +
-      '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + f.docs.length + ' documents (PDF)</button>' +
-      '<button type="button" class="btn btn-secondary" id="print-all">Print all ' + f.docs.length + ' documents</button></div>' +
-      '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div>' +
-      '<p class="pkg-sign-link"><a href="#how-to-sign">How to sign your documents</a> is below.</p></div>';
+      '<p>Download or print all ' + n + ' at once. Save your files now: your purchase is remembered only in this browser.</p>' +
+      '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + n + ' (PDF)</button>' +
+      '<button type="button" class="btn btn-secondary" id="print-all">Print all ' + n + '</button></div>' +
+      '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
   } else {
     var b = beta();
-    action = '<div class="pkg-sum-pay"><h2>Ready to download?</h2>' +
-      '<p>' + (b ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your documents are free to download and print.' : 'Pay ' + (price ? '$' + price : '') + ' once to download and print all ' + f.docs.length + ' documents.') +
-      ' Previewing and changing your answers stay free, before and after.</p>' +
-      '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Take the survey' : 'Continue to payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>';
+    action = '<div class="pkg-sum-pay"><h2>' + (open.length ? 'When they\u2019re all answered' : 'Two steps left') + '</h2>' +
+      '<ol class="pkg-paysteps"><li>' + (b ? 'Answer a short survey (about 5 minutes) and submit it. Beta testers pay nothing.' : 'Pay ' + (price ? '$' + price : '') + ' once for all ' + n + ' documents.') + '</li>' +
+      '<li>Download and print them.</li></ol>' +
+      '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Take the survey' : 'Pay ' + (price ? '$' + price : '') + ' and download') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
+      '<p class="pkg-free">Checking and changing your answers stays free, before and after you pay.</p></div>';
   }
 
   var prof = {};
   try { prof = JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { prof = {}; }
   var aboutRow = '<div class="pkg-sum-row"><span class="pkg-check">' + (prof.aboutDone ? '✓' : '•') + '</span>' +
     '<span class="pkg-doc-name">Personal information<small>' + esc([prof.name, prof.name2].filter(Boolean).join(' and ') || 'Not finished yet') + '</small></span>' +
-    '<a class="btn btn-secondary btn-sm" href="' + esc(url('about-you.html') + '?next=package.html') + '">' + (prof.aboutDone ? 'Review or change' : 'Finish it') + '</a></div>';
+    '<a class="btn btn-secondary btn-sm" href="' + esc(url('about-you.html') + '?next=package.html') + '">' + (prof.aboutDone ? 'Check or change' : 'Finish it') + '</a></div>';
   rows = aboutRow + rows;
   /* HOW TO SIGN: each document's signing steps, saved by that document's review screen (js/will.js), shown once
      here in package order. The "seek a qualified attorney" sentence is taken out of each and said once at the end. */
@@ -98,9 +99,10 @@
     signParts.join('') + '<p class="pkg-sign-atty">' + ATTY + '</p></section>' : '';
   root.innerHTML = '<div class="pkg-summary">' +
     '<p class="overline">Your ' + esc(pkg) + ' package' + (f.couple ? ' for both of you' : '') + '</p>' +
-    '<h1>Review your package</h1>' +
-    '<p class="lead">Here is every document in your package. Open any one to read it again or change an answer, then come back here. Your answers are saved in this browser.</p>' +
-    note + '<div class="pkg-sum-list">' + rows + '</div>' + action + signHtml + '</div>';
+    '<h1>' + (open.length ? 'Almost done' : 'Your documents are ready') + '</h1>' +
+    note + action +
+    '<h2 class="pkg-sum-h">Your documents</h2><p class="pkg-sum-sub">Open any one to check it or change an answer.' + (paid ? ' Each also has its own Download and Print buttons.' : '') + '</p>' +
+    '<div class="pkg-sum-list">' + rows + '</div>' + signHtml + '</div>';
 
   /* ---------- Download all: one PDF built from every document ---------- */
   function status(msg, bad) {
