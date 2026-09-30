@@ -867,7 +867,19 @@
     docEl.addEventListener(ev, function (e) { if (docEl.classList.contains('pv-locked')) e.preventDefault(); });
   });
   var timer = null;
-  function schedulePreview() { clearTimeout(timer); timer = setTimeout(renderDoc, 60); }
+  /* The preview redraws after a short pause in typing, not on every key: a long document (the joint trust
+     is about 480 blocks) is slow to redraw on a phone, and typing lagged. On a phone, while the Questions tab
+     is showing, the hidden preview isn't redrawn at all -- it catches up when the preview tab is opened. */
+  var previewStale = false;
+  function previewHidden() {
+    var tabs = document.querySelector('.pane-tabs');
+    return !!tabs && getComputedStyle(tabs).display !== 'none' && layout.getAttribute('data-pane') !== 'p';
+  }
+  function schedulePreview() {
+    clearTimeout(timer);
+    if (previewHidden()) { previewStale = true; return; }
+    timer = setTimeout(function () { previewStale = false; renderDoc(); }, 250);
+  }
 
   /* the joint trust has two Trustmakers instead of one answers.name, and the Certification of
      Trust is named for the trust itself rather than a person -- handle both for the printed
@@ -4466,6 +4478,7 @@
   /* mobile: switch between the questions and the document */
   function setPane(p) {
     layout.setAttribute('data-pane', p);
+    if (p === 'p' && previewStale) { previewStale = false; renderDoc(); }
     document.querySelectorAll('.pane-tabs button').forEach(function (t) { t.setAttribute('aria-pressed', t.getAttribute('data-pane') === p ? 'true' : 'false'); });
     if (p === 'p') window.scrollTo(0, 0);
   }

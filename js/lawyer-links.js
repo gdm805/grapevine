@@ -70,8 +70,15 @@
     /* state not chosen yet (the home page comes before "About you"): the ABA's directory of bar referral services */
     if (!hit) hit = ANY;
     if (!root || !document.createTreeWalker) return;
-    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null), found = [], n;
-    while ((n = walker.nextNode())) if (n.nodeValue.indexOf(SENTENCE) > -1) found.push(n);
+    /* the document preview (.doc) is skipped entirely: the sentence never belongs inside a document, and
+       scanning a long preview after every redraw slowed typing on phones */
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        if (node.nodeType === 1) return node.classList && node.classList.contains('doc') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_SKIP;
+        return node.nodeValue.indexOf(SENTENCE) > -1 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+      }
+    }), found = [], n;
+    while ((n = walker.nextNode())) found.push(n);
     found.forEach(function (t) {
       var el = t.parentElement;
       if (!el || el.closest('.doc, #will-doc, script, style, a') || el.querySelector('.gv-lawyer-link')) return;
@@ -91,7 +98,9 @@
     decorate(document.body);
     if (!window.MutationObserver) return;
     var pending = false;
-    new MutationObserver(function () {
+    new MutationObserver(function (list) {
+      /* a redraw of the document preview can't add the sentence anywhere that needs a link */
+      if (list.every(function (m) { var t = m.target; return t.nodeType === 1 && t.closest && t.closest('.doc'); })) return;
       if (pending) return; pending = true;
       setTimeout(function () { pending = false; decorate(document.body); }, 50);
     }).observe(document.body, { childList: true, subtree: true });

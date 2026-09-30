@@ -81,7 +81,11 @@
   window.GVDateInput = { scan: scan, toIso: toIso, format: format };
   function start() {
     scan(document);
-    if (window.MutationObserver) new MutationObserver(function () { scan(document); }).observe(document.body, { childList: true, subtree: true });
+    /* re-check only when something outside the document preview changes (the preview has no date boxes) */
+    if (window.MutationObserver) new MutationObserver(function (list) {
+      if (list.every(function (m) { var t = m.target; return t.nodeType === 1 && t.closest && t.closest('.doc'); })) return;
+      scan(document);
+    }).observe(document.body, { childList: true, subtree: true });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
