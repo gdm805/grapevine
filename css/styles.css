@@ -446,3 +446,18 @@ a { color: var(--grape); }
 .price-jump a span { display: block; font-weight: 400; font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
 .price-jump a:hover, .price-jump a:focus-visible { background: var(--grape-tint, #efe8f7); }
 @media (max-width: 760px) { .price-jump { grid-template-columns: 1fr 1fr; } }
+
+/* comparison table with the two smaller packages as extra columns: tighter so all six columns fit */
+.compare.compare-6 { font-size: 15px; table-layout: fixed; }
+.compare.compare-6 thead th:first-child { width: 30%; }
+.compare.compare-6 th, .compare.compare-6 td { padding: 13px 10px; }
+.compare.compare-6 thead th { font-size: 18px; line-height: 1.2; }
+.compare.compare-6 tbody th, .compare.compare-6 tfoot th { width: 30%; }
+.compare.compare-6 .col-small { border-left: 2px solid var(--line); }
+.swipe-note { display: none; }
+@media (max-width: 700px) {
+  /* six columns can't fit a phone: this table scrolls sideways (the note says so) */
+  .compare.compare-6 { min-width: 620px; table-layout: auto; }
+  .compare.compare-6 tbody th, .compare.compare-6 tfoot th { width: auto; min-width: 150px; }
+  .swipe-note { display: block; margin: 0 0 8px; }
+}
