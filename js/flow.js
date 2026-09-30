@@ -20,7 +20,7 @@ window.GVFlow = (function () {
        trust has to exist in the person's mind -- and in their answers -- first. ALL trust documents (the trust and
        its paperwork) come before the pour-over will; then the personal documents. (Changed 25 Sep 2026; it used to start with the pour-over will.) */
     complete: ['trust', 'cert', 'affidavit', 'assignment', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
-    /* the two short packages sold from "Just need one document?" on the pricing page */
+    /* the two short packages sold from "Need a smaller package?" on the pricing page */
     health: ['hcd', 'dementia', 'hipaa', 'finalwishes'],
     trustpaper: ['schedulea', 'cert', 'affidavit', 'assignment']
   };

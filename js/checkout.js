@@ -35,7 +35,7 @@
     will: { single: 'https://buy.stripe.com/test_9B6fZh6SW3gz4aB0AJ5EY00', couple: 'https://buy.stripe.com/test_00wbJ17X07wPbD36Z75EY01' },
     essentials: { single: 'https://buy.stripe.com/test_5kQ3cv4KO3gzePfcjr5EY02', couple: 'https://buy.stripe.com/test_5kQ8wPa582cvcH7dnv5EY03' },
     complete: { single: 'https://buy.stripe.com/test_3cI3cv7X0eZhcH7cjr5EY04', couple: 'https://buy.stripe.com/test_6oUaEX9149EXcH783b5EY05' },
-    /* the smaller offers from "Just need one document?" -- paste each Stripe link between the quotes.
+    /* the smaller offers from "Need a smaller package?" -- paste each Stripe link between the quotes.
        "doc" is used for every single document (they all cost the same); the checkout page remembers which
        document was chosen and paid.html unlocks that one. Until a link is filled in, the checkout page
        shows the "Payments aren't turned on yet" notice for that offer. */

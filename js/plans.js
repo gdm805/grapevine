@@ -70,7 +70,7 @@ window.GV_PLANS = {
     health: { single: 129, couple: 199 },
     trustpaper: { single: 129, couple: 129 }
   },
-  /* plans that are sold from the "Just need one document?" part of the pricing page rather than as one of
+  /* plans that are sold from the "Need a smaller package?" part of the pricing page rather than as one of
      the three main plans. They are looked up like any plan (prices, checkout, unlocking) but stay out of
      `order`, which is the list the checkout page offers as "choose a different plan". */
   extra: ['doc', 'health', 'trustpaper'],
