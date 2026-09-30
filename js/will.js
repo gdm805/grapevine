@@ -14,6 +14,9 @@
     return m ? '?v=' + m[1] : '';
   })();
   var LABELS = {
+    residuary_pct: 'share', residuary_name: 'beneficiary', trustee_name: 'trustee', cotrustee: 'co-trustee',
+    tm1_name: 'trustmaker’s full name', tm2_name: 'second trustmaker’s full name', name1: 'first trustmaker’s full name', name2: 'second trustmaker’s full name',
+    trustee_caption: 'trustee’s name', holder_name: 'trustee’s name', certifying_trustee: 'certifying trustee’s name', affiant_name: 'affiant’s full name', signing_city: 'city where you sign', agent_name: 'agent’s name',
     name: 'your full name', name_caps: 'YOUR FULL NAME', city: 'your city', county: 'your county', state: 'your state',
     spouse: 'spouse\u2019s name', guardian: 'guardian', alt_guardian: 'alternate guardian',
     executor: 'personal representative', successor: 'successor', gift: 'gift', recipient: 'recipient',
@@ -520,7 +523,11 @@
         var yes = cond(n.c, scope), part = renderNodes(yes ? n.a : n.b, scope);
         out += yes && !n.b.length ? markAns(part) : part;
       } else if (n.t === 'each') {
-        (scope[n.l] || []).forEach(function (item) { out += markAns(renderNodes(n.body, Object.assign({}, scope, item))); });
+        /* the blank template shows one sample line of each list, with [bracketed] placeholders, so a list
+           that is always part of the document (beneficiaries, trustees...) isn't simply missing */
+        var list = scope[n.l] || [];
+        if (!list.length && BLANK) list = [{}];
+        list.forEach(function (item) { out += markAns(renderNodes(n.body, Object.assign({}, scope, item))); });
       }
     });
     return out;
