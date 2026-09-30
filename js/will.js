@@ -643,7 +643,10 @@
         case 'row': return '<div class="row2"><span class="l">' + inline(b.l) + '</span>' + (b.r ? '<span class="dots"></span><span class="r">' + inline(b.r) + '</span>' : '') + '</div>';
         case 'sign': return '<div class="sig"><span class="sigline"></span><span class="siglabel">' + inline(b.t) + '</span></div>';
         case 'ul': return '<ul>' + b.items.map(function (x) { return '<li>' + inline(x) + '</li>'; }).join('') + '</ul>';
-        case 'hang': return '<p class="hang">' + inline(b.t) + '</p>';
+        case 'hang':
+          /* "(a)" in its own column, so every line of the text starts at the same place */
+          var hm = /^(\([a-z0-9]+\))\s+([\s\S]*)$/i.exec(b.t);
+          return hm ? '<p class="hang hang-split"><span class="hang-m">' + inline(hm[1]) + '</span><span class="hang-t">' + inline(hm[2]) + '</span></p>' : '<p class="hang">' + inline(b.t) + '</p>';
         default: return '<p>' + inline(b.t) + '</p>';
       }
     }

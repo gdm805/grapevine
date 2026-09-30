@@ -65,7 +65,10 @@
         return P(rXml(b.n, { b: true, sz: 20 }) + tabRun() + rXml(plain(b.t), { b: true }),
           o({ jc: 'left', keepNext: true, keepLines: true, before: 280, after: 100, tabs: '<w:tab w:val="left" w:pos="1500"/>', left: 1500, hang: 1500 }));
       case 'hang':
-        return P(runsXml(b.t), o({ jc: 'left', left: 720, hang: 360 }));
+        var hm = /^(\([a-z0-9]+\))\s+([\s\S]*)$/i.exec(b.t || '');
+        /* "(a)" then a tab to the text column, so every line of the text lines up */
+        return hm ? P(runsXml(hm[1]) + tabRun() + runsXml(hm[2]), o({ jc: 'left', left: 720, hang: 360, tabs: '<w:tab w:val="left" w:pos="720"/>' }))
+          : P(runsXml(b.t), o({ jc: 'left', left: 720, hang: 360 }));
       case 'row':
         return P(rXml(unbold(b.l)) + (b.r ? tabRun() + rXml(unbold(b.r), { b: true }) : ''),
           o({ jc: 'left', left: 360, after: 100, keepLines: true, tabs: b.r ? '<w:tab w:val="right" w:leader="dot" w:pos="9360"/>' : '' }));
@@ -224,6 +227,7 @@
           x += w.w; if (i < line.length - 1 && w.sp) x += sp + extra;
         });
       }
+      function hangSplit(t) { var m = /^(\([a-z0-9]+\))\s+([\s\S]*)$/i.exec(t || ''); return m ? [m[1], m[2]] : ['', t || '']; }
       function para(text, opt) {
         opt = opt || {};
         var size = opt.size || 12, lh = size * 1.34, left = opt.left || 0, first = opt.first || 0;
@@ -240,6 +244,8 @@
           }
           for (var j = 0; j < take; j++) {
             var last = i + j === lines.length - 1, isFirst = i + j === 0;
+            /* a lettered paragraph: "(a)" sits in the margin and every line of its text starts at the same place */
+            if (isFirst && opt.marker) drawLine(layout(toWords(runs(opt.marker)), size, 200, 200)[0] || [], M + (opt.markerLeft || 0), size, 200, false);
             drawLine(lines[i + j], M + left + (isFirst ? first : 0), size, (isFirst ? W - left - right - first : W - left - right), opt.justify !== false && !last);
             y += lh;
           }
@@ -257,7 +263,7 @@
           case 'line': return /_{6}/.test(b.t) ? 40 : 20;
           case 'row': return 22;
           case 'ul': return b.items.length * 24;
-          case 'hang': return nlines(b.t, 36, 0, -24) * 16.1 + 8;
+          case 'hang': return nlines(hangSplit(b.t)[1], 36, 0, 0) * 16.1 + 8;
           case 'item': return nlines(b.t, 36, 36, 0) * 16.1 + 8;
           default: return nlines(b.t || '', 0, 0, 0) * 16.1 + 8;
         }
@@ -313,7 +319,7 @@
             tl.forEach(function (l) { doc.text(l, M + 96, base(12)); y += lh; });
             y += 3; break;
           }
-          case 'hang': para(b.t, { left: 36, first: -24, justify: false }); break;
+          case 'hang': var hs = hangSplit(b.t); if (hs[0]) para(hs[1], { left: 36, marker: hs[0], markerLeft: 12, justify: false }); else para(b.t, { left: 36, first: -24, justify: false }); break;
           case 'line': {
             /* a line with a blank to write on (signature, date, notary) gets room above it to sign in;
                the caption lines under it stay close; a gap follows the whole signature block */

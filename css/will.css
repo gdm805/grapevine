@@ -115,6 +115,8 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .doc .row2 .dots { flex: 1; border-bottom: 1.5px dotted #9b96a3; transform: translateY(-4px); min-width: 24px; }
 .doc .row2 .r { font-weight: 700; }
 .doc .hang { padding-left: 2.4em; text-indent: -1.7em; text-align: left; }
+/* lettered paragraphs: "(a)" in its own column and the text lined up under itself on every line */
+.doc .hang.hang-split { display: grid; grid-template-columns: minmax(1.7em, max-content) 1fr; column-gap: 0.4em; padding-left: 0.7em; text-indent: 0; }
 .doc .subh { font: 700 12.5px/1.3 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; margin: 28px 0 10px; color: #252429; break-after: avoid; }
 .doc ul { margin: 0 0 12px; padding-left: 24px; }
 .doc .sig { margin-top: 46px; max-width: 380px; break-inside: avoid; }
