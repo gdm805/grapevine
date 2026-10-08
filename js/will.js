@@ -3538,7 +3538,37 @@
     v.has_alt_agent = v.has_agent && a.hasAltAgent === 'yes' && !!clean(a.altAgentName);
     v.alt_agent_name = clean(a.altAgentName);
     v.state_note = st ? st.note : '';
+    fwSigningFacts(v);
     return v;
+  }
+  /* Final Wishes signing steps say exactly who must be there (8 Oct 2026). They're read from the person's own
+     signing section (finalwishes_execution in will/finalwishes-state-text.js, rendered with their answers), so
+     they always match the document: each "Witness 1/2" block is a witness, a notary section means a
+     notary, and an "...Acceptance" block is signed by the person named. Nothing to keep in step by hand. */
+  function fwSigningFacts(v) {
+    var sh = (window.FINALWISHES_SHARED || {}).finalwishes_execution;
+    if (!sh || !v.signing_state) return;
+    var lines = renderNodes(parseTemplate(sh).nodes, v).split('\n').map(function (l) { return l.replace(/[\u0000-\u001f]/g, '').trim(); });
+    var w = lines.filter(function (l) { return /^@sub\s+Witness\s+\d+\b/i.test(l); }).length;
+    /* a notary section: a "Notary Public" line, a notary heading, or "...before me" (California's form has no "Notary Public:" line) */
+    var n = lines.some(function (l) { return /^@line\s+Notary Public\b/i.test(l) || /^@sub\b.*\bNotar/i.test(l) || /\bbefore me\b/i.test(l); });
+    var acc = lines.some(function (l) { return /^@sub\b.*\bAcceptance\b/i.test(l); });
+    var count = ['', 'one adult witness', 'two adult witnesses', 'three adult witnesses'][w] || w + ' adult witnesses';
+    if (w && n) {
+      v.fw_who = count + ' and a notary public, all at the same time.';
+      v.fw_when = 'sign and date it in front of everyone. ' + (w === 1 ? 'The witness then signs the witness section' : 'Each witness then signs the witness section') + ', and the notary completes the notary section.';
+    } else if (w) {
+      v.fw_who = (w === 1 ? count : count + ', at the same time') + '. No notary is needed.';
+      v.fw_when = 'sign and date it in front of ' + (w === 1 ? 'your witness. The witness then fills in the witness section.' : 'both witnesses. Each witness then fills in the witness section.');
+    } else if (n) {
+      v.fw_who = 'a notary public. No witnesses are needed.';
+      v.fw_when = 'sign and date it in front of the notary, who then completes the notary section. Bring a photo ID.';
+    } else {
+      v.fw_who = 'no one else. Your signature and the date are enough.';
+      v.fw_when = 'sign and date it.';
+    }
+    v.fw_witness_note = w > 0 && v.has_agent;
+    v.fw_accept = acc ? (v.has_alt_agent ? v.agent_name + ' and ' + v.alt_agent_name + ' each sign their acceptance section in your document.' : v.agent_name + ' signs the acceptance section in your document.') : '';
   }
   /* states where Final Wishes states wishes only and does not appoint anyone: the law there requires a
      specific form for that appointment, so the "name someone" question is replaced by this explanation */
