@@ -194,6 +194,16 @@ window.FINALWISHES_SHARED['finalwishes_execution'] = String.raw`
 
 [[elif signing_state=ARIZONA]]
 // DRAFTER NOTE: Arizona permits either one qualified adult witness or notarization. Grapevine uses the notary alternative in this state file.
+[[if fw_witness]]
+// Witness route: A.R.S. 32-1365.01 (written directions: one adult who affirms presence, sound mind, no duress); for any designation, A.R.S. 36-3221(C)-(D) (not the agent or anyone directly involved in health care; a single witness not related and not entitled to the estate).
+I affirm that I was present when {{name}} signed and dated this document, and that {{name}} appeared to be of sound mind and free from duress at that time. I am an adult. I am not a person designated in this document, I am not directly involved in the health care of {{name}}, I am not related to {{name}} by blood, marriage, or adoption, and I am not entitled to any part of the estate of {{name}} under a will or by operation of law.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @line State of Arizona
 @line County of ________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -201,6 +211,7 @@ window.FINALWISHES_SHARED['finalwishes_execution'] = String.raw`
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=ARKANSAS]]
 // DRAFTER NOTE: Arkansas requires the declarant signature and two witnesses for the Declaration of Final Disposition. A generic notary acknowledgment is not substituted for the witness requirement.
@@ -233,6 +244,16 @@ A notary public or other officer completing this certificate verifies only the i
 
 [[elif signing_state=COLORADO]]
 // DRAFTER NOTE: Colorado permits either notarization or one adult witness confirming presence at signing. Grapevine uses the notary alternative in this state file.
+[[if fw_witness]]
+// Witness route: C.R.S. 15-19-104(5) and 15-19-107(2) (at least one adult who confirms presence when the declarant signed).
+I confirm that I was present when {{name}} signed this declaration. I am at least eighteen years of age.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @line State of Colorado
 @line County of ________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -240,6 +261,7 @@ A notary public or other officer completing this certificate verifies only the i
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=CONNECTICUT]]
 // DRAFTER NOTE: Connecticut requires two attesting witnesses for the written disposition document. A notary is not substituted.
@@ -397,6 +419,22 @@ This declaration appoints the designee only. The Declarant's funeral, ceremony, 
 Dated: {{signing_date}}
 @line ________________________________________
 @line {{name}}, Declarant
+[[if fw_witness]]
+// Witness route: Iowa Code 144C.6(2)(a) (two individuals not named in the declaration, signing in the presence of each other and the declarant).
+We declare that {{name}} signed this declaration in our presence, and that each of us signed below as a witness in the presence of {{name}} and of each other. Neither of us is named in this declaration.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @line State of Iowa
 @line County of ________________________________
 @line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
@@ -404,6 +442,7 @@ Dated: {{signing_date}}
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 [[end]]
 
 [[elif signing_state=KANSAS]]
@@ -498,6 +537,22 @@ I witnessed {{name}} sign this document in my presence, and I sign this document
 
 [[elif signing_state=MICHIGAN]]
 // DRAFTER NOTE: Michigan permits EITHER two qualified witnesses OR acknowledgment before a notary for a Funeral Representative designation. Grapevine uses the notarial route here unless the witness route is separately selected.
+[[if fw_witness]]
+// Witness route: MCL 700.3206(2)(b)(i) (two witnesses who sign in the declarant's presence; not the funeral representative or a person described in 700.3206(2)(c)(ii)-(iv); a witness may not sign unless the declarant appears of sound mind and under no duress, fraud, or undue influence).
+Each of us declares that {{name}} signed this document in our presence, that {{name}} appears to be of sound mind and under no duress, fraud, or undue influence, and that each of us signed below in the presence of {{name}}. Neither of us is [[if has_agent]]the funeral representative or a successor funeral representative named in this document, [[end]]a health professional treating {{name}}, an employee, volunteer, or owner of a health facility or veterans facility serving {{name}}, or an officer, owner, or employee of a cemetery or crematory.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @sub Notarial Acknowledgment
 @line State of Michigan
 @line County of _________________________________________
@@ -506,6 +561,7 @@ I witnessed {{name}} sign this document in my presence, and I sign this document
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=MINNESOTA]]
 // DRAFTER NOTE: Minnesota advance arrangements must be written, dated, signed, and witnessed. A dated written instrument signed by the decedent may appoint the person with the right to control disposition. This execution page includes a witness for the directions and an optional acknowledgment for added evidentiary formality.
@@ -611,6 +667,22 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 
 [[elif signing_state=NEW_MEXICO]]
 // DRAFTER NOTE: For the New Mexico cremation-statement route, the principal signs and uses EITHER notarization OR two witnesses. Grapevine uses the notarial route here by default. Other written directions remain subject to the state ruleset.
+[[if fw_witness]]
+// Witness route: NMSA 1978 24-12A-1(A)(1) (a written statement signed by the adult and notarized or witnessed by two persons).
+We declare that {{name}} signed this written statement in our presence.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @sub Notarial Acknowledgment
 @line State of New Mexico
 @line County of _________________________________________
@@ -619,6 +691,7 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=NEW_YORK]]
 // DRAFTER NOTE: New York requires the principal to sign and date the statutory appointment in the presence of TWO adult witnesses. The appointed agent must also sign the statutory acceptance/assumption section.
@@ -670,6 +743,22 @@ We are adults age 18 or older and witnessed {{name}} sign this written dispositi
 
 [[elif signing_state=OHIO]]
 // DRAFTER NOTE: Ohio requires the statutory declaration content and permits EITHER notarization OR two witnesses. Grapevine uses the notarial route here by default.
+[[if fw_witness]]
+// Witness route: R.C. 2108.73(B) (two adult witnesses not related to the declarant by blood, marriage, or adoption); attestation adapted from the R.C. 2108.72(B) form.
+Each of us attests that the declarant signed or acknowledged this [[if has_agent]]assignment of the right of disposition under section 2108.70 of the Revised Code[[else]]document[[end]] in our presence and that the declarant is at least eighteen years of age and appears to be of sound mind and not under or subject to duress, fraud, or undue influence. Each of us further attests that [[if has_agent]]we are not the declarant's representative or successor representative, [[end]]we are at least eighteen years of age, and we are not related to the declarant by blood, marriage, or adoption.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @sub Notarial Acknowledgment
 @line State of Ohio
 @line County of _________________________________________
@@ -678,6 +767,7 @@ We are adults age 18 or older and witnessed {{name}} sign this written dispositi
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=OKLAHOMA]]
 // DRAFTER NOTE: Oklahoma representative appointments require an executed and witnessed written document. A generic signature or notary alone is not substituted for the state-specific witnessed-document overlay.
@@ -696,6 +786,22 @@ We witnessed {{name}} execute this written disposition/representative appointmen
 
 [[elif signing_state=OREGON]]
 // DRAFTER NOTE: Oregon permits EITHER acknowledgment before a notary OR two competent adult witnesses for the statutory or substantially similar appointment. Grapevine uses the notarial route here by default.
+[[if fw_witness]]
+// Witness route: ORS 97.130(8) form (two competent adult witnesses complete the Declaration of Witnesses).
+We declare that {{name}} is personally known to us, that {{name}} signed this [[if has_agent]]Appointment of Person to Make Decisions Concerning Disposition of Remains[[else]]document[[end]] in our presence, [[if has_agent]]that {{name}} appeared to be of sound mind and not acting under duress, fraud or undue influence, and that neither of us is the person so appointed by this document.[[else]]and that {{name}} appeared to be of sound mind and not acting under duress, fraud or undue influence.[[end]] Each of us is a competent adult.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @sub Notarial Acknowledgment
 @line State of Oregon
 @line County of _________________________________________
@@ -704,6 +810,7 @@ We witnessed {{name}} execute this written disposition/representative appointmen
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=PENNSYLVANIA]]
 // DRAFTER NOTE: Pennsylvania does not use this document as a generic standalone statutory agent appointment. If disposition authority is placed in a Will, the Will execution package controls. The acknowledgment below is optional for these written wishes only.
@@ -757,6 +864,22 @@ I, {{agent_name}}, accept the appointment stated in this instrument and agree to
 
 [[elif signing_state=TENNESSEE]]
 // DRAFTER NOTE: Tennessee permits EITHER notarization OR two qualified adult witnesses for the written directions route. Grapevine uses the notarial route here by default.
+[[if fw_witness]]
+// Witness route: Tenn. Code Ann. 62-5-701(1)-(2) (witnessed by two qualified adults: 18 or older and of sound mind).
+We declare that {{name}} signed this document in our presence. Each of us is at least eighteen (18) years of age and of sound mind.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @sub Notarial Acknowledgment
 @line State of Tennessee
 @line County of _________________________________________
@@ -765,6 +888,7 @@ I, {{agent_name}}, accept the appointment stated in this instrument and agree to
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=TEXAS]]
 // DRAFTER NOTE: Texas requires the principal's signature to be acknowledged. The appointment is valid without the agent's signature, but each agent or successor agent must sign an acceptance before acting.
@@ -795,6 +919,22 @@ I, {{alt_agent_name}}, accept the appointment stated in this instrument and agre
 
 [[elif signing_state=UTAH]]
 // DRAFTER NOTE: Utah permits EITHER acknowledgment before a notary OR execution with Will formalities. Grapevine uses the notarial route here by default.
+[[if fw_witness]]
+// Witness route: Utah Code 58-9-602(1)(a) (executed with the formalities required of a will under 75-2-502: signed by at least two individuals, each within a reasonable time after witnessing the signing or the acknowledgment of the signature or of the document).
+Each of us witnessed {{name}} sign this document, or acknowledge to us the signature on it or the document itself, and each of us signs below as a witness within a reasonable time after doing so.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @sub Notarial Acknowledgment
 @line State of Utah
 @line County of _________________________________________
@@ -803,6 +943,7 @@ I, {{alt_agent_name}}, accept the appointment stated in this instrument and agre
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 
 [[elif signing_state=VERMONT]]
 // DRAFTER NOTE: Vermont routes disposition instructions through the advance-directive architecture. The advance directive must be dated and executed with TWO adult witnesses using the required affirmation. This execution block is the HCD-integrated route, not a competing standalone appointment.
@@ -860,6 +1001,22 @@ I witnessed {{name}} sign this written final-disposition instrument.
 
 [[elif signing_state=WISCONSIN]]
 // DRAFTER NOTE: Wisconsin permits EITHER two qualified witnesses OR notarization for the principal. Grapevine uses the notarial route here by default. Each representative and successor representative must separately sign acceptance.
+[[if fw_witness]]
+// Witness route: Wis. Stat. 154.30(8)(d)2 (two witnesses aged 18 or older, not related to the declarant by blood, marriage, or adoption); attestation adapted from the DHS form.
+Each of us attests that the declarant signed or acknowledged this authorization for final disposition in our presence and that the declarant appears to be of sound mind and not subject to duress, fraud, or undue influence. Each of us further attests that we are not the representative or the successor representative appointed under this document, that we are aged at least 18, and that we are not related to the declarant by blood, marriage, or adoption.
+
+@sub Witness 1
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+
+@sub Witness 2
+@line Signature: ________________________________________
+@line Printed Name: _____________________________________
+@line Address: __________________________________________
+@line Date: _____________________________________________
+[[else]]
 @sub Notarial Acknowledgment
 @line State of Wisconsin
 @line County of _________________________________________
@@ -868,6 +1025,7 @@ I witnessed {{name}} sign this written final-disposition instrument.
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
 @line (Seal)
+[[end]]
 [[if has_agent]]
 @sub Representative Acceptance
 

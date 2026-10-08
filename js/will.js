@@ -3484,7 +3484,7 @@
   /* ---------- FINAL WISHES ---------- */
   var UNOFFERED_FINALWISHES_STATES = { 'Mississippi': 1, 'South Carolina': 1 };
   var EMPTY_FINALWISHES = {
-    state: '', signingDate: '', fwNotary: '',
+    state: '', signingDate: '', fwNotary: '', fwRoute: '',
     name: '',
     disposition: '', dispositionOtherText: '',
     hasLocation: '', location: '',
@@ -3538,7 +3538,8 @@
     v.has_alt_agent = v.has_agent && a.hasAltAgent === 'yes' && !!clean(a.altAgentName);
     v.alt_agent_name = clean(a.altAgentName);
     v.state_note = st ? st.note : '';
-    v.fw_exec = !(FW_NOTARY_OPTIONAL[a.state] && a.fwNotary === 'no');
+    v.fw_exec = !(FW_NOTARY_OPTIONAL[a.state] && a.fwNotary === 'no') && !(FW_SELF_OK[a.state] && a.fwRoute === 'SELF');
+    v.fw_witness = fwRouteAsked(a, v.has_agent) && a.fwRoute === 'WITNESS';
     fwSigningFacts(v);
     return v;
   }
@@ -3576,6 +3577,18 @@
      include it. Witness-or-notary states and notary-required states are not on this list. */
   var FW_NOTARY_OPTIONAL = { 'Alabama': 1, 'California': 1, 'Delaware': 1, 'District of Columbia': 1, 'Florida': 1, 'Kansas': 1, 'Maine': 1,
     'Massachusetts': 1, 'Missouri': 1, 'New Hampshire': 1, 'New Jersey': 1, 'North Dakota': 1, 'Pennsylvania': 1, 'Wyoming': 1 };
+  /* states where Final Wishes can be signed EITHER before a notary OR before witnesses (number = witnesses needed):
+     the person chooses, and the document prints only that section (the witness sections and their statutes are
+     in will/finalwishes-state-text.js). Iowa's signing section exists only when a designee is named. */
+  var FW_WITNESS_OPTION = { 'Arizona': 1, 'Colorado': 1, 'Iowa': 2, 'Michigan': 2, 'New Mexico': 2, 'Ohio': 2, 'Oregon': 2,
+    'Tennessee': 2, 'Utah': 2, 'Wisconsin': 2 };
+  /* of those, states where a notary or witness is optional too ("may", C.R.S. 15-19-104(5)): a third choice, signing alone */
+  var FW_SELF_OK = { 'Colorado': 1 };
+  function fwRouteAsked(a, hasAgent) {
+    if (!FW_WITNESS_OPTION[a.state]) return false;
+    if (a.state === 'Iowa') return hasAgent === undefined ? (!FW_NO_AGENT_STATES[a.state] && a.hasAgent === 'yes' && !!clean(a.agentName)) : hasAgent;
+    return true;
+  }
   /* states where Final Wishes states wishes only and does not appoint anyone: the law there requires a
      specific form for that appointment, so the "name someone" question is replaced by this explanation */
   var FW_NO_AGENT_STATES = {
@@ -3634,6 +3647,10 @@
     },
     signing: function () {
       return stepHead('Signing', '') +
+        (fwRouteAsked(answers) ? field('How do you plan to sign?', pills('fwRoute', (FW_SELF_OK[answers.state] ? [['SELF', 'Sign it myself']] : []).concat([['NOTARY', 'In front of a notary'], ['WITNESS', FW_WITNESS_OPTION[answers.state] === 1 ? 'In front of one witness' : 'In front of two witnesses']]), true),
+          FW_SELF_OK[answers.state]
+            ? 'In ' + esc(answers.state) + ', these Final Wishes need only your signature and the date. You can also sign in front of a notary public or in front of ' + (FW_WITNESS_OPTION[answers.state] === 1 ? 'one adult witness' : 'two adult witnesses') + '. Your document includes a notary or witness section only if you choose one.'
+            : 'In ' + esc(answers.state) + ', you can sign these Final Wishes in front of a notary public or in front of ' + (FW_WITNESS_OPTION[answers.state] === 1 ? 'one adult witness' : 'two adult witnesses') + '. Your document will include the section for the way you choose.') : '') +
         (FW_NOTARY_OPTIONAL[answers.state] ? field('How do you plan to sign?', pills('fwNotary', [['no', 'Sign it myself'], ['yes', 'Sign in front of a notary']], true),
           'In ' + esc(answers.state) + ', these Final Wishes need only your signature and the date. You can also sign in front of a notary public. Your document includes a notary section only if you choose it.') : '') +
         field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
@@ -3686,6 +3703,7 @@
       if (a.hasAgent === 'yes' && a.hasAltAgent === 'yes' && !clean(a.altAgentName)) e.push('Enter the backup’s full legal name, or answer No.');
     } else if (id === 'signing') {
       if (FW_NOTARY_OPTIONAL[a.state] && !a.fwNotary) e.push('Choose how you plan to sign.');
+      if (fwRouteAsked(a) && !a.fwRoute) e.push('Choose how you plan to sign.');
     }
     return e;
   }
