@@ -123,14 +123,25 @@
   }
   /* every answer is saved as it's typed, so nothing is lost if the person leaves this page before finishing
      (Back button, a menu link, a reload). "aboutDone" is still set only by Continue, once everything is filled in. */
+  /* State and county change only when the PERSON picks them. Some browsers' fill-in add-ons (DuckDuckGo's, for one)
+     set the state themselves when you click into another box, and theirs landed on Delaware, wiping out the county
+     (8 Oct 2026). Their changes aren't real clicks or keypresses (isTrusted is false), so they're undone here.
+     Street, city and ZIP can still be filled in for you. */
+  function autoPick(e, k) {
+    if ((k !== 'state' && k !== 'county') || e.isTrusted !== false) return false;
+    e.target.value = k === 'state' ? (ABBR[p.state] || '') : (p.county || '');
+    return true;
+  }
   root.addEventListener('input', function (e) {
     var k = e.target.getAttribute('data-k'); if (!k) return;
+    if (autoPick(e, k)) return;
     p[k] = valueOf(e.target);
     write(p);
   });
   var shownState = p.state || '';
   root.addEventListener('change', function (e) {
     var k = e.target.getAttribute('data-k'); if (!k) return;
+    if (autoPick(e, k)) return;
     p[k] = valueOf(e.target);
     /* the county list depends on the state: only when the state really changes is the county cleared and the
        list redrawn (browser autofill can report a "change" to the same state) */
