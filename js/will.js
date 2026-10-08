@@ -698,6 +698,10 @@
     v.gifts = (a.gifts || []).map(function (g) { return { gift: clean(g.item), recipient: clean(g.recipient), gift_entity: giftEntity(g), gift_to_trust: g.to === 'TRUST' }; }).filter(function (g) { return g.gift && g.recipient; });
     v.has_gifts = a.wantsGifts === 'yes' && v.gifts.length > 0;
     v.has_entity_gift = v.has_gifts && v.gifts.some(function (g) { return g.gift_entity; });
+    /* gifts to a charity follow the "Gifts to Charitable Organizations" section (successor, or a similar charity) */
+    var giftTo = (a.wantsGifts === 'yes' ? (a.gifts || []) : []).filter(function (g) { return clean(g.item) && clean(g.recipient); });
+    v.gift_charity_any = giftTo.some(function (g) { return g.to === 'CHARITY'; });
+    v.gift_trust_any = giftTo.some(function (g) { return g.to === 'TRUST'; });
     v.beneficiaries = (a.beneficiaries || []).filter(function (b) { return clean(b.name); }).map(function (b) {
       var c = b.contingent || 'descendants', nm = clean(b.name), snt = isSntName(nm), tr = snt || isTrustName(nm);
       /* a trust has no descendants: that choice doesn't apply to one (the others share it, or the remote rule) */
@@ -1062,7 +1066,8 @@
             (!snt && (c === 'named' || c === 'charity') ? '<input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="contName" value="' + val(b.contName) + '" placeholder="' + (c === 'charity' ? 'Name of the charity' : 'Name of the person') + '" aria-label="Contingent beneficiary ' + (i + 1) + '">' : '') +
             '</div></div>';
         }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="beneficiaries">+ Add another</button>' +
-          '<p class="hint" id="pct-total">Shares add up to ' + fmtShare(total) + '%. They need to add up to 100%.</p>';
+          '<p class="hint" id="pct-total">Shares add up to ' + fmtShare(total) + '%. They need to add up to 100%.</p>' +
+          '<p class="hint"><strong>Leaving a share to a charity?</strong> If the charity has merged or changed its name, its share goes to the organization that carries on its work. If it no longer exists, your personal representative gives the share to a charity with a similar purpose. To send it somewhere else instead, choose a person, another charity, or the others on this list.</p>';
       }
       if (a.residuary === 'named') table += '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” If you name an existing special needs trust, your document adds a backup: if that trust no longer exists when the gift is made, the share is held for the same person in a supplemental needs trust instead of being paid to them outright. The existing special needs trust stays a separate document: it isn\u2019t part of your Grapevine package, and nothing in it is changed. Otherwise, this document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
       if (onlyNamed) return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Name each person or organization and the share each receives.') + table;
@@ -2477,7 +2482,7 @@
     v.gifts = (a.gifts || []).map(function (g) {
       return {
         gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_entity: giftEntity(g), gift_to_trust: g.to === 'TRUST',
-        gift_contingent: giftEntity(g) ? 'LAPSE' : (g.contingent || 'DESCENDANTS'), gift_contingent_name: clean(g.contingentName)
+        gift_charity: g.to === 'CHARITY', gift_contingent: giftEntity(g) ? 'LAPSE' : (g.contingent || 'DESCENDANTS'), gift_contingent_name: clean(g.contingentName)
       };
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
     if (a.wantsGifts === 'no') v.gifts = [];
@@ -2570,12 +2575,12 @@
             giftToSelect('gifts', i, g.to) +
             '<input class="input" data-list="gifts" data-i="' + i + '" data-f="beneficiary" value="' + val(g.beneficiary) + '" placeholder="' + esc(giftToPh(g.to)) + '">' +
             rm('gifts', i, 'gift ' + (i + 1), answers.gifts.length > 1) + '</div>';
-        }).join('') + '</div>' + addBtn('gifts', '+ Add another gift'), 'If a person you give a gift to doesn\u2019t survive you, the gift goes to that person\u2019s descendants. A gift to a charity or an existing trust that no longer exists becomes part of what\u2019s left for your final beneficiaries.');
+        }).join('') + '</div>' + addBtn('gifts', '+ Add another gift'), 'If a person you give a gift to doesn\u2019t survive you, the gift goes to that person\u2019s descendants. A gift to a charity goes to the organization that carries on its work if it has merged or changed its name, or, if it no longer exists, to a charity with a similar purpose that your trustee chooses. A gift to an existing trust that no longer exists becomes part of what\u2019s left for your final beneficiaries.');
       h += '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
       return h;
     },
     residuary: function () {
-      return stepHead('Who gets everything else?', 'After you die and any specific gifts are made, this is how the rest of your trust is divided. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list.' + ((answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER') ? ' This trust is yours alone: your spouse or partner receives something from it only if you name them here or in a specific gift.' : '')) +
+      return stepHead('Who gets everything else?', 'After you die and any specific gifts are made, this is how the rest of your trust is divided. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list. A charity\u2019s share goes to the organization that carries on its work, or, if it no longer exists, to a charity with a similar purpose that your trustee chooses.' + ((answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER') ? ' This trust is yours alone: your spouse or partner receives something from it only if you name them here or in a specific gift.' : '')) +
         field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
           return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
@@ -2753,7 +2758,7 @@
     v.cotrustees = (a.cotrustees || []).map(function (s) { return { cotrustee: clean(s.name) }; }).filter(function (s) { return s.cotrustee; });
     trusteeVars(a, v);
     var jg = (a.wantsGifts === 'no' ? [] : jointGiftList(a)).map(function (g) {
-      return { when: g.when || '', gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_entity: giftEntity(g), gift_to_trust: g.to === 'TRUST', gift_contingent: giftEntity(g) ? 'LAPSE' : (g.contingent || 'DESCENDANTS'), gift_contingent_name: clean(g.contingentName) };
+      return { when: g.when || '', gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_entity: giftEntity(g), gift_to_trust: g.to === 'TRUST', gift_charity: g.to === 'CHARITY', gift_contingent: giftEntity(g) ? 'LAPSE' : (g.contingent || 'DESCENDANTS'), gift_contingent_name: clean(g.contingentName) };
     }).filter(function (g) { return g.gift_description && g.gift_beneficiary; });
     v.tm1_gifts = jg.filter(function (g) { return g.when === 'P1'; }); v.has_tm1_gifts = v.tm1_gifts.length > 0;
     v.tm2_gifts = jg.filter(function (g) { return g.when === 'P2'; }); v.has_tm2_gifts = v.tm2_gifts.length > 0;
@@ -2865,7 +2870,7 @@
         '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     residuary: function () {
-      return stepHead('Who gets everything else, after both of you have died?', 'The surviving spouse or partner is provided for first. These are your final beneficiaries: the people or organizations who receive what\u2019s left after both of you have died' + (answers.firstDeathPlan === 'SURVIVOR' ? ' (the survivor can change this list later).' : ' (the survivor can change who receives the survivor\u2019s own share, but not the Family Trust).') + ' Don\u2019t list each other here. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list.') +
+      return stepHead('Who gets everything else, after both of you have died?', 'The surviving spouse or partner is provided for first. These are your final beneficiaries: the people or organizations who receive what\u2019s left after both of you have died' + (answers.firstDeathPlan === 'SURVIVOR' ? ' (the survivor can change this list later).' : ' (the survivor can change who receives the survivor\u2019s own share, but not the Family Trust).') + ' Don\u2019t list each other here. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list. A charity\u2019s share goes to the organization that carries on its work, or, if it no longer exists, to a charity with a similar purpose that your trustee chooses.') +
         field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
           return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +

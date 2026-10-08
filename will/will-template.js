@@ -164,6 +164,14 @@ Any other failed gift to a trust passes under the contingent disposition designa
 
 [[end]]
 
+## Gifts to Charitable Organizations {#sec_charity_gifts}
+
+This Section applies to every gift, share, or other interest that this Will gives to a charitable organization, including a Specific Gift, a share of my Residuary Estate, and a contingent gift. The Required Survivorship Period does not apply to a gift to a charitable organization.
+
+If a charitable organization named to receive a gift under this Will has merged, consolidated, reorganized, or changed its name before the gift is distributed, the gift shall be distributed to the successor organization that carries on its charitable purposes. If the named organization is not then in existence and has no such successor, or if it or its successor is not then an organization described in Sections 170(c) and 2055(a) of the Internal Revenue Code, my Personal Representative shall distribute the gift to one or more organizations described in those Sections whose charitable purposes, in my Personal Representative's judgment, most nearly match those of the named organization.
+
+However, if I have designated a named contingent beneficiary, or the other residuary beneficiaries, to receive a share of my Residuary Estate that a charitable organization fails to receive, and that organization is not in existence at my death and has no successor described in this Section, the share shall pass under that contingent disposition instead.
+
 ## Descendants by Right of Representation
 
 Whenever this Will directs property to a person's then-living descendants by right of representation, the property shall be divided into shares at the nearest generation having at least one living descendant.
@@ -368,7 +376,7 @@ My Personal Representative may take any other administrative action reasonably n
 
 ## Specific Gifts
 
-I make the following gifts (each, a "**Specific Gift**"). [[if has_entity_gift]]Each Specific Gift to a person is made only if that person survives me for the Required Survivorship Period, and each Specific Gift to a charity or trust is made only if that charity or trust is in existence at my death.[[else]]Each Specific Gift is made only if the recipient survives me for the Required Survivorship Period.[[end]] A Specific Gift that fails shall become part of my Residuary Estate.
+I make the following gifts (each, a "**Specific Gift**"). [[if has_entity_gift]]Each Specific Gift to a person is made only if that person survives me for the Required Survivorship Period.[[else]]Each Specific Gift is made only if the recipient survives me for the Required Survivorship Period.[[end]][[if gift_charity_any]] Each Specific Gift to a charitable organization passes as provided in [[ref sec_charity_gifts]].[[end]][[if gift_trust_any]] Each Specific Gift to a trust is made only if that trust is in existence at my death.[[end]] A Specific Gift that fails shall become part of my Residuary Estate.
 
 [[each gifts]]
 I give {{gift}} to {{recipient}}.
@@ -421,7 +429,7 @@ If a minor rounding or calculation discrepancy prevents the stated percentages f
 [[end]]
 ## Failure of a Residuary Gift
 
-If a residuary beneficiary does not survive me for the Required Survivorship Period, disclaims the beneficiary's interest, is legally ineligible to receive it, or otherwise fails to receive the share, that share shall be distributed according to the contingent disposition designated for that beneficiary.
+Except as provided in [[ref sec_charity_gifts]] for a gift to a charitable organization, if a residuary beneficiary does not survive me for the Required Survivorship Period, disclaims the beneficiary's interest, is legally ineligible to receive it, or otherwise fails to receive the share, that share shall be distributed according to the contingent disposition designated for that beneficiary.
 
 The contingent disposition may direct the share:
 

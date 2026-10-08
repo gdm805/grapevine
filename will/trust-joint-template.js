@@ -800,6 +800,8 @@ After completing the administration required by this Article, the Trustee shall 
 If {{residuary_name}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it, that share shall be distributed to that beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in this Section who receive their shares, in proportion to their shares; or, if there are none, as provided in the Failure of Distribution Section of this Article.
 
 [[end]]
+A share for a charitable organization passes as provided in [[ref sec_charity_gifts]] instead of under the survival provisions of this Section.
+
 
 ## Survivorship
 
@@ -833,6 +835,12 @@ Upon the death of {{name1}}, whether {{name1}} is the first or the surviving Tru
 
 {{gift_description}} to {{gift_beneficiary}}
 
+[[if gift_charity]]
+
+This Specific Gift passes as provided in [[ref sec_charity_gifts]].
+
+[[else]]
+
 [[if gift_entity]]If {{gift_beneficiary}} is not in existence at {{name1}}'s death, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[else]]If {{gift_beneficiary}} does not survive {{name1}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[end]]
 
 [[if gift_contingent=DESCENDANTS]]
@@ -857,6 +865,8 @@ the Specific Gift shall lapse and become part of the remainder of the Trust Esta
 
 [[end]]
 
+[[end]]
+
 [[if has_tm2_gifts]]
 
 ## Specific Gifts at the Death of {{name2}}
@@ -866,6 +876,12 @@ Upon the death of {{name2}}, whether {{name2}} is the first or the surviving Tru
 [[each tm2_gifts]]
 
 {{gift_description}} to {{gift_beneficiary}}
+
+[[if gift_charity]]
+
+This Specific Gift passes as provided in [[ref sec_charity_gifts]].
+
+[[else]]
 
 [[if gift_entity]]If {{gift_beneficiary}} is not in existence at {{name2}}'s death, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[else]]If {{gift_beneficiary}} does not survive {{name2}} by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[end]]
 
@@ -891,6 +907,8 @@ the Specific Gift shall lapse and become part of the remainder of the Trust Esta
 
 [[end]]
 
+[[end]]
+
 [[if has_survivor_death_gifts]]
 
 ## Specific Gifts After Both Trustmakers Have Died
@@ -900,6 +918,12 @@ Upon the death of the surviving Trustmaker, the Trustee shall make the following
 [[each survivor_death_gifts]]
 
 {{gift_description}} to {{gift_beneficiary}}
+
+[[if gift_charity]]
+
+This Specific Gift passes as provided in [[ref sec_charity_gifts]].
+
+[[else]]
 
 [[if gift_entity]]If {{gift_beneficiary}} is not in existence at the surviving Trustmaker's death, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[else]]If {{gift_beneficiary}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the Specific Gift, or is otherwise ineligible to receive it:[[end]]
 
@@ -918,6 +942,8 @@ the Specific Gift shall be distributed to {{gift_contingent_name}}.
 [[else]]
 
 the Specific Gift shall lapse and become part of the remainder of the Trust Estate.
+
+[[end]]
 
 [[end]]
 
@@ -996,6 +1022,14 @@ No beneficiary shall be required to execute a release as a condition of receivin
 ## Completion of Distribution
 
 Upon completing the distribution of a trust or separate share, the Trustee shall complete any remaining administrative acts reasonably necessary to close that trust or share.
+
+# GIFTS TO CHARITABLE ORGANIZATIONS
+
+## Gifts to Charitable Organizations {#sec_charity_gifts}
+
+Notwithstanding any other provision of this Trust Agreement, this Section applies to every gift, share, or other distribution that this Trust Agreement directs to a charitable organization, including a Specific Gift, a share of the remaining Trust Estate, and an alternate gift. The Required Survivorship Period does not apply to a gift to a charitable organization.
+
+If a charitable organization named to receive a gift under this Trust Agreement has merged, consolidated, reorganized, or changed its name before the gift is distributed, the gift shall be distributed to the successor organization that carries on its charitable purposes. If the named organization is not then in existence and has no such successor, or if it or its successor is not then an organization described in Sections 170(c) and 2055(a) of the Internal Revenue Code, the Trustee shall distribute the gift to one or more organizations described in those Sections whose charitable purposes, in the Trustee's judgment, most nearly match those of the named organization.
 
 [[if has_trust_gift]]
 # GIFTS TO A TRUST
