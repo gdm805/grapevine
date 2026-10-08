@@ -68,7 +68,7 @@
   /* the one next step, at the TOP of the page: pay, then download (or, once paid, download) */
   var n = f.docs.length, action;
   if (paid) {
-    action = '<div class="pkg-sum-pay"><h2>Download your documents</h2>' +
+    action = '<div class="pkg-sum-pay"><h2>Download and print your documents</h2>' +
       '<p>Download or print all ' + n + ' at once. Save your files now: your purchase is remembered only in this browser.</p>' +
       '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + n + ' (PDF)</button>' +
       '<button type="button" class="btn btn-secondary" id="print-all">Print all ' + n + '</button></div>' +
