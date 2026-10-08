@@ -75,7 +75,7 @@
       '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
   } else {
     var b = beta();
-    action = '<div class="pkg-sum-pay"><h2>' + (open.length ? 'When they\u2019re all answered' : 'Two steps left') + '</h2>' +
+    action = '<div class="pkg-sum-pay"><h2>' + (open.length ? 'When they\u2019re all answered' : 'Three steps left') + '</h2>' +
       '<ol class="pkg-paysteps"><li>' + (b ? 'Answer a short survey (about 5 minutes) and submit it. Beta testers pay nothing.' : 'Pay ' + (price ? '$' + price : '') + ' once for all ' + n + ' documents.') + '</li>' +
       '<li>Download and print them.</li>' +
       '<li>Sign each one, following its signing steps (on this page).</li></ol>' +
