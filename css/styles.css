@@ -435,6 +435,22 @@ a { color: var(--grape); }
 .gv-help-link:hover { text-decoration: underline; }
 .gv-help-note { font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); margin: 6px 0 0; }
 .gv-help-x { position: absolute; top: 6px; right: 8px; appearance: none; border: 0; background: none; font-size: 24px; line-height: 1; color: var(--ink-soft); cursor: pointer; padding: 4px 6px; }
+/* the help chat inside the panel (js/nav.js, cloudflare/help-chat.js) */
+.gv-help-panel:has(.gv-chat) { width: min(380px, calc(100vw - 32px)); max-height: calc(100vh - 96px); overflow-y: auto; }
+.gv-chat { margin-bottom: 12px; }
+.gv-help-panel:has(.gv-chat) > .gv-help-note:last-child { display: none; }  /* the chat note already says it */
+.gv-chat-log { max-height: min(36vh, 340px); overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 2px 2px 8px; }
+.gv-chat-msg { max-width: 88%; padding: 9px 12px; border-radius: 14px; font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
+.gv-chat-bot { align-self: flex-start; background: var(--sand, #f3efe4); border-bottom-left-radius: 4px; }
+.gv-chat-me { align-self: flex-end; background: var(--grape); color: #fff; border-bottom-right-radius: 4px; }
+.gv-chat-msg a { color: inherit; font-weight: 600; }
+.gv-chat-wait { color: var(--ink-soft); font-style: italic; }
+.gv-chat-form { display: flex; gap: 8px; align-items: flex-end; }
+.gv-chat-form textarea { flex: 1; min-width: 0; resize: none; font: 15px/1.4 var(--sans); padding: 9px 10px; border: 1.5px solid var(--line, #d9d4c7); border-radius: 12px; }
+.gv-chat-form textarea:focus { outline: 2px solid var(--grape); outline-offset: 1px; }
+.gv-chat-send { appearance: none; border: 0; background: var(--grape); color: #fff; font: 600 15px/1 var(--sans); padding: 11px 14px; border-radius: 12px; cursor: pointer; }
+.gv-chat-send:disabled { opacity: .55; cursor: default; }
+.gv-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 @media print { .gv-help { display: none !important; } }
 /* room at the bottom of phone screens, so the "Need help?" button never hides the last line of a page */
 @media (max-width: 700px) { body { padding-bottom: 72px; } }

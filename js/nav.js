@@ -74,13 +74,26 @@
   header.parentNode.insertBefore(bar, header);
 })();
 
-/* "Need help?" button, bottom-right of every page: opens a small panel with the Questions page and our support
-   email. No outside chat service (so nothing new for the Privacy Policy). It helps with using the site, not with
-   anyone's legal situation -- the panel says so. When live chat is added after launch (launch checklist), it can
-   replace the email line here. */
+/* "Need help?" button, bottom-right of every page: opens a small panel with the signing steps, the Questions page
+   and our support email -- and, once switched on, the AI help chat (cloudflare/help-chat.js). It helps with
+   using the site, not with anyone's legal situation -- the panel says so.
+
+   THE HELP CHAT SWITCH:
+     url  the web address of the Cloudflare help-chat program, e.g. 'https://grapevine-help-chat.gdm805.workers.dev'
+     on   false = the chat shows only in TEST MODE: in a browser that has opened any page with ?chat=1 at the end
+          of its address (?chat=0 turns test mode off again). true = everyone sees it. Before setting true:
+          the Privacy Policy must mention the chat (launch checklist 11d). */
+var GV_CHAT = { url: '', on: false };
 (function () {
   'use strict';
   if (document.getElementById('gv-help')) return;
+  var navSrc = document.currentScript && document.currentScript.src;
+  try {
+    if (/[?&]chat=1\b/.test(location.search)) localStorage.setItem('grapevine.chat', '1');
+    if (/[?&]chat=0\b/.test(location.search)) localStorage.removeItem('grapevine.chat');
+  } catch (e) { /* storage blocked */ }
+  var chatOn = false;
+  try { chatOn = !!GV_CHAT.url && (GV_CHAT.on || localStorage.getItem('grapevine.chat') === '1'); } catch (e) { chatOn = !!GV_CHAT.url && GV_CHAT.on; }
   function url(p) { return window.GVUrl ? window.GVUrl(p) : p; }
   /* "How do I sign?": someone with a package in progress goes straight to its signing steps (package summary);
      anyone else to the Questions page answer, which says where the steps are */
@@ -97,6 +110,11 @@
     '<div class="gv-help-panel" id="gv-help-panel" role="dialog" aria-label="Help" hidden>' +
       '<button type="button" class="gv-help-x" aria-label="Close">&times;</button>' +
       '<p class="gv-help-h">How can we help?</p>' +
+      (chatOn ? '<div class="gv-chat"><div class="gv-chat-log" aria-live="polite"></div>' +
+        '<form class="gv-chat-form"><label class="gv-sr" for="gv-chat-in">Your question</label>' +
+        '<textarea id="gv-chat-in" rows="2" maxlength="1500" placeholder="Type your question"></textarea>' +
+        '<button type="submit" class="gv-chat-send">Send</button></form>' +
+        '<p class="gv-help-note gv-chat-note">An automated assistant answers here. It helps with using Grapevine and can\u2019t give legal advice. Please don\u2019t type account numbers or Social Security numbers.</p></div>' : '') +
       '<a class="gv-help-link" href="' + signHref() + '">How do I sign my documents? &rarr;</a>' +
       '<a class="gv-help-link" href="' + url('questions.html') + '">Common questions &rarr;</a>' +
       '<a class="gv-help-link" href="mailto:support@grapevinedocs.com?subject=Grapevine%20help">Email support@grapevinedocs.com &rarr;</a>' +
@@ -105,11 +123,73 @@
   function mount() { document.body.appendChild(wrap); }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
   var btn = wrap.querySelector('.gv-help-btn'), panel = wrap.querySelector('.gv-help-panel');
-  function set(open) { panel.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); if (open) { var l = panel.querySelector('a'); if (l) l.focus(); } }
+  function set(open) { panel.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); if (open) { var l = panel.querySelector('#gv-chat-in') || panel.querySelector('a'); if (l) l.focus(); } }
   btn.addEventListener('click', function () { set(panel.hidden); });
+  if (chatOn) {
+    chat(wrap);
+    /* the chat's "seek a qualified attorney" sentence gets the person's state bar link (js/lawyer-links.js),
+       which some pages don't load on their own */
+    if (!window.GVLawyerLinks && navSrc) { var ll = document.createElement('script'); ll.src = navSrc.replace(/nav\.js/, 'lawyer-links.js'); document.head.appendChild(ll); }
+  }
   wrap.querySelector('.gv-help-x').addEventListener('click', function () { set(false); btn.focus(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
   document.addEventListener('click', function (e) { if (!panel.hidden && !wrap.contains(e.target)) set(false); });
+
+  /* THE HELP CHAT: the conversation is kept for this browser tab only (sessionStorage), so it follows the person
+     from page to page and is gone when the tab closes. Each question goes to the Cloudflare program, which
+     answers with Claude under Greg's no-legal-advice instructions. */
+  function chat(root) {
+    var KEY = 'gv.chat.v1', EMAIL = 'support@grapevinedocs.com';
+    var GREETING = 'Hi! I can help with using Grapevine: finding your documents, paying, downloading, printing and signing steps. I can\u2019t give legal advice about your situation.';
+    var log = root.querySelector('.gv-chat-log'), form = root.querySelector('.gv-chat-form'), input = root.querySelector('#gv-chat-in');
+    var sendBtn = root.querySelector('.gv-chat-send');
+    var state = { id: '', messages: [] };
+    try { state = JSON.parse(sessionStorage.getItem(KEY) || 'null') || state; } catch (e) { /* new chat */ }
+    function save() { try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ } }
+    function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    /* plain text, with web addresses on grapevinedocs.com and the support email made into links */
+    function format(s) {
+      return esc(s).replace(/(https?:\/\/)?(www\.grapevinedocs\.com[^\s<),]*)/g, function (_, p, u) {
+        var href = 'https://' + u.replace(/[.]$/, ''), tail = /[.]$/.test(u) ? '.' : '';
+        return '<a href="' + href + '">' + u.replace(/[.]$/, '') + '</a>' + tail;
+      }).replace(new RegExp(EMAIL.replace(/[.]/g, '\\.'), 'g'), '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>').replace(/\n/g, '<br>');
+    }
+    function bubble(role, text) {
+      var d = document.createElement('div');
+      d.className = 'gv-chat-msg gv-chat-' + (role === 'user' ? 'me' : 'bot');
+      d.innerHTML = format(text);
+      log.appendChild(d); log.scrollTop = log.scrollHeight;
+      return d;
+    }
+    function render() {
+      log.innerHTML = '';
+      bubble('assistant', GREETING);
+      state.messages.forEach(function (m) { bubble(m.role, m.content); });
+    }
+    render();
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = input.value.trim();
+      if (!q || sendBtn.disabled) return;
+      input.value = '';
+      state.messages.push({ role: 'user', content: q }); save();
+      bubble('user', q);
+      var wait = bubble('assistant', 'Typing\u2026'); wait.classList.add('gv-chat-wait');
+      sendBtn.disabled = true;
+      fetch(GV_CHAT.url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: state.id, messages: state.messages }) })
+        .then(function (r) { return r.json(); })
+        .then(function (a) { return a; }, function () { return null; })
+        .then(function (a) {
+          var text = a && a.reply ? a.reply : 'Sorry, I can\u2019t answer right now. Please email ' + EMAIL + '.';
+          if (a && a.id) state.id = a.id;
+          state.messages.push({ role: 'assistant', content: text }); save();
+          wait.remove(); bubble('assistant', text);
+        })
+        .then(function () { sendBtn.disabled = false; input.focus(); });
+    });
+    /* Enter sends; Shift+Enter starts a new line */
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit')); } });
+  }
 })();
 
 /* a link to a question on the Questions page (questions.html#how-to-sign) opens that answer */
