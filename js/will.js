@@ -3484,7 +3484,7 @@
   /* ---------- FINAL WISHES ---------- */
   var UNOFFERED_FINALWISHES_STATES = { 'Mississippi': 1, 'South Carolina': 1 };
   var EMPTY_FINALWISHES = {
-    state: '', signingDate: '',
+    state: '', signingDate: '', fwNotary: '',
     name: '',
     disposition: '', dispositionOtherText: '',
     hasLocation: '', location: '',
@@ -3538,6 +3538,7 @@
     v.has_alt_agent = v.has_agent && a.hasAltAgent === 'yes' && !!clean(a.altAgentName);
     v.alt_agent_name = clean(a.altAgentName);
     v.state_note = st ? st.note : '';
+    v.fw_exec = !(FW_NOTARY_OPTIONAL[a.state] && a.fwNotary === 'no');
     fwSigningFacts(v);
     return v;
   }
@@ -3548,7 +3549,7 @@
   function fwSigningFacts(v) {
     var sh = (window.FINALWISHES_SHARED || {}).finalwishes_execution;
     if (!sh || !v.signing_state) return;
-    var lines = renderNodes(parseTemplate(sh).nodes, v).split('\n').map(function (l) { return l.replace(/[\u0000-\u001f]/g, '').trim(); });
+    var lines = !v.fw_exec ? [] : renderNodes(parseTemplate(sh).nodes, v).split('\n').map(function (l) { return l.replace(/[\u0000-\u001f]/g, '').trim(); });
     var w = lines.filter(function (l) { return /^@sub\s+Witness\s+\d+\b/i.test(l); }).length;
     /* a notary section: a "Notary Public" line, a notary heading, or "...before me" (California's form has no "Notary Public:" line) */
     var n = lines.some(function (l) { return /^@line\s+Notary Public\b/i.test(l) || /^@sub\b.*\bNotar/i.test(l) || /\bbefore me\b/i.test(l); });
@@ -3570,6 +3571,11 @@
     v.fw_witness_note = w > 0 && v.has_agent;
     v.fw_accept = acc ? (v.has_alt_agent ? v.agent_name + ' and ' + v.alt_agent_name + ' each sign their acceptance section in your document.' : v.agent_name + ' signs the acceptance section in your document.') : '';
   }
+  /* states where Final Wishes needs only the person's signature and date, and the notary section is optional
+     (the drafter notes in will/finalwishes-state-text.js say so for each): the person chooses whether to
+     include it. Witness-or-notary states and notary-required states are not on this list. */
+  var FW_NOTARY_OPTIONAL = { 'Alabama': 1, 'California': 1, 'Delaware': 1, 'District of Columbia': 1, 'Florida': 1, 'Kansas': 1, 'Maine': 1,
+    'Massachusetts': 1, 'Missouri': 1, 'New Hampshire': 1, 'New Jersey': 1, 'North Dakota': 1, 'Pennsylvania': 1, 'Wyoming': 1 };
   /* states where Final Wishes states wishes only and does not appoint anyone: the law there requires a
      specific form for that appointment, so the "name someone" question is replaced by this explanation */
   var FW_NO_AGENT_STATES = {
@@ -3628,6 +3634,8 @@
     },
     signing: function () {
       return stepHead('Signing', '') +
+        (FW_NOTARY_OPTIONAL[answers.state] ? field('How do you plan to sign?', pills('fwNotary', [['no', 'Sign it myself'], ['yes', 'Sign in front of a notary']], true),
+          'In ' + esc(answers.state) + ', these Final Wishes need only your signature and the date. You can also sign in front of a notary public. Your document includes a notary section only if you choose it.') : '') +
         field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
     },
     review: function () {
@@ -3676,6 +3684,8 @@
       if (!a.hasAgent) e.push('Answer whether you want to name someone here.');
       if (a.hasAgent === 'yes' && !clean(a.agentName)) e.push('Enter that person’s full legal name.');
       if (a.hasAgent === 'yes' && a.hasAltAgent === 'yes' && !clean(a.altAgentName)) e.push('Enter the backup’s full legal name, or answer No.');
+    } else if (id === 'signing') {
+      if (FW_NOTARY_OPTIONAL[a.state] && !a.fwNotary) e.push('Choose how you plan to sign.');
     }
     return e;
   }
