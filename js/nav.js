@@ -83,7 +83,7 @@
      on   false = the chat shows only in TEST MODE: in a browser that has opened any page with ?chat=1 at the end
           of its address (?chat=0 turns test mode off again). true = everyone sees it. Before setting true:
           the Privacy Policy must mention the chat (launch checklist 11d). */
-var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: false };
+var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true };
 (function () {
   'use strict';
   if (document.getElementById('gv-help')) return;
