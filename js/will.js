@@ -2110,7 +2110,7 @@
     signing: function () {
       var h = stepHead('Signing', 'This fills in the county on your document’s notary or witness section.') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
+        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
       if (hcdSet(answers, 'exec_choice') === 'yes') {
         var routes = (hcdSet(answers, 'exec_routes') || '').split(',').filter(Boolean);
         h += field('How do you plan to sign?', pills('execRoute', routes.map(function (r) { return [r, HCD_ROUTE_LABELS[r] || r]; })), 'Your state offers more than one way.');
@@ -2611,9 +2611,8 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
-          'Pick the date you’ll sign in front of the notary, and sign on that date. It becomes your trust’s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, every one of those documents gets a blank line to fill in by hand, which is easy to get wrong.') +
-        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> a date entered here prints on your trust and on the documents that go with it. You can change it later &mdash; just come back and update it before you print.</p>');
+        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
+          'If you know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. Don\u2019t know yet? Leave it blank: each of those documents gets a blank line, and you write the same date by hand on all of them when you sign. You can also come back and add it before you print.');
     },
     review: function () {
       var v = buildVarsTrust(answers, states, tpl.settings);
@@ -2901,9 +2900,8 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
-          'Pick the date you’ll sign in front of the notary, and sign on that date. It becomes your trust’s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, every one of those documents gets a blank line to fill in by hand, which is easy to get wrong.') +
-        (answers.signingDate ? '' : '<p class="hint"><strong>Tip:</strong> a date entered here prints on your trust and on the documents that go with it. You can change it later &mdash; just come back and update it before you print.</p>');
+        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
+          'If you know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. Don\u2019t know yet? Leave it blank: each of those documents gets a blank line, and you write the same date by hand on all of them when you sign. You can also come back and add it before you print.');
     },
     review: function () {
       var v = buildVarsTrustJoint(answers, states, tpl.settings);
@@ -3105,7 +3103,7 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
+        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
     },
     review: function () {
       var v = buildVarsCert(answers, states, tpl.settings);
@@ -3291,7 +3289,7 @@
       return stepHead('Signing', '') +
         field('City where you’ll sign', text('signingCity', '')) +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
+        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
     },
     review: function () {
       var v = buildVarsAffidavit(answers, states, tpl.settings);
@@ -3437,7 +3435,7 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
+        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
     },
     review: function () {
       var v = buildVarsAssignment(answers, states, tpl.settings);
@@ -3600,7 +3598,7 @@
     },
     signing: function () {
       return stepHead('Signing', '') +
-        field('Signing date', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">');
+        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
     },
     review: function () {
       var v = buildVarsFinalWishes(answers, states, tpl.settings);
@@ -3648,8 +3646,6 @@
       if (!a.hasAgent) e.push('Answer whether you want to name someone here.');
       if (a.hasAgent === 'yes' && !clean(a.agentName)) e.push('Enter that person’s full legal name.');
       if (a.hasAgent === 'yes' && a.hasAltAgent === 'yes' && !clean(a.altAgentName)) e.push('Enter the backup’s full legal name, or answer No.');
-    } else if (id === 'signing') {
-      if (!a.signingDate) e.push('Enter the date you’ll sign.');
     }
     return e;
   }
