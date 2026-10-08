@@ -51,9 +51,8 @@
     var isDone = done.indexOf(k) > -1;
     return '<div class="pkg-sum-row' + (isDone ? '' : ' pkg-sum-open') + '">' +
       '<span class="pkg-check">' + (isDone ? '✓' : '•') + '</span>' +
-      '<span class="pkg-doc-name">' + esc(F.labelFor(k)) + '<small>' + (isDone ? 'Answered' : 'Not finished yet') +
-      (isDone ? ' · <a class="pkg-row-sign" href="#how-to-sign">How to sign</a>' : '') + '</small></span>' +
-      '<a class="btn btn-secondary btn-sm" href="' + esc(docHref(k, isDone ? 'review=1' : '')) + '">' + (isDone ? (paid ? 'Open' : 'Check or change') : 'Finish it') + '</a>' +
+      '<span class="pkg-doc-name">' + esc(F.labelFor(k)) + '<small>' + (isDone ? 'Answered' : 'Not finished yet') + '</small></span>' +
+      '<a class="btn btn-secondary btn-sm" href="' + esc(docHref(k, isDone ? 'review=1' : '')) + '">' + (isDone ? 'Check or change' : 'Finish it') + '</a>' +
       '</div>';
   }).join('');
 
@@ -91,9 +90,9 @@
      pages of their own (js/will-export.js signingSheet). The steps aren't repeated on screen: people read a page
      they can hold. Each document's steps are built fresh from its current answers when the sheet is made. */
   var signHtml = done.length ? '<section class="pkg-sign" id="how-to-sign"><h2>How to sign your documents</h2>' +
-    '<p class="lead">Print your signing steps before you sign. They list, for each document, who must be there when you sign it and what to do.</p>' +
-    '<div class="sign-sheet-btns"><button type="button" class="btn btn-primary" id="sheet-print">Print signing steps</button>' +
-    '<button type="button" class="btn btn-secondary" id="sheet-pdf">Download signing steps (PDF)</button></div>' +
+    '<p>Print your signing steps before you sign. They list, for each document, who must be there when you sign it and what to do.</p>' +
+    '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary" id="sheet-pdf">Download signing steps (PDF)</button>' +
+    '<button type="button" class="btn btn-secondary" id="sheet-print">Print signing steps</button></div>' +
     '<p class="pkg-status" id="sign-status" role="status"></p>' +
     '<p class="hint sign-sheet-note">The signing steps print on their own pages, separate from your documents. Keep them with your documents until you sign.' + (paid ? ' They are also the first pages of your \u201cDownload all\u201d PDF.' : '') + '</p>' +
     '<p class="pkg-sign-atty">' + ATTY + '</p></section>' : '';
@@ -101,7 +100,7 @@
     '<p class="overline">Your ' + esc(pkg) + ' package' + (f.couple ? ' for both of you' : '') + '</p>' +
     '<h1>' + (open.length ? 'Almost done' : 'Your documents are ready') + '</h1>' +
     note + action + (paid ? signHtml : '') +
-    '<h2 class="pkg-sum-h">Your documents</h2><p class="pkg-sum-sub">Open any one to check it or change an answer.' + (paid ? ' Each also has its own Download and Print buttons.' : '') + '</p>' +
+    '<h2 class="pkg-sum-h">Your documents</h2><p class="pkg-sum-sub">Choose \u201cCheck or change\u201d to look over a document or change an answer.' + (paid ? ' Each also has its own Download and Print buttons.' : '') + '</p>' +
     '<div class="pkg-sum-list">' + rows + '</div>' + (paid ? '' : signHtml) + '</div>';
 
   /* ---------- Download all: one PDF built from every document ---------- */
