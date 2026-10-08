@@ -47,17 +47,12 @@
   var price = GV && GV.priceFor ? GV.priceFor(f.plan, household) : 0;
   var checkoutHref = url('checkout.html') + '?plan=' + encodeURIComponent(f.plan) + '&household=' + household + '&return=package.html';
 
-  /* each document's "How to sign" steps, saved by its review screen (js/will.js) -- read here so every row can
-     link straight to its own steps */
-  var signing = {};
-  try { signing = JSON.parse(localStorage.getItem('grapevine.signing.v1') || '{}') || {}; } catch (e) { signing = {}; }
-  function hasSteps(k) { return !!(signing[k] && signing[k].html); }
   var rows = f.docs.map(function (k) {
     var isDone = done.indexOf(k) > -1;
     return '<div class="pkg-sum-row' + (isDone ? '' : ' pkg-sum-open') + '">' +
       '<span class="pkg-check">' + (isDone ? '✓' : '•') + '</span>' +
       '<span class="pkg-doc-name">' + esc(F.labelFor(k)) + '<small>' + (isDone ? 'Answered' : 'Not finished yet') +
-      (isDone && hasSteps(k) ? ' · <a class="pkg-row-sign" href="#sign-' + esc(k) + '">How to sign</a>' : '') + '</small></span>' +
+      (isDone ? ' · <a class="pkg-row-sign" href="#how-to-sign">How to sign</a>' : '') + '</small></span>' +
       '<a class="btn btn-secondary btn-sm" href="' + esc(docHref(k, isDone ? 'review=1' : '')) + '">' + (isDone ? (paid ? 'Open' : 'Check or change') : 'Finish it') + '</a>' +
       '</div>';
   }).join('');
@@ -92,20 +87,16 @@
   /* HOW TO SIGN: each document's signing steps, saved by that document's review screen (js/will.js), shown once
      here in package order. The "seek a qualified attorney" sentence is taken out of each and said once at the end. */
   var ATTY = 'If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.';
-  var sheetParts = f.docs.filter(hasSteps).map(function (k) { return { label: F.labelFor(k), html: signing[k].html }; });
-  var signParts = f.docs.filter(hasSteps).map(function (k) {
-    var box = document.createElement('div');
-    box.innerHTML = signing[k].html;
-    Array.prototype.forEach.call(box.querySelectorAll('p'), function (p) { if (p.textContent.indexOf('seek a qualified attorney') > -1) p.remove(); });
-    var h = box.querySelector('h2'); if (h) h.remove();
-    return '<div class="pkg-sign-doc" id="sign-' + esc(k) + '"><h3>' + esc(F.labelFor(k)) + '</h3>' + box.innerHTML + '</div>';
-  });
-  var signHtml = signParts.length ? '<section class="pkg-sign" id="how-to-sign"><h2>How to sign your documents</h2>' +
-    '<p class="lead">Read these before you sign. Each one says who must be there when you sign that document.</p>' +
-    '<div class="sign-sheet-btns"><button type="button" class="btn btn-secondary btn-sm" id="sheet-pdf">Download signing steps (PDF)</button>' +
-    '<button type="button" class="btn btn-secondary btn-sm" id="sheet-print">Print signing steps</button></div>' +
-    '<p class="hint sign-sheet-note">The signing steps print on their own pages, separate from your documents' + (paid ? ', and they are also the first pages of your “Download all” PDF' : '') + '.</p>' +
-    signParts.join('') + '<p class="pkg-sign-atty">' + ATTY + '</p></section>' : '';
+  /* HOW TO SIGN: a short section whose job is the printable signing sheet -- the steps for every document, on
+     pages of their own (js/will-export.js signingSheet). The steps aren't repeated on screen: people read a page
+     they can hold. Each document's steps are built fresh from its current answers when the sheet is made. */
+  var signHtml = done.length ? '<section class="pkg-sign" id="how-to-sign"><h2>How to sign your documents</h2>' +
+    '<p class="lead">Print your signing steps before you sign. They list, for each document, who must be there when you sign it and what to do.</p>' +
+    '<div class="sign-sheet-btns"><button type="button" class="btn btn-primary" id="sheet-print">Print signing steps</button>' +
+    '<button type="button" class="btn btn-secondary" id="sheet-pdf">Download signing steps (PDF)</button></div>' +
+    '<p class="pkg-status" id="sign-status" role="status"></p>' +
+    '<p class="hint sign-sheet-note">The signing steps print on their own pages, separate from your documents. Keep them with your documents until you sign.' + (paid ? ' They are also the first pages of your \u201cDownload all\u201d PDF.' : '') + '</p>' +
+    '<p class="pkg-sign-atty">' + ATTY + '</p></section>' : '';
   root.innerHTML = '<div class="pkg-summary">' +
     '<p class="overline">Your ' + esc(pkg) + ' package' + (f.couple ? ' for both of you' : '') + '</p>' +
     '<h1>' + (open.length ? 'Almost done' : 'Your documents are ready') + '</h1>' +
@@ -127,7 +118,7 @@
       function finish() {
         if (settled) return; settled = true; clearTimeout(giveUp);
         var api = iframe.contentWindow && iframe.contentWindow.GrapevineWill, got = { blocks: [], footer: '' };
-        try { if (api) got = { blocks: api.blocks(), footer: api.exportOptions().footer }; } catch (e) { /* keep empty */ }
+        try { if (api) got = { blocks: api.blocks(), footer: api.exportOptions().footer, signing: api.signing ? api.signing() : '' }; } catch (e) { /* keep empty */ }
         if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
         resolve(got);
       }
@@ -170,9 +161,9 @@
         return loadKindBlocks(id).then(function (r) { out.push(r); });
       });
     }, Promise.resolve()).then(function () {
-      var combined = [], sheet = sheetParts.length && window.GVExport.sheetBlocks;
+      var parts = sheetPartsFrom(out), combined = [], sheet = parts.length && window.GVExport.sheetBlocks;
       /* the signing sheet first, on pages of its own with its own footer -- not part of any document */
-      if (sheet) combined = window.GVExport.sheetBlocks(sheetParts);
+      if (sheet) combined = window.GVExport.sheetBlocks(parts);
       out.forEach(function (r, i) { if (i > 0 || sheet) combined.push({ k: 'break', footer: r.footer }); combined.push.apply(combined, r.blocks); });
       var who = '';
       try { who = (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).name || ''; } catch (e) { who = ''; }
@@ -196,7 +187,7 @@
     buildPackage().then(function (r) {
       offerSave(r.blob, r.filename);
       autoSave(r.blob, r.filename);
-      status('Done. Your package PDF is downloading to your Downloads folder.' + (sheetParts.length ? ' It starts with the signing steps, on their own pages, then every document.' : ' It has every document.'));
+      status('Done. Your package PDF is downloading to your Downloads folder. It starts with the signing steps, on their own pages, then every document.');
     }).catch(function () {
       status('We could not build the combined PDF. Open each document to download it instead.', true);
     }).then(function () { busy(false); });
@@ -216,25 +207,41 @@
       status('We could not build the combined PDF. Open each document to print it instead.', true);
     }).then(function () { busy(false); });
   });
-  /* the signing sheet on its own: download or print just the steps */
+  function sheetPartsFrom(out) {
+    return out.map(function (r, i) { return { label: F.labelFor(f.docs[i]), html: r && r.signing }; })
+      .filter(function (p, i) { return p.html && done.indexOf(f.docs[i]) > -1; });
+  }
+  function signStatus(msg, bad) {
+    var el = document.getElementById('sign-status');
+    if (el) { el.textContent = msg; el.className = 'pkg-status' + (bad ? ' bad' : ''); }
+  }
+  /* the signing sheet on its own: each document's steps, fresh, then one PDF of just the steps */
   function sheetFile() {
-    return window.GVExport.signingSheet(sheetParts).then(function (blob) { return { blob: blob, filename: 'Grapevine-How-to-Sign.pdf' }; });
+    var out = [];
+    return f.docs.reduce(function (p, id, i) {
+      return p.then(function () {
+        signStatus('Preparing your signing steps... document ' + (i + 1) + ' of ' + f.docs.length + '.');
+        return done.indexOf(id) > -1 ? loadKindBlocks(id).then(function (r) { out[i] = r; }) : null;
+      });
+    }, Promise.resolve()).then(function () {
+      var parts = sheetPartsFrom(out);
+      if (!parts.length) throw new Error('no steps');
+      return window.GVExport.signingSheet(parts);
+    }).then(function (blob) { return { blob: blob, filename: 'Grapevine-How-to-Sign.pdf' }; });
   }
   var sp = document.getElementById('sheet-pdf'), spr = document.getElementById('sheet-print');
   if (sp) sp.addEventListener('click', function () {
-    if (!window.GVExport || !window.GVExport.signingSheet) { status('The download tools did not load. Please reload the page.', true); return; }
-    sheetFile().then(function (r) { autoSave(r.blob, r.filename); status('Your signing steps are downloading to your Downloads folder.'); })
-      .catch(function () { status('We could not build the signing steps PDF. Please reload the page and try again.', true); });
+    if (!window.GVExport || !window.GVExport.signingSheet) { signStatus('The download tools did not load. Please reload the page.', true); return; }
+    sheetFile().then(function (r) { autoSave(r.blob, r.filename); signStatus('Your signing steps are downloading to your Downloads folder.'); })
+      .catch(function () { signStatus('We could not build the signing steps PDF. Please reload the page and try again.', true); });
   });
   if (spr) spr.addEventListener('click', function () {
-    if (!window.GVExport || !window.GVExport.signingSheet) { status('The print tools did not load. Please reload the page.', true); return; }
+    if (!window.GVExport || !window.GVExport.signingSheet) { signStatus('The print tools did not load. Please reload the page.', true); return; }
     var job = window.GVExport.printStart();
-    sheetFile().then(function (r) { return job.show(r.blob, r.filename, autoSave); }).then(function (msg) { status(msg); })
-      .catch(function () { job.cancel(); status('We could not build the signing steps PDF. Please reload the page and try again.', true); });
+    sheetFile().then(function (r) { return job.show(r.blob, r.filename, autoSave); }).then(function (msg) { signStatus(msg); })
+      .catch(function () { job.cancel(); signStatus('We could not build the signing steps PDF. Please reload the page and try again.', true); });
   });
   if (location.hash === '#how-to-sign') { var hs = document.getElementById('how-to-sign'); if (hs) setTimeout(function () { hs.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
-  var sh = /^#sign-[\w-]+$/.test(location.hash) && document.getElementById(location.hash.slice(1));
-  if (sh) setTimeout(function () { sh.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300);
   /* arriving from the payment page: bring the download box into view */
   if (/[?&]download=all\b/.test(location.search)) {
     var box = root.querySelector('.pkg-sum-pay');

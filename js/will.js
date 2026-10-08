@@ -4714,7 +4714,9 @@
     setAnswers: function (o) { Object.assign(answers, o); draw(); },
     load: function (name) { return new Promise(function (ok) { dpLoad(name, ok); }); },
     text: docText, html: function () { return toHtml(docText()); }, blocks: function () { return toBlocks(docText()); }, exportOptions: exportOptions,
-    vars: function () { return buildVars(answers, states, tpl.settings); }, validate: function (id) { return KIND.validate(id); }, applyPreset: applyPreset
+    vars: function () { return buildVars(answers, states, tpl.settings); }, validate: function (id) { return KIND.validate(id); }, applyPreset: applyPreset,
+    /* this document's "How to sign" steps, built fresh from the current answers (the package summary's signing sheet) */
+    signing: function () { return toHtml(renderNodes(sign.nodes, buildVars(answers, states, tpl.settings)), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>'); }
   };
 
   /* a "See the blank template" link above every document preview; on the blank page itself, the heading says so */
