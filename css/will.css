@@ -241,6 +241,7 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .pkg-status:empty { display: none; }
 .pkg-status.bad { color: #9b2c2c; }
 .pkg-save { display: grid; gap: 8px; margin-top: 10px; font-size: 14px; color: var(--ink-soft); }
+.pkg-save[hidden] { display: none; }
 
 /* package summary page (package.html) */
 .pkg-summary-wrap { padding: clamp(32px, 6vw, 72px) 0; }
@@ -259,7 +260,7 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .pkg-sum-pay { background: var(--grape-tint); border: 2px solid var(--grape); border-radius: 20px; padding: clamp(20px, 3vw, 30px); display: grid; gap: 12px; }
 .pkg-sum-btns { display: flex; flex-wrap: wrap; gap: 10px; }
 /* Download all and Print all: the same size, side by side (each full width on a phone) */
-.pkg-sum-btns > .btn { flex: 1 1 220px; width: auto; justify-content: center; margin: 4px 0 14px; }
+.pkg-sum-btns > .btn { flex: 1 1 220px; width: auto; justify-content: center; margin: 0; }
 .pkg-paysteps { display: block; margin: 0 0 4px 22px; padding: 0; font-size: 17px; line-height: 1.5; list-style: decimal; }
 .pkg-paysteps li { display: list-item; margin: 2px 0; }
 .pkg-free { font-size: 14px; color: var(--ink-soft, #5a5560); }
