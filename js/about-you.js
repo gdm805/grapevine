@@ -48,9 +48,18 @@
   function input(k, type, ph, auto) {
     return '<input class="input" type="' + (type || 'text') + '" data-k="' + k + '" value="' + esc(p[k] || '') + '" placeholder="' + esc(ph || '') + '" autocomplete="' + (auto || 'off') + '">';
   }
+  /* each state's value is its two-letter code: a browser filling in a saved address gives the state as "WA",
+     which must match Washington exactly -- with full names only, "WA" matched the first name containing
+     those letters, DelaWAre, and the state change wiped out the county (8 Oct 2026). Saved as the full name. */
+  var NAME_OF = {};
+  states.forEach(function (s) { NAME_OF[ABBR[s]] = s; });
+  function valueOf(el) {
+    if (el.type === 'checkbox') return el.checked;
+    return el.getAttribute('data-k') === 'state' ? (NAME_OF[el.value] || el.value) : el.value;
+  }
   function stateSelect() {
-    return '<select class="input" data-k="state" data-redraw>' + '<option value="">Choose your state</option>' +
-      states.map(function (s) { return '<option' + (p.state === s ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') + '</select>';
+    return '<select class="input" data-k="state" data-redraw autocomplete="address-level1">' + '<option value="">Choose your state</option>' +
+      states.map(function (s) { return '<option value="' + esc(ABBR[s]) + '"' + (p.state === s ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') + '</select>';
   }
   function countySelect() {
     var list = COUNTIES[ABBR[p.state]] || [];
@@ -78,11 +87,11 @@
       '<p class="q-sub">Every field is used in your documents, now or later.</p>' +
       person('1', 'You') +
       '<h3 class="about-who">' + (couple ? 'Where you live' : 'Where you live') + '</h3>' +
-      field('Street address', input('street', 'text', 'Street and unit number')) +
-      field('City', input('city', 'text', '')) +
+      field('Street address', input('street', 'text', 'Street and unit number', 'address-line1')) +
+      field('City', input('city', 'text', '', 'address-level2')) +
       field('State', stateSelect()) +
       field('County', countySelect()) +
-      field('ZIP code', input('zip', 'text', '5-digit ZIP')) +
+      field('ZIP code', input('zip', 'text', '5-digit ZIP', 'postal-code')) +
       (couple ? person('2', 'Your spouse or partner') : '') +
       '<div class="nav-row"><span></span><button type="button" class="btn btn-primary" data-save>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>';
   }
@@ -116,13 +125,13 @@
      (Back button, a menu link, a reload). "aboutDone" is still set only by Continue, once everything is filled in. */
   root.addEventListener('input', function (e) {
     var k = e.target.getAttribute('data-k'); if (!k) return;
-    p[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    p[k] = valueOf(e.target);
     write(p);
   });
   var shownState = p.state || '';
   root.addEventListener('change', function (e) {
     var k = e.target.getAttribute('data-k'); if (!k) return;
-    p[k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+    p[k] = valueOf(e.target);
     /* the county list depends on the state: only when the state really changes is the county cleared and the
        list redrawn (browser autofill can report a "change" to the same state) */
     if (k === 'state' && p.state !== shownState) { shownState = p.state; p.county = ''; write(p); draw(); return; }
