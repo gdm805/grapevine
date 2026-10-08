@@ -93,7 +93,7 @@
       if (t.nextSibling) el.insertBefore(span, t.nextSibling); else el.appendChild(span);
     });
   }
-  window.GVLawyerLinks = { links: LINKS, decorate: decorate };
+  window.GVLawyerLinks = { links: LINKS, any: ANY, decorate: decorate };
   function start() {
     decorate(document.body);
     if (!window.MutationObserver) return;

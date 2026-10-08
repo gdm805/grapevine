@@ -439,5 +439,51 @@
     };
   }
 
-  window.GVExport = { docx: docx, pdf: pdf, runs: runs, printStart: printStart };
+  /* THE SIGNING SHEET (added 8 Oct 2026): the on-screen "How to sign" steps, turned into PDF pages of their own,
+     with their own footer and page numbers -- never part of a document. parts = [{ label, html }], where html is
+     a document's "How to sign" box. A package's "Download all" puts the sheet first; each document page and the
+     package summary also have their own "Download signing steps" button. */
+  var ATTY = 'If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.';
+  var SHEET_FOOTER = 'How to sign (instructions only, not part of your documents)';
+  function inlineText(el) {
+    var c = el.cloneNode(true);
+    Array.prototype.forEach.call(c.querySelectorAll('.gv-lawyer-link'), function (s) { s.remove(); });
+    Array.prototype.forEach.call(c.querySelectorAll('strong, b'), function (s) { s.textContent = '**' + s.textContent + '**'; });
+    return c.textContent.replace(/\s+/g, ' ').replace(/\*\*\s*\*\*/g, '').trim();
+  }
+  function sheetBlocks(parts) {
+    var blocks = [{ k: 'center', t: 'How to Sign Your Documents' },
+      { k: 'p', t: 'These are instructions only. They are not part of any document, and they are not signed. Read them before you sign.' }];
+    parts.forEach(function (part) {
+      var box = document.createElement('div');
+      box.innerHTML = part.html;
+      blocks.push({ k: 'plain', t: part.label });
+      (function walk(node) {
+        Array.prototype.forEach.call(node.children, function (el) {
+          var tag = el.tagName;
+          if (/^H\d$/.test(tag) || el.classList.contains('instr-btns') || el.classList.contains('instr-note')) return;
+          if (tag === 'UL' || tag === 'OL') {
+            var items = Array.prototype.map.call(el.querySelectorAll('li'), inlineText).filter(Boolean);
+            if (items.length) blocks.push({ k: 'ul', items: items });
+          } else if (tag === 'P') {
+            var t = inlineText(el);
+            if (t && t.indexOf('seek a qualified attorney') === -1) blocks.push({ k: 'p', t: t });
+          } else if (el.children.length) walk(el);
+          else { var x = inlineText(el); if (x) blocks.push({ k: 'p', t: x }); }
+        });
+      })(box);
+    });
+    blocks.push({ k: 'p', t: ATTY });
+    var L = window.GVLawyerLinks, st = '';
+    try { st = (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || ''; } catch (e) { st = ''; }
+    var hit = L && L.links && L.links[st] ? L.links[st] : (L && L.any);
+    if (hit) blocks.push({ k: 'p', t: 'To find one in ' + (L.links[st] ? st : 'your state') + ': ' + hit[0] + ', ' + hit[1] });
+    return blocks;
+  }
+  function signingSheet(parts) {
+    return pdf(sheetBlocks(parts), { footer: SHEET_FOOTER, draftLabel: '', title: 'How to Sign Your Documents' });
+  }
+
+  window.GVExport = { docx: docx, pdf: pdf, runs: runs, printStart: printStart,
+    sheetBlocks: sheetBlocks, signingSheet: signingSheet, sheetFooter: SHEET_FOOTER };
 })();
