@@ -59,6 +59,7 @@
 .paid-summary .sum-l { display: block; font: 700 11.5px/1.2 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 3px; }
 .paid-summary .sum-v { display: block; font-size: 15.5px; line-height: 1.4; }
 .paid-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 12px; }
+.paid-sign { max-width: 52ch; margin: 16px auto 0; padding: 12px 16px; background: var(--sand); border: 2px solid var(--grape); border-radius: 14px; font-size: 15.5px; }
 .paid-note { max-width: 52ch; font-size: 14.5px; color: var(--ink-mute); margin-top: 8px; }
 .paid-error { max-width: 52ch; }
 

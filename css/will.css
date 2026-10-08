@@ -87,8 +87,12 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
 .see-doc { display: none; }
 .draft-inline { font-size: 14px; color: var(--overline); font-weight: 600; }
-.instr { padding: 20px 22px; background: var(--sand); border-radius: var(--r-lg); }
-.instr h2 { font: 600 12.5px/1.3 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--grape-deep); margin-bottom: 10px; }
+.instr { padding: 20px 22px; background: var(--sand); border: 2px solid var(--grape); border-radius: var(--r-lg); scroll-margin-top: 110px; }
+.instr-btns, .sign-sheet-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.instr-note, .sign-sheet-note { margin-top: 8px; font-size: 14px; }
+.pkg-sign, .pkg-sign-doc { scroll-margin-top: 110px; }
+.pkg-row-sign { color: var(--grape); font-weight: 600; }
+.instr h2 { font: 700 15px/1.3 var(--sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--grape-deep); margin-bottom: 10px; }
 .instr p { margin-bottom: 10px; font-size: 15.5px; }
 .instr ul { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 8px; font-size: 15.5px; }
 .reset { margin: 0; }

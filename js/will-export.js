@@ -444,7 +444,7 @@
      a document's "How to sign" box. A package's "Download all" puts the sheet first; each document page and the
      package summary also have their own "Download signing steps" button. */
   var ATTY = 'If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.';
-  var SHEET_FOOTER = 'How to sign (instructions only, not part of your documents)';
+  var SHEET_FOOTER = 'How to sign (instructions only, not part of any document)';
   function inlineText(el) {
     var c = el.cloneNode(true);
     Array.prototype.forEach.call(c.querySelectorAll('.gv-lawyer-link'), function (s) { s.remove(); });
@@ -452,7 +452,8 @@
     return c.textContent.replace(/\s+/g, ' ').replace(/\*\*\s*\*\*/g, '').trim();
   }
   function sheetBlocks(parts) {
-    var blocks = [{ k: 'center', t: 'How to Sign Your Documents' },
+    var one = parts.length === 1;
+    var blocks = [{ k: 'center', t: one ? 'How to Sign Your Document' : 'How to Sign Your Documents' },
       { k: 'p', t: 'These are instructions only. They are not part of any document, and they are not signed. Read them before you sign.' }];
     parts.forEach(function (part) {
       var box = document.createElement('div');
@@ -481,7 +482,7 @@
     return blocks;
   }
   function signingSheet(parts) {
-    return pdf(sheetBlocks(parts), { footer: SHEET_FOOTER, draftLabel: '', title: 'How to Sign Your Documents' });
+    return pdf(sheetBlocks(parts), { footer: SHEET_FOOTER, draftLabel: '', title: parts.length === 1 ? 'How to Sign Your Document' : 'How to Sign Your Documents' });
   }
 
   window.GVExport = { docx: docx, pdf: pdf, runs: runs, printStart: printStart,

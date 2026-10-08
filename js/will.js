@@ -4116,7 +4116,7 @@
             if (sumEl) {
               var nx = document.createElement('p');
               nx.className = 'pkg-next-top';
-              nx.innerHTML = 'Next in your package: <a href="' + esc(pageUrl(nextKind)) + '">' + esc(window.GVFlow.labelFor(nextKind)) + ' &rarr;</a> <span>(read how to sign this one below first)</span>';
+              nx.innerHTML = 'Next in your package: <a href="' + esc(pageUrl(nextKind)) + '">' + esc(window.GVFlow.labelFor(nextKind)) + ' &rarr;</a> <span>(how to sign every document is on your package summary)</span>';
               sumEl.parentNode.insertBefore(nx, sumEl);
             }
           }
@@ -4131,6 +4131,7 @@
         if (sub) sub.textContent = paidUp() ? 'Read it over. Download or print it below, or get every document at once from your package summary.'
           : 'Read it over. When your package is finished, you\u2019ll pay once, then download and print everything.';
       }
+      signingHelp();
     }
     if (focusSel) { var f = stepEl.querySelector(focusSel); if (f) f.focus(); }
     renderDoc(); save();
@@ -4305,6 +4306,42 @@
     p.className = 'hint pkg-sign-note';
     p.innerHTML = 'How to sign this document is on your <a href="' + esc(window.GVUrl('package.html')) + '#how-to-sign">package summary</a>, with the signing steps for every document in one place.';
     box.parentNode.replaceChild(p, box);
+  }
+  /* "How to sign", easy to find (8 Oct 2026 -- customers kept asking how to sign): a "How to sign" button beside
+     Download and Print that jumps to the steps (inside a package, to the package summary, where every document's
+     steps are), plus "Download / Print signing steps", which make a separate PDF of just the steps
+     (js/will-export.js signingSheet) -- never part of the document itself. */
+  function signingHelp() {
+    var box = stepEl.querySelector('.instr'), note = stepEl.querySelector('.pkg-sign-note');
+    var target = box ? '#how-to-sign' : (note ? window.GVUrl('package.html') + '#how-to-sign' : '');
+    if (!target) return;
+    var acts = stepEl.querySelector('.actions:not(.pkg-continue)');
+    if (acts && !acts.querySelector('.how-sign-btn')) acts.insertAdjacentHTML('beforeend', '<a class="btn btn-secondary how-sign-btn" href="' + esc(target) + '">How to sign</a>');
+    if (!box || !window.GVExport || !window.GVExport.signingSheet) return;
+    box.id = 'how-to-sign';
+    var label = (window.GVFlow && window.GVFlow.baseLabel) ? window.GVFlow.baseLabel(docId) : 'Your document';
+    box.insertAdjacentHTML('beforeend', '<div class="instr-btns"><button type="button" class="btn btn-secondary btn-sm" data-sign-pdf>Download signing steps (PDF)</button>' +
+      '<button type="button" class="btn btn-secondary btn-sm" data-sign-print>Print signing steps</button></div>' +
+      '<p class="hint instr-note" role="status">The signing steps print on their own pages, separate from your document.</p>');
+    var msg = box.querySelector('.instr-note');
+    function sheet() {
+      return window.GVExport.signingSheet([{ label: label, html: box.innerHTML }]);
+    }
+    function saveBlob(blob, name) {
+      var a = document.createElement('a'), u = URL.createObjectURL(blob);
+      a.href = u; a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 1500);
+    }
+    var FILE = 'Grapevine-How-to-Sign.pdf';
+    box.querySelector('[data-sign-pdf]').addEventListener('click', function () {
+      sheet().then(function (blob) { saveBlob(blob, FILE); msg.textContent = 'Your signing steps are downloading to your Downloads folder.'; })
+        .catch(function () { msg.textContent = 'We could not build the signing steps PDF. Please reload the page and try again.'; });
+    });
+    box.querySelector('[data-sign-print]').addEventListener('click', function () {
+      var job = window.GVExport.printStart();
+      sheet().then(function (blob) { return job.show(blob, FILE, saveBlob); }).then(function (m) { msg.textContent = m; })
+        .catch(function () { job.cancel(); msg.textContent = 'We could not build the signing steps PDF. Please reload the page and try again.'; });
+    });
   }
   function renderPkgContinue(nextKind) {
     var label = window.GVFlow.labelFor(nextKind), page = pageUrl(nextKind);
@@ -4643,6 +4680,7 @@
   })();
 
   draw(null);
+  if (location.hash === '#how-to-sign') setTimeout(function () { var hs = document.getElementById('how-to-sign'); if (hs) hs.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 500);
   /* arriving from the "payment received" page (?download=all): bring the download box into view */
   if (/[?&]download=all\b/.test(location.search) && window.GVFlow && window.GVFlow.current() && !/[?&]export=1\b/.test(location.search)) {
     location.replace(window.GVUrl('package.html') + '?download=all');

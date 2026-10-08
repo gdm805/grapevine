@@ -82,6 +82,13 @@
   'use strict';
   if (document.getElementById('gv-help')) return;
   function url(p) { return window.GVUrl ? window.GVUrl(p) : p; }
+  /* "How do I sign?": someone with a package in progress goes straight to its signing steps (package summary);
+     anyone else to the Questions page answer, which says where the steps are */
+  function signHref() {
+    var f = null;
+    try { f = JSON.parse(localStorage.getItem('grapevine.flow.v1') || 'null'); } catch (e) { f = null; }
+    return f && f.plan && f.plan !== 'doc' ? url('package.html') + '#how-to-sign' : url('questions.html') + '#how-to-sign';
+  }
   var wrap = document.createElement('div');
   wrap.id = 'gv-help';
   wrap.className = 'gv-help';
@@ -90,6 +97,7 @@
     '<div class="gv-help-panel" id="gv-help-panel" role="dialog" aria-label="Help" hidden>' +
       '<button type="button" class="gv-help-x" aria-label="Close">&times;</button>' +
       '<p class="gv-help-h">How can we help?</p>' +
+      '<a class="gv-help-link" href="' + signHref() + '">How do I sign my documents? &rarr;</a>' +
       '<a class="gv-help-link" href="' + url('questions.html') + '">Common questions &rarr;</a>' +
       '<a class="gv-help-link" href="mailto:support@grapevinedocs.com?subject=Grapevine%20help">Email support@grapevinedocs.com &rarr;</a>' +
       '<p class="gv-help-note">We help with using Grapevine, such as finding your documents, downloading and printing. We can’t give legal advice about your situation.</p>' +
@@ -102,4 +110,15 @@
   wrap.querySelector('.gv-help-x').addEventListener('click', function () { set(false); btn.focus(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
   document.addEventListener('click', function (e) { if (!panel.hidden && !wrap.contains(e.target)) set(false); });
+})();
+
+/* a link to a question on the Questions page (questions.html#how-to-sign) opens that answer */
+(function () {
+  'use strict';
+  function openHash() {
+    var id = location.hash.slice(1), el = id && /^[\w-]+$/.test(id) && document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') { el.open = true; setTimeout(function () { el.scrollIntoView({ block: 'start' }); }, 150); }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', openHash); else openHash();
+  window.addEventListener('hashchange', openHash);
 })();
