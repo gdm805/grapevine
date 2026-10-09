@@ -2505,7 +2505,7 @@
     v.residuary = (a.residuary || []).map(function (r) {
       var ty = resType(r);
       return { residuary_name: clean(r.name), residuary_pct: clean(r.pct), residuary_type: ty,
-        residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT',
+        residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT', residuary_person: ty === 'PERSON' || ty === 'ONGOING' || ty === '',
         residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
         residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
     }).filter(function (r) { return r.residuary_name; });
@@ -2540,6 +2540,44 @@
     return v;
   }
   var GIFT_CONTINGENT_LABELS = { DESCENDANTS: 'To that beneficiary’s descendants', NAMED: 'To another named person', CHARITY: 'To a charity', LAPSE: 'Becomes part of everything else' };
+  /* the trusts' "Who gets everything else?" rows: each beneficiary's type, name and share, plus the ages for an ongoing
+     trust or the details of a special needs trust (single and joint trust share this) */
+  function residuaryRows() {
+      var ageOpts = function (cur) { return '<option value="">Age</option>' + BT_AGES.map(function (n) { return '<option value="' + n + '"' + (String(cur) === String(n) ? ' selected' : '') + '>' + n + '</option>'; }).join(''); };
+    return field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
+          if (!r.type && clean(r.name)) r.type = resType(r);
+          var ty = r.type || '';
+          var sel = '<select class="input" data-list="residuary" data-i="' + i + '" data-f="type" data-rerender aria-label="Beneficiary ' + (i + 1) + ' is">' +
+            '<option value="">Who is this?</option>' + RES_TYPES.map(function (o) { return '<option value="' + o[0] + '"' + (ty === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
+          var extra = '';
+          if (ty === 'ONGOING') {
+            extra = '<div class="bt-ages"><span class="cont-l">They can ask for their share in three parts, at these ages:</span><div class="bt-age-row">' +
+              ['age1', 'age2', 'age3'].map(function (k, j) { return '<select class="input" data-list="residuary" data-i="' + i + '" data-f="' + k + '" data-rerender aria-label="' + ['First', 'Second', 'Third'][j] + ' age">' + ageOpts(r[k]) + '</select>'; }).join('') + '</div>' +
+              '<span class="hint">Up to a third at the first age, half of what\u2019s left at the second, and the rest at the third. Until then, your trustee can pay for their health, education and support, and their share is protected from their creditors.</span></div>';
+          } else if (ty === 'SNT') {
+            extra = '<div class="bt-ages"><span class="cont-l">Who the trust is for</span><input class="input" data-list="residuary" data-i="' + i + '" data-f="sntFor" value="' + val(r.sntFor) + '" placeholder="Full name" aria-label="Who the special needs trust is for">' +
+              '<span class="cont-l">The trust\u2019s date <em>(optional)</em></span><input class="input" type="date" data-list="residuary" data-i="' + i + '" data-f="sntDate" value="' + val(r.sntDate) + '" aria-label="Date of the special needs trust">' +
+              '<span class="hint">If that trust no longer exists when the share is paid, it\u2019s held for the same person in a backup supplemental needs trust. The existing trust isn\u2019t changed.</span></div>';
+          }
+          return '<div class="resrow">' + sel +
+            '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="' + esc(RES_PH[ty] || 'Full name') + '">' +
+            '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
+            rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>' + extra + '</div>';
+        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.');
+  }
+  function residuaryChecks(a, e) {
+    (a.residuary || []).forEach(function (r) {
+      if (!clean(r.name)) return;
+      var who = clean(r.name);
+      if (!r.type) e.push('Choose who or what ' + who + ' is (a person, an ongoing trust, a special needs trust, a charity or another trust).');
+      if (r.type === 'ONGOING') {
+        var ages = [r.age1, r.age2, r.age3].map(function (x) { return parseInt(x, 10) || 0; });
+        if (ages.some(function (x) { return !x; })) e.push('Choose all three ages for ' + who + '.');
+        else if (!(ages[0] < ages[1] && ages[1] < ages[2])) e.push('For ' + who + ', each age must be later than the one before.');
+      }
+      if (r.type === 'SNT' && !clean(r.sntFor)) e.push('Enter who the special needs trust ' + who + ' is for.');
+    });
+  }
   var RENDER_TRUST = {
     pets: function () { return petsScreen(); },
     start: function () {
@@ -2605,28 +2643,8 @@
       return h;
     },
     residuary: function () {
-      var ageOpts = function (cur) { return '<option value="">Age</option>' + BT_AGES.map(function (n) { return '<option value="' + n + '"' + (String(cur) === String(n) ? ' selected' : '') + '>' + n + '</option>'; }).join(''); };
       return stepHead('Who gets everything else?', 'After you die and any specific gifts are made, this is how the rest of your trust is divided. For each beneficiary, choose who or what it is, then the share. If a person dies before you, their share goes to their descendants, or if none, to the others on this list.' + ((answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER') ? ' This trust is yours alone: your spouse or partner receives something from it only if you name them here or in a specific gift.' : '')) +
-        field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
-          if (!r.type && clean(r.name)) r.type = resType(r);
-          var ty = r.type || '';
-          var sel = '<select class="input" data-list="residuary" data-i="' + i + '" data-f="type" data-rerender aria-label="Beneficiary ' + (i + 1) + ' is">' +
-            '<option value="">Who is this?</option>' + RES_TYPES.map(function (o) { return '<option value="' + o[0] + '"' + (ty === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
-          var extra = '';
-          if (ty === 'ONGOING') {
-            extra = '<div class="bt-ages"><span class="cont-l">They can ask for their share in three parts, at these ages:</span><div class="bt-age-row">' +
-              ['age1', 'age2', 'age3'].map(function (k, j) { return '<select class="input" data-list="residuary" data-i="' + i + '" data-f="' + k + '" data-rerender aria-label="' + ['First', 'Second', 'Third'][j] + ' age">' + ageOpts(r[k]) + '</select>'; }).join('') + '</div>' +
-              '<span class="hint">Up to a third at the first age, half of what\u2019s left at the second, and the rest at the third. Until then, your trustee can pay for their health, education and support, and their share is protected from their creditors.</span></div>';
-          } else if (ty === 'SNT') {
-            extra = '<div class="bt-ages"><span class="cont-l">Who the trust is for</span><input class="input" data-list="residuary" data-i="' + i + '" data-f="sntFor" value="' + val(r.sntFor) + '" placeholder="Full name" aria-label="Who the special needs trust is for">' +
-              '<span class="cont-l">The trust\u2019s date <em>(optional)</em></span><input class="input" type="date" data-list="residuary" data-i="' + i + '" data-f="sntDate" value="' + val(r.sntDate) + '" aria-label="Date of the special needs trust">' +
-              '<span class="hint">If that trust no longer exists when the share is paid, it\u2019s held for the same person in a backup supplemental needs trust. The existing trust isn\u2019t changed.</span></div>';
-          }
-          return '<div class="resrow">' + sel +
-            '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="' + esc(RES_PH[ty] || 'Full name') + '">' +
-            '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
-            rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>' + extra + '</div>';
-        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.');
+        residuaryRows();
     },
     assets: function () {
       function assetBlock(flagKey, label, listKey, cols, ph) {
@@ -2717,17 +2735,7 @@
       petsErrors(a, e);
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
-      (a.residuary || []).forEach(function (r, i) {
-        if (!clean(r.name)) return;
-        var who = clean(r.name);
-        if (!r.type) e.push('Choose who or what ' + who + ' is (a person, an ongoing trust, a special needs trust, a charity or another trust).');
-        if (r.type === 'ONGOING') {
-          var ages = [r.age1, r.age2, r.age3].map(function (x) { return parseInt(x, 10) || 0; });
-          if (ages.some(function (x) { return !x; })) e.push('Choose all three ages for ' + who + '.');
-          else if (!(ages[0] < ages[1] && ages[1] < ages[2])) e.push('For ' + who + ', each age must be later than the one before.');
-        }
-        if (r.type === 'SNT' && !clean(r.sntFor)) e.push('Enter who the special needs trust ' + who + ' is for.');
-      });
+      residuaryChecks(a, e);
     } else if (id === 'signing') {
       if (!clean(a.signingCounty)) e.push('Enter the county where you’ll sign.');
     }
@@ -2825,7 +2833,7 @@
     v.residuary = (a.residuary || []).map(function (r) {
       var ty = resType(r);
       return { residuary_name: clean(r.name), residuary_pct: clean(r.pct), residuary_type: ty,
-        residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT',
+        residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT', residuary_person: ty === 'PERSON' || ty === 'ONGOING' || ty === '',
         residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
         residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
     }).filter(function (r) { return r.residuary_name; });
@@ -2935,13 +2943,8 @@
         '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     residuary: function () {
-      return stepHead('Who gets everything else, after both of you have died?', 'The surviving spouse or partner is provided for first. These are your final beneficiaries: the people or organizations who receive what\u2019s left after both of you have died' + (answers.firstDeathPlan === 'SURVIVOR' ? ' (the survivor can change this list later).' : ' (the survivor can change who receives the survivor\u2019s own share, but not the Family Trust).') + ' Don\u2019t list each other here. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list. A charity\u2019s share goes to the organization that carries on its work, or, if it no longer exists, to a charity with a similar purpose that your trustee chooses.') +
-        field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
-          return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
-            '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
-            rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>';
-        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.') +
-        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” If you name an existing special needs trust, your document adds a backup: if that trust no longer exists when the gift is made, the share is held for the same person in a supplemental needs trust instead of being paid to them outright. The existing special needs trust stays a separate document: it isn\u2019t part of your Grapevine package, and nothing in it is changed. Otherwise, this document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
+      return stepHead('Who gets everything else, after both of you have died?', 'The surviving spouse or partner is provided for first. These are your final beneficiaries: the people or organizations who receive what\u2019s left after both of you have died' + (answers.firstDeathPlan === 'SURVIVOR' ? ' (the survivor can change this list later).' : ' (the survivor can change who receives the survivor\u2019s own share, but not the Family Trust).') + ' Don\u2019t list each other here. For each beneficiary, choose who or what it is, then the share. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list. A charity\u2019s share goes to the organization that carries on its work, or, if it no longer exists, to a charity with a similar purpose that your trustee chooses.') +
+        residuaryRows();
     },
     assets: function () {
       function assetBlock(flagKey, label, listKey, cols, ph) {
@@ -3031,6 +3034,7 @@
       petsErrors(a, e);
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
+      residuaryChecks(a, e);
     } else if (id === 'signing') {
       if (!clean(a.signingCounty)) e.push('Enter the county where you’ll sign.');
     }

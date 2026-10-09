@@ -761,7 +761,7 @@ Upon the death of the surviving Trustmaker, the Trustee shall determine the then
 The Trustee shall maintain the identity of the Family Trust separately from the Survivor's Trust and any other trust or share then being administered.
 
 [[end]]
-# DEATH OF SECOND TRUSTMAKER
+# DEATH OF SECOND TRUSTMAKER {#art_second_death}
 
 ## Assumption of Trusteeship
 
@@ -795,9 +795,12 @@ After completing the administration required by this Article, the Trustee shall 
 
 [[each residuary]]
 
-{{residuary_pct}}% to {{residuary_name}}, outright.
+[[if residuary_ongoing]]{{residuary_pct}}% to the Trustee, to be held in a separate Beneficiary Trust for {{residuary_name}} under [[ref art_beneficiary_trust]], with Distribution Ages of {{residuary_age1}}, {{residuary_age2}}, and {{residuary_age3}}.[[elif residuary_snt]]{{residuary_pct}}% to the trustee of {{residuary_name}}[[if residuary_snt_date]], dated {{residuary_snt_date}}[[end]], a special needs trust established for the benefit of {{residuary_snt_for}}.[[else]]{{residuary_pct}}% to {{residuary_name}}, outright.[[end]]
 
+[[if residuary_person]]
 If {{residuary_name}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it, that share shall be distributed to that beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in this Section who receive their shares, in proportion to their shares; or, if there are none, as provided in the Failure of Distribution Section of this Article.
+
+[[end]]
 
 [[end]]
 A share for a charitable organization passes as provided in [[ref sec_charity_gifts]] instead of under the survival provisions of this Section.
@@ -1023,6 +1026,42 @@ No beneficiary shall be required to execute a release as a condition of receivin
 
 Upon completing the distribution of a trust or separate share, the Trustee shall complete any remaining administrative acts reasonably necessary to close that trust or share.
 
+[[if has_beneficiary_trust]]
+# BENEFICIARY TRUSTS {#art_beneficiary_trust}
+
+## Establishment
+
+Each share that the Final Distribution Section of [[ref art_second_death]] directs the Trustee to hold in a Beneficiary Trust for a beneficiary shall be held by the Trustee as a separate trust for that beneficiary (in this Article, the "Beneficiary"), and administered and distributed as provided in this Article. The Distribution Ages of a Beneficiary are the three ages stated for that Beneficiary in that Section.
+
+## Trustee
+
+The Trustee of this Trust Agreement then serving, including any Successor Trustee, shall serve as trustee of each Beneficiary Trust, with all the powers given to the Trustee under this Trust Agreement.
+
+## Distributions for Health, Education, Maintenance, and Support
+
+Until a Beneficiary Trust is fully distributed, the Trustee may distribute to or for the benefit of the Beneficiary as much of the net income and principal as the Trustee considers advisable for the Beneficiary's health, education, maintenance, and support, taking into account other resources known to the Trustee to be available to the Beneficiary. Net income not distributed shall be added to principal.
+
+## Distributions at the Distribution Ages
+
+After the Beneficiary reaches the first Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-third (1/3) of the Beneficiary Trust, including accrued income, valued as of the date of the request.
+
+After the Beneficiary reaches the second Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-half (1/2) of the Beneficiary Trust then remaining, including accrued income, valued as of the date of the request.
+
+After the Beneficiary reaches the third Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire remaining balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
+
+A right to request a distribution under this Section that the Beneficiary does not exercise continues, and the Beneficiary may exercise it at any later time. If the Beneficiary has already reached one or more Distribution Ages when the Beneficiary Trust is established, the rights for those ages may be exercised at once, in order.
+
+While the Beneficiary is Incapacitated, the Trustee may decline a requested distribution and continue to hold the Beneficiary Trust, making distributions under the preceding Section.
+
+## Death of the Beneficiary
+
+If the Beneficiary dies before the Beneficiary Trust is fully distributed, the Trustee shall distribute the remaining balance to the Beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in the Final Distribution Section of [[ref art_second_death]] who received or are entitled to receive shares, in proportion to their shares, adding any portion for a beneficiary whose share is then held in a Beneficiary Trust to that trust; or, if there are none, as provided in the Failure of Distribution Section of [[ref art_second_death]].
+
+## Spendthrift Provision
+
+No interest of a Beneficiary in a Beneficiary Trust may be anticipated, assigned, pledged, or encumbered by the Beneficiary, and no such interest shall be subject to attachment, garnishment, execution, or other legal process, or to the claims of the Beneficiary's creditors, before it is actually distributed to the Beneficiary. This Section is intended to be a spendthrift provision under applicable law.
+
+[[end]]
 # GIFTS TO CHARITABLE ORGANIZATIONS
 
 ## Gifts to Charitable Organizations {#sec_charity_gifts}
@@ -1101,6 +1140,12 @@ Trustmaker means either person who creates this Trust. Together, they are the Tr
 
 Beneficiary means any person or organization entitled to receive a benefit under this Trust Agreement.
 
+[[if has_beneficiary_trust]]
+## Beneficiary Trust
+
+Beneficiary Trust means a separate trust held for a beneficiary under [[ref art_beneficiary_trust]].
+
+[[end]]
 ## Survivor's Trust
 
 Survivor's Trust means the separate revocable trust created upon the death of the first Trustmaker and funded with the property allocated to it under this Trust Agreement.
