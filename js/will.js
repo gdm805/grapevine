@@ -864,6 +864,7 @@
      standard wording that doesn't change from person to person is blurred. The preview can't be selected,
      copied, dragged or printed. Everything is clear once paid. Not on the blank template, which is generic text. */
   var PV_CLEAR = 12;
+  var STRICT_BLUR = { finalwishes: 1 };
   function lockPreview() {
     var locked = !BLANK && !paidUp();
     docEl.classList.toggle('pv-locked', locked);
@@ -886,6 +887,9 @@
     function formLine(el) { return /_{4}/.test(el.textContent) || el.classList.contains('ln') || el.classList.contains('c') || el.classList.contains('sig') || el.classList.contains('row2'); }
     function mine(el) {
       if (/^H[1-6]$/.test(el.tagName) || el.classList.contains('subh')) return true;
+      /* stricter for documents made mostly of the person's own wishes (Final Wishes, 9 Oct 2026): the wording around
+         the answers is blurred too, and only the answers themselves stay sharp (css: .pv-blur .fill) */
+      if (STRICT_BLUR[kindKey]) return false;
       if (el.querySelector('.fill')) return true;
       return el.hasAttribute('data-ans') && !formLine(el) && el.textContent.trim().length > 40;
     }
