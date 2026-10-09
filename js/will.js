@@ -4504,6 +4504,7 @@
      steps are), plus "Download / Print signing steps", which make a separate PDF of just the steps
      (js/will-export.js signingSheet) -- never part of the document itself. */
   function signingHelp() {
+    if (kindKey === 'contacts') return;   /* nothing to sign: its note says so, no "How to sign" buttons */
     var box = stepEl.querySelector('.instr'), note = stepEl.querySelector('.pkg-sign-note');
     var target = box ? '#how-to-sign' : (note ? window.GVUrl('package.html') + '#how-to-sign' : '');
     if (!target) return;
