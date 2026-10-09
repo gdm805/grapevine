@@ -67,6 +67,11 @@ window.GV_PLANS = {
        same price covers a couple's JOINT trust, but a couple with two separate trusts buys once for each trust
        (the pricing page and checkout say so). Display only: they are bought through the "doc" plan. */
     doctrust: { single: 49, couple: 49 },
+    /* lower-priced single documents (9 Oct 2026): Important Contacts and Schedule A at $19 (one list per household,
+       one Schedule A per trust, so a couple pays the same), Dementia Care Preferences at $29 (one price for everyone).
+       Each price has its own Stripe Payment Link in js/checkout.js and cloudflare/payment-check.js. */
+    doc19: { single: 19, couple: 19 },
+    doc29: { single: 29, couple: 29 },
     health: { single: 129, couple: 199 },
     trustpaper: { single: 129, couple: 129 }
   },
@@ -76,7 +81,12 @@ window.GV_PLANS = {
   extra: ['doc', 'health', 'trustpaper'],
   /* the documents that can be bought one at a time, in the order the pricing page lists them */
   trustSide: ['schedulea', 'cert', 'affidavit', 'assignment'],
-  singles: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'schedulea', 'cert', 'affidavit', 'assignment'],
+  singles: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment'],
+  /* which price a single document is sold at: 'doc' ($49 / $79), 'doctrust' ($49 per trust), 'doc19', 'doc29' */
+  docTier: { contacts: 'doc19', schedulea: 'doc19', dementia: 'doc29' },
+  docPriceKey: function (docKey) { return this.docTier[docKey] || ((this.trustSide || []).indexOf(docKey) > -1 ? 'doctrust' : 'doc'); },
+  /* the price of one single document for this household */
+  docPrice: function (docKey, household) { return this.priceFor(this.docPriceKey(docKey), household); },
   priceFor: function (planKey, household) {
     var p = this.prices[planKey];
     if (!p) return 0;

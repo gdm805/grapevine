@@ -115,7 +115,7 @@
     /* and straight to the signing steps: a package's are all on its summary; a single document's are on its own page */
     var signHref = window.GVUrl(goTo) + '#how-to-sign';
     var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : 'Your ' + esc(p.name) + ' package';
-    var amount = wasFree ? '$0 (beta tester)' : money(GV.priceFor(plan, (plan === 'doc' && (GV.trustSide || []).indexOf(docKey) > -1) ? 'single' : household)) + ', one-time';
+    var amount = wasFree ? '$0 (beta tester)' : money(plan === 'doc' && GV.docPrice ? GV.docPrice(docKey, (GV.trustSide || []).indexOf(docKey) > -1 ? 'single' : household) : GV.priceFor(plan, household)) + ', one-time';
     root.innerHTML =
       '<div class="paid-card">' +
       '<div class="paid-badge"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>' +

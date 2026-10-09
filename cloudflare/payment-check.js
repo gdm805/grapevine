@@ -28,6 +28,9 @@ var PAYMENT_LINKS = {
   'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09': { plan: 'health', household: 'couple' },
   'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a': { plan: 'trustpaper', household: 'single' },
   'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b': { plan: 'trustpaper', household: 'couple' }
+  /* the lower-priced single documents (9 Oct 2026). tier says which documents a link may unlock (see DOC_TIER) */
+  , 'https://buy.stripe.com/test_00wdR9gtwg3l7mN5V35EY0c': { plan: 'doc', household: 'single', tier: 19 }
+  , 'https://buy.stripe.com/test_4gM5kDelo04n0YpfvD5EY0d': { plan: 'doc', household: 'single', tier: 29 }
 
   /* LIVE links go here when you go live, one per line, same pattern, for example:
   , 'https://buy.stripe.com/abc123': { plan: 'will', household: 'single' } */
@@ -45,7 +48,10 @@ var ALLOWED_SITES = ['https://www.grapevinedocs.com', 'https://grapevinedocs.com
 var REQUIRE_TERMS = false;
 
 /* the documents that can be bought one at a time (must match "singles" in js/plans.js) */
-var SINGLE_DOCS = ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'schedulea', 'cert', 'affidavit', 'assignment'];
+var SINGLE_DOCS = ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment'];
+/* the price of each single document that isn't $49 (must match docTier in js/plans.js). A Payment Link unlocks only the
+   documents at its own price ("tier", 49 when not stated), so paying $19 can't unlock a $49 document. */
+var DOC_TIER = { contacts: 19, schedulea: 19, dementia: 29 };
 
 /* ---------- nothing below here needs editing ---------- */
 
@@ -89,6 +95,7 @@ export default {
     if (sold.plan === 'doc') {
       var parts = String(s.client_reference_id || '').split('_');
       if (SINGLE_DOCS.indexOf(parts[2]) > -1) doc = parts[2];
+      if (doc && (DOC_TIER[doc] || 49) !== (sold.tier || 49)) return reply({ ok: false, reason: 'wrong_document' }, 402);
     }
 
     /* free = paid $0 with a 100%-off code (beta testers); the site then retires that browser's beta discount */

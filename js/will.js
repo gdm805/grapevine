@@ -4569,7 +4569,7 @@
     var GV = window.GV_PLANS, plan = (f && f.plan) || (window.GVPay ? window.GVPay.planForDoc(kindKey) : 'essentials');
     var hh = householdNow(f);
     if (plan === 'doc' && GV && (GV.trustSide || []).indexOf(kindKey) > -1) hh = 'single';
-    var price = GV ? GV.priceFor(plan, hh) : 0;
+    var price = GV ? (plan === 'doc' && GV.docPrice ? GV.docPrice(kindKey, hh) : GV.priceFor(plan, hh)) : 0;
     var beta = false;
     try { beta = !!(window.GV_BETA && window.GV_BETA.on && localStorage.getItem('grapevine.beta') === '1' && localStorage.getItem('grapevine.beta.used') !== '1'); } catch (e) {}
     return { price: price, priceText: price ? '$' + price : '', beta: beta };

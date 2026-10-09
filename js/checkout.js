@@ -40,6 +40,10 @@
        document was chosen and paid.html unlocks that one. Until a link is filled in, the checkout page
        shows the "Payments aren't turned on yet" notice for that offer. */
     doc: { single: 'https://buy.stripe.com/test_28E9ATelo4kD36x0AJ5EY06', couple: 'https://buy.stripe.com/test_dRm14n5OS3gzcH76Z75EY07' },
+    /* the lower-priced single documents (GV_PLANS.docTier in js/plans.js): $19 = Important Contacts and Schedule A
+       and $29 = Dementia Care Preferences (each one link, one price for everyone). Paste each Stripe link between the quotes. */
+    doc19: { single: 'https://buy.stripe.com/test_00wdR9gtwg3l7mN5V35EY0c', couple: 'https://buy.stripe.com/test_00wdR9gtwg3l7mN5V35EY0c' },
+    doc29: { single: 'https://buy.stripe.com/test_4gM5kDelo04n0YpfvD5EY0d', couple: 'https://buy.stripe.com/test_4gM5kDelo04n0YpfvD5EY0d' },
     health: { single: 'https://buy.stripe.com/test_fZu8wPelo7wP0Yp3MV5EY08', couple: 'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09' },
     trustpaper: { single: 'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a', couple: 'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b' }
   };
@@ -90,7 +94,10 @@
     var docKey = RETURN_DOC[validReturn];
     /* one document per trust: a couple pays the same $49 as one person for these, using the single link */
     var payHousehold = (plan === 'doc' && docKey && (GV.trustSide || []).indexOf(docKey) > -1) ? 'single' : household;
-    var p = GV.plans[plan], price = GV.priceFor(plan, payHousehold);
+    var p = GV.plans[plan], price = plan === 'doc' && docKey ? GV.docPrice(docKey, payHousehold) : GV.priceFor(plan, payHousehold);
+    /* a single document's Stripe link depends on its price (doc, doc19 or doc29); doc19 and doc29 are one price for everyone */
+    var linkPlan = plan === 'doc' && docKey && GV.docTier[docKey] ? GV.docTier[docKey] : plan;
+    if (linkPlan === 'doc19' || linkPlan === 'doc29') payHousehold = 'single';
     /* trust documents are priced per TRUST: the same price covers a couple's joint trust, but a couple with two
        separate trusts buys once for each trust */
     var perTrust = plan === 'trustpaper' || (plan === 'doc' && docKey && (GV.trustSide || []).indexOf(docKey) > -1);
@@ -107,7 +114,7 @@
     /* a single-document purchase: remember which document, so paid.html can unlock exactly that one */
     if (plan === 'doc' && docKey) { try { localStorage.setItem('grapevine.pending.doc', docKey); } catch (e) {} }
     var includes = (plan === 'doc' && docKey && window.GVFlow) ? [window.GVFlow.baseLabel(docKey)] : p.includes;
-    var link = ((PAYMENT_LINKS[plan] || {})[payHousehold] || '').trim();
+    var link = ((PAYMENT_LINKS[linkPlan] || {})[payHousehold] || '').trim();
     var payHref = '#';
     if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold + (plan === 'doc' && docKey ? '_' + docKey : '')); }
     /* beta testers: Stripe applies the 100%-off code for them (see GV_BETA in js/plans.js) */
