@@ -317,3 +317,16 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 
 /* the "Read the full blank template" button on the last screen, before payment */
 .blank-btn-row { margin: 4px 0 14px; }
+
+/* cover page and table of contents at the top of the preview (js/will.js withFront) */
+.doc .cover { text-align: center; padding: 56px 0 40px; border-bottom: 1px dashed rgba(0, 0, 0, 0.15); margin-bottom: 28px; }
+.doc .cover-t { font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 1.25em; margin: 0 0 6px; }
+.doc .cover-rule { display: block; width: 120px; height: 0; border-top: 1.5px solid currentColor; margin: 18px auto 22px; }
+.doc .cover-s { margin: 0 0 6px; }
+.doc .cover-d { margin-top: 22px; }
+.doc .toc { padding: 4px 0 28px; border-bottom: 1px dashed rgba(0, 0, 0, 0.15); margin-bottom: 28px; }
+.doc .toc-h { text-align: center; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+.doc .toc-i { display: grid; grid-template-columns: 7.5em 1fr; gap: 10px; margin: 0 0 6px; }
+.doc .toc-n { font-weight: 700; font-size: 0.92em; }
+.doc .cover p, .doc .toc-h { text-align: center !important; }
+.doc .toc-i { text-align: left !important; }

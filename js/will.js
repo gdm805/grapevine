@@ -550,6 +550,11 @@
   /* text with simple codes -> simple blocks (used for the screen, the PDF and the Word file) */
   var HEAD = /^(#!|##|#)\s+(.*?)(?:\s*\{#(\w+)\})?$/;
   function titleCase(w) { return w.charAt(0) + w.slice(1).toLowerCase(); }
+  /* "ARTICLE SIX" -> "Article Six", "SURVIVOR'S TRUST" -> "Survivor's Trust" (contents page) */
+  function headCase(s) {
+    var small = { and: 1, of: 1, the: 1, to: 1, a: 1, an: 1, in: 1, for: 1, or: 1, on: 1, by: 1 };
+    return String(s).toLowerCase().replace(/[a-z][a-z']*/g, function (w, i) { return i > 0 && small[w] ? w : w.charAt(0).toUpperCase() + w.slice(1); });
+  }
   function dropEmptyHeadings(lines) {
     var dead = {};
     function level(l) { var m = HEAD.exec(l.trim()); return m ? m[1] : ''; }
@@ -653,6 +658,10 @@
     }).join('');
     function one(b) {
       switch (b.k) {
+        case 'cover': return '<div class="cover">' + b.lines.map(function (l) { return '<p class="cover-t">' + inline(l) + '</p>'; }).join('') + '<span class="cover-rule"></span>' +
+          (b.subs || []).map(function (l) { return '<p class="cover-s">' + inline(l) + '</p>'; }).join('') + (b.dated ? '<p class="cover-d">' + inline(b.dated) + '</p>' : '') + '</div>';
+        case 'toc': return '<div class="toc"><p class="toc-h">Table of Contents</p>' + b.items.map(function (it) { return '<p class="toc-i"><span class="toc-n">' + esc(headCase(it.n)) + '</span><span class="toc-t">' + inline(headCase(it.t)) + '</span></p>'; }).join('') + '</div>';
+        case 'frontend': return '<div class="pagebreak front-end"></div>';
         case 'plain': return '<h2 class="art-h plain"><span class="art-t">' + inline(b.t) + '</span></h2>';
         case 'article': return '<h2 class="art-h"><span class="art-n">' + b.n + '</span><span class="art-t">' + inline(b.t) + '</span></h2>';
         case 'section': return '<h3 class="sec-h"><span class="sec-n">' + b.n + '</span><span class="sec-t">' + inline(b.t) + '</span></h3>';
@@ -673,6 +682,28 @@
     }
   }
   function toHtml(text) { return blocksToHtml(toBlocks(text)); }
+  /* COVER PAGE (every document) and TABLE OF CONTENTS (the will and the trusts), 9 Oct 2026. Built from the
+     document's own title lines and article headings, so they always match it. They sit in front of the document,
+     unnumbered (js/will-export.js). Left off Louisiana wills, which must be signed on every separate page. */
+  var TOC_KINDS = { will: 1, trust: 1, trustjoint: 1 };
+  function withFront(blocks) {
+    if (!blocks.length) return blocks;
+    if ((kindKey === 'will' || kindKey === 'pourover') && answers.state === 'Louisiana') return blocks;
+    var lines = [];
+    for (var i = 0; i < blocks.length && blocks[i].k === 'center'; i++) lines.push(blocks[i].t);
+    if (!lines.length) lines.push(exportInfo().footer);
+    var v = {};
+    try { v = buildVars(answers, states, tpl.settings) || {}; } catch (e) { v = {}; }
+    var subs = answers.state ? [(answers.state === 'District of Columbia' ? 'District of Columbia' : 'State of ' + answers.state)] : [];
+    var front = [{ k: 'cover', lines: lines, subs: subs, dated: 'Dated: ' + (v.signing_date || '____________________') }];
+    if (TOC_KINDS[kindKey]) {
+      var items = blocks.filter(function (b) { return b.k === 'article'; }).map(function (b) { return { n: b.n, t: b.t }; });
+      if (items.length > 1) front.push({ k: 'toc', items: items });
+    }
+    front.push({ k: 'frontend' });
+    return front.concat(blocks);
+  }
+  function docBlocks() { return withFront(toBlocks(docText())); }
 
   /* the words that change from state to state (pour-over will) */
   function parseStateText(raw) {
@@ -851,7 +882,7 @@
       '<div class="nav-row"><span></span><a class="btn btn-primary" href="' + esc(location.pathname.split('/').pop()) + (SPOUSE2 ? '?spouse=2' : '') + '">Start filling it in <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>';
   }
   function renderDoc() {
-    docEl.innerHTML = (draft ? '<div class="wm-print" aria-hidden="true">' + esc(draftLabel) + '</div>' : '') + toHtml(docText(), 'screen');
+    docEl.innerHTML = (draft ? '<div class="wm-print" aria-hidden="true">' + esc(draftLabel) + '</div>' : '') + blocksToHtml(docBlocks());
     docEl.classList.toggle('draft', draft);
     lockPreview();
     if (draft) {
@@ -876,7 +907,7 @@
       ph.textContent = locked ? 'A preview of your ' + what : 'Your ' + what;
     }
     if (!locked) return;
-    var blocks = Array.prototype.filter.call(docEl.children, function (el) { return !el.classList.contains('wm-print'); });
+    var blocks = Array.prototype.filter.call(docEl.children, function (el) { return !el.classList.contains('wm-print') && !el.classList.contains('cover') && !el.classList.contains('toc') && !el.classList.contains('front-end'); });
     /* the readable opening: up to 12 blocks, but only about the first tenth of a short document (at least the
        title), so a short one like Schedule A isn't left entirely readable */
     var open = Math.min(PV_CLEAR, Math.max(3, Math.round(blocks.length * 0.1)));
@@ -4762,14 +4793,14 @@
     /* the new tab (where one is needed) must open inside this click, before the PDF is built */
     var job = window.GVExport.printStart(), opts = exportOptions();
     status('Preparing your document to print...');
-    window.GVExport.pdf(toBlocks(docText()), opts)
+    window.GVExport.pdf(docBlocks(), opts)
       .then(function (blob) { return job.show(blob, opts.base + '.pdf', deliver); })
       .then(function (msg) { status(msg); })
       .catch(function () { job.cancel(); status('', false); pageFallback(); });
   }
   function runExport(kind) {
     if (!window.GVExport) { status('The export tools did not load. Try Print instead.', true); return; }
-    var opts = exportOptions(), blocks = toBlocks(docText());
+    var opts = exportOptions(), blocks = docBlocks();
     status(kind === 'pdf' ? 'Preparing your PDF...' : 'Preparing your Word file...');
     var work = kind === 'pdf' ? window.GVExport.pdf(blocks, opts) : Promise.resolve(window.GVExport.docx(blocks, opts));
     return work
@@ -4820,7 +4851,7 @@
   function downloadPackagePdf(f) {
     if (!window.GVExport) { status('The export tools did not load. Try downloading each document instead.', true); return; }
     status('Preparing your package PDF... this can take a moment for a longer package.');
-    Promise.all(f.docs.map(function (k) { return k === docId ? Promise.resolve({ blocks: toBlocks(docText()), footer: exportOptions().footer }) : loadKindBlocks(k); }))
+    Promise.all(f.docs.map(function (k) { return k === docId ? Promise.resolve({ blocks: docBlocks(), footer: exportOptions().footer }) : loadKindBlocks(k); }))
       .then(function (allBlocks) {
         var combined = [];
         allBlocks.forEach(function (r, i) { if (i > 0) combined.push({ k: 'break', footer: r.footer }); combined.push.apply(combined, r.blocks); });
@@ -4837,7 +4868,7 @@
   window.GrapevineWill = {
     setAnswers: function (o) { Object.assign(answers, o); draw(); },
     load: function (name) { return new Promise(function (ok) { dpLoad(name, ok); }); },
-    text: docText, html: function () { return toHtml(docText()); }, blocks: function () { return toBlocks(docText()); }, exportOptions: exportOptions,
+    text: docText, html: function () { return toHtml(docText()); }, blocks: docBlocks, exportOptions: exportOptions,
     vars: function () { return buildVars(answers, states, tpl.settings); }, validate: function (id) { return KIND.validate(id); }, applyPreset: applyPreset,
     /* this document's "How to sign" steps, built fresh from the current answers (the package summary's signing sheet) */
     signing: function () { return toHtml(renderNodes(sign.nodes, buildVars(answers, states, tpl.settings)), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>'); }

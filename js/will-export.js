@@ -118,6 +118,7 @@
 
   var NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"';
   function docx(blocks, o) {
+    blocks = blocks.filter(function (b) { return b.k !== 'cover' && b.k !== 'toc' && b.k !== 'frontend'; });
     var body = '', pb = false, prevCenter = false;
     blocks.forEach(function (b, bi) {
       if (b.k === 'break') { pb = true; return; }
@@ -171,6 +172,21 @@
     /* the PDF font (Tinos) has no ballot-box character, so print "☐" as a drawn-looking "[  ]" */
     blocks = blocks.map(function (b) { return b.t && b.t.indexOf('\u2610') > -1 ? Object.assign({}, b, { t: b.t.replace(/\u2610/g, '[  ]') }) : b; });
     return loadLibs().then(function () {
+      /* COVER PAGE AND TABLE OF CONTENTS (9 Oct 2026): {k:'cover'} starts a document's front pages, {k:'toc'} is
+         its contents page, {k:'frontend'} ends them. Front pages are unnumbered: "Page 1 of N" starts with the
+         document itself. The contents page lists each article's page, so the PDF is laid out twice: once to find
+         where every article lands, once with those page numbers filled in (the layout is the same both times). */
+      var r = build();
+      var tocs = blocks.filter(function (b) { return b.k === 'toc'; });
+      if (tocs.length) {
+        tocs.forEach(function (tb, ti) {
+          var pages = r.arts.filter(function (a) { return a.toc === ti; }).map(function (a) { return a.page; });
+          tb.items = tb.items.map(function (it, j) { return Object.assign({}, it, { page: pages[j] }); });
+        });
+        r = build();
+      }
+      return r.doc.output('blob');
+      function build() {
       var doc = new window.jspdf.jsPDF({ unit: 'pt', format: 'letter' });
       doc.addFileToVFS('Tinos-Regular.ttf', window.GV_FONTS.regular); doc.addFont('Tinos-Regular.ttf', 'Tinos', 'normal');
       doc.addFileToVFS('Tinos-Bold.ttf', window.GV_FONTS.bold); doc.addFont('Tinos-Bold.ttf', 'Tinos', 'bold');
@@ -179,7 +195,12 @@
       var PW = 612, PH = 792, M = 72, W = PW - 2 * M, BOTTOM = PH - 76, y = M;
       function font(b, size) { doc.setFont('Tinos', b ? 'bold' : 'normal'); doc.setFontSize(size); }
       function tw(str, b, size) { font(b, size); return doc.getTextWidth(str); }
-      function newPage() { doc.addPage(); y = M; }
+      var noFoot = {}, front = false, arts = [], tocIdx = -1;
+      function newPage() { doc.addPage(); y = M; if (front) noFoot[doc.getNumberOfPages()] = true; }
+      function tcase(s) {
+        var small = { and: 1, of: 1, the: 1, to: 1, a: 1, an: 1, in: 1, for: 1, or: 1, on: 1, by: 1 };
+        return String(s).toLowerCase().replace(/[a-z][a-z']*/g, function (w, i) { return i > 0 && small[w] ? w : w.charAt(0).toUpperCase() + w.slice(1); });
+      }
       function space(h) { if (y + h > BOTTOM) newPage(); }
       function base(size) { return y + size * 0.9; }
 
@@ -285,9 +306,42 @@
       var prevCenter = false;
       /* a combined package PDF marks where each document starts ({k:'break', footer:...}), so every
          document gets its own footer and its own "Page X of Y" */
-      var sections = [{ start: 1, footer: o.footer }];
+      var sections = [{ start: 1, front: 1, footer: o.footer }];
       blocks.forEach(function (b, bi) {
         switch (b.k) {
+          case 'cover': {
+            front = true; noFoot[doc.getNumberOfPages()] = true;
+            y = PH * 0.28;
+            (b.lines || []).forEach(function (l) { wrapCentered(unbold(plain(l)).toUpperCase(), 20, true, 1.2); y += 4; });
+            doc.setLineWidth(0.8); doc.line(PW / 2 - 60, y + 10, PW / 2 + 60, y + 10); y += 40;
+            (b.subs || []).forEach(function (l) { wrapCentered(plain(l), 13, false, 0.3); y += 6; });
+            if (b.dated) { y += 30; wrapCentered(plain(b.dated), 12, false, 0); }
+            break;
+          }
+          case 'toc': {
+            newPage(); tocIdx++;
+            wrapCentered('TABLE OF CONTENTS', 14, true, 1.4); y += 22;
+            (b.items || []).forEach(function (it) {
+              space(22);
+              var n = tcase(it.n), ttl = tcase(plain(it.t)), pg = it.page ? String(it.page) : '';
+              font(true, 11); doc.text(n, M, base(12));
+              font(false, 12);
+              var tx = M + 104, pw = doc.getTextWidth(pg), maxT = W - 104 - pw - 18;
+              var tl = doc.splitTextToSize(ttl, maxT)[0];
+              doc.text(tl, tx, base(12));
+              if (pg) {
+                doc.text(pg, PW - M - pw, base(12));
+                var dx = tx + doc.getTextWidth(tl) + 6, end = PW - M - pw - 6;
+                doc.setTextColor(120, 120, 120);
+                for (var x = dx; x < end; x += 5) doc.text('.', x, base(12));
+                doc.setTextColor(0, 0, 0);
+              }
+              y += 20;
+            });
+            break;
+          }
+          case 'frontend':
+            front = false; newPage(); sections[sections.length - 1].start = doc.getNumberOfPages(); break;
           case 'center': {
             /* double rule below the title, GAP below the capitals:
                a 16pt line is drawn with its baseline 14.4pt down and capitals ~10.6pt tall, so capitals
@@ -304,6 +358,7 @@
           }
           case 'article':
             y += 24; space(170);
+            arts.push({ toc: tocIdx, page: doc.getNumberOfPages() - sections[sections.length - 1].start + 1 });
             centered(b.n, 9, true, 2.4, 70); y += 14;
             wrapCentered(plain(b.t), 13, true, 0.8);
             doc.setDrawColor(150, 150, 150); doc.setLineWidth(0.8); doc.line(PW / 2 - 20, y + 2, PW / 2 + 20, y + 2); doc.setDrawColor(0, 0, 0);
@@ -356,7 +411,7 @@
           case 'break':
             /* only a package's document boundary (a break that carries its own footer) restarts "Page X of Y";
                an ordinary page break inside one document (such as before EXECUTION) keeps counting */
-            newPage(); if (b.footer) sections.push({ start: doc.getNumberOfPages(), footer: b.footer }); break;
+            newPage(); if (b.footer) { sections.push({ start: doc.getNumberOfPages(), front: doc.getNumberOfPages(), footer: b.footer }); } break;
           default: {
             var nk = blocks[bi + 1] && blocks[bi + 1].k;
             para(b.t, { keep: (nk === 'sign' || nk === 'line') ? 80 : 0, justify: !/_{4}/.test(b.t) });
@@ -376,16 +431,18 @@
           doc.text(o.draftLabel, PW / 2 - (wl / 2) * Math.cos(ang), PH / 2 + (wl / 2) * Math.sin(ang), { angle: 35 });
           doc.restoreGraphicsState(); doc.setTextColor(0, 0, 0);
         }
+        if (noFoot[i]) continue;   /* cover and contents pages: no footer, not counted */
         doc.setDrawColor(190, 190, 190); doc.setLineWidth(0.5); doc.line(M, PH - 47, PW - M, PH - 47); doc.setDrawColor(0, 0, 0);
         font(false, 9); doc.setTextColor(70, 70, 70);
         var si = 0;
-        for (var q = 0; q < sections.length; q++) if (sections[q].start <= i) si = q;
-        var sec = sections[si], secEnd = sections[si + 1] ? sections[si + 1].start - 1 : n;
+        for (var q = 0; q < sections.length; q++) if (sections[q].front <= i) si = q;
+        var sec = sections[si], secEnd = sections[si + 1] ? sections[si + 1].front - 1 : n;
         var label = sec.footer + ' | Page ' + (i - sec.start + 1) + ' of ' + (secEnd - sec.start + 1);
         doc.text(label, PW / 2 - doc.getTextWidth(label) / 2, PH - 36);
         doc.setTextColor(0, 0, 0);
       }
-      return doc.output('blob');
+      return { doc: doc, arts: arts };
+      }
     });
   }
 
