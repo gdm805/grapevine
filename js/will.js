@@ -717,13 +717,20 @@
     v.gift_charity_any = giftTo.some(function (g) { return g.to === 'CHARITY'; });
     v.gift_trust_any = giftTo.some(function (g) { return g.to === 'TRUST'; });
     v.beneficiaries = (a.beneficiaries || []).filter(function (b) { return clean(b.name); }).map(function (b) {
-      var c = b.contingent || 'descendants', nm = clean(b.name), snt = isSntName(nm), tr = snt || isTrustName(nm);
+      var c = b.contingent || 'descendants', nm = clean(b.name), ty = resType(b), snt = ty === 'SNT', tr = snt || ty === 'TRUST';
       /* a trust has no descendants: that choice doesn't apply to one (the others share it, or the remote rule) */
-      if (tr && c === 'descendants') c = 'remote';
-      return { beneficiary: nm, share: clean(b.share), cont_name: clean(b.contName), is_trust: tr, is_snt: snt,
+      if (tr && (c === 'descendants' || c === 'charityrule')) c = 'remote';
+      if (ty === 'CHARITY' && c === 'descendants') c = 'charityrule';
+      return { beneficiary: nm, share: clean(b.share), cont_name: clean(b.contName), is_trust: tr, is_snt: snt, res_type: ty,
+        is_ongoing: ty === 'ONGOING', bt_age1: ageWords(b.age1), bt_age2: ageWords(b.age2), bt_age3: ageWords(b.age3),
+        snt_for: snt ? clean(b.sntFor) : '', snt_date: snt && b.sntDate ? longDate(b.sntDate) : '',
+        cont_charity_rule: !snt && c === 'charityrule',
         cont_descendants: !snt && c === 'descendants', cont_named: !snt && c === 'named', cont_charity: !snt && c === 'charity', cont_others: !snt && c === 'others', cont_remote: !snt && c === 'remote' };
     });
-    trustGiftFlags(v, v.gifts.map(function (g) { return g.recipient; }).concat(v.beneficiaries.map(function (b) { return b.beneficiary; }), v.beneficiaries.map(function (b) { return b.cont_name; })));
+    trustGiftFlags(v, v.gifts.map(function (g) { return g.recipient; }).concat(v.beneficiaries.filter(function (b) { return b.is_trust; }).map(function (b) { return b.beneficiary; }), v.beneficiaries.map(function (b) { return b.cont_name; })));
+    if (v.beneficiaries.some(function (b) { return b.is_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
+    if (v.beneficiaries.some(function (b) { return b.is_trust; })) v.has_trust_gift = true;
+    v.has_beneficiary_trust = v.beneficiaries.some(function (b) { return b.is_ongoing; });
     if (v.has_gifts && v.gifts.some(function (g) { return g.gift_to_trust; })) v.has_trust_gift = true;
     var days = parseInt(settings.survival_days, 10) || 30;
     v.survival_days = String(days);
@@ -1064,26 +1071,29 @@
         var total = a.beneficiaries.reduce(function (t, b) { return t + (parseFloat(b.share) || 0); }, 0);
         var multi = a.beneficiaries.filter(function (b) { return clean(b.name); }).length > 1;
         table = '<div class="bens">' + a.beneficiaries.map(function (b, i) {
-          var snt = isSntName(b.name), tr = snt || isTrustName(b.name);
-          if (tr && (!b.contingent || b.contingent === 'descendants')) b.contingent = multi ? 'others' : 'named';
+          if (!b.type && clean(b.name)) b.type = resType(b);
+          var ty = b.type || '', snt = ty === 'SNT', tr = snt || ty === 'TRUST', ch = ty === 'CHARITY';
+          if (tr && (!b.contingent || b.contingent === 'descendants' || b.contingent === 'charityrule')) b.contingent = multi ? 'others' : 'named';
+          if (ch && (!b.contingent || b.contingent === 'descendants')) b.contingent = 'charityrule';
+          if (!ch && b.contingent === 'charityrule') b.contingent = 'descendants';
           var c = b.contingent || 'descendants';
           var sel = '<select class="input" data-list="beneficiaries" data-i="' + i + '" data-f="contingent" data-rerender aria-label="If ' + val(b.name || 'this person') + ' does not survive me">' +
-            (tr ? '' : '<option value="descendants"' + (c === 'descendants' ? ' selected' : '') + '>Their descendants take their share</option>') +
+            (ch ? '<option value="charityrule"' + (c === 'charityrule' ? ' selected' : '') + '>Its successor, or a similar charity</option>' : '') +
+            (tr || ch ? '' : '<option value="descendants"' + (c === 'descendants' ? ' selected' : '') + '>Their descendants take their share</option>') +
             '<option value="named"' + (c === 'named' ? ' selected' : '') + '>A person I name takes it</option>' +
             '<option value="charity"' + (c === 'charity' ? ' selected' : '') + '>A charity I name takes it</option>' +
             '<option value="others"' + (c === 'others' ? ' selected' : '') + (multi ? '' : ' disabled') + '>The others on this list share it</option></select>';
-          return '<div class="ben"><div class="rowitem"><input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Person or organization" aria-label="Beneficiary ' + (i + 1) + '">' +
+          return '<div class="ben">' + resTypeSelect('beneficiaries', b, i) + '<div class="rowitem"><input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="' + esc(RES_PH[ty] || 'Person or organization') + '" aria-label="Beneficiary ' + (i + 1) + '">' +
             '<span class="pct"><input class="input" inputmode="decimal" data-list="beneficiaries" data-i="' + i + '" data-f="share" value="' + val(b.share) + '" placeholder="50" aria-label="Share ' + (i + 1) + ' percent"><b>%</b></span>' +
-            rm('beneficiaries', i, 'beneficiary ' + (i + 1), a.beneficiaries.length > 1) + '</div>' +
-            (snt ? '<div class="cont"><span class="cont-l">If this trust no longer exists at my death</span><span class="hint">The share is held for the same person in a backup supplemental needs trust that your will sets up.</span>' :
-            '<div class="cont"><span class="cont-l">' + (tr ? 'If this trust no longer exists at my death' : 'If they do not survive me') + '</span>' + sel) +
+            rm('beneficiaries', i, 'beneficiary ' + (i + 1), a.beneficiaries.length > 1) + '</div>' + resExtra('beneficiaries', b, i) +
+            (snt ? '<div class="cont">' :
+            '<div class="cont"><span class="cont-l">' + (tr ? 'If this trust no longer exists at my death' : ch ? 'If this charity no longer exists at my death' : 'If they do not survive me') + '</span>' + sel) +
             (!snt && (c === 'named' || c === 'charity') ? '<input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="contName" value="' + val(b.contName) + '" placeholder="' + (c === 'charity' ? 'Name of the charity' : 'Name of the person') + '" aria-label="Contingent beneficiary ' + (i + 1) + '">' : '') +
             '</div></div>';
         }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="beneficiaries">+ Add another</button>' +
           '<p class="hint" id="pct-total">Shares add up to ' + fmtShare(total) + '%. They need to add up to 100%.</p>' +
           '<p class="hint"><strong>Leaving a share to a charity?</strong> If the charity has merged or changed its name, its share goes to the organization that carries on its work. If it no longer exists, your personal representative gives the share to a charity with a similar purpose. To send it somewhere else instead, choose a person, another charity, or the others on this list.</p>';
       }
-      if (a.residuary === 'named') table += '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” If you name an existing special needs trust, your document adds a backup: if that trust no longer exists when the gift is made, the share is held for the same person in a supplemental needs trust instead of being paid to them outright. The existing special needs trust stays a separate document: it isn\u2019t part of your Grapevine package, and nothing in it is changed. Otherwise, this document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
       if (onlyNamed) return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Name each person or organization and the share each receives.') + table;
       return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Start with a choice below, then adjust it.') +
         cards('residuary', opts) + table;
@@ -1156,7 +1166,8 @@
         if (!bs.length) e.push('Add at least one person or organization.');
         else if (bs.some(function (b) { return !clean(b.name) || !(parseFloat(b.share) > 0); })) e.push('Each one needs a name and a share.');
         else if (Math.abs(tot - 100) > 0.05) e.push('The shares add up to ' + fmtShare(tot) + '%. They must add up to 100%.');
-        if (bs.some(function (b) { return !isSntName(b.name) && (b.contingent === 'named' || b.contingent === 'charity') && !clean(b.contName); })) e.push('Enter who takes the share when someone does not survive you.');
+        if (bs.some(function (b) { return resType(b) !== 'SNT' && (b.contingent === 'named' || b.contingent === 'charity') && !clean(b.contName); })) e.push('Enter who takes the share when someone does not survive you.');
+        residuaryChecks(a, e, bs);
         if (bs.length === 1 && bs[0].contingent === 'others' && !isSntName(bs[0].name)) e.push('There are no others on the list to share it. Choose a different option.');
       }
     }
@@ -2565,8 +2576,24 @@
             rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>' + extra + '</div>';
         }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.');
   }
-  function residuaryChecks(a, e) {
-    (a.residuary || []).forEach(function (r) {
+  /* the extra lines under a beneficiary: three ages for an ongoing trust, or who/when for a special needs trust */
+  function resExtra(listKey, r, i) {
+    var ageOpts = function (cur) { return '<option value="">Age</option>' + BT_AGES.map(function (n) { return '<option value="' + n + '"' + (String(cur) === String(n) ? ' selected' : '') + '>' + n + '</option>'; }).join(''); };
+    if (r.type === 'ONGOING') return '<div class="bt-ages"><span class="cont-l">They can ask for their share in three parts, at these ages:</span><div class="bt-age-row">' +
+      ['age1', 'age2', 'age3'].map(function (k, j) { return '<select class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + k + '" data-rerender aria-label="' + ['First', 'Second', 'Third'][j] + ' age">' + ageOpts(r[k]) + '</select>'; }).join('') + '</div>' +
+      '<span class="hint">Up to a third at the first age, half of what\u2019s left at the second, and the rest at the third. Until then, ' + (listKey === 'beneficiaries' ? 'your personal representative, as trustee,' : 'your trustee') + ' can pay for their health, education and support, and their share is protected from their creditors.</span></div>';
+    if (r.type === 'SNT') return '<div class="bt-ages"><span class="cont-l">Who the trust is for</span><input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="sntFor" value="' + val(r.sntFor) + '" placeholder="Full name" aria-label="Who the special needs trust is for">' +
+      '<span class="cont-l">The trust\u2019s date <em>(optional)</em></span><input class="input" type="date" data-list="' + listKey + '" data-i="' + i + '" data-f="sntDate" value="' + val(r.sntDate) + '" aria-label="Date of the special needs trust">' +
+      '<span class="hint">If that trust no longer exists when the share is paid, it\u2019s held for the same person in a backup supplemental needs trust. The existing trust isn\u2019t changed.</span></div>';
+    return '';
+  }
+  function resTypeSelect(listKey, r, i) {
+    var ty = r.type || '';
+    return '<select class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="type" data-rerender aria-label="Beneficiary ' + (i + 1) + ' is">' +
+      '<option value="">Who is this?</option>' + RES_TYPES.map(function (o) { return '<option value="' + o[0] + '"' + (ty === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
+  }
+  function residuaryChecks(a, e, list) {
+    (list || a.residuary || []).forEach(function (r) {
       if (!clean(r.name)) return;
       var who = clean(r.name);
       if (!r.type) e.push('Choose who or what ' + who + ' is (a person, an ongoing trust, a special needs trust, a charity or another trust).');

@@ -413,7 +413,7 @@ This property is referred to in this Will as my "**Residuary Estate**."
 
 I direct my Personal Representative to divide my Residuary Estate among the beneficiaries designated below in the percentages stated for them.
 
-Each remainder beneficiary's share shall be distributed outright when that beneficiary becomes entitled to receive the share, subject to the provisions of this Will governing distributions to a minor or incapacitated recipient.
+[[if has_beneficiary_trust]]Except for a share that this Article directs to be held in a Beneficiary Trust, each[[else]]Each[[end]] remainder beneficiary's share shall be distributed outright when that beneficiary becomes entitled to receive the share, subject to the provisions of this Will governing distributions to a minor or incapacitated recipient.
 
 The percentages allocated to the remainder beneficiaries shall total one hundred percent (100%).
 
@@ -422,9 +422,18 @@ If a minor rounding or calculation discrepancy prevents the stated percentages f
 [[each beneficiaries]]
 @row {{beneficiary}} | {{share}}%
 
+[[if is_ongoing]]
+This share shall be held in a separate Beneficiary Trust for {{beneficiary}} under [[ref art_beneficiary_trust]], with Distribution Ages of {{bt_age1}}, {{bt_age2}}, and {{bt_age3}}.
+
+[[end]]
+[[if snt_for]]
+{{beneficiary}}[[if snt_date]], dated {{snt_date}},[[end]] is a special needs trust established for the benefit of {{snt_for}}. This share is given to its trustee.
+
+[[end]]
+
 **Contingent Disposition for {{beneficiary}}:**
 
-[[if is_snt]]If that trust is not in existence at my death, as provided in [[ref art_snt]].[[end]][[if cont_remote]]Under [[ref remote]].[[end]][[if cont_descendants]]To that beneficiary's then-living descendants, by right of representation.[[end]][[if cont_named]]To {{cont_name}}.[[end]][[if cont_charity]]To {{cont_name}}, a charitable organization.[[end]][[if cont_others]]Among the other residuary beneficiaries then entitled to receive shares under this Article, in proportion to their respective shares.[[end]]
+[[if is_snt]]If that trust is not in existence at my death, as provided in [[ref art_snt]].[[end]][[if cont_remote]]Under [[ref remote]].[[end]][[if cont_charity_rule]]As provided in [[ref sec_charity_gifts]].[[end]][[if cont_descendants]]To that beneficiary's then-living descendants, by right of representation.[[end]][[if cont_named]]To {{cont_name}}.[[end]][[if cont_charity]]To {{cont_name}}, a charitable organization.[[end]][[if cont_others]]Among the other residuary beneficiaries then entitled to receive shares under this Article, in proportion to their respective shares.[[end]]
 
 [[end]]
 ## Failure of a Residuary Gift
@@ -459,6 +468,42 @@ To the persons who would then be my heirs under the intestacy laws governing the
 
 After payment or reasonable provision for the lawful obligations of my estate and completion of the distributions required by this Will, my Personal Representative shall distribute any remaining property as part of my Residuary Estate and complete the administration of my estate.
 
+[[if has_beneficiary_trust]]
+# Beneficiary Trusts {#art_beneficiary_trust}
+
+## Establishment
+
+My Personal Representative shall distribute each share of my Residuary Estate that [[ref residuary]] directs to be held in a Beneficiary Trust to the trustee named in this Article, to be held as a separate trust for that beneficiary (in this Article, the "Beneficiary") and administered and distributed as provided in this Article. The Distribution Ages of a Beneficiary are the three ages stated for that Beneficiary in [[ref residuary]].
+
+## Trustee
+
+The trustee of each Beneficiary Trust (in this Article, the "Trustee") is my Personal Representative then serving, including any successor Personal Representative. The Trustee shall serve without bond to the extent permitted by law and may resign by written notice to the Beneficiary or the Beneficiary's legal representative. If no Trustee is able and willing to serve, a court of competent jurisdiction may appoint one. In addition to the powers given to trustees by applicable law, the Trustee shall have all the powers given to my Personal Representative under [[ref powers]], exercisable without court order to the extent permitted by law.
+
+## Distributions for Health, Education, Maintenance, and Support
+
+Until a Beneficiary Trust is fully distributed, the Trustee may distribute to or for the benefit of the Beneficiary as much of the net income and principal as the Trustee considers advisable for the Beneficiary's health, education, maintenance, and support, taking into account other resources known to the Trustee to be available to the Beneficiary. Net income not distributed shall be added to principal.
+
+## Distributions at the Distribution Ages
+
+After the Beneficiary reaches the first Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-third (1/3) of the Beneficiary Trust, including accrued income, valued as of the date of the request.
+
+After the Beneficiary reaches the second Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-half (1/2) of the Beneficiary Trust then remaining, including accrued income, valued as of the date of the request.
+
+After the Beneficiary reaches the third Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire remaining balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
+
+A right to request a distribution under this Section that the Beneficiary does not exercise continues, and the Beneficiary may exercise it at any later time. If the Beneficiary has already reached one or more Distribution Ages when the Beneficiary Trust is established, the rights for those ages may be exercised at once, in order.
+
+While the Beneficiary is Incapacitated, the Trustee may decline a requested distribution and continue to hold the Beneficiary Trust, making distributions under the preceding Section.
+
+## Death of the Beneficiary
+
+If the Beneficiary dies before the Beneficiary Trust is fully distributed, the Trustee shall distribute the remaining balance to the Beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in [[ref residuary]] who received or are entitled to receive shares, in proportion to their shares, adding any portion for a beneficiary whose share is then held in a Beneficiary Trust to that trust; or, if there are none, as provided in [[ref remote]].
+
+## Spendthrift Provision
+
+No interest of a Beneficiary in a Beneficiary Trust may be anticipated, assigned, pledged, or encumbered by the Beneficiary, and no such interest shall be subject to attachment, garnishment, execution, or other legal process, or to the claims of the Beneficiary's creditors, before it is actually distributed to the Beneficiary. This Section is intended to be a spendthrift provision under applicable law.
+
+[[end]]
 [[if has_snt_gift]]
 # Standby Supplemental Needs Trust {#art_snt}
 
@@ -509,6 +554,12 @@ When the Supplemental Needs Beneficiary dies, the trustee may pay the reasonable
 
 "**Beneficiary**" means a person or organization entitled to receive a gift, distribution, or other beneficial interest under this Will.
 
+[[if has_beneficiary_trust]]
+## Beneficiary Trust
+
+"**Beneficiary Trust**" means a separate trust held for a beneficiary under [[ref art_beneficiary_trust]].
+
+[[end]]
 ## Child
 
 "**Child**" means a person recognized as my child under applicable law, including a legally adopted child.
