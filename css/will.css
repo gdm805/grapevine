@@ -314,3 +314,6 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .resrow:first-child { padding-top: 0; }
 .bt-ages { display: grid; gap: 6px; padding-left: 12px; border-left: 3px solid var(--grape-tint, #efe8f7); }
 .bt-age-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; max-width: 360px; }
+
+/* the "Read the full blank template" button on the last screen, before payment */
+.blank-btn-row { margin: 4px 0 14px; }

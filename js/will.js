@@ -892,7 +892,7 @@
     blocks.forEach(function (el, i) { if (i >= open && !mine(el)) el.classList.add('pv-blur'); });
     var note = document.createElement('div');
     note.className = 'pv-note';
-    note.innerHTML = '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text.';
+    note.innerHTML = '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">Read every word in the blank template</a>.';
     docEl.insertBefore(note, blocks[open]);
   }
   ['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (ev) {
@@ -4288,6 +4288,7 @@
           : 'Read it over. When your package is finished, you\u2019ll pay once, then download and print everything.';
       }
       signingHelp();
+      reviewBeforePay();
     }
     if (focusSel) { var f = stepEl.querySelector(focusSel); if (f) f.focus(); }
     renderDoc(); save();
@@ -4498,6 +4499,28 @@
       sheet().then(function (blob) { return job.show(blob, FILE, saveBlob); }).then(function (m) { msg.textContent = m; })
         .catch(function () { job.cancel(); msg.textContent = 'We could not build the signing steps PDF. Please reload the page and try again.'; });
     });
+  }
+  /* the blank template of this document, set to the person's state (North Carolina requires that a customer can
+     see the document's wording before buying: N.C. Gen. Stat. 84-2.2; the blank template is never blurred) */
+  function blankHref() {
+    return location.pathname.split('/').pop() + '?blank=1' + (SPOUSE2 ? '&spouse=2' : '') + (answers.state ? '&state=' + encodeURIComponent(answers.state) : '');
+  }
+  /* Before payment, the last screen says what's true: the answers are complete, most of the wording is blurred,
+     and every word can be read in the blank template (9 Oct 2026). After payment it's "ready to review" as before. */
+  function reviewBeforePay() {
+    if (BLANK || paidUp()) return;
+    var title = stepEl.querySelector('.q-title'), sub = stepEl.querySelector('.q-sub');
+    if (title) title.textContent = 'Your answers are complete';
+    var msg = 'Check your answers below. The preview shows your answers and the headings; the rest of the wording is blurred until you pay.' +
+      (inFlowNow() ? ' When your package is finished, you\u2019ll pay once, then download and print everything.' : '') +
+      ' To read every word before you buy, open the full blank template.';
+    if (sub) sub.textContent = msg;
+    var anchor = sub || title;
+    if (anchor && !stepEl.querySelector('.blank-btn')) anchor.insertAdjacentHTML('afterend', '<p class="blank-btn-row"><a class="btn btn-secondary blank-btn" href="' + esc(blankHref()) + '" target="_blank" rel="noopener">Read the full blank template</a></p>');
+  }
+  function inFlowNow() {
+    var fl = window.GVFlow && window.GVFlow.current();
+    return !!(fl && fl.docs && fl.docs.indexOf(docId) > -1 && !(fl.plan === 'doc' && fl.docs.length === 1));
   }
   function renderPkgContinue(nextKind) {
     var label = window.GVFlow.labelFor(nextKind), page = pageUrl(nextKind);
@@ -4831,7 +4854,7 @@
     if (head && !head.querySelector('.blank-link')) {
       var a = document.createElement('a');
       a.className = 'blank-link'; a.target = '_blank'; a.rel = 'noopener';
-      a.href = location.pathname.split('/').pop() + '?blank=1' + (SPOUSE2 ? '&spouse=2' : '') + (answers.state ? '&state=' + encodeURIComponent(answers.state) : '');
+      a.href = blankHref();
       a.textContent = 'See the blank template';
       head.appendChild(a);
     }
