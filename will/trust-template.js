@@ -653,7 +653,7 @@ The remaining Trust Estate shall be distributed or allocated as follows:
 
 [[each residuary]]
 
-{{residuary_pct}}% to {{residuary_name}}
+[[if residuary_ongoing]]{{residuary_pct}}% to the Trustee, to be held in a separate Beneficiary Trust for {{residuary_name}} under [[ref art_beneficiary_trust]], with Distribution Ages of {{residuary_age1}}, {{residuary_age2}}, and {{residuary_age3}}[[elif residuary_snt]]{{residuary_pct}}% to the trustee of {{residuary_name}}[[if residuary_snt_date]], dated {{residuary_snt_date}}[[end]], a special needs trust established for the benefit of {{residuary_snt_for}}[[else]]{{residuary_pct}}% to {{residuary_name}}[[end]]
 
 [[end]]
 
@@ -673,6 +673,42 @@ No beneficiary shall be required to execute a release of the Trustee as a condit
 
 Upon completion of all required distributions, the Trustee may perform any remaining administrative acts reasonably necessary to complete the administration and close the Trust. Upon completion of those acts, the Trust shall terminate.
 
+[[if has_beneficiary_trust]]
+# BENEFICIARY TRUSTS {#art_beneficiary_trust}
+
+## Establishment
+
+Each share of the remaining Trust Estate that [[ref art_final_distribution]] directs the Trustee to hold in a Beneficiary Trust for a beneficiary shall be held by the Trustee as a separate trust for that beneficiary (in this Article, the "Beneficiary"), and administered and distributed as provided in this Article. The Distribution Ages of a Beneficiary are the three ages stated for that Beneficiary in [[ref art_final_distribution]].
+
+## Trustee
+
+The Trustee of this Trust Agreement then serving, including any Successor Trustee, shall serve as trustee of each Beneficiary Trust, with all the powers given to the Trustee under this Trust Agreement.
+
+## Distributions for Health, Education, Maintenance, and Support
+
+Until a Beneficiary Trust is fully distributed, the Trustee may distribute to or for the benefit of the Beneficiary as much of the net income and principal as the Trustee considers advisable for the Beneficiary's health, education, maintenance, and support, taking into account other resources known to the Trustee to be available to the Beneficiary. Net income not distributed shall be added to principal.
+
+## Distributions at the Distribution Ages
+
+After the Beneficiary reaches the first Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-third (1/3) of the Beneficiary Trust, including accrued income, valued as of the date of the request.
+
+After the Beneficiary reaches the second Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-half (1/2) of the Beneficiary Trust then remaining, including accrued income, valued as of the date of the request.
+
+After the Beneficiary reaches the third Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire remaining balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
+
+A right to request a distribution under this Section that the Beneficiary does not exercise continues, and the Beneficiary may exercise it at any later time. If the Beneficiary has already reached one or more Distribution Ages when the Beneficiary Trust is established, the rights for those ages may be exercised at once, in order.
+
+While the Beneficiary is Incapacitated, the Trustee may decline a requested distribution and continue to hold the Beneficiary Trust, making distributions under the preceding Section.
+
+## Death of the Beneficiary
+
+If the Beneficiary dies before the Beneficiary Trust is fully distributed, the Trustee shall distribute the remaining balance to the Beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in the Division of the Remaining Trust Estate Section of [[ref art_final_distribution]] who received or are entitled to receive shares, in proportion to their shares, adding any portion for a beneficiary whose share is then held in a Beneficiary Trust to that trust; or, if there are none, as provided in the Remote Contingent Distribution Section of [[ref art_final_distribution]].
+
+## Spendthrift Provision
+
+No interest of a Beneficiary in a Beneficiary Trust may be anticipated, assigned, pledged, or encumbered by the Beneficiary, and no such interest shall be subject to attachment, garnishment, execution, or other legal process, or to the claims of the Beneficiary's creditors, before it is actually distributed to the Beneficiary. This Section is intended to be a spendthrift provision under applicable law.
+
+[[end]]
 # GIFTS TO CHARITABLE ORGANIZATIONS
 
 ## Gifts to Charitable Organizations {#sec_charity_gifts}

@@ -308,3 +308,9 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 
 /* "To find one in [state]: [bar referral service]" after the see-an-attorney sentence (js/lawyer-links.js) */
 .gv-lawyer-link a { color: var(--grape); font-weight: 600; }
+
+/* trust "Who gets everything else?": each beneficiary's type, ages for an ongoing trust, details of a special needs trust */
+.resrow { display: grid; gap: 8px; padding: 12px 0; border-bottom: 1px solid var(--line, #e6e1d4); }
+.resrow:first-child { padding-top: 0; }
+.bt-ages { display: grid; gap: 6px; padding-left: 12px; border-left: 3px solid var(--grape-tint, #efe8f7); }
+.bt-age-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; max-width: 360px; }

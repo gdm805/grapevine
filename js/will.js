@@ -66,6 +66,20 @@
   function giftToPh(t) { return GIFT_TO_PH[t] || 'To whom'; }
   function giftTypeMissing(rows) { return rows.some(function (g) { return !g.to; }); }
   var GIFT_TO_ERR = 'For each gift, choose who it goes to: a person, a charity, an existing trust, or other.';
+  /* "Who gets everything else?" in the trust: each beneficiary's type (Greg, 9 Oct 2026). ONGOING = held in a Beneficiary
+     Trust with three Distribution Ages (will/trust-template.js, BENEFICIARY TRUSTS); SNT = an existing special needs trust
+     (the standby supplemental needs trust is the backup); CHARITY follows Gifts to Charitable Organizations. */
+  var RES_TYPES = [['PERSON', 'A person'], ['ONGOING', 'A person, held in an ongoing trust'], ['SNT', 'An existing special needs trust'], ['CHARITY', 'A charity'], ['TRUST', 'Another existing trust']];
+  var RES_PH = { PERSON: 'Full name', ONGOING: 'Full name', SNT: 'Name of the special needs trust', CHARITY: 'The charity\u2019s full legal name, city and state', TRUST: 'The trust\u2019s full name and date' };
+  var BT_AGES = [18, 21, 25, 30, 35, 40, 45, 50];
+  var AGE_WORDS = { 18: 'eighteen', 21: 'twenty-one', 25: 'twenty-five', 30: 'thirty', 35: 'thirty-five', 40: 'forty', 45: 'forty-five', 50: 'fifty' };
+  function ageWords(n) { n = parseInt(n, 10); return AGE_WORDS[n] ? AGE_WORDS[n] + ' (' + n + ')' : ''; }
+  /* rows saved before the type question existed get a type from their name */
+  function resType(r) {
+    if (r && r.type) return r.type;
+    var n = clean(r && r.name); if (!n) return '';
+    return isSntName(n) ? 'SNT' : (isTrustName(n) ? 'TRUST' : 'PERSON');
+  }
   function isSntName(s) { return /special[\s-]+needs|supplemental[\s-]+needs|\bSNT\b/i.test(String(s || '')); }
   /* turns on the "Gifts to a Trust" section, and the standby supplemental needs trust, only when a trust is named */
   function trustGiftFlags(v, names) {
@@ -2488,10 +2502,21 @@
     if (a.wantsGifts === 'no') v.gifts = [];
     v.has_gifts = v.gifts.length > 0;
     v.gifts_to_trust = v.gifts.some(function (g) { return g.gift_to_trust; });
-    v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
+    v.residuary = (a.residuary || []).map(function (r) {
+      var ty = resType(r);
+      return { residuary_name: clean(r.name), residuary_pct: clean(r.pct), residuary_type: ty,
+        residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT',
+        residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
+        residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
+    }).filter(function (r) { return r.residuary_name; });
     trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.beneficiary; })
-      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
+      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }),
+        v.residuary.filter(function (r) { return r.residuary_type === 'SNT' || r.residuary_type === 'TRUST'; }).map(function (r) { return r.residuary_name; })));
     if (v.gifts_to_trust) v.has_trust_gift = true;
+    /* a beneficiary typed as an existing special needs trust or another existing trust turns on those sections */
+    if (v.residuary.some(function (r) { return r.residuary_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
+    if (v.residuary.some(function (r) { return r.residuary_type === 'TRUST'; })) v.has_trust_gift = true;
+    v.has_beneficiary_trust = v.residuary.some(function (r) { return r.residuary_ongoing; });
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_ownership: clean(p.ownership), real_property_county_state: clean(p.countyState), real_property_deed_reference: clean(p.deedReference) };
@@ -2580,13 +2605,28 @@
       return h;
     },
     residuary: function () {
-      return stepHead('Who gets everything else?', 'After you die and any specific gifts are made, this is how the rest of your trust is divided. If one of them dies before you, that share goes to their descendants, or if none, to the others on this list. A charity\u2019s share goes to the organization that carries on its work, or, if it no longer exists, to a charity with a similar purpose that your trustee chooses.' + ((answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER') ? ' This trust is yours alone: your spouse or partner receives something from it only if you name them here or in a specific gift.' : '')) +
+      var ageOpts = function (cur) { return '<option value="">Age</option>' + BT_AGES.map(function (n) { return '<option value="' + n + '"' + (String(cur) === String(n) ? ' selected' : '') + '>' + n + '</option>'; }).join(''); };
+      return stepHead('Who gets everything else?', 'After you die and any specific gifts are made, this is how the rest of your trust is divided. For each beneficiary, choose who or what it is, then the share. If a person dies before you, their share goes to their descendants, or if none, to the others on this list.' + ((answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER') ? ' This trust is yours alone: your spouse or partner receives something from it only if you name them here or in a specific gift.' : '')) +
         field('Beneficiaries', '<div class="rowset">' + answers.residuary.map(function (r, i) {
-          return '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Full name">' +
+          if (!r.type && clean(r.name)) r.type = resType(r);
+          var ty = r.type || '';
+          var sel = '<select class="input" data-list="residuary" data-i="' + i + '" data-f="type" data-rerender aria-label="Beneficiary ' + (i + 1) + ' is">' +
+            '<option value="">Who is this?</option>' + RES_TYPES.map(function (o) { return '<option value="' + o[0] + '"' + (ty === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
+          var extra = '';
+          if (ty === 'ONGOING') {
+            extra = '<div class="bt-ages"><span class="cont-l">They can ask for their share in three parts, at these ages:</span><div class="bt-age-row">' +
+              ['age1', 'age2', 'age3'].map(function (k, j) { return '<select class="input" data-list="residuary" data-i="' + i + '" data-f="' + k + '" data-rerender aria-label="' + ['First', 'Second', 'Third'][j] + ' age">' + ageOpts(r[k]) + '</select>'; }).join('') + '</div>' +
+              '<span class="hint">Up to a third at the first age, half of what\u2019s left at the second, and the rest at the third. Until then, your trustee can pay for their health, education and support, and their share is protected from their creditors.</span></div>';
+          } else if (ty === 'SNT') {
+            extra = '<div class="bt-ages"><span class="cont-l">Who the trust is for</span><input class="input" data-list="residuary" data-i="' + i + '" data-f="sntFor" value="' + val(r.sntFor) + '" placeholder="Full name" aria-label="Who the special needs trust is for">' +
+              '<span class="cont-l">The trust\u2019s date <em>(optional)</em></span><input class="input" type="date" data-list="residuary" data-i="' + i + '" data-f="sntDate" value="' + val(r.sntDate) + '" aria-label="Date of the special needs trust">' +
+              '<span class="hint">If that trust no longer exists when the share is paid, it\u2019s held for the same person in a backup supplemental needs trust. The existing trust isn\u2019t changed.</span></div>';
+          }
+          return '<div class="resrow">' + sel +
+            '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="' + esc(RES_PH[ty] || 'Full name') + '">' +
             '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
-            rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>';
-        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.') +
-        '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust as the beneficiary instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” If you name an existing special needs trust, your document adds a backup: if that trust no longer exists when the gift is made, the share is held for the same person in a supplemental needs trust instead of being paid to them outright. The existing special needs trust stays a separate document: it isn\u2019t part of your Grapevine package, and nothing in it is changed. Otherwise, this document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
+            rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>' + extra + '</div>';
+        }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.');
     },
     assets: function () {
       function assetBlock(flagKey, label, listKey, cols, ph) {
@@ -2627,7 +2667,11 @@
         row('Trustmaker', esc(v.name), 'about') +
         row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') +
         (v.has_gifts ? row('Specific gifts', v.gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary); }).join('<br>'), 'gifts') : '') +
-        row('Beneficiaries', v.residuary.map(function (r) { return esc(r.residuary_name) + (r.residuary_pct ? ' (' + esc(r.residuary_pct) + '%)' : ''); }).join('<br>'), 'residuary') + '</div>' +
+        row('Beneficiaries', v.residuary.map(function (r) {
+          var how = r.residuary_ongoing ? ', in an ongoing trust: ' + [r.residuary_age1, r.residuary_age2, r.residuary_age3].map(function (x) { return (x.match(/\((\d+)\)/) || [])[1] || '?'; }).join(', ')
+            : r.residuary_snt ? ', special needs trust for ' + esc(r.residuary_snt_for) : '';
+          return esc(r.residuary_name) + (r.residuary_pct ? ' (' + esc(r.residuary_pct) + '%' + how + ')' : '');
+        }).join('<br>'), 'residuary') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
         '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
@@ -2673,6 +2717,17 @@
       petsErrors(a, e);
     } else if (id === 'residuary') {
       if (!(a.residuary || []).some(function (r) { return clean(r.name); })) e.push('Add at least one beneficiary for the rest of your trust.');
+      (a.residuary || []).forEach(function (r, i) {
+        if (!clean(r.name)) return;
+        var who = clean(r.name);
+        if (!r.type) e.push('Choose who or what ' + who + ' is (a person, an ongoing trust, a special needs trust, a charity or another trust).');
+        if (r.type === 'ONGOING') {
+          var ages = [r.age1, r.age2, r.age3].map(function (x) { return parseInt(x, 10) || 0; });
+          if (ages.some(function (x) { return !x; })) e.push('Choose all three ages for ' + who + '.');
+          else if (!(ages[0] < ages[1] && ages[1] < ages[2])) e.push('For ' + who + ', each age must be later than the one before.');
+        }
+        if (r.type === 'SNT' && !clean(r.sntFor)) e.push('Enter who the special needs trust ' + who + ' is for.');
+      });
     } else if (id === 'signing') {
       if (!clean(a.signingCounty)) e.push('Enter the county where you’ll sign.');
     }
@@ -2767,10 +2822,21 @@
     /* first death: the share of the one who died goes into a separate Family Trust, or stays in the Survivor's Trust */
     v.family_trust = a.firstDeathPlan !== 'SURVIVOR';
     v.has_any_gifts = v.has_first_death_gifts || v.has_survivor_death_gifts;
-    v.residuary = (a.residuary || []).map(function (r) { return { residuary_name: clean(r.name), residuary_pct: clean(r.pct) }; }).filter(function (r) { return r.residuary_name; });
+    v.residuary = (a.residuary || []).map(function (r) {
+      var ty = resType(r);
+      return { residuary_name: clean(r.name), residuary_pct: clean(r.pct), residuary_type: ty,
+        residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT',
+        residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
+        residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
+    }).filter(function (r) { return r.residuary_name; });
     trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.beneficiary; })
-      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }), (a.residuary || []).map(function (r) { return r.name; })));
+      .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }),
+        v.residuary.filter(function (r) { return r.residuary_type === 'SNT' || r.residuary_type === 'TRUST'; }).map(function (r) { return r.residuary_name; })));
     if (v.gifts_to_trust) v.has_trust_gift = true;
+    /* a beneficiary typed as an existing special needs trust or another existing trust turns on those sections */
+    if (v.residuary.some(function (r) { return r.residuary_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
+    if (v.residuary.some(function (r) { return r.residuary_type === 'TRUST'; })) v.has_trust_gift = true;
+    v.has_beneficiary_trust = v.residuary.some(function (r) { return r.residuary_ongoing; });
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_reference: clean(p.reference), real_property_ownership: clean(p.ownership) };
