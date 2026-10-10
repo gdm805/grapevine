@@ -65,7 +65,7 @@
 
 /* Terms and Conditions fold-down, just above "Continue to secure payment" */
 .terms-note { font-size: 14px; line-height: 1.5; color: var(--ink-soft); margin: 4px 0 2px; }
-.terms-note a, .terms-open a { color: var(--grape); text-underline-offset: 3px; }
+.terms-open a { color: var(--grape); text-underline-offset: 3px; }
 .terms-fold { border: 1px solid var(--line); border-radius: var(--r-md); margin: 8px 0 12px; background: var(--white); }
 .terms-fold summary { list-style: none; cursor: pointer; padding: 12px 40px 12px 14px; font: 600 14.5px/1.3 var(--sans); color: var(--ink); position: relative; }
 .terms-fold summary::-webkit-details-marker { display: none; }
@@ -98,3 +98,6 @@
 .ca-notice .ca-bold { font-size: 16px; font-weight: 700; }
 .ca-notice .ca-cancel { font-size: 16px; background: var(--sand, #f2eee1); padding: 10px 12px; border-radius: 10px; }
 .ca-notice .ca-ack { margin-top: 4px; }
+/* the required "I agree to the Terms" box above the pay button */
+.terms-ack { margin: 10px 0 4px; padding: 12px 14px; border: 2px solid var(--grape); border-radius: var(--r-sm); background: var(--grape-tint); font-weight: 600; }
+.terms-ack a { color: var(--grape-deep); text-underline-offset: 3px; }

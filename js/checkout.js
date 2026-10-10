@@ -141,6 +141,8 @@
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Submit the survey above to unlock this button</button>'
             : isCA() && !caAck
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Confirm you\u2019ve read the California notice above</button>'
+            : !termsAck
+            ? '<button class="btn btn-primary btn-lg" type="button" disabled>Agree to the Terms and Conditions above to continue</button>'
             : '<a class="btn btn-primary btn-lg" href="' + payHref + '">' + (betaTester() ? 'Continue &mdash; your documents are free' : 'Continue to secure payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>')
           : '<div class="pay-off"><p><strong>Payments aren’t turned on yet.</strong> Add a Stripe Payment Link for the ' + esc(p.name) + ' plan (' + household + ') in <code>js/checkout.js</code>, or open <code>paid.html?plan=' + plan + '&household=' + household + '</code> to try the unlocked view.</p></div>') +
         '<p class="secure-note"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Handled by Stripe on their own secure page. We never see or store your card details.</p>' +
@@ -199,6 +201,7 @@
      California. The bold statements are the ones 6410(b) requires in 12-point bold; (b)(3) and (b)(5) -- the
      county clerk's details -- appear only once GV_CA_LDA.registered is true (js/plans.js). */
   var caAck = false;
+  var TERMS_VERSION = 'September 29, 2026';   /* the "Last updated" date on terms.html */
   function isCA() {
     try { return ((JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || '') === 'California'; } catch (e) { return false; }
   }
@@ -217,7 +220,19 @@
       '<p class="ca-cancel"><strong>Your right to cancel:</strong> you may cancel this purchase within 24 hours by giving us any written statement that you are canceling, by email to <a href="mailto:support@grapevinedocs.com">support@grapevinedocs.com</a> or by mail to Grapevine Docs, LLC at the address in our Terms. A mailed cancellation is effective on its postmark date. We will then promptly return your payment, except fees for services actually, necessarily, and reasonably performed for you with your knowing and express written consent.</p>' +
       '<label class="check ca-ack"><input type="checkbox" id="ca-ack"' + (caAck ? ' checked' : '') + '><span>I have read the California notice above.</span></label></div>';
   }
+  /* agreeing to the Terms is required before payment (Greg, 10 Oct 2026): the pay button stays switched off until
+     this box is ticked, every visit. Every path to payment and download comes through this page. The agreement is
+     also noted in this browser with the terms' "Last updated" date. At launch, Stripe's own terms box and the payment
+     check's REQUIRE_TERMS go on too (cloudflare/payment-check.js), so a payment can't unlock anything without it. */
+  var termsAck = false;
   root.addEventListener('change', function (e) {
+    if (e.target && e.target.id === 'terms-ack') {
+      termsAck = e.target.checked;
+      if (termsAck) { try { localStorage.setItem('grapevine.terms', JSON.stringify({ agreed: new Date().toISOString(), version: TERMS_VERSION })); } catch (x) { /* ignore */ } }
+      render();
+      var t = document.getElementById('terms-ack'); if (t) t.focus();
+      return;
+    }
     if (e.target && e.target.id === 'ca-ack') { caAck = e.target.checked; render(); var n = document.getElementById('ca-notice'); if (n && caAck) { var b = root.querySelector('.order-card .btn-primary'); if (b && b.scrollIntoView) b.scrollIntoView({ block: 'center' }); } }
   });
 
@@ -227,7 +242,7 @@
      terms of service" switched on, and the Cloudflare payment check refuses payments without that consent. */
   function termsFold() {
     var url = window.GVUrl('terms.html');
-    return '<p class="terms-note">By continuing to payment, you agree to our <a href="' + url + '" target="_blank" rel="noopener">Terms and Conditions</a>.</p>' +
+    return '<label class="check terms-ack"><input type="checkbox" id="terms-ack"' + (termsAck ? ' checked' : '') + '><span>I have read and agree to the <a href="' + url + '" target="_blank" rel="noopener">Terms and Conditions</a>.</span></label>' +
       '<details class="terms-fold"><summary>Read the Terms and Conditions</summary>' +
       '<div class="terms-box" data-terms tabindex="0">Loading…</div>' +
       '<p class="terms-open"><a href="' + url + '" target="_blank" rel="noopener">Open the terms in a new tab</a></p></details>';
