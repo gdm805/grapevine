@@ -193,7 +193,9 @@
      keeps the original trust date and adds the restatement date (the day the restatement is signed). */
   /* "the" + a trust's name, without doubling it: most names already begin with "The" ("The Alvarez Family
      Trust"), so a sentence like "part of the {{trust_name}}" would read "part of the The Alvarez Family Trust" */
-  function theTrust(n) { return !n ? '' : (/^the\s/i.test(n) ? n : 'the ' + n); }
+  /* a trust's name always starts with a capital "The" when it has one, wherever it's printed (Greg, 10 Oct 2026) */
+  function capThe(n) { return String(n || '').replace(/^the\s+/i, 'The '); }
+  function theTrust(n) { return !n ? '' : (/^the\s/i.test(n) ? capThe(n) : 'The ' + n); }
   /* How property is titled in the trust's name -- the exact wording to give a bank, brokerage or title company:
      "[Name(s)], as (Co-)Trustee(s) of [Trust Name], dated ___, and any amendments made to it" */
   function trustTitle(names, trustName, date, restatedOn) {
@@ -959,10 +961,10 @@
   }
   function footerName() {
     /* a trust's footer names the document itself: "The Merrill Living Trust Agreement" */
-    if (KIND.key === 'trust' || KIND.key === 'trustjoint') return clean(answers.trustName).replace(/["\\]/g, '');
-    if (KIND.key === 'cert') return clean(answers.trustName).replace(/["\\]/g, '');
+    if (KIND.key === 'trust' || KIND.key === 'trustjoint') return capThe(clean(answers.trustName)).replace(/["\\]/g, '');
+    if (KIND.key === 'cert') return capThe(clean(answers.trustName)).replace(/["\\]/g, '');
     if (KIND.key === 'affidavit') return affiantList(answers).join(' and ').replace(/["\\]/g, '');
-    if (KIND.key === 'assignment' || KIND.key === 'schedulea') return clean(answers.trustName).replace(/["\\]/g, '');
+    if (KIND.key === 'assignment' || KIND.key === 'schedulea') return capThe(clean(answers.trustName)).replace(/["\\]/g, '');
     return clean(answers.name).replace(/["\\]/g, '');
   }
 
@@ -1327,7 +1329,7 @@
     v.spouse = clean(a.spouse); v.revoke_spouse = a.revokeSpouse !== 'no';
     v.children_answered = a.hasChildren === 'yes' || a.hasChildren === 'no';
     v.children_yes = hasKids; v.children = kids; v.minor_children_yes = minors.length > 0;
-    v.trust_name = clean(a.trustName); v.trust_date = longDate(a.trustDate);
+    v.trust_name = capThe(clean(a.trustName)); v.trust_date = longDate(a.trustDate);
     v.the_trust_name = theTrust(v.trust_name);
     v.joint_trust = a.jointTrust === 'yes'; v.other_trustmaker = clean(a.otherTrustmaker);
     v.pr_co = a.prMode === 'co'; v.pr_successive = !v.pr_co;
@@ -2514,13 +2516,13 @@
     v.county = clean(a.signingCounty).replace(/\s+(county|parish)$/i, '');
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.signing_state = v.state ? trustSlug(v.state) : '';
-    v.trust_name = clean(a.trustName) || (v.name ? v.name + ' Living Trust' : '');
+    v.trust_name = capThe(clean(a.trustName)) || (v.name ? v.name + ' Living Trust' : '');
     /* the title line already says "TRUST AGREEMENT FOR" -- add "THE" only when the name someone
        typed doesn't already start with it themselves (e.g. "The Smith Family Trust"), so the title
        never reads "...FOR THE THE Smith..." and never reads "...FOR Smith..." either */
     v.trust_starts_with_the = /^the\s/i.test(v.trust_name) ? 'YES' : 'NO';
     v.trust_type = a.trustType === 'RESTATEMENT' ? 'RESTATEMENT' : 'NEW';
-    v.orig_trust_name = clean(a.trustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
+    v.orig_trust_name = capThe(clean(a.trustName)); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'MARRIED' ? 'MARRIED' : (a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'UNMARRIED');
     v.spouse = clean(a.spouse); v.partner = clean(a.partner);
@@ -2628,6 +2630,13 @@
       '<option value="">Who is this?</option>' + RES_TYPES.map(function (o) { return '<option value="' + o[0] + '"' + (ty === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
   }
   function residuaryChecks(a, e, list) {
+    /* the trusts: every beneficiary needs a share, and the shares must total exactly 100% (the will checks its own) */
+    if (!list) {
+      var named = (a.residuary || []).filter(function (r) { return clean(r.name) || clean(r.pct); });
+      var tot = named.reduce(function (s, r) { return s + (parseFloat(String(r.pct).replace(/[^\d.]/g, '')) || 0); }, 0);
+      if (named.some(function (r) { return !clean(r.name) || !(parseFloat(String(r.pct).replace(/[^\d.]/g, '')) > 0); })) e.push('Each beneficiary needs a name and a share.');
+      else if (named.length && Math.abs(tot - 100) > 0.05) e.push('The shares add up to ' + fmtShare(tot) + '%. They must add up to 100%.');
+    }
     (list || a.residuary || []).forEach(function (r) {
       if (!clean(r.name)) return;
       var who = clean(r.name);
@@ -2858,13 +2867,13 @@
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.signing_state = v.state ? trustSlug(v.state) : '';
     v.is_joint = true;
-    v.trust_name = clean(a.trustName) || ((v.name1 && v.name2) ? v.name1 + ' and ' + v.name2 + ' Living Trust' : '');
+    v.trust_name = capThe(clean(a.trustName)) || ((v.name1 && v.name2) ? v.name1 + ' and ' + v.name2 + ' Living Trust' : '');
     /* the title line already says "TRUST AGREEMENT FOR" -- add "THE" only when the name someone
        typed doesn't already start with it themselves (e.g. "The Smith Family Trust"), so the title
        never reads "...FOR THE THE Smith..." and never reads "...FOR Smith..." either */
     v.trust_starts_with_the = /^the\s/i.test(v.trust_name) ? 'YES' : 'NO';
     v.trust_type = a.trustType === 'RESTATEMENT' ? 'RESTATEMENT' : 'NEW';
-    v.orig_trust_name = clean(a.trustName); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
+    v.orig_trust_name = capThe(clean(a.trustName)); v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'MARRIED';
     /* whose child: a child from a prior relationship is identified as the child of that Trustmaker only */
@@ -3140,7 +3149,7 @@
     v.county = clean(a.signingCounty).replace(/\s+(county|parish)$/i, '');
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.signing_state = v.state ? trustSlug(v.state) : '';
-    v.trust_name = clean(a.trustName);
+    v.trust_name = capThe(clean(a.trustName));
     v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.trust_restated = a.trustRestated === 'yes';
     v.restatement_date = a.restatementDate ? longDate(a.restatementDate) : '';
@@ -3324,7 +3333,7 @@
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.signing_state = v.state ? trustSlug(v.state) : '';
     v.trust_type = a.trustType === 'JOINT' ? 'JOINT' : 'SINGLE';
-    v.trust_name = clean(a.trustName);
+    v.trust_name = capThe(clean(a.trustName));
     v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.trust_restated = a.trustRestated === 'yes';
     v.restatement_date = a.restatementDate ? longDate(a.restatementDate) : '';
@@ -3511,7 +3520,7 @@
     v.county_label = v.state === 'Louisiana' ? 'Parish' : 'County';
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.trust_type = a.trustType === 'JOINT' ? 'JOINT' : 'SINGLE';
-    v.trust_name = clean(a.trustName);
+    v.trust_name = capThe(clean(a.trustName));
     v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.trust_restated = a.trustRestated === 'yes';
     v.restatement_date = a.restatementDate ? longDate(a.restatementDate) : '';
@@ -3941,7 +3950,7 @@
   function buildVarsScheduleA(a, states, settings) {
     var v = {};
     v.trust_type = a.trustType === 'JOINT' ? 'JOINT' : 'SINGLE';
-    v.trust_name = clean(a.trustName); v.the_trust_name = theTrust(v.trust_name);
+    v.trust_name = capThe(clean(a.trustName)); v.the_trust_name = theTrust(v.trust_name);
     v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
     v.trust_restated = a.trustRestated === 'yes';
     v.restatement_date = a.restatementDate ? longDate(a.restatementDate) : '';
