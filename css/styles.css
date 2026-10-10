@@ -1,6 +1,6 @@
 /* Grapevine website. Tokens follow the Grapevine design system. */
 :root {
-  --stone: #fefdf2;
+  --stone: #faf9f5;
   --sand: #f2f0e5;
   --white: #ffffff;
   --ink: #252429;
@@ -58,13 +58,13 @@ a { color: var(--grape); }
 .btn-light { background: var(--lavender); color: #1d0f33; }
 .btn-light:hover { background: #e6dbf7; }
 .btn-ghost-light { background: transparent; color: var(--stone); border-color: var(--stone); }
-.btn-ghost-light:hover { background: rgba(254, 253, 242, 0.12); }
+.btn-ghost-light:hover { background: rgba(250, 249, 245, 0.12); }
 .btn-sm { min-height: 42px; padding: 0 20px; font-size: 15px; }
 .btn-lg { min-height: 56px; padding: 0 32px; font-size: 17px; }
 .band :focus-visible { outline-color: var(--lavender); }
 
 /* header */
-.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(254, 253, 242, 0.94); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(250, 249, 245, 0.94); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--header-h); }
 .brand { display: block; flex: none; }
 /* the header logo (images/grapevine-logo-header.svg: grapes, "Grapevine" and "Smarter Legal Documents") */
@@ -206,7 +206,7 @@ a { color: var(--grape); }
   .bar .btn { margin-left: auto; }
   .menu-btn { display: inline-flex; }
   /* the menu, opened with the menu button, drops down under the header */
-  .site-header.open .primary { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; margin: 0; padding: 4px clamp(20px, 4vw, 40px) 14px; background: #fefdf2; border-bottom: 1px solid var(--line); box-shadow: 0 16px 32px -20px rgba(37, 36, 41, 0.35); }
+  .site-header.open .primary { display: flex; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; margin: 0; padding: 4px clamp(20px, 4vw, 40px) 14px; background: #faf9f5; border-bottom: 1px solid var(--line); box-shadow: 0 16px 32px -20px rgba(37, 36, 41, 0.35); }
   .site-header.open .primary a { font-size: 18px; padding: 15px 0; border-bottom: 1px solid var(--line); }
   .site-header.open .primary a:last-child { border-bottom: 0; }
   .site-header.open .primary a[aria-current="page"] { color: var(--grape); border-bottom-color: var(--line); }
