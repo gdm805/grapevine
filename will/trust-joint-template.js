@@ -303,9 +303,17 @@ Any amendment, revocation, or restatement must be made by a written instrument s
 
 No amendment, revocation, restatement, withdrawal, or other exercise of a reserved power may alter a portion of the Trust that has become irrevocable, except to the extent permitted by applicable law.
 
-## Effect of Revocation
+## Effect of Revocation {#sec_effect_revocation}
 
 Upon revocation of all or any portion of the Trust, the Trustee shall transfer the affected Trust property to the person or persons entitled to receive it according to their respective ownership interests, unless the instrument of revocation validly directs otherwise.
+
+## Divorce, Dissolution, or Legal Separation
+
+If the Trustmakers' marriage or registered domestic partnership is terminated by divorce, dissolution, annulment, or decree of legal separation, this Trust shall be revoked in its entirety upon entry of the final decree, without further action by either Trustmaker. The Trustee shall then transfer the Trust property as provided in [[ref sec_effect_revocation]], in accordance with the decree or, to the extent the decree does not allocate it, according to the Trustmakers' respective ownership interests under applicable law, so that each Trustmaker may make new arrangements.
+
+Until the Trust property has been transferred, the Trustee shall hold and administer it only for that purpose, and each Trustmaker shall be treated as having predeceased the other for every gift, beneficial interest, nomination, and power under this Trust Agreement, except to the extent applicable law requires a different result.
+
+The Trustee may rely on a certified copy of the decree and shall not be liable for any action taken in good faith before receiving written notice of it.
 
 ## Termination of Reserved Powers
 

@@ -422,9 +422,32 @@
   function kidsShared(list, relOf) { return (list || []).filter(function (c) { return clean(c.name); }).map(function (c) { return { name: clean(c.name), rel: relOf(c.rel) }; }); }
   function willRelToShared(r) { return r === 'mine' ? 'p1' : (r === 'spouse' ? 'p2' : (r === 'both' ? 'both' : '')); }
   function sharedRelToWill(r) { if (r === 'both') return 'both'; if (r === 'p1') return SPOUSE2 ? 'spouse' : 'mine'; if (r === 'p2') return SPOUSE2 ? 'mine' : 'spouse'; return ''; }
+  /* ---------- "If your marriage ends, cancel everything about that person?" -- asked in the will, the pour-over
+     will and the living trust (Greg, 10 Oct 2026). The first answer is shared, so the next document starts with it
+     chosen; if two saved documents disagree, the question shows a notice. A document saved before the will and
+     trust asked this always cancelled, so a missing answer counts as "cancel". ---------- */
+  var REVOKE_DOCS = { will: ['grapevine.will.v2', 'will'], pourover: ['grapevine.pourover.v1', 'pour-over will'], trust: ['grapevine.trust.v1', 'living trust'] };
+  function revokeMarried(a, k) { return k === 'trust' ? (a.maritalStatus === 'MARRIED' || a.maritalStatus === 'PARTNER') : a.marital === 'married'; }
+  function revokeQ(docWord) {
+    if (!answers.revokeSpouse) answers.revokeSpouse = readShared().revokeSpouse || 'yes';
+    var mine = answers.revokeSpouse, other = [];
+    Object.keys(REVOKE_DOCS).forEach(function (k) {
+      if (k === KIND.key) return;
+      try {
+        var sv = JSON.parse(localStorage.getItem(REVOKE_DOCS[k][0] + (SPOUSE2 ? '.s2' : '')) || 'null'), a = sv && sv.answers;
+        if (a && revokeMarried(a, k) && (a.revokeSpouse === 'no' ? 'no' : 'yes') !== mine) other.push(REVOKE_DOCS[k][1]);
+      } catch (e) { /* ignore */ }
+    });
+    var note = other.length ? '<div class="note revoke-note" role="status"><strong>This doesn’t match your ' + other.join(' and your ') + '.</strong> Your ' + other.join(' and your ') +
+      (mine === 'no' ? ' says to cancel it. This ' + docWord + ' now says to keep it.' : ' says to keep it. This ' + docWord + ' now says to cancel it.') +
+      ' These usually should match. You can change either one.</div>' : '';
+    return field('If your marriage or partnership ends before you die, should everything in this ' + docWord + ' about that person be cancelled?',
+      pills('revokeSpouse', [['yes', 'Yes, cancel it'], ['no', 'No, keep it']], true), 'The law of your state may also affect this.') + note;
+  }
   function saveShared(a, kind) {
     var k = kind.key;
     if (SPOUSE2) return;   /* the first person's answers are the household's reference */
+    if (REVOKE_DOCS[k] && revokeMarried(a, k) && a.revokeSpouse) writeShared({ revokeSpouse: a.revokeSpouse });
     if (k === 'will' || k === 'pourover') {
       writeShared({ marital: a.marital, spouse: a.marital === 'married' ? clean(a.spouse) : '',
         children: a.hasChildren === 'yes' ? kidsShared(a.children, willRelToShared) : (a.hasChildren === 'no' ? [] : undefined) });
@@ -733,7 +756,7 @@
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase(); v.city = clean(a.city);
     v.county = clean(a.county).replace(/\s+county$/i, '');
     v.state = st ? st.name : '';
-    v.marital = a.marital ? (a.marital === 'married' ? 'married' : 'unmarried') : ''; v.has_spouse = a.marital === 'married'; v.spouse = clean(a.spouse);
+    v.marital = a.marital ? (a.marital === 'married' ? 'married' : 'unmarried') : ''; v.has_spouse = a.marital === 'married'; v.spouse = clean(a.spouse); v.revoke_spouse = a.revokeSpouse !== 'no';
     v.children_answered = a.hasChildren === 'yes' || a.hasChildren === 'no';
     v.has_children = hasKids; v.has_minor_children = hasKids && kids.some(function (c) { return c.minor; });
     v.children = kids;
@@ -786,7 +809,7 @@
   /* ---------- what the person is asked ---------- */
   var EMPTY_WILL = {
     state: '', ageOk: false, freeOk: false,
-    name: '', county: '', marital: '', spouse: '',
+    name: '', county: '', marital: '', spouse: '', revokeSpouse: '',
     hasChildren: '', children: [{ name: '', minor: false }],
     guardian: '', altGuardian: '',
     executor: '', successors: [{ name: '' }],
@@ -1037,7 +1060,7 @@
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
-        (answers.marital === 'married' ? field('Your spouse\u2019s or domestic partner\u2019s full legal name', text('spouse', '')) : '');
+        (answers.marital === 'married' ? field('Your spouse\u2019s or domestic partner\u2019s full legal name', text('spouse', '')) + revokeQ('will') : '');
     },
     children: function () {
       var rows = '';
@@ -1214,7 +1237,7 @@
   /* ================= POUR-OVER WILL (for use with a trust) ================= */
   var EMPTY_PO = {
     state: '', ageOk: false, freeOk: false, trustOk: false,
-    name: '', county: '', marital: '', spouse: '', revokeSpouse: 'yes',
+    name: '', county: '', marital: '', spouse: '', revokeSpouse: '',
     hasChildren: '', children: [{ name: '', minor: false }],
     trustName: '', trustDate: '', jointTrust: '', otherTrustmaker: '',
     prMode: 'successive', executor: '', successors: [{ name: '' }], coPRs: [{ name: '' }, { name: '' }],
@@ -1393,7 +1416,7 @@
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married'
           ? field('Your spouse’s or domestic partner’s full legal name', text('spouse', '')) +
-            field('If your marriage or partnership ends before you die, should everything in this will about that person be cancelled?', pills('revokeSpouse', [['yes', 'Yes, cancel it'], ['no', 'No, keep it']]), 'The law of your state may also affect this.')
+            revokeQ('will')
           : '');
     },
     children: function () { return RENDER_WILL.children(); },
@@ -2468,7 +2491,7 @@
     state: '', county: '', ageOk: false, freeOk: false,
     trustName: '', trustType: 'NEW', origTrustName: '', origTrustDate: '',
     name: '',
-    maritalStatus: '', spouse: '', partner: '',
+    maritalStatus: '', spouse: '', partner: '', revokeSpouse: '',
     children: [{ name: '' }],
     excluded: [{ name: '', relationship: '' }],
     trusteeMode: 'SUCCESSIVE', successors: [{ name: '' }], cotrustees: [{ name: '' }],
@@ -2526,7 +2549,7 @@
     v.title_line = trustTitle(kindKey === 'trustjoint' ? [v.name1, v.name2] : [v.name], v.trust_name, v.trust_type === 'RESTATEMENT' ? v.orig_trust_date : v.signing_date, v.trust_type === 'RESTATEMENT' ? v.signing_date : '');
     v.marital_status = a.maritalStatus === 'MARRIED' ? 'MARRIED' : (a.maritalStatus === 'PARTNER' ? 'PARTNER' : 'UNMARRIED');
     v.spouse = clean(a.spouse); v.partner = clean(a.partner);
-    v.is_married = v.marital_status !== 'UNMARRIED';
+    v.is_married = v.marital_status !== 'UNMARRIED'; v.revoke_spouse = a.revokeSpouse !== 'no';
     var paired = v.marital_status !== 'UNMARRIED';
     var kidsAll = (a.children || []).map(function (c) { return { name: clean(c.name), rel: paired ? (c.rel || '') : 'both' }; }).filter(function (c) { return c.name; });
     v.children = kidsAll.filter(function (c) { return c.rel !== 'spouse'; }).map(function (c) { return { child: c.name + (c.rel === 'mine' ? ' (the Trustmaker\u2019s child from a prior relationship)' : '') }; });
@@ -2677,6 +2700,7 @@
         field('Marital status', pills('maritalStatus', [['UNMARRIED', 'Unmarried'], ['MARRIED', 'Married'], ['PARTNER', 'Registered domestic partner']], true));
       if (answers.maritalStatus === 'MARRIED') h += field('Spouse’s full name', text('spouse', ''));
       if (answers.maritalStatus === 'PARTNER') h += field('Partner’s full name', text('partner', ''));
+      if (answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER') h += revokeQ('trust');
       /* married or partnered: ask whose child each one is, so a stepchild is named as a stepchild */
       var paired = answers.maritalStatus === 'MARRIED' || answers.maritalStatus === 'PARTNER';
       var krows = '<div class="rowset">' + answers.children.map(function (c, i) {

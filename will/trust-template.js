@@ -196,7 +196,13 @@ The identification, omission, nomination, or beneficial treatment of the Trustma
 
 ## Change in Relationship Status
 
+[[if revoke_spouse]]
 If the Trustmaker's marriage or registered domestic partnership is terminated, dissolved, annulled, or otherwise legally ended before the Trustmaker's death, any nomination, gift, beneficial interest, or power granted under this Trust Agreement to the former spouse or former registered domestic partner shall be governed by the controlling law then applicable. To the fullest extent permitted by that law, the former spouse or former registered domestic partner shall be treated as having predeceased the Trustmaker unless the Trustmaker, after the relationship ended, executes a legally effective amendment or other instrument expressly reaffirming the affected provision.
+
+[[else]]
+If the Trustmaker's marriage or registered domestic partnership is terminated, dissolved, annulled, or otherwise legally ended before the Trustmaker's death, the Trustmaker does not intend that event, by itself, to revoke any nomination, gift, beneficial interest, or power granted under this Trust Agreement to the former spouse or former registered domestic partner. Each such provision shall remain in effect as written, except to the extent the controlling law then applicable requires a different result.
+
+[[end]]
 
 [[end]]
 

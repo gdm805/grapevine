@@ -75,7 +75,13 @@ I am not married.
 [[if has_spouse]]
 ## Effect of Change in Marital Status
 
+[[if revoke_spouse]]
 If, before my death, my marriage or legally recognized domestic partnership is terminated by divorce, dissolution, annulment, decree of legal separation, or other legally effective termination of the relationship, I intend every provision of this Will that identifies, benefits, nominates, or grants authority to my spouse or domestic partner to be revoked to the fullest extent permitted by applicable law. For purposes of this Will, my spouse or domestic partner shall be treated as having predeceased me with respect to each such provision, except to the extent applicable law requires a different result.
+
+[[else]]
+If, before my death, my marriage or legally recognized domestic partnership is terminated by divorce, dissolution, annulment, decree of legal separation, or other legally effective termination of the relationship, I do not intend that event, by itself, to revoke a provision of this Will identifying, benefiting, nominating, or granting authority to my spouse or domestic partner, except to the extent applicable law requires otherwise.
+
+[[end]]
 
 [[end]]
 [[if children_answered]]
@@ -717,7 +723,7 @@ If two provisions of this Will can reasonably be interpreted consistently, they 
 //                     executor (the primary personal representative)
 //                     guardian  alt_guardian  survival_days  survival_words ("thirty (30)")
 //                     witness_count (as a word)  state_note
-//  Yes or no tests:   has_spouse  has_children  has_minor_children  children_answered
+//  Yes or no tests:   has_spouse  revoke_spouse  has_children  has_minor_children  children_answered
 //                     has_alt_guardian  has_successors  has_gifts  two_witnesses  self_proving
 //                     cp_quasi  cp_plain  homestead  no_contest_yes (these four come from will/state-text.js)
 //  [[tail]] inserts the current state's execution, witness and notary text.
