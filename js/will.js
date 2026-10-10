@@ -1005,6 +1005,11 @@
 
   /* ---------- small html builders ---------- */
   function val(x) { return esc(x == null ? '' : x); }
+  /* the signing date is never required (Greg, 10 Oct 2026): left blank, a blank line prints wherever the date goes */
+  function signDateField(more) {
+    return field('Signing date <em>(not required)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
+      '<strong>Not required.</strong> If you don\u2019t know the date yet, leave it blank. A blank line prints everywhere the date goes, and you write the date in by hand when you sign. You can also come back and add it before you print.' + (more ? ' ' + more : ''));
+  }
   function field(label, html, hint, extra) {
     return '<div class="f' + (extra ? ' ' + extra : '') + '"><label>' + label + '</label>' + html + (hint ? '<span class="hint">' + hint + '</span>' : '') + '</div>';
   }
@@ -2198,7 +2203,7 @@
     signing: function () {
       var h = stepHead('Signing', 'This fills in the county on your document’s notary or witness section.') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
+        signDateField();
       if (hcdSet(answers, 'exec_choice') === 'yes') {
         var routes = (hcdSet(answers, 'exec_routes') || '').split(',').filter(Boolean);
         h += field('How do you plan to sign?', pills('execRoute', routes.map(function (r) { return [r, HCD_ROUTE_LABELS[r] || r]; })), 'Your state offers more than one way.');
@@ -2767,8 +2772,7 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
-          'If you know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. Don\u2019t know yet? Leave it blank: each of those documents gets a blank line, and you write the same date by hand on all of them when you sign. You can also come back and add it before you print.');
+        signDateField('If you do know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, write the same date by hand on all of them when you sign.');
     },
     review: function () {
       var v = buildVarsTrust(answers, states, tpl.settings);
@@ -3067,8 +3071,7 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">',
-          'If you know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. Don\u2019t know yet? Leave it blank: each of those documents gets a blank line, and you write the same date by hand on all of them when you sign. You can also come back and add it before you print.');
+        signDateField('If you do know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, write the same date by hand on all of them when you sign.');
     },
     review: function () {
       var v = buildVarsTrustJoint(answers, states, tpl.settings);
@@ -3275,7 +3278,7 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
+        signDateField();
     },
     review: function () {
       var v = buildVarsCert(answers, states, tpl.settings);
@@ -3461,7 +3464,7 @@
       return stepHead('Signing', '') +
         field('City where you’ll sign', text('signingCity', '')) +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
+        signDateField();
     },
     review: function () {
       var v = buildVarsAffidavit(answers, states, tpl.settings);
@@ -3607,7 +3610,7 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('County where you’ll sign', countySelect('signingCounty')) +
-        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
+        signDateField();
     },
     review: function () {
       var v = buildVarsAssignment(answers, states, tpl.settings);
@@ -3825,7 +3828,7 @@
             : 'In ' + esc(answers.state) + ', you can sign these Final Wishes in front of a notary public or in front of ' + (FW_WITNESS_OPTION[answers.state] === 1 ? 'one adult witness' : 'two adult witnesses') + '. Your document will include the section for the way you choose.') : '') +
         (FW_NOTARY_OPTIONAL[answers.state] ? field('How do you plan to sign?', pills('fwNotary', [['no', 'Sign it myself'], ['yes', 'Sign in front of a notary']], true),
           'In ' + esc(answers.state) + ', these Final Wishes need only your signature and the date. You can also sign in front of a notary public. Your document includes a notary section only if you choose it.') : '') +
-        field('Signing date <em>(optional)</em>', '<input class="input" type="date" data-k="signingDate" value="' + val(answers.signingDate) + '">', 'Don\u2019t know the date yet? Leave it blank. A blank line prints where the date goes, and you write it in by hand when you sign.');
+        signDateField();
     },
     review: function () {
       var v = buildVarsFinalWishes(answers, states, tpl.settings);
@@ -4552,6 +4555,7 @@
     if (acts && !acts.querySelector('.how-sign-btn')) acts.insertAdjacentHTML('beforeend', '<a class="btn btn-secondary how-sign-btn" href="' + esc(target) + '">How to sign</a>');
     if (!box || !window.GVExport || !window.GVExport.signingSheet) return;
     box.id = 'how-to-sign';
+    if (!clean(answers.signingDate)) box.insertAdjacentHTML('beforeend', '<p class="instr-date"><strong>The date:</strong> it isn\u2019t filled in ahead of time. Every date line in the document is left blank, so you write in the date by hand on the day you sign.</p>');
     var label = (window.GVFlow && window.GVFlow.baseLabel) ? window.GVFlow.baseLabel(docId) : 'Your document';
     box.insertAdjacentHTML('beforeend', '<div class="instr-btns"><button type="button" class="btn btn-secondary btn-sm" data-sign-pdf>Download signing steps (PDF)</button>' +
       '<button type="button" class="btn btn-secondary btn-sm" data-sign-print>Print signing steps</button></div>' +
