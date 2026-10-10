@@ -4662,6 +4662,138 @@
     go(vis[Math.max(i - 1, 0)].id);
   }
 
+  /* ---------- "Pick someone you've already named": the same people (a spouse, a sister, a grown child) are
+     often the trustee, executor, agent and health care agent across a whole package. When a box that asks
+     for a person's name is in use, a row of buttons below it lists every person already named in ANY saved
+     document on this device; one tap fills the box. Charities and trusts are left out, and so is the
+     person making the document. Names are read fresh from the saved answers each time; nothing new is stored. ---------- */
+  var PERSON_K = { agent: 1, agentName: 1, alt1Name: 1, alt2Name: 1, altAgentName: 1, altGuardian: 1, executor: 1, gAlt1: 1, gAlt2: 1,
+    guardian: 1, otherTrustmaker: 1, partner: 1, spouse: 1, petCaretaker: 1, petAltCaretaker: 1, propAlt1: 1, propFidName: 1,
+    affiantName: 1, determiner: 1, name2: 1, tm2Name: 1 };
+  var PERSON_LISTS = { successors: 1, cotrustees: 1, coPRs: 1, trustees: 1, children: 1, excluded: 1, beneficiaries: 1, residuary: 1,
+    coAgents: 1, recipients: 1, contacts: 1, trustmakers: 1 };
+  function personRow(list, r) {
+    if (!r) return false;
+    if (list === 'beneficiaries' || list === 'residuary') { var ty = resType(r); return ty !== 'CHARITY' && ty !== 'TRUST' && ty !== 'SNT'; }
+    return true;
+  }
+  /* every person-name value in one document's answers */
+  function namesIn(a) {
+    var out = [];
+    if (!a || typeof a !== 'object') return out;
+    Object.keys(PERSON_K).forEach(function (k) { if (typeof a[k] === 'string') out.push(a[k]); });
+    Object.keys(PERSON_LISTS).forEach(function (l) {
+      (Array.isArray(a[l]) ? a[l] : []).forEach(function (r) {
+        if (personRow(l, r) && typeof r.name === 'string') out.push(r.name);
+        if (l === 'beneficiaries' && r && r.contingent === 'named') out.push(r.contName);
+      });
+    });
+    ['gifts', 'jointGifts'].forEach(function (l) {
+      (Array.isArray(a[l]) ? a[l] : []).forEach(function (g) {
+        if (g && !giftEntity(g) && g.to !== 'OTHER') { out.push(g.recipient); out.push(g.beneficiary); }
+      });
+    });
+    var eg = a.eachGuardian || {};
+    Object.keys(eg).forEach(function (i) { var g = eg[i] || {}; out.push(g.name, g.alt1, g.alt2); });
+    return out;
+  }
+  /* the person (or two) making this document: never offered as a pick */
+  function ownNames() {
+    var own = [answers.name, answers.name1, answers.tm1Name];
+    if (KIND.key === 'trustjoint') own.push(answers.name2);
+    if (KIND.key === 'cert' && answers.trustmakers) own.push((answers.trustmakers[0] || {}).name);
+    if (!SPOUSE2) own.push(readProfile().name);
+    return own.map(clean).filter(Boolean);
+  }
+  function peopleBook() {
+    var all = namesIn(answers), p = readProfile();
+    all.push(p.name2);
+    if (SPOUSE2) all.push(p.name);
+    Object.keys(KINDS).forEach(function (k) {
+      [KINDS[k].ls, KINDS[k].ls + '.s2'].forEach(function (key) {
+        if (key === LS_KEY) return;
+        try { var sv = JSON.parse(localStorage.getItem(key) || 'null'); if (sv && sv.answers) all = all.concat(namesIn(sv.answers)); } catch (e) { /* ignore */ }
+      });
+    });
+    var own = ownNames(), book = [];
+    all.forEach(function (n) {
+      n = clean(n);
+      if (!n || n.length < 3 || n.length > 80 || nameTokens(n).length < 2 || isTrustName(n) || isSntName(n)) return;
+      if (own.some(function (o) { return sameName(o, n); })) return;
+      for (var i = 0; i < book.length; i++) {
+        if (sameName(book[i], n)) { if (n.length > book[i].length) book[i] = n; return; }
+      }
+      book.push(n);
+    });
+    return book;
+  }
+  /* is this box one that asks for a person's name? */
+  function isPersonBox(t) {
+    if (!t || t.tagName !== 'INPUT' || t.type !== 'text' && t.hasAttribute('type')) return false;
+    if (t.hasAttribute('data-k')) {
+      var k = t.getAttribute('data-k');
+      if (k === 'name2' && KIND.key === 'trustjoint') return false;
+      return !!PERSON_K[k];
+    }
+    if (t.hasAttribute('data-path')) return /^eachGuardian\.\d+\.(name|alt1|alt2)$/.test(t.getAttribute('data-path'));
+    if (!t.hasAttribute('data-list')) return false;
+    var l = t.getAttribute('data-list'), f = t.getAttribute('data-f'), r = (answers[l] || [])[+t.getAttribute('data-i')];
+    if (l === 'trustmakers') return false;
+    if (f === 'name') return !!PERSON_LISTS[l] && personRow(l, r);
+    if (f === 'contName') return !!r && r.contingent === 'named';
+    if (f === 'recipient' || f === 'beneficiary') return !!r && !giftEntity(r) && r.to !== 'OTHER';
+    return false;
+  }
+  var picksFor = null;
+  function closePicks() {
+    var old = stepEl.querySelector('.name-picks'); if (old) old.remove();
+    picksFor = null;
+  }
+  /* narrowed to names that match only while letters are being typed; on arrival every name shows */
+  function showPicks(t, typing) {
+    var book = peopleBook(), typed = typing ? clean(t.value).toLowerCase() : '';
+    var list = book.filter(function (n) { return !sameName(n, t.value) && (!typed || n.toLowerCase().indexOf(typed) > -1 || nameTokens(n).some(function (w) { return w.indexOf(typed) === 0; })); }).slice(0, 8);
+    var old = stepEl.querySelector('.name-picks');
+    if (!list.length) { if (old) old.remove(); picksFor = t; return; }
+    var box = old || document.createElement('div');
+    box.className = 'name-picks';
+    box.innerHTML = '<span class="name-picks-l">Someone you’ve already named:</span>' + list.map(function (n) {
+      return '<button type="button" class="name-pick" data-name="' + esc(n) + '">' + esc(n) + '</button>';
+    }).join('');
+    /* below the whole row when the box sits in a row with other boxes (a share, a "Remove" button) */
+    var after = t.closest('.rowitem') || t;
+    if (box.previousElementSibling !== after) after.insertAdjacentElement('afterend', box);
+    picksFor = t;
+  }
+  var justPicked = false;
+  stepEl.addEventListener('focusin', function (e) {
+    var t = e.target;
+    if (justPicked) return;
+    if (isPersonBox(t)) showPicks(t);
+    else if (!(t.closest && t.closest('.name-picks'))) closePicks();
+  });
+  stepEl.addEventListener('input', function (e) { if (e.target === picksFor) showPicks(e.target, true); });
+  /* keep the name box focused while a pick is pressed, so the row doesn't vanish under the finger */
+  stepEl.addEventListener('mousedown', function (e) { if (e.target.closest('.name-pick')) e.preventDefault(); });
+  stepEl.addEventListener('click', function (e) {
+    /* clicking back into a box that already has the cursor shows the names again */
+    if (e.target === picksFor && e.target === document.activeElement && !stepEl.querySelector('.name-picks')) { showPicks(e.target); return; }
+    var b = e.target.closest('.name-pick'); if (!b || !picksFor) return;
+    var t = picksFor;
+    t.value = b.getAttribute('data-name');
+    closePicks();
+    t.dispatchEvent(new Event('input', { bubbles: true }));
+    t.dispatchEvent(new Event('change', { bubbles: true }));
+    picksFor = t;
+    justPicked = true; t.focus(); justPicked = false;
+  });
+  stepEl.addEventListener('focusout', function () {
+    setTimeout(function () {
+      var a = document.activeElement;
+      if (picksFor && a !== picksFor && !(a && a.closest && a.closest('.name-picks'))) closePicks();
+    }, 150);
+  });
+
   /* ---------- events ---------- */
   root.addEventListener('input', function (e) {
     var t = e.target;
