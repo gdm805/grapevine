@@ -921,6 +921,9 @@
      copied, dragged or printed. Everything is clear once paid. Not on the blank template, which is generic text. */
   var PV_CLEAR = 12;
   var STRICT_BLUR = { finalwishes: 1 };
+  /* Important Contacts is nothing but the person's own entries, so "answers stay readable" would leave all of it
+     readable before payment (Greg, 10 Oct 2026): after the opening lines, the entries themselves are blurred too */
+  var ALL_BLUR = { contacts: 1 };
   function lockPreview() {
     var locked = !BLANK && !paidUp();
     docEl.classList.toggle('pv-locked', locked);
@@ -945,14 +948,14 @@
       if (/^H[1-6]$/.test(el.tagName) || el.classList.contains('subh')) return true;
       /* stricter for documents made mostly of the person's own wishes (Final Wishes, 9 Oct 2026): the wording around
          the answers is blurred too, and only the answers themselves stay sharp (css: .pv-blur .fill) */
-      if (STRICT_BLUR[kindKey]) return false;
+      if (STRICT_BLUR[kindKey] || ALL_BLUR[kindKey]) return false;
       if (el.querySelector('.fill')) return true;
       return el.hasAttribute('data-ans') && !formLine(el) && el.textContent.trim().length > 40;
     }
-    blocks.forEach(function (el, i) { if (i >= open && !mine(el)) el.classList.add('pv-blur'); });
+    blocks.forEach(function (el, i) { if (i >= open && !mine(el)) { el.classList.add('pv-blur'); if (ALL_BLUR[kindKey]) el.classList.add('pv-all'); } });
     var note = document.createElement('div');
     note.className = 'pv-note';
-    note.innerHTML = '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">Read every word in the blank template</a>.';
+    note.innerHTML = ALL_BLUR[kindKey] ? '<strong>The rest of your list is blurred until checkout.</strong> Pay once to read, download and print it. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">See the blank template</a>.' : '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">Read every word in the blank template</a>.';
     docEl.insertBefore(note, blocks[open]);
   }
   ['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (ev) {
