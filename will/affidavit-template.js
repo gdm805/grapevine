@@ -24,13 +24,13 @@ This Affidavit does not amend, revoke, restate, or otherwise alter the Trust Agr
 
 [[if trust_type=SINGLE]]
 
-Trust Name: {{trust_name}}
-Trustmaker / Settlor: {{tm1_name}}
-Original Trust Date: {{orig_trust_date}}
+@line Trust Name: {{trust_name}}
+@line Trustmaker / Settlor: {{tm1_name}}
+@line Original Trust Date: {{orig_trust_date}}
 
 [[if trust_restated]]
 
-Most Recent Restatement Date: {{restatement_date}}
+@line Most Recent Restatement Date: {{restatement_date}}
 
 The Trust is a continuation and restatement of the trust originally established on {{orig_trust_date}}. The restatement did not create a new trust.
 
@@ -38,13 +38,13 @@ The Trust is a continuation and restatement of the trust originally established 
 
 [[else]]
 
-Trust Name: {{trust_name}}
-Trustmakers / Settlors: {{tm1_name}} and {{tm2_name}}
-Original Trust Date: {{orig_trust_date}}
+@line Trust Name: {{trust_name}}
+@line Trustmakers / Settlors: {{tm1_name}} and {{tm2_name}}
+@line Original Trust Date: {{orig_trust_date}}
 
 [[if trust_restated]]
 
-Most Recent Restatement Date: {{restatement_date}}
+@line Most Recent Restatement Date: {{restatement_date}}
 
 The Trust is a continuation and restatement of the trust originally established on {{orig_trust_date}}. The restatement did not create a new trust.
 

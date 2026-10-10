@@ -3183,6 +3183,10 @@
     v.amendments = (a.amendments || []).map(function (x) { return { amendment_title: clean(x.title), amendment_date: x.date ? longDate(x.date) : '' }; }).filter(function (x) { return x.amendment_title; });
     v.has_amendments = a.hasAmendments === 'yes' && v.amendments.length > 0;
     v.trustmakers = (a.trustmakers || []).map(function (x) { return { trustmaker_name: clean(x.name) }; }).filter(function (x) { return x.trustmaker_name; });
+    /* "Trustmaker / Settlor: Greg Merrill" or "Trustmakers / Settlors: Greg Merrill and Lisa Merrill", as in the Affidavit of Trustee */
+    var tmn = v.trustmakers.map(function (t) { return t.trustmaker_name; });
+    v.one_trustmaker = tmn.length < 2;
+    v.trustmaker_names = tmn.length < 3 ? tmn.join(' and ') : tmn.slice(0, -1).join(', ') + ', and ' + tmn[tmn.length - 1];
     v.trustees = (a.trustees || []).map(function (x) { return { trustee_name: clean(x.name), trustee_address: clean(x.address) }; }).filter(function (x) { return x.trustee_name; });
     v.single_trustee = v.trustees.length <= 1;
     v.trustee_rule = a.trusteeRule || 'ANY_ONE';

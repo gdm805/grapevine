@@ -16,19 +16,27 @@ This Certification states selected facts concerning the Trust and the authority 
 
 # TRUST IDENTIFICATION
 
-## Trust Name and Date
+## Trust Identification
 
-The Trust is known as {{trust_name}} (the "Trust"). The Trust was originally executed on {{orig_trust_date}}.
+@line Trust Name: {{trust_name}}
+[[if one_trustmaker]]
+@line Trustmaker / Settlor: {{trustmaker_names}}
+[[else]]
+@line Trustmakers / Settlors: {{trustmaker_names}}
+[[end]]
+@line Original Trust Date: {{orig_trust_date}}
 
 [[if trust_restated]]
 
-The Trust was most recently amended and restated on {{restatement_date}}.
+@line Most Recent Restatement Date: {{restatement_date}}
+
+The Trust is a continuation and restatement of the trust originally established on {{orig_trust_date}}. The restatement did not create a new trust.
 
 [[end]]
 
 [[if has_amendments]]
 
-The Trust has been amended by the following currently operative amendment or amendments:
+Currently operative amendments:
 
 [[each amendments]]
 
@@ -38,17 +46,7 @@ The Trust has been amended by the following currently operative amendment or ame
 
 [[end]]
 
-The Trust exists and is in full force and effect as of the date of this Certification.
-
-## Trustmaker or Trustmakers
-
-The Trust was created by the following person or persons, each referred to in this Certification as a "Trustmaker" and, where applicable, as a settlor, trustor, or grantor:
-
-[[each trustmakers]]
-
-{{trustmaker_name}}
-
-[[end]]
+In this Certification, the trust identified above is called the "Trust," and each person named above as a Trustmaker is called a "Trustmaker" and, where applicable, a settlor, trustor, or grantor. The Trust exists and is in full force and effect as of the date of this Certification.
 
 ## Governing Law
 
