@@ -787,6 +787,8 @@
     if (v.beneficiaries.some(function (b) { return b.is_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
     if (v.beneficiaries.some(function (b) { return b.is_trust; })) v.has_trust_gift = true;
     v.has_beneficiary_trust = v.beneficiaries.some(function (b) { return b.is_ongoing; });
+    /* the "Gifts to Charitable Organizations" section prints only when something goes to a charity (Greg, 12 Oct 2026) */
+    v.has_charity = v.gift_charity_any || v.beneficiaries.some(function (b) { return b.res_type === 'CHARITY' || b.cont_charity; });
     if (v.has_gifts && v.gifts.some(function (g) { return g.gift_to_trust; })) v.has_trust_gift = true;
     var days = parseInt(settings.survival_days, 10) || 30;
     v.survival_days = String(days);
@@ -2595,6 +2597,9 @@
       .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }),
         v.residuary.filter(function (r) { return r.residuary_type === 'SNT' || r.residuary_type === 'TRUST'; }).map(function (r) { return r.residuary_name; })));
     if (v.gifts_to_trust) v.has_trust_gift = true;
+    /* the "Gifts to Charitable Organizations" article prints only when something goes to a charity (Greg, 12 Oct 2026) */
+    v.has_charity = (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).some(function (g) { return clean(g.beneficiary) && (g.to === 'CHARITY' || g.contingent === 'CHARITY'); }) ||
+      v.residuary.some(function (r) { return r.residuary_type === 'CHARITY'; });
     /* a beneficiary typed as an existing special needs trust or another existing trust turns on those sections */
     if (v.residuary.some(function (r) { return r.residuary_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
     if (v.residuary.some(function (r) { return r.residuary_type === 'TRUST'; })) v.has_trust_gift = true;
@@ -2946,6 +2951,9 @@
       .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }),
         v.residuary.filter(function (r) { return r.residuary_type === 'SNT' || r.residuary_type === 'TRUST'; }).map(function (r) { return r.residuary_name; })));
     if (v.gifts_to_trust) v.has_trust_gift = true;
+    /* the "Gifts to Charitable Organizations" article prints only when something goes to a charity (Greg, 12 Oct 2026) */
+    v.has_charity = (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).some(function (g) { return clean(g.beneficiary) && (g.to === 'CHARITY' || g.contingent === 'CHARITY'); }) ||
+      v.residuary.some(function (r) { return r.residuary_type === 'CHARITY'; });
     /* a beneficiary typed as an existing special needs trust or another existing trust turns on those sections */
     if (v.residuary.some(function (r) { return r.residuary_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
     if (v.residuary.some(function (r) { return r.residuary_type === 'TRUST'; })) v.has_trust_gift = true;

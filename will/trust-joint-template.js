@@ -813,7 +813,7 @@ If {{residuary_name}} does not survive the surviving Trustmaker by the Required 
 [[end]]
 
 [[end]]
-A share for a charitable organization passes as provided in [[ref sec_charity_gifts]] instead of under the survival provisions of this Section.
+[[if has_charity]]A share for a charitable organization passes as provided in [[ref sec_charity_gifts]] instead of under the survival provisions of this Section.[[end]]
 
 
 ## Survivorship
@@ -1072,6 +1072,7 @@ If the Beneficiary dies before the Beneficiary Trust is fully distributed, the T
 No interest of a Beneficiary in a Beneficiary Trust may be anticipated, assigned, pledged, or encumbered by the Beneficiary, and no such interest shall be subject to attachment, garnishment, execution, or other legal process, or to the claims of the Beneficiary's creditors, before it is actually distributed to the Beneficiary. This Section is intended to be a spendthrift provision under applicable law.
 
 [[end]]
+[[if has_charity]]
 # GIFTS TO CHARITABLE ORGANIZATIONS
 
 ## Gifts to Charitable Organizations {#sec_charity_gifts}
@@ -1079,6 +1080,8 @@ No interest of a Beneficiary in a Beneficiary Trust may be anticipated, assigned
 Notwithstanding any other provision of this Trust Agreement, this Section applies to every gift, share, or other distribution that this Trust Agreement directs to a charitable organization, including a Specific Gift, a share of the remaining Trust Estate, and an alternate gift. The Required Survivorship Period does not apply to a gift to a charitable organization.
 
 If a charitable organization named to receive a gift under this Trust Agreement has merged, consolidated, reorganized, or changed its name before the gift is distributed, the gift shall be distributed to the successor organization that carries on its charitable purposes. If the named organization is not then in existence and has no such successor, or if it or its successor is not then an organization described in Sections 170(c) and 2055(a) of the Internal Revenue Code, the Trustee shall distribute the gift to one or more organizations described in those Sections whose charitable purposes, in the Trustee's judgment, most nearly match those of the named organization.
+
+[[end]]
 
 [[if has_trust_gift]]
 # GIFTS TO A TRUST

@@ -667,7 +667,7 @@ The remaining Trust Estate shall be distributed or allocated as follows:
 
 [[end]]
 
-A share for a charitable organization passes as provided in [[ref sec_charity_gifts]]. If any other beneficiary named in this Section does not survive the Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it, that share shall be distributed to that beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in this Section who receive their shares, in proportion to their shares; or, if there are none, as provided in the Remote Contingent Distribution Section of this Article.
+[[if has_charity]]A share for a charitable organization passes as provided in [[ref sec_charity_gifts]]. If any other beneficiary[[else]]If any beneficiary[[end]] named in this Section does not survive the Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it, that share shall be distributed to that beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in this Section who receive their shares, in proportion to their shares; or, if there are none, as provided in the Remote Contingent Distribution Section of this Article.
 
 ## Remote Contingent Distribution
 
@@ -719,6 +719,7 @@ If the Beneficiary dies before the Beneficiary Trust is fully distributed, the T
 No interest of a Beneficiary in a Beneficiary Trust may be anticipated, assigned, pledged, or encumbered by the Beneficiary, and no such interest shall be subject to attachment, garnishment, execution, or other legal process, or to the claims of the Beneficiary's creditors, before it is actually distributed to the Beneficiary. This Section is intended to be a spendthrift provision under applicable law.
 
 [[end]]
+[[if has_charity]]
 # GIFTS TO CHARITABLE ORGANIZATIONS
 
 ## Gifts to Charitable Organizations {#sec_charity_gifts}
@@ -726,6 +727,8 @@ No interest of a Beneficiary in a Beneficiary Trust may be anticipated, assigned
 Notwithstanding any other provision of this Trust Agreement, this Section applies to every gift, share, or other distribution that this Trust Agreement directs to a charitable organization, including a Specific Gift, a share of the remaining Trust Estate, and an alternate gift. The Required Survivorship Period does not apply to a gift to a charitable organization.
 
 If a charitable organization named to receive a gift under this Trust Agreement has merged, consolidated, reorganized, or changed its name before the gift is distributed, the gift shall be distributed to the successor organization that carries on its charitable purposes. If the named organization is not then in existence and has no such successor, or if it or its successor is not then an organization described in Sections 170(c) and 2055(a) of the Internal Revenue Code, the Trustee shall distribute the gift to one or more organizations described in those Sections whose charitable purposes, in the Trustee's judgment, most nearly match those of the named organization.
+
+[[end]]
 
 [[if has_trust_gift]]
 # GIFTS TO A TRUST
