@@ -178,11 +178,9 @@ The Trustmakers intentionally exclude the following person or persons from recei
 
 If both Trustmakers are serving as Co-Trustees and one Trustmaker dies, becomes incapacitated, resigns, or otherwise ceases to serve, the other Trustmaker shall continue to serve as sole Trustee while willing and able to serve.
 
-If no Trustmaker is then willing and able to serve as Trustee, the following Successor Trustee or Successor Co-Trustees shall serve as provided below:
-
 [[if trustee_mode=SUCCESSIVE]]
 
-The following Successor Trustees shall serve, one at a time, in the order listed:
+[[if one_successor]]If no Trustmaker is then willing and able to serve as Trustee, the following person shall serve as Successor Trustee:[[else]]If no Trustmaker is then willing and able to serve as Trustee, the following Successor Trustees shall serve, one at a time, in the order listed:[[end]]
 
 [[each successors]]
 
@@ -192,7 +190,7 @@ The following Successor Trustees shall serve, one at a time, in the order listed
 
 [[else]]
 
-The following Successor Co-Trustees shall serve together:
+If no Trustmaker is then willing and able to serve as Trustee, the following Successor Co-Trustees shall serve together:
 
 [[each cotrustees]]
 
@@ -203,7 +201,7 @@ The following Successor Co-Trustees shall serve together:
 If any Co-Trustee ceases to serve, the remaining Co-Trustee or Co-Trustees shall continue to serve while willing and able to serve.
 
 [[if has_backup_trustees]]
-If no Co-Trustee is able and willing to serve, the following Successor Trustees shall serve, one at a time, in the order listed:
+[[if one_backup_trustee]]If no Co-Trustee is able and willing to serve, the following person shall serve as Successor Trustee:[[else]]If no Co-Trustee is able and willing to serve, the following Successor Trustees shall serve, one at a time, in the order listed:[[end]]
 
 [[each backup_trustees]]
 

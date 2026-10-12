@@ -212,7 +212,7 @@ If the Trustmaker's marriage or registered domestic partnership is terminated, d
 
 [[if trustee_mode=SUCCESSIVE]]
 
-The following Successor Trustees shall serve, one at a time, in the order listed:
+[[if one_successor]]The following person shall serve as Successor Trustee:[[else]]The following Successor Trustees shall serve, one at a time, in the order listed:[[end]]
 
 [[each successors]]
 
@@ -233,7 +233,7 @@ The following Successor Co-Trustees shall serve together:
 If any Co-Trustee ceases to serve, the remaining Co-Trustee or Co-Trustees shall continue to serve.
 
 [[if has_backup_trustees]]
-If no Co-Trustee is able and willing to serve, the following Successor Trustees shall serve, one at a time, in the order listed:
+[[if one_backup_trustee]]If no Co-Trustee is able and willing to serve, the following person shall serve as Successor Trustee:[[else]]If no Co-Trustee is able and willing to serve, the following Successor Trustees shall serve, one at a time, in the order listed:[[end]]
 
 [[each backup_trustees]]
 

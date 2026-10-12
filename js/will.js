@@ -1288,6 +1288,9 @@
     /* Co-Trustees can have backups too: the names after the first successor trustee */
     v.backup_trustees = v.is_cotrustees ? (a.successors || []).slice(1).map(function (x) { return { backup_trustee: clean(x.name) }; }).filter(function (x) { return x.backup_trustee; }) : [];
     v.has_backup_trustees = v.backup_trustees.length > 0;
+    /* one name reads "the following person shall serve as Successor Trustee", not "Trustees ... one at a time" */
+    v.one_successor = v.successors.length === 1;
+    v.one_backup_trustee = v.backup_trustees.length === 1;
   }
   function extraRows(list, from, ph) {
     var rows = '';
