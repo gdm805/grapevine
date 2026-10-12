@@ -653,6 +653,8 @@
       else if ((m = /^@center\s+(.*)$/.exec(line))) { flush(); blocks.push({ k: 'center', t: fix(m[1]) }); }
       else if ((m = /^@sub\s+(.*)$/.exec(line))) { flush(); blocks.push({ k: 'sub', t: fix(m[1]) }); }
       else if ((m = /^@line\s+(.*)$/.exec(line))) { flush(); blocks.push({ k: 'line', t: fix(m[1]) }); }
+      /* a boxed notice, such as the one California requires at the top of a notary certificate */
+      else if ((m = /^@box\s+(.*)$/.exec(line))) { flush(); blocks.push({ k: 'box', t: fix(m[1]) }); }
       else if ((m = /^@item\s+(.*)$/.exec(line))) { flush(); blocks.push({ k: 'item', t: fix(m[1]) }); }
       else if ((m = /^@row\s+(.*)$/.exec(line))) {
         flush();
@@ -693,6 +695,7 @@
         case 'break': return '<div class="pagebreak"></div>';
         case 'center': return '<p class="c">' + inline(b.t) + '</p>';
         case 'sub': return '<p class="subh">' + inline(b.t) + '</p>';
+        case 'box': return '<p class="ackbox">' + inline(b.t) + '</p>';
         case 'line': return '<p class="ln' + (/_{6}/.test(b.t) ? ' ln-sign' : '') + '">' + inline(b.t) + '</p>';
         case 'item': return '<p class="item">' + inline(b.t) + '</p>';
         case 'row': return '<div class="row2"><span class="l">' + inline(b.l) + '</span>' + (b.r ? '<span class="dots"></span><span class="r">' + inline(b.r) + '</span>' : '') + '</div>';
@@ -3576,6 +3579,7 @@
     v.property = (a.property || []).map(function (p) { return { property_description: clean(p.description) }; }).filter(function (p) { return p.property_description; });
     v.has_property = v.property.length > 0;
     v.wants_notary = a.wantsNotary === 'yes';
+    v.signing_state = v.state ? trustSlug(v.state) : '';
     v.state_note = st ? st.note : '';
     return v;
   }

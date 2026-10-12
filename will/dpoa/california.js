@@ -117,7 +117,7 @@ BY ACCEPTING OR ACTING UNDER THE APPOINTMENT, THE AGENT ASSUMES THE FIDUCIARY AN
 
 @center **CERTIFICATE OF ACKNOWLEDGMENT OF NOTARY PUBLIC**
 
-A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
+@box A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
 
 @line State of California
 @line County of ____________________

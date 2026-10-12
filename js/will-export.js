@@ -72,6 +72,10 @@
       case 'row':
         return P(rXml(unbold(b.l)) + (b.r ? tabRun() + rXml(unbold(b.r), { b: true }) : ''),
           o({ jc: 'left', left: 360, after: 100, keepLines: true, tabs: b.r ? '<w:tab w:val="right" w:leader="dot" w:pos="9360"/>' : '' }));
+      case 'box': {
+        var bs = function (side) { return '<w:' + side + ' w:val="single" w:sz="6" w:space="4" w:color="000000"/>'; };
+        return P(rXml(unbold(b.t), { sz: 21 }), o({ jc: 'left', keepLines: true, after: 200, bdr: '<w:pBdr>' + bs('top') + bs('left') + bs('bottom') + bs('right') + '</w:pBdr>' }));
+      }
       case 'line':
         return P(rXml(unbold(b.t)), o({ jc: 'left', after: nextK === 'sign' ? 0 : 20, keepNext: nextK === 'sign' || nextK === 'line' }));
       case 'item':
@@ -286,6 +290,7 @@
           case 'ul': return b.items.length * 24;
           case 'hang': return nlines(hangSplit(b.t)[1], 36, 0, 0) * 16.1 + 8;
           case 'item': return nlines(b.t, 36, 36, 0) * 16.1 + 8;
+          case 'box': return nlines(b.t, 7, 7, 0) * 14.1 + 26;
           default: return nlines(b.t || '', 0, 0, 0) * 16.1 + 8;
         }
       }
@@ -385,6 +390,16 @@
             para(b.t, { justify: false, after: nk2 === 'line' ? 4 : 12 }); break;
           }
           case 'item': para(b.t, { left: 36, right: 36 }); break;
+          case 'box': {
+            /* the notice in a ruled box, kept whole on one page */
+            var bpad = 7, bl = layout(toWords(runs(b.t)), 10.5, W - 2 * bpad, W - 2 * bpad).length, bh = bl * 10.5 * 1.34 + 2 * bpad;
+            y += 4; space(bh + 12);
+            var by = y; y += bpad;
+            para(b.t, { size: 10.5, left: bpad, right: bpad, justify: false, after: 0 });
+            y = by + bh;
+            doc.setLineWidth(0.8); doc.rect(M, by, W, bh);
+            y += 12; break;
+          }
           case 'row': {
             var lh2 = 12 * 1.34; space(lh2 + 8);
             font(false, 12); var lt = unbold(b.l), yy = base(12), x1 = M + 22;

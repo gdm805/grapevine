@@ -94,6 +94,7 @@ Cal. Probate Code § 18100.5.
 
 @sub Notary Acknowledgment
 
+@box A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
 @line STATE OF CALIFORNIA
 @line COUNTY OF _______________________________
 @line On __________________ before me, ________________________________, personally appeared ________________________________, who proved to me on the basis of satisfactory evidence to be the person(s) whose name(s) is/are subscribed to the within instrument and acknowledged to me that he/she/they executed the same in his/her/their authorized capacity(ies), and that by his/her/their signature(s) on the instrument the person(s), or the entity upon behalf of which the person(s) acted, executed the instrument.

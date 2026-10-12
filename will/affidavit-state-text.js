@@ -72,7 +72,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Executed in {{signing_city}}, {{county}} County, {{state}}, on {{signing_date}}.
 @line ________________________________________
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
-@line A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
+@box A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
 @line STATE OF CALIFORNIA
 @line COUNTY OF ____________________________
 @line Subscribed and sworn to (or affirmed) before me on this ____________________________, by ____________________________, proved to me on the basis of satisfactory evidence to be the person(s) who appeared before me.

@@ -686,6 +686,8 @@ I further declare under penalty of perjury under the laws of California that I a
 
 @sub CERTIFICATE OF ACKNOWLEDGMENT OF NOTARY PUBLIC
 
+@box A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
+
 @line State of California
 
 @line County of {{county}}

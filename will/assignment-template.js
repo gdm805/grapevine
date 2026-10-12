@@ -219,6 +219,17 @@ The Assignors execute this Assignment on {{signing_date}} in {{county}} {{county
 
 @sub Notary Acknowledgment
 
+[[if signing_state=CALIFORNIA]]
+@box A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
+@line State of California
+@line County of ________________________________
+@line On __________________ before me, ________________________________, personally appeared _______________________________, who proved to me on the basis of satisfactory evidence to be the person(s) whose name(s) is/are subscribed to the instrument and acknowledged execution in the authorized capacity(ies), and that by the signature(s) on the instrument the person(s), or the entity upon behalf of which the person(s) acted, executed the instrument.
+@line I certify under PENALTY OF PERJURY under the laws of the State of California that the foregoing paragraph is true and correct.
+@line WITNESS my hand and official seal.
+@line ________________________________________
+@line Signature of Notary Public
+@line (Seal)
+[[else]]
 @line State of {{state}}
 @line County/Parish of ________________________________
 @line This instrument was acknowledged before me on ____________________________ by ____________________________.
@@ -226,6 +237,7 @@ The Assignors execute this Assignment on {{signing_date}} in {{county}} {{county
 @line Notary Public
 @line My Commission Expires: ____________________
 @line (Seal)
+[[end]]
 
 [[end]]
 `;
