@@ -134,13 +134,17 @@ The Trustmaker has no children.
 
 [[end]]
 
-## After-Born and Later-Adopted Children {#sec_afterborn}
+## After-Born and Adopted Children {#sec_afterborn}
 
-Any child of the Trustmaker born or legally adopted after the execution of this Trust Agreement shall be treated as though specifically identified as a child of the Trustmaker under this Article.
+If the Trustmaker has or adopts a child after signing this Trust Agreement, that child shall be treated as a child of the Trustmaker named in this Article, with the same rights as a child named here.
 
-## Intentional Omission of Other Descendants
+## Persons Not Named
 
-Except as otherwise provided in this Trust Agreement, and except for a child born to or legally adopted by the Trustmaker after the execution of this Trust Agreement, who is treated as provided in [[ref sec_afterborn]], the Trustmaker has intentionally, and not as a result of accident or mistake, made no provision in this Trust Agreement for any descendant of the Trustmaker who is living at the Trustmaker's death and is not named or otherwise provided for in this Trust Agreement. This Section does not limit any gift to a class of beneficiaries, such as the Trustmaker's descendants, that includes that person.
+The Trustmaker has intentionally, and not by accident or mistake, made no provision in this Trust Agreement for any child, grandchild, or other descendant of the Trustmaker who is not named or otherwise provided for in this Trust Agreement. This Section does not apply to:
+
+(a) a child born to or adopted by the Trustmaker after this Trust Agreement is signed, who is provided for under [[ref sec_afterborn]]; or
+
+(b) a person who takes as a member of a group of beneficiaries described in this Trust Agreement, such as "the Trustmaker's descendants."
 
 [[if has_stepchildren]]
 
@@ -212,7 +216,7 @@ If the Trustmaker's marriage or registered domestic partnership is terminated, d
 
 [[if trustee_mode=SUCCESSIVE]]
 
-[[if one_successor]]The following person shall serve as Successor Trustee:[[else]]The following Successor Trustees shall serve, one at a time, in the order listed:[[end]]
+[[if one_successor]]If the Trustmaker dies, becomes incapacitated, resigns, or otherwise ceases to serve as Trustee, the following person shall serve as Successor Trustee:[[else]]If the Trustmaker dies, becomes incapacitated, resigns, or otherwise ceases to serve as Trustee, the following Successor Trustees shall serve, one at a time, in the order listed:[[end]]
 
 [[each successors]]
 
@@ -222,7 +226,7 @@ If the Trustmaker's marriage or registered domestic partnership is terminated, d
 
 [[else]]
 
-The following Successor Co-Trustees shall serve together:
+If the Trustmaker dies, becomes incapacitated, resigns, or otherwise ceases to serve as Trustee, the following Successor Co-Trustees shall serve together:
 
 [[each cotrustees]]
 

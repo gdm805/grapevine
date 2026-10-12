@@ -150,13 +150,17 @@ The Trustmakers have no children.
 
 [[end]]
 
-## After-Born and Later-Adopted Children {#sec_afterborn}
+## After-Born and Adopted Children {#sec_afterborn}
 
-Any child of either Trustmaker born or legally adopted after the execution of this Trust Agreement shall be treated as though specifically identified as a child of that Trustmaker under this Article.
+If either Trustmaker has or adopts a child after signing this Trust Agreement, that child shall be treated as a child of that Trustmaker named in this Article, with the same rights as a child named here.
 
-## Intentional Omission of Other Descendants
+## Persons Not Named
 
-Except as otherwise provided in this Trust Agreement, and except for a child born to or legally adopted by either Trustmaker after the execution of this Trust Agreement, who is treated as provided in [[ref sec_afterborn]], the Trustmakers have intentionally, and not as a result of accident or mistake, made no provision in this Trust Agreement for any descendant of either Trustmaker who is living at that Trustmaker's death and is not named or otherwise provided for in this Trust Agreement. This Section does not limit any gift to a class of beneficiaries, such as the Trustmakers' descendants, that includes that person.
+The Trustmakers have intentionally, and not by accident or mistake, made no provision in this Trust Agreement for any child, grandchild, or other descendant of either Trustmaker who is not named or otherwise provided for in this Trust Agreement. This Section does not apply to:
+
+(a) a child born to or adopted by either Trustmaker after this Trust Agreement is signed, who is provided for under [[ref sec_afterborn]]; or
+
+(b) a person who takes as a member of a group of beneficiaries described in this Trust Agreement, such as "the Trustmakers' descendants."
 
 [[if has_excluded]]
 
@@ -225,7 +229,7 @@ A newly appointed Successor Trustee shall assume office upon accepting the appoi
 
 ## Appointment by Beneficiaries
 
-If no Trustee is then serving and no designated Successor Trustee is willing and able to serve, a majority of the Vested Beneficiaries may appoint a Successor Trustee or one or more Co-Trustees by written instrument.
+If no Trustee is then serving and no designated Successor Trustee is willing and able to serve, a majority of the Vested Beneficiaries, as defined in [[ref def_vested]], may appoint a Successor Trustee or one or more Co-Trustees by written instrument.
 
 If the Trustee being replaced was required to satisfy Section 672(c) of the Internal Revenue Code, any Successor Trustee appointed under this Section must satisfy the same requirement.
 

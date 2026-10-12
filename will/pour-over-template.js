@@ -71,13 +71,17 @@ Unless this Will expressly provides otherwise, a stepchild of mine is not treate
 
 [[end]]
 [[end]]
-## After-Born and Later-Adopted Children {#sec_afterborn}
+## After-Born and Adopted Children {#sec_afterborn}
 
-Any child of mine born or legally adopted after I execute this Will shall be treated as though specifically identified as my child in this Will.
+If I have or adopt a child after signing this Will, that child shall be treated as my child named in this Will, with the same rights as a child named here.
 
-## Intentional Omission of Other Descendants
+## Persons Not Named
 
-Except as otherwise provided in this Will, and except for a child born to or legally adopted by me after I execute this Will, who is treated as provided in [[ref sec_afterborn]], I have intentionally, and not as a result of accident or mistake, made no provision in this Will for any descendant of mine who is living at my death and is not named or otherwise provided for in this Will. My estate passes to the Trust, which provides for my family according to its terms. This Section does not limit any gift to a class of beneficiaries, such as my descendants, that includes that person.
+I have intentionally, and not by accident or mistake, made no provision in this Will for any child, grandchild, or other descendant of mine who is not named or otherwise provided for in this Will. My estate passes to the Trust, which provides for my family according to its terms. This Section does not apply to:
+
+(a) a child born to or adopted by me after I sign this Will, who is provided for under [[ref sec_afterborn]]; or
+
+(b) a person who takes as a member of a group of beneficiaries described in this Will, such as "my descendants."
 
 ## Existing Trust
 
