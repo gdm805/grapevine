@@ -9,6 +9,10 @@ window.WILL_POUR_OVER_SIGNING = String.raw`
 
 **When you sign:** sign and date your will in front of [[if self_proving]]everyone[[else]]the witnesses[[end]]. Each witness then signs and prints their name and address.[[if self_proving]] Last, you and the witnesses sign the notary section, and the notary completes it.[[end]]
 
+[[if trust_even_date]]
+**Sign your trust first:** your will refers to your trust as signed the same day ("of even date herewith"). Sign your trust first, then this will, on the same day.
+
+[[end]]
 **Afterward:** keep the signed original somewhere safe and tell {{executor}} where it is. Don't write on it after signing; to change it, make a new will.
 
 **This will doesn't fund your trust.** Anything still in your own name when you die may go through probate before it reaches {{the_trust_name}}. Move your home and accounts into the trust while you're alive.

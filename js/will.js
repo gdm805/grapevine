@@ -339,6 +339,9 @@
   }
   /* the trust made here left its signing date blank (to write in by hand): the trust paperwork doesn't ask
      for that date again -- it prints a blank line to fill in with the same date */
+  /* the pour-over will's trust is a NEW trust written here (not a restatement): the will and the trust are signed the
+     same day, so the will calls it a trust agreement "of even date herewith" and no trust date is asked (Greg, 12 Oct 2026) */
+  function newTrustHere(a) { var f = readTrustFacts(); return madeHere(a) && !!f && !f.restated; }
   function handOrig(a) { var f = readTrustFacts(); return madeHere(a) && !!f && !f.restated && !f.origDate; }
   function handRest(a) { var f = readTrustFacts(); return madeHere(a) && !!f && f.restated && !f.restatementDate; }
   var HAND_DATE_NOTE = '<p class="hint"><strong>Trust date:</strong> you left the signing date blank in your trust, to write in by hand. It prints as a blank line here too. Write in the same date you sign your trust.</p>';
@@ -1370,6 +1373,7 @@
     v.children_yes = hasKids; v.children = kids; v.minor_children_yes = minors.length > 0;
     v.trust_name = capThe(clean(a.trustName)); v.trust_date = longDate(a.trustDate);
     v.the_trust_name = theTrust(v.trust_name);
+    v.trust_even_date = !BLANK && newTrustHere(a);
     v.joint_trust = a.jointTrust === 'yes'; v.other_trustmaker = clean(a.otherTrustmaker);
     v.pr_co = a.prMode === 'co'; v.pr_successive = !v.pr_co;
     v.executor = clean(a.executor);
@@ -1439,7 +1443,8 @@
     trust: function () {
       return stepHead('Tell us about your trust', 'Your pour-over will sends anything left outside your trust into it. Copy these details from your signed trust document.') +
         field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust.') +
-        (handOrig(answers) ? HAND_DATE_NOTE : field('Date your trust was first signed', '<input class="input" type="date" data-k="trustDate" value="' + val(answers.trustDate) + '">', 'Use the original date, not the date of any later amendment.')) +
+        (newTrustHere(answers) ? '<p class="hint"><strong>Trust date:</strong> your trust is new, written here, so this will calls it a trust agreement \u201cof even date herewith\u201d, meaning signed the same day. No date is needed. Sign your trust first, then this will, on the same day.</p>'
+          : handOrig(answers) ? HAND_DATE_NOTE : field('Date your trust was first signed', '<input class="input" type="date" data-k="trustDate" value="' + val(answers.trustDate) + '">', 'Use the original date, not the date of any later amendment.')) +
         field('Is it a joint trust, one that you and another person made together (for example, with your spouse)?', pills('jointTrust', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.jointTrust === 'yes' ? field('The other person’s full legal name', text('otherTrustmaker', '')) : '');
     },
@@ -1501,7 +1506,7 @@
         row('Lives in', esc([v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ')), 'start') +
         row('Name', esc(v.name) + (v.married_or_dp ? ', with ' + esc(v.spouse) : ''), 'about') +
         row('Children', v.children_yes ? esc(v.children.map(function (c) { return c.child; }).join(', ')) : 'None', 'children') +
-        row('Your trust', esc(v.trust_name) + (v.trust_date ? ', dated ' + esc(v.trust_date) : '') + (v.joint_trust ? ' (joint with ' + esc(v.other_trustmaker) + ')' : ''), 'trust') +
+        row('Your trust', esc(v.trust_name) + (v.trust_even_date ? ', signed the same day as this will' : v.trust_date ? ', dated ' + esc(v.trust_date) : '') + (v.joint_trust ? ' (joint with ' + esc(v.other_trustmaker) + ')' : ''), 'trust') +
         row('Personal representative', pr, 'executor') +
         (v.minor_children_yes ? row('Guardian', guardians, 'guardian') : '') +
         (v.minor_children_yes ? row('Manages a minor’s property', v.prop_fid_yes ? esc(v.prop_fid) : 'Not chosen', 'propfid') : '') + '</div>' +
@@ -1534,7 +1539,7 @@
       if (a.hasChildren === 'yes' && a.marital === 'married' && a.children.some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
     } else if (id === 'trust') {
       if (!clean(a.trustName)) e.push('Enter the name of your trust.');
-      if (!handOrig(a) && !/^\d{4}-\d{2}-\d{2}$/.test(a.trustDate || '')) e.push('Enter the date your trust was first signed.');
+      if (!handOrig(a) && !newTrustHere(a) && !/^\d{4}-\d{2}-\d{2}$/.test(a.trustDate || '')) e.push('Enter the date your trust was first signed.');
       if (!a.jointTrust) e.push('Tell us whether it is a joint trust.');
       if (a.jointTrust === 'yes' && !clean(a.otherTrustmaker)) e.push('Enter the other person’s name.');
     } else if (id === 'executor') {

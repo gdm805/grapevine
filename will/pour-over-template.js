@@ -85,7 +85,11 @@ I have intentionally, and not by accident or mistake, made no provision in this 
 
 ## Existing Trust
 
+[[if trust_even_date]]
+I have established or am a Trustmaker of {{the_trust_name}}, under a trust agreement of even date herewith, as it may be amended from time to time (the "**Trust**"). The Trust is intended to receive property from my probate estate under this Will.
+[[else]]
 I have established or am a Trustmaker of {{the_trust_name}}, originally dated {{trust_date}} and, if applicable, amended or restated from time to time (the "**Trust**"). The Trust is intended to receive property from my probate estate under this Will.
+[[end]]
 
 [[if joint_trust]]
 The Trust is a Joint Trust created by me and {{other_trustmaker}}. A reference in this Will to the Trust includes the Trust as it exists at my death and any separate trust or share then continuing under its terms that the Trust designates to receive property passing from my estate.
@@ -300,7 +304,7 @@ To the fullest extent enforceable under applicable law, if a beneficiary directl
 // ==========================================================================
 //  THE BLANKS YOU CAN USE
 //
-//  Words and names:   name  name_caps (the name in ALL CAPS, used in the title)  county  state  spouse  trust_name  trust_date  other_trustmaker
+//  Words and names:   name  name_caps (the name in ALL CAPS, used in the title)  county  state  spouse  trust_name  trust_date (trust_even_date = new trust written here: "of even date herewith")  other_trustmaker
 //                     executor (the primary personal representative)  survival_words  witness_count
 //  Yes or no tests:   unmarried  married_or_dp  revoke_spouse  children_answered  children_yes
 //                     minor_children_yes  joint_trust  pr_successive  pr_co  prop_fid_yes
