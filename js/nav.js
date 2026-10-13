@@ -100,7 +100,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
   function signHref() {
     var f = null;
     try { f = JSON.parse(localStorage.getItem('grapevine.flow.v1') || 'null'); } catch (e) { f = null; }
-    return f && f.plan && f.plan !== 'doc' ? url('package.html') + '#how-to-sign' : url('questions.html') + '#how-to-sign';
+    return url('questions.html') + '#how-to-sign';
   }
   var wrap = document.createElement('div');
   wrap.id = 'gv-help';

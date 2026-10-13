@@ -4559,7 +4559,7 @@
     } catch (e) { return; /* storage blocked: keep the steps here */ }
     var p = document.createElement('p');
     p.className = 'hint pkg-sign-note';
-    p.innerHTML = 'How to sign this document is on your <a href="' + esc(window.GVUrl('package.html')) + '#how-to-sign">package summary</a>, with the signing steps for every document in one place.';
+    p.innerHTML = 'The signing steps for this document are the first pages of the \u201cDownload all\u201d PDF on your <a href="' + esc(window.GVUrl('package.html')) + '">package summary</a>.';
     box.parentNode.replaceChild(p, box);
   }
   /* "How to sign", easy to find (8 Oct 2026 -- customers kept asking how to sign): a "How to sign" button beside
@@ -4569,7 +4569,7 @@
   function signingHelp() {
     if (kindKey === 'contacts') return;   /* nothing to sign: its note says so, no "How to sign" buttons */
     var box = stepEl.querySelector('.instr'), note = stepEl.querySelector('.pkg-sign-note');
-    var target = box ? '#how-to-sign' : (note ? window.GVUrl('package.html') + '#how-to-sign' : '');
+    var target = box ? '#how-to-sign' : '';
     if (!target) return;
     var acts = stepEl.querySelector('.actions:not(.pkg-continue)');
     if (acts && !acts.querySelector('.how-sign-btn')) acts.insertAdjacentHTML('beforeend', '<a class="btn btn-secondary how-sign-btn" href="' + esc(target) + '">How to sign</a>');

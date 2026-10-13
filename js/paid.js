@@ -113,7 +113,7 @@
     /* back to the finished documents, with the download box brought into view (js/will.js reads ?download=all) */
     var downloadHref = window.GVUrl(goTo) + (goTo.indexOf('?') > -1 ? '&' : '?') + 'download=all';
     /* and straight to the signing steps: a package's are all on its summary; a single document's are on its own page */
-    var signHref = window.GVUrl(goTo) + '#how-to-sign';
+    var signHref = plan === 'doc' ? window.GVUrl(goTo) + '#how-to-sign' : window.GVUrl('questions.html') + '#how-to-sign';
     var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : 'Your ' + esc(p.name) + ' package';
     var amount = wasFree ? '$0 (beta tester)' : money(plan === 'doc' && GV.docPrice ? GV.docPrice(docKey, (GV.trustSide || []).indexOf(docKey) > -1 ? 'single' : household) : GV.priceFor(plan, household)) + ', one-time';
     root.innerHTML =
