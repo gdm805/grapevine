@@ -40,7 +40,7 @@ window.GV_PAYMENT_CHECK_URL = 'https://grapevine-payment-check.gdm805.workers.de
    submit it, "Continue to secure payment" unlocks and takes them to Stripe with the 100%-off promotion code
    already applied, so they pay $0 and get their documents. Everyone else checks out normally.
      on      true during the beta; set to false at public launch (turns all of this off)
-     code    the Stripe PROMOTION CODE (the customer-facing code, e.g. BETA2026), 100% off; in Stripe give
+     code    the Stripe PROMOTION CODE (the customer-facing code, e.g. BETANOV), 100% off; in Stripe give
              it a maximum number of redemptions and an expiry date
      survey  the Tally form's ID (the part after tally.so/r/ in its share link) */
 /* CALIFORNIA (Cal. Bus. & Prof. Code 6410): California customers see the required notice at checkout and must
@@ -48,7 +48,7 @@ window.GV_PAYMENT_CHECK_URL = 'https://grapevine-payment-check.gdm805.workers.de
    registered to true and fill in the county clerk's details -- then the two registration statements appear too. */
 window.GV_CA_LDA = { registered: false, county: '', clerkAddress: '', clerkPhone: '', clerkWebsite: '' };
 
-window.GV_BETA = { on: true, code: 'BETA2026', survey: '445AKO' };
+window.GV_BETA = { on: true, code: 'BETANOV', survey: '445AKO' };   /* BETANOV replaced BETA2026 on 13 Oct 2026 (launch moved to Nov 13); expires Nov 12 */
 (function () {
   try {
     if (window.GV_BETA && window.GV_BETA.on && /[?&]beta=1\b/.test(location.search)) localStorage.setItem('grapevine.beta', '1');
