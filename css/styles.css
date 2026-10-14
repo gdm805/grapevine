@@ -1,6 +1,6 @@
-/* Grapevine website. Tokens follow the Grapevine design system. */
+/* Tovakin website. Tokens follow the Tovakin design system. */
 :root {
-  /* TOVAKIN COLORS (13 Oct 2026): near-black ink + medium blue on bright white. The old Grapevine purple/green/cream
+  /* TOVAKIN COLORS (13 Oct 2026): near-black ink + medium blue on bright white. The old Tovakin purple/green/cream
      values were: grape #583785, grape-deep #3f2560, grape-tint #efe8f8, lavender #d6c4f0, leaf #7ea744, leaf-deep #4d7220,
      leaf-light #b5d97a, leaf-tint #eaf3dc, stone #faf9f5, sand #f2f0e5, ink #252429, paper #fffef8. */
   --stone: #ffffff;
@@ -390,7 +390,7 @@ a { color: var(--grape); }
 .badge[hidden] { display: none; }
 .pick-kicker[hidden] { display: none; }
 /* the home page's "Wills, trusts and the paperwork behind them" label: same size as every green label, plus a
-   soft green band, since it's the line that says what Grapevine does */
+   soft green band, since it's the line that says what Tovakin does */
 .hero-kicker { display: inline-block; padding: 9px 16px; border-radius: var(--r-pill); background: var(--leaf-tint); }
 
 /* trust documents: "priced per trust" note on the pricing card and at checkout */

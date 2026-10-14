@@ -1,4 +1,4 @@
-/* Grapevine "About you" (about-you.html): the first screen of every package and single-document purchase.
+/* Tovakin "About you" (about-you.html): the first screen of every package and single-document purchase.
    Collects the personal information every document uses -- full legal name, home address with state and
    county, phone, and date of birth (and the same for a spouse or partner in a couple's package) -- once, and
    saves it to the shared profile (grapevine.profile.v1) that js/will.js reads to fill in each document.
@@ -107,7 +107,7 @@
     need('street', 'Enter your street address.');
     need('city', 'Enter your city.');
     need('state', 'Choose your state.');
-    if (p.state === 'Arizona') e.push("Grapevine isn't available in Arizona yet. We're confirming Arizona's rules for online document services and hope to offer Arizona documents soon.");
+    if (p.state === 'Arizona') e.push("Tovakin isn't available in Arizona yet. We're confirming Arizona's rules for online document services and hope to offer Arizona documents soon.");
     need('county', 'Choose your county.');
     need('zip', 'Enter your ZIP code.');
     if (clean(p.zip) && !/^\d{5}(-\d{4})?$/.test(clean(p.zip))) e.push('Your ZIP code should be 5 digits.');

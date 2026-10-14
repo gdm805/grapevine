@@ -35,7 +35,7 @@
   if (!tester || !header) return;
   var bar = document.createElement('div');
   bar.className = 'beta-bar';
-  bar.innerHTML = '<div class="container"><strong>Beta tester?</strong> Questions, problems or ideas: email <a href="mailto:' + EMAIL + '?subject=Grapevine%20beta">' + EMAIL + '</a>. Thank you for helping!</div>';
+  bar.innerHTML = '<div class="container"><strong>Beta tester?</strong> Questions, problems or ideas: email <a href="mailto:' + EMAIL + '?subject=Tovakin%20beta">' + EMAIL + '</a>. Thank you for helping!</div>';
   header.parentNode.insertBefore(bar, header);
 })();
 
@@ -114,11 +114,11 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
         '<form class="gv-chat-form"><label class="gv-sr" for="gv-chat-in">Your question</label>' +
         '<textarea id="gv-chat-in" rows="2" maxlength="1500" placeholder="Type your question"></textarea>' +
         '<button type="submit" class="gv-chat-send">Send</button></form>' +
-        '<p class="gv-help-note gv-chat-note">An automated assistant answers here. It helps with using Grapevine and can\u2019t give legal advice. Please don\u2019t type account numbers or Social Security numbers.</p></div>' : '') +
+        '<p class="gv-help-note gv-chat-note">An automated assistant answers here. It helps with using Tovakin and can\u2019t give legal advice. Please don\u2019t type account numbers or Social Security numbers.</p></div>' : '') +
       '<a class="gv-help-link" href="' + signHref() + '">How do I sign my documents? &rarr;</a>' +
       '<a class="gv-help-link" href="' + url('questions.html') + '">Common questions &rarr;</a>' +
-      '<a class="gv-help-link" href="mailto:support@grapevinedocs.com?subject=Grapevine%20help">Email support@grapevinedocs.com &rarr;</a>' +
-      '<p class="gv-help-note">We help with using Grapevine, such as finding your documents, downloading and printing. We can’t give legal advice about your situation.</p>' +
+      '<a class="gv-help-link" href="mailto:support@grapevinedocs.com?subject=Tovakin%20help">Email support@grapevinedocs.com &rarr;</a>' +
+      '<p class="gv-help-note">We help with using Tovakin, such as finding your documents, downloading and printing. We can’t give legal advice about your situation.</p>' +
     '</div>';
   function mount() { document.body.appendChild(wrap); }
   if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
@@ -140,7 +140,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
      answers with Claude under Greg's no-legal-advice instructions. */
   function chat(root) {
     var KEY = 'gv.chat.v1', EMAIL = 'support@grapevinedocs.com';
-    var GREETING = 'Hi! I can help with using Grapevine: finding your documents, paying, downloading, printing and signing steps. I can\u2019t give legal advice about your situation.';
+    var GREETING = 'Hi! I can help with using Tovakin: finding your documents, paying, downloading, printing and signing steps. I can\u2019t give legal advice about your situation.';
     var log = root.querySelector('.gv-chat-log'), form = root.querySelector('.gv-chat-form'), input = root.querySelector('#gv-chat-in');
     var sendBtn = root.querySelector('.gv-chat-send');
     var state = { id: '', messages: [] };

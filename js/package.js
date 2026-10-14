@@ -1,4 +1,4 @@
-/* Grapevine package summary (package.html): the last stop in a package, before paying and downloading.
+/* Tovakin package summary (package.html): the last stop in a package, before paying and downloading.
    Lists every document in the package (js/flow.js), shows which are answered, and lets the person jump
    back into any one to review or change the answers ("?review=1" opens that document at its review
    screen). Not paid yet: one "Continue to payment" button for the whole package. Paid: "Download all"
@@ -156,7 +156,7 @@
       var who = '';
       try { who = (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).name || ''; } catch (e) { who = ''; }
       var file = String(who).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
-      var opts = { footer: sheet ? window.GVExport.sheetFooter : ((out[0] && out[0].footer) || (pkg + ' Package')), draftLabel: '', title: pkg + ' Package', base: 'Grapevine-' + pkg.replace(/\s+/g, '-') + '-Package' + (file ? '-' + file : '') };
+      var opts = { footer: sheet ? window.GVExport.sheetFooter : ((out[0] && out[0].footer) || (pkg + ' Package')), draftLabel: '', title: pkg + ' Package', base: 'Tovakin-' + pkg.replace(/\s+/g, '-') + '-Package' + (file ? '-' + file : '') };
       return window.GVExport.pdf(combined, opts).then(function (blob) { return { blob: blob, filename: opts.base + '.pdf' }; });
     });
   }
@@ -215,7 +215,7 @@
       var parts = sheetPartsFrom(out);
       if (!parts.length) throw new Error('no steps');
       return window.GVExport.signingSheet(parts);
-    }).then(function (blob) { return { blob: blob, filename: 'Grapevine-How-to-Sign.pdf' }; });
+    }).then(function (blob) { return { blob: blob, filename: 'Tovakin-How-to-Sign.pdf' }; });
   }
   var sp = document.getElementById('sheet-pdf'), spr = document.getElementById('sheet-print');
   if (sp) sp.addEventListener('click', function () {

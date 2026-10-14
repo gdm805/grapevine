@@ -7,7 +7,7 @@ window.DEMENTIA_TEMPLATE = String.raw`
 //
 //  WHAT THIS DOCUMENT IS: your baseline calls it an "optional AHCD supplement" -- guidance that goes with a
 //  person's Advance Health Care Directive (their living will / health-care power of attorney), not a
-//  replacement for it and not a separate grant of authority. Grapevine doesn't have an Advance Health Care
+//  replacement for it and not a separate grant of authority. Tovakin doesn't have an Advance Health Care
 //  Directive builder yet, so this asks for the person's own name and state directly instead of pulling them
 //  from that document (your baseline's Section 10.02 says to inherit them once that builder exists).
 //
@@ -56,7 +56,7 @@ These Care Preferences shall be read together with my controlling health-care di
 
 ## No Diagnosis by This Document
 
-The descriptive stages used below are practical planning categories only. They are not medical diagnoses and do not authorize my health-care agent, Grapevine, or any non-clinician to diagnose dementia, determine capacity, or decide that a particular clinical stage has been reached. Those determinations are made under applicable law and ordinary clinical practice.
+The descriptive stages used below are practical planning categories only. They are not medical diagnoses and do not authorize my health-care agent, Tovakin, or any non-clinician to diagnose dementia, determine capacity, or decide that a particular clinical stage has been reached. Those determinations are made under applicable law and ordinary clinical practice.
 
 # Guiding Values and Decision Standard
 

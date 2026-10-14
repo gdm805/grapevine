@@ -7,10 +7,10 @@ window.DPOA_STATES["Minnesota"] = String.raw`
 //  Subd. 3: the wording and content must be duplicated EXACTLY, with no modifications; parts First,
 //  Second and Third must be completed; the principal's signature must be acknowledged. So: do not edit
 //  the wording in this file. Only the fill-ins change: names come from the answers, and the check marks
-//  are pre-filled to match Grapevine's standard durable power of attorney -- (N) all powers, SECOND
+//  are pre-filled to match Tovakin's standard durable power of attorney -- (N) all powers, SECOND
 //  durable, THIRD no self-gifts, FOURTH accounting only on request. Addresses, the optional expiration
 //  date and the principal's initials on the notice are completed by hand.
-//  (The custom Grapevine document this replaced was kept outside the site, 25 Sep 2026.)
+//  (The custom Tovakin document this replaced was kept outside the site, 25 Sep 2026.)
 // ==========================================================================
 @set effective_choice = no
 @set ask_determiner = no

@@ -1,4 +1,4 @@
-/* Grapevine "package" flow: lets someone answer every document in their Will, Essentials, or
+/* Tovakin "package" flow: lets someone answer every document in their Will, Essentials, or
    Complete package back to back, instead of finding each builder on their own. Every plan now
    starts a flow -- the order for each plan is FLOWS below, and matches what js/plans.js promises
    each plan includes. Say the word if you want the order changed, or another document added.

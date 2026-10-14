@@ -1,4 +1,4 @@
-/* Grapevine will builder.
+/* Tovakin will builder.
    You should not need to edit this file. The words of the will live in
    will/will-template.js, the signing steps in will/signing-instructions.js,
    and the state rules in will/states.js. */
@@ -228,7 +228,7 @@
      trust's name and dates, who made it, the current trustees and how they act, the state, and where and when
      it's signed -- fills in the others (only where still empty), and a screen whose answers are all filled in
      is skipped, so the Trust Paperwork package asks each question once. Kept apart from the trust facts above
-     (a trust written HERE), so an outside trust's answers never make it look like Grapevine's own trust. */
+     (a trust written HERE), so an outside trust's answers never make it look like Tovakin's own trust. */
   var PAPER_KEY = 'grapevine.trustpaper.v1', PAPER_DOCS = ['schedulea', 'cert', 'affidavit', 'assignment'];
   function readPaper() { try { return JSON.parse(localStorage.getItem(PAPER_KEY) || '{}') || {}; } catch (e) { return {}; } }
   function paperNames(a, key) {
@@ -267,7 +267,7 @@
       if (a.trustType === p.trustType) CARRY_CONFIRMED.trustType = 1;
       fill('tm1Name', p.tm1); if (a.trustType === 'JOINT') fill('tm2Name', p.tm2); else CARRY_CONFIRMED.tm2Name = 1;
     }
-    /* the Affidavit is signed by the person using Grapevine (their name from About you), when they're a trustee */
+    /* the Affidavit is signed by the person using Tovakin (their name from About you), when they're a trustee */
     if (k === 'affidavit' && !clean(a.affiantName)) {
       var me = clean(readProfile().name);
       if (me && (p.trustees || []).some(function (t) { return sameName(t, me); })) a.affiantName = me;
@@ -305,7 +305,7 @@
     return null;
   }
   /* true when this document is for the trust written on this site (its name matches the saved trust facts).
-     Grapevine's own trust puts no special limits on the Trustee, so the Certification skips that question. */
+     Tovakin's own trust puts no special limits on the Trustee, so the Certification skips that question. */
   function madeHere(a) {
     var f = readTrustFacts();
     return !!(f && f.trustName && clean(a.trustName) === f.trustName);
@@ -386,7 +386,7 @@
     fill('trustName', f.trustName); fill('origTrustDate', f.origDate);
     fill('trustRestated', f.restated ? 'yes' : 'no');
     if (f.restated) fill('restatementDate', f.restatementDate);
-    /* What Grapevine's own trust says, so these documents don't ask: it is revocable; the Trustmakers are the
+    /* What Tovakin's own trust says, so these documents don't ask: it is revocable; the Trustmakers are the
        first Trustees, still living; and two Co-Trustees must act together (majority of two = both), except for
        routine administrative acts. Only applied while this document's own answer is untouched. */
     if (fresh) {
@@ -406,7 +406,7 @@
     }
     if (k === 'cert') {
       if (!f.restated) fill('hasAmendments', 'no');
-      /* on a Grapevine trust the Trustmakers are the first Trustees */
+      /* on a Tovakin trust the Trustmakers are the first Trustees */
       if (!(a.trustees || []).some(function (t) { return clean(t.name); })) a.trustees = [f.name1, f.name2].filter(Boolean).map(function (n) { return { name: n, address: '' }; });
     }
     else if (fresh || !clean(a.tm1Name)) a.trustType = f.joint ? 'JOINT' : 'SINGLE';
@@ -1130,7 +1130,7 @@
       }
       return stepHead('Is there anything you want a specific person to have?', 'For example, jewelry, a car, or a sum of money. You can skip this. Everything else is covered next.') +
         pills('wantsGifts', [['yes', 'Yes, add a gift'], ['no', 'No, skip this']], true) + rows +
-        (answers.wantsGifts === 'yes' ? '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” If you name an existing special needs trust, your document adds a backup: if that trust no longer exists when the gift is made, the share is held for the same person in a supplemental needs trust instead of being paid to them outright. The existing special needs trust stays a separate document: it isn\u2019t part of your Grapevine package, and nothing in it is changed. Otherwise, this document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '') +
+        (answers.wantsGifts === 'yes' ? '<p class="hint"><strong>A beneficiary with special needs?</strong> Someone who receives needs-based government benefits (such as SSI or Medicaid) may lose them by receiving a share outright. If a special needs (supplemental needs) trust already exists for that person, you can name that trust instead of the person, for example “The Trustee of the Jane Doe Supplemental Needs Trust dated March 1, 2020.” If you name an existing special needs trust, your document adds a backup: if that trust no longer exists when the gift is made, the share is held for the same person in a supplemental needs trust instead of being paid to them outright. The existing special needs trust stays a separate document: it isn\u2019t part of your Tovakin package, and nothing in it is changed. Otherwise, this document does not create a special needs trust. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '') +
         (answers.wantsGifts === 'yes' ? '<p class="hint"><strong>Firearms.</strong> Leaving firearms to someone is subject to federal and state law. Items regulated under the federal National Firearms Act (such as suppressors and short-barreled rifles) have special transfer rules, and some people hold them in a separate firearms trust. Rules on transferring other firearms differ from state to state. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '');
     },
     residuary: function () {
@@ -3218,7 +3218,7 @@
     v.own_joint_spouses = ownJointSpouses(a);
     v.trustee_count = String(v.trustees.length);
     v.revocability = a.revocability === 'IRREVOCABLE' ? 'IRREVOCABLE' : (a.revocability === 'PARTIAL' ? 'PARTIAL' : 'REVOCABLE');
-    /* the power to revoke is held by the Trustmaker(s) themselves, same as Grapevine's own trust builders --
+    /* the power to revoke is held by the Trustmaker(s) themselves, same as Tovakin's own trust builders --
        no separate question needed */
     v.revocation_holders = v.trustmakers.map(function (t) { return { holder_name: t.trustmaker_name }; });
     v.revocable_portion = clean(a.revocablePortion);
@@ -4589,7 +4589,7 @@
       a.href = u; a.download = name; document.body.appendChild(a); a.click();
       setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 1500);
     }
-    var FILE = 'Grapevine-How-to-Sign.pdf';
+    var FILE = 'Tovakin-How-to-Sign.pdf';
     box.querySelector('[data-sign-pdf]').addEventListener('click', function () {
       sheet().then(function (blob) { saveBlob(blob, FILE); msg.textContent = 'Your signing steps are downloading to your Downloads folder.'; })
         .catch(function () { msg.textContent = 'We could not build the signing steps PDF. Please reload the page and try again.'; });
@@ -4704,7 +4704,7 @@
   function next() {
     errors = KIND.validate(stepId);
     var stOff = states.map[answers.state];
-    if (stepId === 'start' && stOff && !stOff.supported && errors.indexOf(stOff.note) === -1) errors.push(stOff.note || 'Grapevine isn\u2019t available in that state yet.');
+    if (stepId === 'start' && stOff && !stOff.supported && errors.indexOf(stOff.note) === -1) errors.push(stOff.note || 'Tovakin isn\u2019t available in that state yet.');
     if (errors.length) { draw(); return; }
     var vis = visibleSteps(answers), i = vis.map(function (s) { return s.id; }).indexOf(stepId);
     var j = Math.min(i + 1, vis.length - 1), skipped = [];
@@ -5054,7 +5054,7 @@
         allBlocks.forEach(function (r, i) { if (i > 0) combined.push({ k: 'break', footer: r.footer }); combined.push.apply(combined, r.blocks); });
         var who = clean(readProfile().name || footerName());
         var file = who.replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
-        var opts = { footer: (allBlocks[0] && allBlocks[0].footer) || (pkgName(f) + ' Package of ' + (who || 'Your Documents')), draftLabel: draft ? draftLabel : '', title: pkgName(f) + ' Package', base: 'Grapevine-' + pkgName(f) + '-Package' + (file ? '-' + file : '') };
+        var opts = { footer: (allBlocks[0] && allBlocks[0].footer) || (pkgName(f) + ' Package of ' + (who || 'Your Documents')), draftLabel: draft ? draftLabel : '', title: pkgName(f) + ' Package', base: 'Tovakin-' + pkgName(f) + '-Package' + (file ? '-' + file : '') };
         return window.GVExport.pdf(combined, opts).then(function (blob) { offerSave(blob, opts.base + '.pdf'); return deliver(blob, opts.base + '.pdf'); });
       })
       .then(function () { status('Done. Your package PDF is downloading to your Downloads folder. It has every document, with page numbers running all the way through.'); })

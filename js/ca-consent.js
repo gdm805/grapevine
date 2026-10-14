@@ -10,7 +10,7 @@
 window.GVCaConsent = (function () {
   'use strict';
   var KEY = 'grapevine.ca.consent';
-  var TEXT = 'I ask Grapevine to deliver my documents now, and I consent to that service being performed for me. ' +
+  var TEXT = 'I ask Tovakin to deliver my documents now, and I consent to that service being performed for me. ' +
     'I understand that once my documents are delivered, the fee for that service is not refundable under my 24-hour cancellation right.';
 
   function profile() { try { return JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { return {}; } }

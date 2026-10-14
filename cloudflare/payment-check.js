@@ -1,4 +1,4 @@
-/* Grapevine payment check -- a small program that runs on Cloudflare (a "Worker"), not on the website.
+/* Tovakin payment check -- a small program that runs on Cloudflare (a "Worker"), not on the website.
 
    WHAT IT DOES: after someone pays, Stripe sends them to paid.html with a receipt number in the link
    (session_id=cs_...). paid.html sends that number here. This program asks Stripe, using your secret

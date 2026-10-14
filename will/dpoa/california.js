@@ -11,7 +11,7 @@ window.DPOA_STATES["California"] = String.raw`
 //  (backup agents, and -- for "only if I become incapacitated" -- a springing clause with the person who
 //  declares the incapacity under penalty of perjury, Prob. Code § 4129). The principal initials line (N)
 //  by hand. The notary certificate is the Civil Code § 1189 all-purpose acknowledgment.
-//  (The custom Grapevine document this replaced was kept outside the site, 25 Sep 2026.)
+//  (The custom Tovakin document this replaced was kept outside the site, 25 Sep 2026.)
 // ==========================================================================
 @set effective_choice = yes
 @set ask_determiner = yes

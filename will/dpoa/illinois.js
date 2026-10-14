@@ -7,7 +7,7 @@ window.DPOA_STATES["Illinois"] = String.raw`
 //  Article Seven (special powers) is kept below but switched off: the standard DPOA leaves it out.
 //  25 Sep 2026: with ONE agent this file now prints the ILLINOIS STATUTORY SHORT FORM POWER OF ATTORNEY
 //  FOR PROPERTY (755 ILCS 45/3-3), because 755 ILCS 45/2-8 makes refusing that form unreasonable. The
-//  statutory form does not allow co-agents, so when co-agents are named the Grapevine custom document
+//  statutory form does not allow co-agents, so when co-agents are named the Tovakin custom document
 //  below is used instead (a valid nonstatutory power: one witness plus a notary, 3-3(b)).
 // ==========================================================================
 @set effective_choice = yes
@@ -18,7 +18,7 @@ window.DPOA_STATES["Illinois"] = String.raw`
 @set exec_choice = no
 @set statutory_form = single_agent
 @set sign_note = Illinois: this is the Illinois Statutory Short Form. Before signing, read the Notice on the first page and initial it. All fifteen kinds of powers are granted unless you draw a line through a title. Paragraphs 4 (agent may delegate), 5 (agent may be paid), and 9 (agent as guardian of your estate) also stay in unless you draw a line through them. If paragraph 6 says when the power takes effect, initial its bracket. Sign in front of one witness and a notary (the notary cannot also be the witness).
-@set sign_note_co_agents = Illinois: because you named co-agents, this is Grapevine's own Illinois power of attorney (Illinois's short form doesn't allow co-agents). Sign in front of one adult witness and a notary; the notary cannot also be the witness.
+@set sign_note_co_agents = Illinois: because you named co-agents, this is Tovakin's own Illinois power of attorney (Illinois's short form doesn't allow co-agents). Sign in front of one adult witness and a notary; the notary cannot also be the witness.
 
 [[if has_co_agents]]
 @dropempty

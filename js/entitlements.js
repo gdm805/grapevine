@@ -1,4 +1,4 @@
-/* Grapevine entitlements: remembers, in this browser, which plan someone paid for, and which builders
+/* Tovakin entitlements: remembers, in this browser, which plan someone paid for, and which builders
    (will, pour-over, dpoa) that unlocks. Written to by paid.html right after payment. Read by js/will.js
    to decide whether the Download and Print buttons work, or send the person to checkout instead.
 

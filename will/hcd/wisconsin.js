@@ -606,7 +606,7 @@ This Directive shall be interpreted to carry out the Principal's expressed healt
 
 Section 4.05 — Wisconsin Statutory Limitations
 
-The Health Care Agent may not exercise authority prohibited by Wisconsin law, including authority concerning certain inpatient mental-health placements or treatment procedures. Authority concerning admission to a nursing home or community-based residential facility and authority to withhold or withdraw a feeding tube shall be effective only to the extent expressly selected by the Principal in the applicable Grapevine election.
+The Health Care Agent may not exercise authority prohibited by Wisconsin law, including authority concerning certain inpatient mental-health placements or treatment procedures. Authority concerning admission to a nursing home or community-based residential facility and authority to withhold or withdraw a feeding tube shall be effective only to the extent expressly selected by the Principal in the applicable election in this document.
 
 Execution follows on the next page.
 

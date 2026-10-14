@@ -7,11 +7,11 @@ window.DPOA_STATES["Alaska"] = String.raw`
 //  following form" is the statute's test; the form's own NOTICE TO THIRD PARTIES makes a third party that
 //  fails to honor a properly executed statutory form liable for a civil penalty plus damages, costs and fees.
 //  Execution (AS 13.26.600): signed and acknowledged before a notary.
-//  Boxes are pre-marked from the answers to match Grapevine's standard durable power: every power (A)-(N);
+//  Boxes are pre-marked from the answers to match Tovakin's standard durable power: every power (A)-(N);
 //  no "specific authority" acts; separately/jointly for co-agents; effective now and NOT affected by
 //  incapacity (AS 13.26.660(3): if that box is left unmarked the power ENDS at incapacity) -- or, for
 //  "only if I become incapacitated", effective on incapacity (established by affidavit, as the form's own notice says).
-//  (The custom Grapevine document this replaced was kept outside the site, 25 Sep 2026.)
+//  (The custom Tovakin document this replaced was kept outside the site, 25 Sep 2026.)
 // ==========================================================================
 @set effective_choice = yes
 @set ask_determiner = no

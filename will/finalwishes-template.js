@@ -7,7 +7,7 @@ window.FINALWISHES_TEMPLATE = String.raw`
 //  state files -- only Article Six/Seven's state routing note and execution formalities vary,
 //  taken word for word from each state's own controlled file. See will/finalwishes-state-text.js
 //  for that, and will/NOTES-ON-YOUR-FINAL-WISHES.txt for what was left out and why (including the
-//  two states your own source material flags as needing a form Grapevine doesn't have on file).
+//  two states your own source material flags as needing a form Tovakin doesn't have on file).
 // ==========================================================================
 @set draft_watermark = yes
 @set draft_label = Preview - Not for Signing

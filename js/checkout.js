@@ -170,7 +170,7 @@
     return '<div class="beta-box"><p class="beta-kicker">Beta tester</p>' +
       '<h3>Last step: answer a few questions</h3>' +
       '<ol class="beta-steps"><li>Answer the short survey below (about 5 minutes) and click <strong>Submit</strong> at the end.</li><li>Then click the purple button under the survey. Your total will be $0.00.</li><li>Download and print your documents.</li></ol>' +
-      '<iframe class="beta-survey" data-tally-src="' + src + '" loading="lazy" width="100%" height="700" frameborder="0" title="Grapevine beta tester survey"></iframe></div>';
+      '<iframe class="beta-survey" data-tally-src="' + src + '" loading="lazy" width="100%" height="700" frameborder="0" title="Tovakin beta tester survey"></iframe></div>';
   }
   /* Tally's own embed script sizes the survey to its full height (no scrolling inside the box). If it can't
      load, the survey still shows, just at a fixed height. */
@@ -201,7 +201,7 @@
      California. The bold statements are the ones 6410(b) requires in 12-point bold; (b)(3) and (b)(5) -- the
      county clerk's details -- appear only once GV_CA_LDA.registered is true (js/plans.js). */
   var caAck = false;
-  var TERMS_VERSION = 'September 29, 2026';   /* the "Last updated" date on terms.html */
+  var TERMS_VERSION = 'October 13, 2026';   /* the "Last updated" date on terms.html */
   function isCA() {
     try { return ((JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || '') === 'California'; } catch (e) { return false; }
   }
@@ -213,10 +213,10 @@
     return '<div class="ca-notice" id="ca-notice"><h3>Notice to California customers</h3>' +
       '<p><strong>Services:</strong> software you use to prepare your own ' + esc(p.name) + ' documents (' + esc(includes.join(', ')) + '). <strong>Cost:</strong> ' + money(price) + ', one time.</p>' +
       reg +
-      '<p class="ca-bold">Grapevine is not an attorney and may not perform the legal services that an attorney performs.</p>' +
+      '<p class="ca-bold">Tovakin is not an attorney and may not perform the legal services that an attorney performs.</p>' +
       '<p class="ca-bold">You may obtain information about free or low-cost representation through a local bar association or legal aid foundation. If you believe you have been a victim of fraud, the unauthorized practice of law, or any other injury, you may contact local law enforcement, a district attorney, or a legal aid foundation.</p>' +
-      '<p class="ca-bold">Grapevine is not permitted to engage in the practice of law, including providing any kind of advice, explanation, opinion, or recommendation to you about possible legal rights, remedies, defenses, options, selection of forms, or strategies.</p>' +
-      '<p>Under California Business and Professions Code section 6409.1, the venue for an action arising out of a dispute between you and Grapevine is the county where you have your primary residence.</p>' +
+      '<p class="ca-bold">Tovakin is not permitted to engage in the practice of law, including providing any kind of advice, explanation, opinion, or recommendation to you about possible legal rights, remedies, defenses, options, selection of forms, or strategies.</p>' +
+      '<p>Under California Business and Professions Code section 6409.1, the venue for an action arising out of a dispute between you and Tovakin is the county where you have your primary residence.</p>' +
       '<p class="ca-cancel"><strong>Your right to cancel:</strong> you may cancel this purchase within 24 hours by giving us any written statement that you are canceling, by email to <a href="mailto:support@grapevinedocs.com">support@grapevinedocs.com</a> or by mail to Grapevine Docs, LLC at the address in our Terms. A mailed cancellation is effective on its postmark date. We will then promptly return your payment, except fees for services actually, necessarily, and reasonably performed for you with your knowing and express written consent.</p>' +
       '<label class="check ca-ack"><input type="checkbox" id="ca-ack"' + (caAck ? ' checked' : '') + '><span>I have read the California notice above.</span></label></div>';
   }

@@ -11,7 +11,7 @@ window.DPOA_STATES["New York"] = String.raw`
 //  (12 point); do not use @sub or @sign here (they print smaller).
 //  Grant of authority: the letters A through N are typed on line (P), as the form permits, and the
 //  principal initials (P) by hand. Every other "( )" is for the principal's own initials.
-//  (The custom Grapevine document this replaced was kept outside the site, 25 Sep 2026.)
+//  (The custom Tovakin document this replaced was kept outside the site, 25 Sep 2026.)
 // ==========================================================================
 @set effective_choice = no
 @set ask_determiner = no

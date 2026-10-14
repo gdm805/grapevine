@@ -1,4 +1,4 @@
-/* Grapevine will exports: a real Word file (.docx) and a PDF, both with a running
+/* Tovakin will exports: a real Word file (.docx) and a PDF, both with a running
    footer that says "... | Page X of Y". You should not need to edit this file.
    It is called by js/will.js with the will already broken into simple blocks. */
 (function () {

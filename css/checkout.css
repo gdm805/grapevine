@@ -1,4 +1,4 @@
-/* Grapevine checkout and payment-confirmation pages. */
+/* Tovakin checkout and payment-confirmation pages. */
 
 .checkout-wrap { padding-block: clamp(40px, 6vw, 80px) clamp(64px, 8vw, 112px); }
 .checkout-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: start; }
