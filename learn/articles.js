@@ -115,9 +115,43 @@ A court will appoint someone, often called an administrator, to settle your affa
 
 A will lets you choose who receives your property, name your executor, and nominate a guardian for your children. It usually takes less time and costs less than leaving these decisions to a court. To see what a will involves, read [What is a will, and do I need one?](learn.html#what-is-a-will)
 
+=== what-is-a-living-trust
+title: What is a living trust?
+category: Trusts
+date: 2026-10-13
+summary: A living trust holds your property while you are alive and passes it to the people you choose after you die, usually without going through probate court.
+---
+A living trust is a legal arrangement you set up during your lifetime. You move property such as your home and accounts into the trust, and the trust's written instructions say who manages it and who receives it. Most people use a revocable living trust, which means you can change it or cancel it at any time while you have capacity.
+
+## Who does what
+
+- **You are the trustmaker.** You create the trust and decide its terms. Some states use the words settlor or grantor.
+- **You are usually the first trustee.** You keep managing your own property just as before.
+- **A successor trustee takes over** if you die or can no longer manage your affairs. This is someone you choose, such as a spouse, a grown child or a trusted friend.
+- **Beneficiaries receive the property** under the trust's instructions, now or later.
+
+Married couples often make one joint trust together. Each spouse can also have a separate trust.
+
+## Why people choose one
+
+- **It can avoid probate.** Property that is in the trust when you die passes under the trust's terms, generally without a court case. That can save time and expense, especially if you own real estate in more than one state.
+- **It stays private.** A will usually becomes a public court record once it goes through probate. A trust generally does not.
+- **It plans for incapacity.** If you become unable to manage your affairs, your successor trustee can step in without a court-appointed guardian or conservator for the trust property.
+- **It can hold property for later.** A trust can keep an inheritance for a young adult until a set age, instead of handing it over all at once.
+
+## What it does not do
+
+A trust only controls property that has actually been placed in it. Signing the trust is the first step. You also need to retitle your home and accounts in the name of the trust, or name the trust as beneficiary where that is allowed. Anything left outside the trust may still go through probate, which is why people with a trust also sign a pour-over will.
+
+A revocable living trust generally does not reduce income taxes or shield property from your own creditors while you are alive.
+
+## Getting started
+
+You can [write your living trust](trust.html) here, or a [joint trust](trust-joint.html) with your spouse. To compare it with a will, read [Will or living trust: which is right for you?](learn.html#will-vs-living-trust)
+
 === what-is-a-pour-over-will
 title: What is a pour-over will?
-category: Trusts
+category: Wills
 date: 2026-09-23
 summary: A pour-over will is the safety net for your living trust. It sends anything you forgot to put in the trust into it after you die.
 ---
@@ -178,7 +212,7 @@ Your will can also say whether your executor must post a bond, which is a kind o
 
 === choosing-a-guardian
 title: How to choose a guardian for your children
-category: Family
+category: Children
 date: 2026-09-18
 summary: A guardian would raise your children if you couldn't. Here is how to think through the choice.
 ---
@@ -207,7 +241,7 @@ If you and another parent are both alive, the surviving parent will usually keep
 
 === power-of-attorney-and-health-care-directive
 title: Power of attorney and health care directive: what's the difference?
-category: Planning
+category: Incapacity
 date: 2026-09-17
 summary: One handles your money and paperwork. The other handles your medical decisions. Both matter if you couldn't speak for yourself.
 ---
