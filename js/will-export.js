@@ -441,7 +441,7 @@
         doc.setPage(i);
         if (o.draftLabel) {
           doc.saveGraphicsState(); doc.setGState(new doc.GState({ opacity: 0.09 }));
-          doc.setTextColor(88, 55, 133); font(true, 34);
+          doc.setTextColor(47, 111, 219); font(true, 34);
           var wl = doc.getTextWidth(o.draftLabel), ang = 35 * Math.PI / 180;
           doc.text(o.draftLabel, PW / 2 - (wl / 2) * Math.cos(ang), PH / 2 + (wl / 2) * Math.sin(ang), { angle: 35 });
           doc.restoreGraphicsState(); doc.setTextColor(0, 0, 0);
