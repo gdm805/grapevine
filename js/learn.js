@@ -76,7 +76,7 @@
     if (cats.indexOf(filter) < 0) filter = 'All';
     var shown = articles.filter(function (a) { return filter === 'All' || a.category === filter; });
     var feat = shown[0], rest = shown.slice(1);
-    return '<section class="learn-hero"><div class="container"><p class="overline">Learn</p><h1>Estate planning, <em>explained plainly.</em></h1>' +
+    return '<section class="learn-hero hero-center"><div class="container"><h1>Estate planning, <em>explained plainly.</em></h1>' +
       '<p class="lead">Short, clear guides to wills, trusts and the paperwork that protects your family. General information, written for people doing this for the first time.</p></div></section>' +
       '<section class="learn-body"><div class="container">' +
       '<div class="filters" role="group" aria-label="Filter by topic">' + cats.map(function (c) {

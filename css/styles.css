@@ -71,7 +71,7 @@ a { color: var(--grape); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--header-h); }
 .brand { display: block; flex: none; }
 /* the header logo (images/tovakin-logo.svg since 13 Oct 2026; was images/grapevine-logo-header.svg at 72px) */
-.brand img { height: 54px; width: auto; }
+.brand img { height: 81px; width: auto; }
 .primary { display: flex; gap: clamp(16px, 2.6vw, 34px); margin-left: auto; }
 .primary a { color: var(--ink-soft); text-decoration: none; font-weight: 500; font-size: 15px; padding: 8px 0; border-bottom: 2px solid transparent; }
 .primary a:hover { color: var(--ink); border-bottom-color: var(--leaf); }
@@ -196,7 +196,7 @@ a { color: var(--grape); }
 
 .site-footer { background: var(--sand); padding-top: clamp(48px, 6vw, 72px); }
 .foot-grid { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.3fr); gap: 32px clamp(32px, 6vw, 88px); align-items: start; }
-.foot-brand img { width: 200px; }
+.foot-brand img { width: 300px; }
 .foot-nav { display: grid; gap: 10px; font-size: 15px; }
 .foot-nav a { color: var(--ink-soft); text-decoration: none; width: fit-content; }
 .foot-nav a:hover { color: var(--grape); text-decoration: underline; }
@@ -221,7 +221,7 @@ a { color: var(--grape); }
 }
 @media (max-width: 720px) {
   :root { --header-h: 76px; }
-  .brand img { height: 44px; }
+  .brand img { height: 66px; }
   .doc-list a { grid-template-columns: 48px minmax(0, 1fr) 20px; padding: 22px 4px; }
   .doc-ico { width: 48px; height: 48px; }
   .doc-tags { display: none; }
@@ -381,7 +381,7 @@ a { color: var(--grape); }
 .plan.picked { outline: 3px solid var(--leaf); outline-offset: 4px; }
 /* small phones: logo, "Get started" and the menu button must fit in one row */
 @media (max-width: 480px) {
-  .brand img { height: 36px; }
+  .brand img { height: 44px; }
   .bar { gap: 8px; }
   .bar .btn-sm { padding: 0 14px; font-size: 14px; min-height: 40px; }
   .menu-btn { width: 42px; height: 42px; }
