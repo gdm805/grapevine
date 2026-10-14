@@ -87,7 +87,10 @@ a { color: var(--grape); }
 .hero { padding-block: clamp(40px, 6vw, 88px) clamp(56px, 7vw, 104px); }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
 /* the "Try it now" demo was removed from the hero (13 Oct 2026): the copy stands alone, at a readable width */
-.hero-copy { max-width: 1120px; }
+.hero-copy { max-width: 1120px; margin-inline: auto; text-align: center; }
+/* the home page opening is centred (13 Oct 2026), like the Pricing page's */
+.hero-copy .lead { margin-inline: auto; max-width: 58ch; }
+.hero-copy .cta-row, .hero-copy .assure { justify-content: center; }
 .hero h1 { font-size: clamp(44px, 6.6vw, 82px); line-height: 1.02; letter-spacing: -0.022em; margin-block: 18px 22px; }
 .hero h1 em { font-style: italic; color: var(--grape); }
 .lead { font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-soft); max-width: 46ch; }
