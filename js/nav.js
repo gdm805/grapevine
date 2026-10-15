@@ -18,6 +18,19 @@
   window.addEventListener('resize', function () { if (window.innerWidth > 960) set(false); });
 })();
 
+/* AD LINKS (15 Oct 2026): a visitor who arrives from one of our tagged ad links (?utm_source=meta&utm_campaign=kids-will)
+   has that tag remembered in this browser, so checkout can note which ad a paid order came from (js/checkout.js adds it to
+   the Stripe reference). No tracking pixel, no cookies, nothing sent anywhere until the person pays. Kept 30 days. */
+(function () {
+  'use strict';
+  try {
+    var q = new URLSearchParams(location.search), src = q.get('utm_source'), camp = q.get('utm_campaign');
+    if (!src && !camp) return;
+    var tidy = function (v) { return String(v || '').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40); };
+    localStorage.setItem('grapevine.adsrc.v1', JSON.stringify({ source: tidy(src), campaign: tidy(camp), at: Date.now() }));
+  } catch (e) { /* storage blocked: nothing remembered */ }
+})();
+
 /* BETA BANNER (temporary): a thin strip above the header for beta testers only -- people who arrived through
    an address ending in ?beta=1 (remembered in this browser). It turns itself off after BETA_UNTIL, so nothing
    needs to be removed when the beta ends (though this block can be deleted then). */

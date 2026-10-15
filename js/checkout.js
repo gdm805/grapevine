@@ -116,7 +116,14 @@
     var includes = (plan === 'doc' && docKey && window.GVFlow) ? [window.GVFlow.baseLabel(docKey)] : p.includes;
     var link = ((PAYMENT_LINKS[linkPlan] || {})[payHousehold] || '').trim();
     var payHref = '#';
-    if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold + (plan === 'doc' && docKey ? '_' + docKey : '')); }
+    /* which ad brought this visitor (js/nav.js, last 30 days) rides on the end of the Stripe reference: "will_single_ad-meta-kids-will".
+       The payment check reads only the first three parts, so this never changes what is unlocked. */
+    var adTag = '';
+    try {
+      var ad = JSON.parse(localStorage.getItem('grapevine.adsrc.v1') || 'null');
+      if (ad && Date.now() - (ad.at || 0) < 30 * 864e5 && (ad.source || ad.campaign)) adTag = '_ad-' + [ad.source, ad.campaign].filter(Boolean).join('-');
+    } catch (e) { adTag = ''; }
+    if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold + (plan === 'doc' && docKey ? '_' + docKey : (adTag ? '_x' : '')) + adTag); }
     /* beta testers: Stripe applies the 100%-off code for them (see GV_BETA in js/plans.js) */
     if (link && betaTester()) payHref += '&prefilled_promo_code=' + encodeURIComponent(window.GV_BETA.code);
 
