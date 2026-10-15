@@ -14,12 +14,14 @@
 .switch-pill.on { background: var(--grape); border-color: var(--grape); color: #fff; }
 .switch-pill.on span { color: var(--lavender); }
 
-.order-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); box-shadow: var(--shadow-card); padding: clamp(24px, 3.4vw, 38px); display: grid; gap: 6px; max-width: 520px; }
+.order-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-xl); box-shadow: var(--shadow-card); padding: clamp(24px, 3.4vw, 38px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; max-width: 520px; }
 .order-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 .order-head h2 { font-size: 28px; }
 .order-card .plan-lead { margin-top: 6px; }
 .order-card .includes { margin-bottom: 22px; }
-.order-card .btn { width: 100%; margin-top: 4px; }
+.order-card .btn { width: 100%; margin-top: 4px; white-space: normal; text-align: center; height: auto; min-height: 52px; line-height: 1.25; padding-block: 12px; }
+/* everything in the card wraps inside it (14 Oct 2026: a long button label pushed text past the card's edge) */
+.order-card > * { min-width: 0; }
 
 .pay-off { background: var(--sand); border: 1px dashed var(--field-line); border-radius: var(--r-md); padding: 16px 18px; margin-top: 4px; }
 .pay-off p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); }
