@@ -241,7 +241,7 @@ This Affidavit may be furnished to a person or entity requesting sworn evidence 
 
 This Affidavit is not a substitute for a statutory Certification of Trust, Certificate of Trust, Extract of Trust, Memorandum of Trust, or other state-specific trust-authentication vehicle when applicable law or the pending transaction requires that vehicle.
 
-If the purpose of the request is merely to establish the existence of the Trust or the authority of the Trustee, a Certification of Trust may be the better fit -- see cert.html.
+If the purpose of the request is merely to establish the existence of the Trust or the authority of the Trustee, a Certification of Trust may be more appropriate.
 
 ## No Dispositive Disclosure
 
@@ -252,8 +252,6 @@ This Affidavit does not disclose dispositive provisions of the Trust except to t
 If this Affidavit will be recorded or used in connection with real property, the applicable real-property and recorder rules should be confirmed before relying on it. This Affidavit does not replace a recordable Certification, Memorandum, Extract, legal description, deed, or other instrument required by the jurisdiction where the property is located.
 
 # EXECUTION
-
-Because this document is an Affidavit, the Affiant must swear or affirm the truth of the statements before an authorized officer -- a notary won't accept a pre-filled jurat.
 
 [[include affidavit_execution]]
 `;
