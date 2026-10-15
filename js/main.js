@@ -77,7 +77,7 @@
     if (kicker) kicker.hidden = !done;
     if (cta) cta.style.display = done ? '' : 'none';
     if (!done) {
-      title.textContent = answered ? 'Answer all six to see the package that matches your answers (' + answered + ' of 6 answered).' : 'Answer all six questions to see the package that matches your answers.';
+      title.textContent = answered ? 'Answer all six to see what people in similar situations often choose (' + answered + ' of 6 answered).' : 'Answer all six questions to see what people in similar situations often choose.';
       if (why) why.textContent = '';
       list.innerHTML = '';
       return;
@@ -104,20 +104,21 @@
     if (why) {
       /* only the reasons this visitor gave */
       var reasons = [];
+      /* general information, not advice (15 Oct 2026): what people in similar situations often choose */
       if (married) reasons.push('are married');
       if (kids) reasons.push('have children under 18');
       if (home) reasons.push('own real estate');
-      if (probate) reasons.push('want to keep your estate out of probate court');
-      if (money) reasons.push('want someone to handle your money if you can’t');
-      if (care) reasons.push('want someone to make medical decisions for you if you can’t');
+      if (probate) reasons.push('want to keep their estate out of probate court');
+      if (money) reasons.push('want someone to handle their money if they can’t');
+      if (care) reasons.push('want someone to make medical decisions for them if they can’t');
       var planText = {
-        complete: 'the Complete package, a will plus a living trust' + (married ? ' for the two of you' : '') + ', covers what you described',
-        essentials: 'the Essentials package, a will plus the documents that let someone act for you' + (married ? ', for each of you' : '') + ', covers what you described',
-        will: 'a will' + (married ? ' for each of you' : '') + ' covers what you described'
+        complete: 'the Complete package, a will plus a living trust' + (married ? ' for the two of them' : ''),
+        essentials: 'the Essentials package, a will plus the documents that let someone act for them' + (married ? ', for each of them' : ''),
+        will: 'a will' + (married ? ' for each of them' : '')
       }[plan];
       why.textContent = reasons.length
-        ? 'Because you ' + joinAnd(reasons) + ', ' + planText + '.'
-        : 'Based on your answers, ' + planText + '.';
+        ? 'People who ' + joinAnd(reasons) + ' often choose ' + planText + '. The choice is yours.'
+        : 'People who answer this way often choose ' + planText + '. The choice is yours.';
     }
     list.innerHTML = out.map(function (r) {
       return '<li>' + tick + '<span><strong>' + r.t + '</strong><span class="why">' + r.w + '</span></span></li>';
