@@ -104,7 +104,7 @@
     }
   } catch (e) {}
 
-  /* the home page's "which documents do I need?" questions send their suggestion as ?need=will|essentials|complete.
+  /* the home page's "What do people like me choose?" questions send their suggestion as ?need=will|essentials|complete.
      The visitor lands at the top of this page as usual (prices, single or couple) with a note naming the
      suggested plan; that plan's card is outlined and labelled "Suggested for you", and the page's standing
      "Recommended" label is hidden for this visit so there's only one suggestion on screen. */
