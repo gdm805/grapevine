@@ -37,7 +37,7 @@
 (function () {
   'use strict';
   var BETA_UNTIL = new Date('2026-11-13T00:00:00');   /* launch day; the beta ends the day before (launch moved to Nov 13, 2026) */
-  var EMAIL = 'support@grapevinedocs.com';
+  var EMAIL = 'support@tovakin.com';
   if (new Date() >= BETA_UNTIL) return;
   var tester = false;
   try {
@@ -130,7 +130,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
         '<p class="gv-help-note gv-chat-note">An automated assistant answers here. It helps with using Tovakin and can\u2019t give legal advice. Please don\u2019t type account numbers or Social Security numbers.</p></div>' : '') +
       '<a class="gv-help-link" href="' + signHref() + '">How do I sign my documents? &rarr;</a>' +
       '<a class="gv-help-link" href="' + url('questions.html') + '">Common questions &rarr;</a>' +
-      '<a class="gv-help-link" href="mailto:support@grapevinedocs.com?subject=Tovakin%20help">Email support@grapevinedocs.com &rarr;</a>' +
+      '<a class="gv-help-link" href="mailto:support@tovakin.com?subject=Tovakin%20help">Email support@tovakin.com &rarr;</a>' +
       '<p class="gv-help-note">We help with using Tovakin, such as finding your documents, downloading and printing. We can’t give legal advice about your situation.</p>' +
     '</div>';
   function mount() { document.body.appendChild(wrap); }
@@ -152,7 +152,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
      from page to page and is gone when the tab closes. Each question goes to the Cloudflare program, which
      answers with Claude under Greg's no-legal-advice instructions. */
   function chat(root) {
-    var KEY = 'gv.chat.v1', EMAIL = 'support@grapevinedocs.com';
+    var KEY = 'gv.chat.v1', EMAIL = 'support@tovakin.com';
     var GREETING = 'Hi! I can help with using Tovakin: finding your documents, paying, downloading, printing and signing steps. I can\u2019t give legal advice about your situation.';
     var log = root.querySelector('.gv-chat-log'), form = root.querySelector('.gv-chat-form'), input = root.querySelector('#gv-chat-in');
     var sendBtn = root.querySelector('.gv-chat-send');
@@ -160,9 +160,9 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
     try { state = JSON.parse(sessionStorage.getItem(KEY) || 'null') || state; } catch (e) { /* new chat */ }
     function save() { try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ } }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-    /* plain text, with web addresses on grapevinedocs.com and the support email made into links */
+    /* plain text, with web addresses on tovakin.com and the support email made into links */
     function format(s) {
-      return esc(s).replace(/(https?:\/\/)?(www\.grapevinedocs\.com[^\s<),]*)/g, function (_, p, u) {
+      return esc(s).replace(/(https?:\/\/)?(www\.(?:tovakin|grapevinedocs)\.com[^\s<),]*)/g, function (_, p, u) {
         var href = 'https://' + u.replace(/[.]$/, ''), tail = /[.]$/.test(u) ? '.' : '';
         return '<a href="' + href + '">' + u.replace(/[.]$/, '') + '</a>' + tail;
       }).replace(new RegExp(EMAIL.replace(/[.]/g, '\\.'), 'g'), '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>').replace(/\n/g, '<br>');

@@ -128,7 +128,7 @@
       '<div class="sum-row"><span class="sum-l">' + (plan === 'doc' ? 'Document' : 'Plan') + '</span><span class="sum-v">' + esc(plan === 'doc' && window.GVFlow ? window.GVFlow.baseLabel(docKey) : p.name) + '</span></div>' +
       '<div class="sum-row"><span class="sum-l">Amount</span><span class="sum-v">' + amount + '</span></div>' +
       '</div>' +
-      '<p class="paid-note"><strong>Save your files right away.</strong> Your purchase is remembered only in this browser on this device. If you switch devices or clear your browser data, email support@grapevinedocs.com with your Stripe receipt and we’ll help you get back in.</p>' +
+      '<p class="paid-note"><strong>Save your files right away.</strong> Your purchase is remembered only in this browser on this device. If you switch devices or clear your browser data, email support@tovakin.com with your Stripe receipt and we’ll help you get back in.</p>' +
       '</div>';
   }
 })();

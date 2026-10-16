@@ -13,7 +13,7 @@
         matching price in js/plans.js (Products > Add a Payment Link, one per row below).
      2. In that Payment Link's settings, under "After payment", choose "Redirect customers to a website"
         and enter, for the Will plan's single-person link:
-          https://www.grapevinedocs.com/paid.html?plan=will&household=single&session_id={CHECKOUT_SESSION_ID}
+          https://www.tovakin.com/paid.html?plan=will&household=single&session_id={CHECKOUT_SESSION_ID}
         Swap "will" and "single" for the matching plan/household on each link. Type {CHECKOUT_SESSION_ID}
         exactly like that -- Stripe
         fills it in automatically; it is not something you type in yourself.
@@ -208,7 +208,7 @@
      California. The bold statements are the ones 6410(b) requires in 12-point bold; (b)(3) and (b)(5) -- the
      county clerk's details -- appear only once GV_CA_LDA.registered is true (js/plans.js). */
   var caAck = false;
-  var TERMS_VERSION = 'October 13, 2026';   /* the "Last updated" date on terms.html */
+  var TERMS_VERSION = 'October 16, 2026';   /* the "Last updated" date on terms.html */
   function isCA() {
     try { return ((JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || '') === 'California'; } catch (e) { return false; }
   }
@@ -224,7 +224,7 @@
       '<p class="ca-bold">You may obtain information about free or low-cost representation through a local bar association or legal aid foundation. If you believe you have been a victim of fraud, the unauthorized practice of law, or any other injury, you may contact local law enforcement, a district attorney, or a legal aid foundation.</p>' +
       '<p class="ca-bold">Tovakin is not permitted to engage in the practice of law, including providing any kind of advice, explanation, opinion, or recommendation to you about possible legal rights, remedies, defenses, options, selection of forms, or strategies.</p>' +
       '<p>Under California Business and Professions Code section 6409.1, the venue for an action arising out of a dispute between you and Tovakin is the county where you have your primary residence.</p>' +
-      '<p class="ca-cancel"><strong>Your right to cancel:</strong> you may cancel this purchase within 24 hours by giving us any written statement that you are canceling, by email to <a href="mailto:support@grapevinedocs.com">support@grapevinedocs.com</a> or by mail to Grapevine Docs, LLC at the address in our Terms. A mailed cancellation is effective on its postmark date. We will then promptly return your payment, except fees for services actually, necessarily, and reasonably performed for you with your knowing and express written consent.</p>' +
+      '<p class="ca-cancel"><strong>Your right to cancel:</strong> you may cancel this purchase within 24 hours by giving us any written statement that you are canceling, by email to <a href="mailto:support@tovakin.com">support@tovakin.com</a> or by mail to Grapevine Docs, LLC at the address in our Terms. A mailed cancellation is effective on its postmark date. We will then promptly return your payment, except fees for services actually, necessarily, and reasonably performed for you with your knowing and express written consent.</p>' +
       '<label class="check ca-ack"><input type="checkbox" id="ca-ack"' + (caAck ? ' checked' : '') + '><span>I have read the California notice above.</span></label></div>';
   }
   /* agreeing to the Terms is required before payment (Greg, 10 Oct 2026): the pay button stays switched off until
