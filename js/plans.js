@@ -99,29 +99,29 @@ window.GV_PLANS = {
       lead: 'Just your will',
       /* the full list of what this plan unlocks, always -- no trailing "and more". Keep this list and
          the plan's own <ul class="includes"> in pricing.html in sync. */
-      includes: ['Last Will and Testament', 'Important Contacts', 'Final Wishes'],
+      includes: ['Last Will and Testament', 'Important Contacts', 'Care of your pets (a caretaker named in your will, with money for their care)'],
       cta: 'Start your will',
       why: 'Start here if you mainly want to name a guardian for your children and say who receives what you own.',
       /* which builders this plan unlocks for download and print, by their data-kind:
          will | pourover | dpoa | dementia | hcd | hipaa | trust | trustjoint | cert | affidavit | assignment | finalwishes | contacts */
-      unlocks: ['will', 'finalwishes', 'contacts'],
+      unlocks: ['will', 'contacts'],
       goesTo: 'will.html'
     },
     essentials: {
       name: 'Essentials',
       tag: 'Your will, plus the documents that let someone act for you.',
       lead: 'Everything in Will, plus these additional documents:',
-      includes: ['Last Will and Testament', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
+      includes: ['Last Will and Testament', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Important Contacts'],
       cta: 'Start with Essentials',
-      why: 'Adds the documents that let someone speak and act for you, plus Final Wishes and Important Contacts.',
-      unlocks: ['will', 'dpoa', 'dementia', 'hcd', 'hipaa', 'finalwishes', 'contacts'],
+      why: 'Adds the documents that let someone speak and act for you if you can’t.',
+      unlocks: ['will', 'dpoa', 'dementia', 'hcd', 'hipaa', 'contacts'],
       goesTo: 'will.html'
     },
     complete: {
       name: 'Complete',
       tag: 'Everything in Essentials, plus a trust for your home and savings.',
       lead: 'Everything in Essentials, plus these additional documents:',
-      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust', 'Pour-Over Will', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts', 'Companion animal protection (a caretaker for your pets, with money for their care)'],
+      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust', 'Pour-Over Will', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts', 'Care of your pets (a caretaker named in your trust, with money for their care)'],
       cta: 'Start with Complete',
       why: 'Adds a trust and the paperwork that supports it, so your home and savings can pass on privately.',
       /* Complete customers get the pour-over will instead of the plain will, but nothing stops them from also
