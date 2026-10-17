@@ -767,6 +767,10 @@
     v.has_children = hasKids; v.has_minor_children = hasKids && kids.some(function (c) { return c.minor; });
     v.children = kids;
     v.guardian = clean(a.guardian); v.alt_guardian = clean(a.altGuardian); v.has_alt_guardian = !!v.alt_guardian;
+    /* the first backup guardian stays in altGuardian (where earlier answers saved it); the second is gAlt2 */
+    v.guardian_nominations = guardianNoms(a, a.hasChildren === 'yes' ? minorsOf(a) : [], a.altGuardian, 'any child of mine');
+    v.prop_fid_yes = v.has_minor_children && a.propFid === 'yes'; v.prop_fid = clean(a.propFidName);
+    v.prop_alternates = [a.propAlt1].map(clean).filter(Boolean).map(function (x) { return { prop_alt: x }; });
     v.executor = clean(a.executor);
     v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
     if (a.wantsBackups === 'no') v.successors = [];
@@ -819,7 +823,8 @@
     state: '', ageOk: false, freeOk: false,
     name: '', county: '', marital: '', spouse: '', revokeSpouse: '',
     hasChildren: '', children: [{ name: '', minor: false }],
-    guardian: '', altGuardian: '',
+    guardian: '', altGuardian: '', gAlt2: '', guardianMode: 'same', eachGuardian: {},
+    propFid: '', propFidName: '', propAlt1: '',
     executor: '', successors: [{ name: '' }],
     wantsGifts: '', gifts: [{ item: '', to: '', recipient: '' }],
     residuary: '', beneficiaries: [{ name: '', share: '', contingent: 'descendants', contName: '' }]
@@ -836,6 +841,7 @@
     { id: 'about', label: 'About you' },
     { id: 'children', label: 'Children' },
     { id: 'guardian', label: 'Guardian', show: hasMinor },
+    { id: 'propfid', label: 'Property for a minor', show: hasMinor },
     { id: 'executor', label: 'Personal representative' },
     { id: 'gifts', label: 'Special gifts' },
     { id: 'pets', label: 'Pets' },
@@ -1096,10 +1102,11 @@
           ? '<p class="hint">Louisiana: a child who is 23 or younger, or who is permanently unable to care for themselves or manage their property, is a \u201cforced heir\u201d entitled by law to a share of your estate. Your will gives any forced heir that share and reduces the other gifts to make room. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>'
           : '');
     },
-    guardian: function () {
-      return stepHead('Who should look after your children under 18?', 'This person would care for them if you couldn\u2019t. A court still has the final say.') +
-        field('Guardian\u2019s full name', text('guardian', '')) +
-        field('A backup guardian <em>(optional)</em>', text('altGuardian', ''), 'Used if your first choice can\u2019t serve.');
+    guardian: function () { return guardianScreen('altGuardian'); },
+    propfid: function () {
+      return stepHead('If a child under 18 inherits from your will, who should manage it?', 'A child can\u2019t manage money or property on their own. You can choose someone to manage what your child receives under this will, or skip this.') +
+        pills('propFid', [['yes', 'Yes, choose someone'], ['no', 'No, skip this']], true) +
+        (answers.propFid === 'yes' ? field('Who should manage it?', text('propFidName', '')) + field('A backup <em>(optional)</em>', text('propAlt1', '')) : '');
     },
     executor: function () {
       var rows = '<div class="rowset">' + answers.successors.map(function (s, i) {
@@ -1187,7 +1194,8 @@
         row('Lives in', esc([v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ')), 'start') +
         row('Name', esc(v.name) + (v.has_spouse ? ', married to ' + esc(v.spouse) : ''), 'about') +
         row('Children', v.has_children ? esc(v.children.map(function (c) { return c.child; }).join(', ')) : 'None', 'children') +
-        (v.has_minor_children ? row('Guardian', esc(v.guardian), 'guardian') : '') +
+        (v.has_minor_children ? row('Guardian', v.guardian_nominations.map(function (g) { return (v.guardian_nominations.length > 1 ? esc(g.applies_to) + ': ' : '') + esc(g.guardian); }).join('; '), 'guardian') : '') +
+        (v.has_minor_children ? row('Manages a minor\u2019s property', v.prop_fid_yes ? esc(v.prop_fid) : 'Not chosen', 'propfid') : '') +
         row('Personal representative', pr, 'executor') +
         row('Special gifts', v.has_gifts ? v.gifts.length + (v.gifts.length === 1 ? ' gift' : ' gifts') : 'None', 'gifts') +
         row('Everything else', bens, 'residuary') + '</div>' +
@@ -1220,7 +1228,9 @@
       if (a.hasChildren === 'yes' && !a.children.some(function (c) { return clean(c.name); })) e.push('Enter at least one child\u2019s name.');
       if (a.hasChildren === 'yes' && a.marital === 'married' && a.children.some(function (c) { return clean(c.name) && !c.rel; })) e.push('For each child, choose whose child they are.');
     } else if (id === 'guardian') {
-      if (!clean(a.guardian)) e.push('Enter the name of the person who should be guardian.');
+      guardianErrors(a, e);
+    } else if (id === 'propfid') {
+      propFidErrors(a, e);
     } else if (id === 'executor') {
       if (!clean(a.executor)) e.push('Enter the name of your personal representative.');
       anotherErrors(a, e, 'personal representative', false, (a.successors || []).some(function (x) { return clean(x.name); }), 0);
@@ -1347,6 +1357,37 @@
     return '<select class="input child-rel" data-list="' + list + '" data-i="' + i + '" data-f="rel" aria-label="Whose child is this?">' +
       '<option value="">Whose child?</option>' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (current === o[0] ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>';
   }
+  /* THE GUARDIAN QUESTION (will and pour-over will): one guardian with up to two backups, or, with two or more
+     minor children, a different guardian (and one backup) for each child. firstAlt is the answer that holds the
+     first backup: altGuardian in the will (where earlier answers saved it), gAlt1 in the pour-over will. */
+  function guardianScreen(firstAlt) {
+    var minors = minorsOf(answers), multi = minors.length > 1, each = multi && answers.guardianMode === 'each';
+    var body;
+    if (!each) {
+      body = field('Guardian’s full name', text('guardian', '')) +
+        field('A backup guardian <em>(optional)</em>', text(firstAlt, ''), 'Used if your first choice can’t serve.') +
+        field('A second backup <em>(optional)</em>', text('gAlt2', ''), 'Used if neither of the first two can serve.');
+    } else {
+      body = minors.map(function (m) {
+        var g = (answers.eachGuardian || {})[m.idx] || {};
+        return '<div class="ben"><strong>' + esc(m.child) + '</strong>' +
+          field('Guardian’s full name', '<input class="input" data-path="eachGuardian.' + m.idx + '.name" value="' + val(g.name) + '" autocomplete="off" aria-label="Guardian for ' + val(m.child) + '">') +
+          field('A backup guardian <em>(optional)</em>', '<input class="input" data-path="eachGuardian.' + m.idx + '.alt1" value="' + val(g.alt1) + '" autocomplete="off" aria-label="Backup guardian for ' + val(m.child) + '">') + '</div>';
+      }).join('');
+    }
+    return stepHead('Who should look after your children under 18?', 'This person would care for them if you couldn’t. A court still has the final say.') +
+      (multi ? field('Should the same person look after all of them?', pills('guardianMode', [['same', 'Yes, the same person'], ['each', 'No, a different person for each child']], true)) : '') + body;
+  }
+  function guardianErrors(a, e) {
+    var minors = minorsOf(a);
+    if (a.guardianMode === 'each' && minors.length > 1) {
+      if (minors.some(function (m) { return !clean(((a.eachGuardian || {})[m.idx] || {}).name); })) e.push('Enter a guardian for each child.');
+    } else if (!clean(a.guardian)) e.push('Enter the name of the person who should be guardian.');
+  }
+  function propFidErrors(a, e) {
+    if (!a.propFid) e.push('Choose whether to name someone to manage a minor’s property.');
+    if (a.propFid === 'yes' && !clean(a.propFidName)) e.push('Enter the name of the person who should manage it.');
+  }
   function willKids(a) {
     var married = a.marital === 'married';
     var all = (a.children || []).map(function (c) { return { name: clean(c.name), minor: !!c.minor, rel: married ? (c.rel || '') : 'both' }; }).filter(function (c) { return c.name; });
@@ -1357,6 +1398,21 @@
   }
   function altList(names) {
     return names.map(clean).filter(Boolean).map(function (x) { return { alternate: x }; });
+  }
+  /* backup guardians, in order: the second backup serves only if the guardian AND the first backup can't */
+  function guardianAlts(names) {
+    var list = altList(names);
+    return list.map(function (x, i) { return { alternate: x.alternate, second: i === 1, first_alt: i === 1 ? list[0].alternate : '' }; });
+  }
+  /* the guardian nominations (will and pour-over will): one guardian for every minor child, or one for each */
+  function guardianNoms(a, minors, firstAlt, anyChild) {
+    if (a.guardianMode === 'each' && minors.length > 1) {
+      return minors.map(function (m) {
+        var g = (a.eachGuardian || {})[m.idx] || {};
+        return { applies_to: m.child, guardian: clean(g.name), alternates: guardianAlts([g.alt1]) };
+      });
+    }
+    return [{ applies_to: minors.length === 1 ? minors[0].child : anyChild, guardian: clean(a.guardian), alternates: guardianAlts([firstAlt, a.gAlt2]) }];
   }
   function buildVarsPO(a, states, settings) {
     var v = {}, st = states.map[a.state] || null;
@@ -1382,14 +1438,7 @@
     /* the first person named is always "executor"; together, they head the co-personal representative list */
     if (v.pr_co && v.executor && !v.co_prs.some(function (x) { return x.co_pr === v.executor; })) v.co_prs.unshift({ co_pr: v.executor });
     if (a.wantsBackups === 'no') { v.successors = []; v.pr_co = false; v.pr_successive = true; }
-    if (a.guardianMode === 'each' && minors.length > 1) {
-      v.guardian_nominations = minors.map(function (m) {
-        var g = (a.eachGuardian || {})[m.idx] || {};
-        return { applies_to: m.child, guardian: clean(g.name), alternates: altList([g.alt1]) };
-      });
-    } else {
-      v.guardian_nominations = [{ applies_to: minors.length === 1 ? minors[0].child : 'any Child of mine', guardian: clean(a.guardian), alternates: altList([a.gAlt1, a.gAlt2]) }];
-    }
+    v.guardian_nominations = guardianNoms(a, minors, a.gAlt1, 'any Child of mine');
     v.prop_fid_yes = a.propFid === 'yes'; v.prop_fid = clean(a.propFidName);
     v.prop_alternates = [a.propAlt1].map(clean).filter(Boolean).map(function (x) { return { prop_alt: x }; });
     var days = parseInt(settings.survival_days, 10) || 30;
@@ -1469,24 +1518,7 @@
       }
       return h;
     },
-    guardian: function () {
-      var minors = minorsOf(answers), multi = minors.length > 1, each = multi && answers.guardianMode === 'each';
-      var body;
-      if (!each) {
-        body = field('Guardian’s full name', text('guardian', '')) +
-          field('A backup guardian <em>(optional)</em>', text('gAlt1', ''), 'Used if your first choice can’t serve.') +
-          field('A second backup <em>(optional)</em>', text('gAlt2', ''));
-      } else {
-        body = minors.map(function (m) {
-          var g = (answers.eachGuardian || {})[m.idx] || {};
-          return '<div class="ben"><strong>' + esc(m.child) + '</strong>' +
-            field('Guardian’s full name', '<input class="input" data-path="eachGuardian.' + m.idx + '.name" value="' + val(g.name) + '" autocomplete="off" aria-label="Guardian for ' + val(m.child) + '">') +
-            field('A backup guardian <em>(optional)</em>', '<input class="input" data-path="eachGuardian.' + m.idx + '.alt1" value="' + val(g.alt1) + '" autocomplete="off" aria-label="Backup guardian for ' + val(m.child) + '">') + '</div>';
-        }).join('');
-      }
-      return stepHead('Who should look after your children under 18?', 'This person would care for them if you couldn’t. A court still has the final say.') +
-        (multi ? field('Should the same person look after all of them?', pills('guardianMode', [['same', 'Yes, the same person'], ['each', 'No, a different person for each child']], true)) : '') + body;
-    },
+    guardian: function () { return guardianScreen('gAlt1'); },
     propfid: function () {
       return stepHead('If a child under 18 inherits directly, who should manage it?', 'Most of your property goes to your trust. But some can pass to a child directly, for example under the fallback rules in your will. You can choose someone to manage it for the child, or skip this.') +
         pills('propFid', [['yes', 'Yes, choose someone'], ['no', 'No, skip this']], true) +
@@ -1546,13 +1578,9 @@
       if (!clean(a.executor)) e.push('Enter the name of your personal representative.');
       anotherErrors(a, e, 'personal representative', true, (a.successors || []).some(function (x) { return clean(x.name); }), (a.coPRs || []).filter(function (x) { return clean(x.name); }).length);
     } else if (id === 'guardian') {
-      var minors = minorsOf(a);
-      if (a.guardianMode === 'each' && minors.length > 1) {
-        if (minors.some(function (m) { return !clean(((a.eachGuardian || {})[m.idx] || {}).name); })) e.push('Enter a guardian for each child.');
-      } else if (!clean(a.guardian)) e.push('Enter the name of the person who should be guardian.');
+      guardianErrors(a, e);
     } else if (id === 'propfid') {
-      if (!a.propFid) e.push('Choose whether to name someone to manage a minor’s property.');
-      if (a.propFid === 'yes' && !clean(a.propFidName)) e.push('Enter the name of the person who should manage it.');
+      propFidErrors(a, e);
     }
     return e;
   }

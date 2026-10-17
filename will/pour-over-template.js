@@ -155,7 +155,11 @@ If two or more Personal Representatives serve together, they shall act in the ma
 If at my death {{applies_to}} is a minor and a guardian of that Child's person is needed, I nominate {{guardian}} to serve as guardian, subject to applicable law and the court's determination of the Child's best interests.
 
 [[each alternates]]
+[[if second]]
+If both {{guardian}} and {{first_alt}} are unwilling, unable, or ineligible to serve, I nominate {{alternate}} to serve as second alternate guardian.
+[[else]]
 If {{guardian}} is unwilling, unable, or ineligible to serve, I nominate {{alternate}} to serve as alternate guardian.
+[[end]]
 
 [[end]]
 [[end]]

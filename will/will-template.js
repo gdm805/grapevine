@@ -110,18 +110,34 @@ Unless this Will expressly provides otherwise, a stepchild of mine is not treate
 [[end]]
 [[end]]
 [[if has_minor_children]]
-// ADDED: your draft had no guardian clause (Section 1.06 is missing from the numbering).
-// If that is where your guardian language belongs, replace the words below with yours.
+// Matches the pour-over will's guardian article (17 Oct 2026): a guardian for every minor child or one for
+// each child, up to two backups in order, and an optional manager for property a minor child receives.
 ## Guardian of Minor Children
 
-If a guardian of the person is needed for any of my children who are under eighteen (18) years of age, I nominate {{guardian}} to serve as guardian.
+[[each guardian_nominations]]
+If at my death {{applies_to}} is a minor and a guardian of that child's person is needed, I nominate {{guardian}} to serve as guardian, subject to applicable law and the court's determination of the child's best interests.
 
-[[if has_alt_guardian]]
-If {{guardian}} is unwilling, unable, or ineligible to serve or ceases to serve, I nominate {{alt_guardian}} to serve as guardian.
+[[each alternates]]
+[[if second]]
+If both {{guardian}} and {{first_alt}} are unwilling, unable, or ineligible to serve, I nominate {{alternate}} to serve as second alternate guardian.
+[[else]]
+If {{guardian}} is unwilling, unable, or ineligible to serve, I nominate {{alternate}} to serve as alternate guardian.
+[[end]]
 
 [[end]]
-No guardian nominated by me shall be required to furnish a bond or other security, to the extent permitted by applicable law.
+[[end]]
+To the extent permitted by applicable law, I request that a guardian of a minor child's person designated by me be permitted to serve without bond. Any bond concerning management of a minor's property remains subject to applicable law and court order.
 
+[[if prop_fid_yes]]
+## Property of a Minor
+
+If applicable law requires a guardian, conservator, custodian, or other fiduciary to hold or manage property passing under this Will to a minor child of mine, I nominate {{prop_fid}} to serve in that capacity.
+
+[[each prop_alternates]]
+If {{prop_fid}} is unwilling, unable, or ineligible to serve, I nominate {{prop_alt}} to serve as alternate property fiduciary.
+
+[[end]]
+[[end]]
 [[end]]
 ## After-Born and Adopted Children {#sec_afterborn}
 
@@ -728,7 +744,7 @@ If two provisions of this Will can reasonably be interpreted consistently, they 
 //
 //  Words and names:   name  name_caps (the name in ALL CAPS, used in the title)  county  state  spouse  marital
 //                     executor (the primary personal representative)
-//                     guardian  alt_guardian  survival_days  survival_words ("thirty (30)")
+//                     guardian_nominations (applies_to, guardian, alternates)  prop_fid  survival_days  survival_words ("thirty (30)")
 //                     witness_count (as a word)  state_note
 //  Yes or no tests:   has_spouse  revoke_spouse  has_children  has_minor_children  children_answered
 //                     has_alt_guardian  has_successors  has_gifts  two_witnesses  self_proving
