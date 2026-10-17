@@ -99,7 +99,7 @@ window.GV_PLANS = {
       lead: 'Just your will',
       /* the full list of what this plan unlocks, always -- no trailing "and more". Keep this list and
          the plan's own <ul class="includes"> in pricing.html in sync. */
-      includes: ['Last Will and Testament', 'Important Contacts', 'Care of your pets (a caretaker named in your will, with money for their care)'],
+      includes: ['Last Will and Testament', 'Important Contacts', 'A guardian for your minor children', 'Care of your pets (a caretaker named in your will, with money for their care)'],
       cta: 'Start your will',
       why: 'Start here if you mainly want to name a guardian for your children and say who receives what you own.',
       /* which builders this plan unlocks for download and print, by their data-kind:
@@ -111,10 +111,10 @@ window.GV_PLANS = {
       name: 'Essentials',
       tag: 'Your will, plus the documents that let someone act for you.',
       lead: 'Everything in Will, plus these additional documents:',
-      includes: ['Last Will and Testament', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Important Contacts'],
+      includes: ['Last Will and Testament', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
       cta: 'Start with Essentials',
-      why: 'Adds the documents that let someone speak and act for you if you can’t.',
-      unlocks: ['will', 'dpoa', 'dementia', 'hcd', 'hipaa', 'contacts'],
+      why: 'Adds the documents that let someone speak and act for you, plus Final Wishes.',
+      unlocks: ['will', 'dpoa', 'dementia', 'hcd', 'hipaa', 'finalwishes', 'contacts'],
       goesTo: 'will.html'
     },
     complete: {

@@ -15,7 +15,7 @@ window.GVFlow = (function () {
   var KEY = 'grapevine.flow.v1';
   var FLOWS = {
     will: ['will', 'contacts'],
-    essentials: ['will', 'dpoa', 'hcd', 'dementia', 'hipaa', 'contacts'],
+    essentials: ['will', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
     /* Complete starts with the TRUST: the pour-over will asks about the trust (its name, date, trustee), so the
        trust has to exist in the person's mind -- and in their answers -- first. ALL trust documents (the trust and
        its paperwork) come before the pour-over will; then the personal documents. (Changed 25 Sep 2026; it used to start with the pour-over will.) */
