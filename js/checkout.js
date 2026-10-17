@@ -42,8 +42,8 @@
     doc: { single: 'https://buy.stripe.com/test_28E9ATelo4kD36x0AJ5EY06', couple: 'https://buy.stripe.com/test_dRm14n5OS3gzcH76Z75EY07' },
     /* the lower-priced single documents (GV_PLANS.docTier in js/plans.js): $19 = Important Contacts and Schedule A
        and $29 = Dementia Care Preferences (each one link, one price for everyone). Paste each Stripe link between the quotes. */
-    doc19: { single: 'https://buy.stripe.com/test_00wdR9gtwg3l7mN5V35EY0c', couple: 'https://buy.stripe.com/test_00wdR9gtwg3l7mN5V35EY0c' },
-    doc29: { single: 'https://buy.stripe.com/test_4gM5kDelo04n0YpfvD5EY0d', couple: 'https://buy.stripe.com/test_4gM5kDelo04n0YpfvD5EY0d' },
+    doc19: { single: 'https://buy.stripe.com/test_aFa8wP6SWdVd5eF2IR5EY0e', couple: 'https://buy.stripe.com/test_aFa8wP6SWdVd5eF2IR5EY0e' },
+    doc29: { single: 'https://buy.stripe.com/test_bJefZhelo8ATdLb0AJ5EY0f', couple: 'https://buy.stripe.com/test_bJefZhelo8ATdLb0AJ5EY0f' },
     health: { single: 'https://buy.stripe.com/test_fZu8wPelo7wP0Yp3MV5EY08', couple: 'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09' },
     trustpaper: { single: 'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a', couple: 'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b' }
   };

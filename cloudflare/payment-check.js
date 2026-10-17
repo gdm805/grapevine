@@ -29,8 +29,8 @@ var PAYMENT_LINKS = {
   'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a': { plan: 'trustpaper', household: 'single' },
   'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b': { plan: 'trustpaper', household: 'couple' }
   /* the lower-priced single documents (9 Oct 2026). tier says which documents a link may unlock (see DOC_TIER) */
-  , 'https://buy.stripe.com/test_00wdR9gtwg3l7mN5V35EY0c': { plan: 'doc', household: 'single', tier: 19 }
-  , 'https://buy.stripe.com/test_4gM5kDelo04n0YpfvD5EY0d': { plan: 'doc', household: 'single', tier: 29 }
+  , 'https://buy.stripe.com/test_aFa8wP6SWdVd5eF2IR5EY0e': { plan: 'doc', household: 'single', tier: 19 }
+  , 'https://buy.stripe.com/test_bJefZhelo8ATdLb0AJ5EY0f': { plan: 'doc', household: 'single', tier: 29 }
 
   /* LIVE links go here when you go live, one per line, same pattern, for example:
   , 'https://buy.stripe.com/abc123': { plan: 'will', household: 'single' } */
