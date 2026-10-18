@@ -41,6 +41,15 @@ window.GVFlow = (function () {
      are shared by the household, so they appear once. */
   var PER_PERSON = ['will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'];
   function baseOf(id) { return String(id).split(':')[0]; }
+  /* "About you" (about-you.html) is asked only where it saves typing: a PACKAGE that includes the Health Care
+     Directive or HIPAA Authorization, which need a date of birth, phone and address (17 Oct 2026, Greg). Every
+     document still asks for what it needs on its own screens, so a single document, the Will package and the
+     Trust Paperwork package go straight to their first document. */
+  var ABOUT_DOCS = ['hcd', 'hipaa'];
+  function needsAbout(f) {
+    f = f || current();
+    return !!(f && f.plan !== 'doc' && (f.docs || []).some(function (id) { return ABOUT_DOCS.indexOf(baseOf(id)) > -1; }));
+  }
 
   function household() {
     try { return sessionStorage.getItem('gv.household') === 'couple' ? 'couple' : 'single'; } catch (e) { return 'single'; }
@@ -132,9 +141,9 @@ window.GVFlow = (function () {
     else if (FLOWS[plan]) f = start(plan); else clear();
     /* send the click to the flow's FIRST document (for Complete: the trust, or the joint trust for a couple),
        whatever page the link itself names, keeping its ?household= and other settings */
-    if (f && f.docs.length && a.getAttribute('href')) {
+    if (f && f.docs.length && a.getAttribute('href') && needsAbout(f)) {
       try {
-        /* every package and single-document purchase starts with "About you" (about-you.html) */
+        /* a package with a health care directive or HIPAA authorization starts with "About you" (about-you.html) */
         var to = new URL('about-you.html', location.href), from = new URL(a.getAttribute('href'), location.href);
         from.searchParams.forEach(function (v, k) { to.searchParams.set(k, v); });
         a.setAttribute('href', to.href);
@@ -142,5 +151,5 @@ window.GVFlow = (function () {
     }
   });
 
-  return { start: start, rebuild: rebuild, current: current, useTrust: useTrust, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
+  return { start: start, rebuild: rebuild, needsAbout: needsAbout, current: current, useTrust: useTrust, markDone: markDone, clear: clear, baseOf: baseOf, baseLabel: function (id) { return LABELS[baseOf(id)] || baseOf(id); }, pageFor: pageFor, labelFor: labelFor, plans: FLOWS };
 })();

@@ -82,7 +82,7 @@
   var aboutRow = '<div class="pkg-sum-row"><span class="pkg-check">' + (prof.aboutDone ? '✓' : '•') + '</span>' +
     '<span class="pkg-doc-name">Personal information<small>' + esc([prof.name, prof.name2].filter(Boolean).join(' and ') || 'Not finished yet') + '</small></span>' +
     '<a class="btn btn-secondary btn-sm" href="' + esc(url('about-you.html') + '?next=package.html') + '">' + (prof.aboutDone ? 'Check or change' : 'Finish it') + '</a></div>';
-  rows = aboutRow + rows;
+  if (!window.GVFlow || !window.GVFlow.needsAbout || window.GVFlow.needsAbout(f)) rows = aboutRow + rows;
   /* HOW TO SIGN (removed from this page 13 Oct 2026, Greg): the signing steps are the first pages of the
      "Download all" PDF and the download box says so; the Questions page answers "How do I sign?" */
   root.innerHTML = '<div class="pkg-summary">' +

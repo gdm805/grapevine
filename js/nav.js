@@ -70,8 +70,10 @@
   var nextId = f.docs.filter(function (k) { return done.indexOf(k) === -1; })[0];
   var href = 'package.html', prof = {};
   try { prof = JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { prof = {}; }
-  if (!prof.aboutDone) nextId = nextId || 'about';
-  if (!prof.aboutDone) href = 'about-you.html';
+  /* "About you" only for a package with a health care directive or HIPAA authorization (see needsAbout in js/flow.js) */
+  var needsAbout = f.plan !== 'doc' && f.docs.some(function (k) { return /^(hcd|hipaa)(:|$)/.test(String(k)); });
+  if (needsAbout && !prof.aboutDone) nextId = nextId || 'about';
+  if (needsAbout && !prof.aboutDone) href = 'about-you.html';
   else if (nextId) {
     var base = String(nextId).split(':')[0];
     href = (PAGES[base] || 'package.html') + (/:2$/.test(nextId) ? '?spouse=2' : '');

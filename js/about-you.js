@@ -1,4 +1,6 @@
-/* Tovakin "About you" (about-you.html): the first screen of every package and single-document purchase.
+/* Tovakin "About you" (about-you.html): the first screen of a package that includes the Health Care Directive or
+   HIPAA Authorization (Essentials, Complete, Health Care; see needsAbout in js/flow.js). Single documents, the Will
+   package and Trust Paperwork skip it (17 Oct 2026): each document asks for what it needs itself.
    Collects the personal information every document uses -- full legal name, home address with state and
    county, phone, and date of birth (and the same for a spouse or partner in a couple's package) -- once, and
    saves it to the shared profile (grapevine.profile.v1) that js/will.js reads to fill in each document.

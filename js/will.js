@@ -4282,7 +4282,7 @@
   (function () {
     var fl = window.GVFlow && window.GVFlow.current();
     if (!fl || window.top !== window || /[?&]export=1\b/.test(location.search)) return;
-    if (BLANK || readProfile().aboutDone) return;
+    if (BLANK || readProfile().aboutDone || (window.GVFlow.needsAbout && !window.GVFlow.needsAbout(fl))) return;
     var here = location.pathname.split('/').pop() + location.search;
     location.replace(window.GVUrl('about-you.html') + '?next=' + encodeURIComponent(here.replace(/^\//, '')));
   })();
