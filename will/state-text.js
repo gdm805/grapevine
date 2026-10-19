@@ -20,12 +20,53 @@ window.WILL_STATE_TEXT = String.raw`
 //      witnesses: 2           how many witnesses (used in the signing steps)
 //      notary: yes            yes = this state's will has a notary section (used in the signing steps)
 //      --- tail
-//      ...the execution, witness and notary text, using the same codes as the main template...
-//
-//  Extra code used here:  @line text   a short line with no extra spacing (like "STATE OF ALABAMA")
-//  Blank lines to fill in by hand are typed as underscores.
-//  The same text is used for the will and the pour-over will, so a state's signing formalities always match.
-// ==========================================================================
+@sub Testator Execution
+
+I execute this Will on ____________________, 20____ in ____________________ County, Alabama. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
+
+@sign {{name}}, Testator
+
+@sub Witness Attestation
+
+We, the undersigned witnesses, sign this Will as witnesses after witnessing the Testator sign this Will or acknowledge the Testator’s signature or this Will. We understand this instrument to be the Testator’s Last Will and Testament.
+
+@sign Witness 1 Signature
+
+@sign Printed Name
+
+@sign Address
+
+@sign Witness 2 Signature
+
+@sign Printed Name
+
+@sign Address
+
+@sub Self-Proving Affidavit
+
+I, {{name}}, the testator, sign my name to this instrument this ______ day of _____, 20__, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
+
+@sign {{name}}, Testator
+
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as his/her last will and that he/she signs it willingly (or willingly directs another to sign for him or her), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
+
+@sign Witness
+
+@sign Witness
+
+@line State of ____________________
+@line County of ____________________
+
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator and subscribed and sworn to before me by ____________________, and ____________________, witnesses, this _____ day of _____, 20__.
+
+@line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Alabama
 community: none
@@ -106,18 +147,29 @@ We, the undersigned witnesses, sign this instrument as witnesses within a reason
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Will, that I sign it willingly as my free and voluntary act, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this __________ day of _____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes expressed in the will, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signs and executes this instrument as the Testator's Will, signs it willingly, and that each of us, in the presence and hearing of the Testator, signs this Will as witness to the Testator's signing; and to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+@sign {{name}}, Testator
 
-@line STATE OF ALASKA
-@line _____ JUDICIAL DISTRICT
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as the testator's will and that the testator signs it willingly (or willingly directs another to sign for the testator), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
-Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses, this ____________________, 20____.
+@sign Witness
 
-@sign Officer Authorized to Administer Oaths
+@sign Witness
+
+@line State of ____________________
+@line ____________________ Judicial District
+
+Subscribed, sworn to, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________, and ____________________, witness, this __________ day of _____.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Arizona
 community: plain
@@ -149,18 +201,29 @@ We, the undersigned witnesses, sign this Will within a reasonable time after wit
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Will, that I do so willingly as my free and voluntary act, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this _____ day of _______________, and being first duly sworn, do declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly, or willingly direct another to sign for me, that I execute it as my free and voluntary act for the purposes expressed in that document and that I am eighteen years of age or older, of sound mind and under no constraint or undue influence.
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signs and executes this instrument as the Testator's Will, signs it willingly, and that each of us, in the presence and hearing of the Testator, signs as witness to the Testator's signing; and to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+@sign {{name}}, Testator
 
-@line STATE OF ARIZONA
-@line COUNTY OF ____________________
+We, ____________________, ____________________, the witnesses, sign our names to this instrument being first duly sworn and do declare to the undersigned authority that the testator signs and executes this instrument as his/her will and that he/she signs it willingly, or willingly directs another to sign for him/her, and that each of us, in the presence and hearing of the testator, signs this will as witness to the testator's signing and that to the best of our knowledge the testator is eighteen years of age or older, of sound mind and under no constraint or undue influence.
 
-Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses, this ____________________, 20____.
+@sign Witness
 
-@sign Notarial Officer
+@sign Witness
+
+@line The State of ____________________
+@line County of ____________________
+
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this _____ day of _______________.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Arkansas
 community: none
@@ -176,7 +239,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-The Testator declared to us that this instrument is the Testator's Last Will and Testament, signed or acknowledged the Will in our presence, and requested that we sign as witnesses. At the Testator's request and in the Testator's presence, we now sign as attesting witnesses.
+On the date written above, {{name}}, the Testator, declared to us that this instrument is the Testator's Last Will and Testament, signed it (or acknowledged to us the Testator's signature already made on it) in our presence, and requested that we sign it as witnesses. At the Testator's request, in the Testator's presence, and in the presence of each other, we now sign as attesting witnesses. Each of us is eighteen years of age or older, and to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint, duress, or undue influence.
 
 @sign Witness 1 Signature
 
@@ -190,24 +253,31 @@ The Testator declared to us that this instrument is the Testator's Last Will and
 
 @sign Address
 
-@sub Self-Proving Affidavit
+@sub Affidavit of Attesting Witnesses
 
-@sub AFFIDAVIT OF ATTESTING WITNESSES
-
-@line STATE OF ARKANSAS
+@line STATE OF ____________________
 @line COUNTY OF ____________________
 
-We, the undersigned attesting witnesses, being duly sworn, state that {{name}} declared the attached instrument to be the Testator's Will; signed or acknowledged the Will in our presence; requested that we sign as witnesses; and that each of us signed the Will at the Testator's request and in the Testator's presence.
+We, ____________________ and ____________________, the attesting witnesses to the attached or foregoing instrument, being first duly sworn, each state on oath that: {{name}}, the Testator, declared to us that the instrument is the Testator's Last Will and Testament; the Testator signed the instrument (or acknowledged to us the Testator's signature already made on it) in our presence; the Testator requested that we sign as witnesses; each of us signed the instrument as a witness at the Testator's request, in the Testator's presence, and in the presence of each other; at that time each of us was eighteen years of age or older; and to the best of our knowledge the Testator was then eighteen years of age or older, of sound mind, and under no constraint, duress, or undue influence. We make this affidavit at the request of the Testator.
 
-@sign Witness
+@sign Witness 1 Signature
 
-@sign Witness
+@sign Printed Name
 
-Subscribed and sworn before me on ____________________, 20____.
+@sign Witness 2 Signature
 
-@sign Officer Authorized to Administer Oaths
+@sign Printed Name
+
+Subscribed and sworn to before me by ____________________ and ____________________, witnesses, on ____________________, 20____.
+
+@sign Signature of Officer
+
+@sign Printed Name and Title of Officer
+
+@line My commission expires: ____________________
 
 @line (Seal)
+
 
 === California
 community: quasi
@@ -223,11 +293,23 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-On ____________________, 20____, {{name}} declared to us that this instrument is the Testator's Last Will and Testament. We were both present at the same time and witnessed the Testator sign this Will or acknowledge the Testator's signature or this Will. We understand that the instrument we sign is the Testator's Will, and we sign it as witnesses during the Testator's lifetime.
+On ____________________, 20____, {{name}} declared to us that this instrument is the Testator's Last Will and Testament. We were both present at the same time and witnessed the Testator sign this Will or acknowledge the Testator's signature or this Will. We understand that the instrument we sign is the Testator's Will, and we sign it as witnesses during the Testator's lifetime. Each of us is now more than eighteen years of age and a competent witness.
 
-@sign Witness
+We declare under penalty of perjury under the laws of the State of California that the foregoing is true and correct.
 
-@sign Witness
+Executed on ____________________, 20____, at ____________________, California.
+
+@sign Witness 1 Signature
+
+@sign Printed Name
+
+@sign Residence Address
+
+@sign Witness 2 Signature
+
+@sign Printed Name
+
+@sign Residence Address
 
 === Colorado
 community: none
@@ -235,7 +317,7 @@ no_contest: yes
 witnesses: 2
 notary: yes
 --- tail
-// Attestation and optional self-proving affidavit follow C.R.S. 15-11-502 and 15-11-504(2).
+// Attestation follows C.R.S. 15-11-502; self-proving affidavit is the C.R.S. 15-11-504(1) statutory form.
 @sub Testator Execution
 
 I execute this Will on ____________________, 20____ in ____________________ County, Colorado. I declare that I have read this Will, have had it read to me, or have had its contents explained to me; that I understand its provisions; that it accurately reflects my intentions; and that I execute it freely and voluntarily as my Last Will and Testament.
@@ -260,26 +342,29 @@ We, the undersigned witnesses, declare that {{name}} signed this instrument, or 
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, sign my name to this instrument this _____ day of ____________________, 20____, and being first duly sworn, declare to the undersigned authority that I sign and execute this instrument as my Will and that I sign it willingly, or willingly direct another to sign for me, that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this ____ day of _______, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-We, the undersigned witnesses, sign our names to this instrument, being first duly sworn, and declare to the undersigned authority that the Testator signs and executes this instrument as the Testator's Will and that the Testator signs it willingly, or willingly directs another to sign for the Testator, and that each of us, in the presence and hearing of the Testator, signs this Will as witness to the Testator's signing, and that to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+We, ____________________, ____________________ the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as [his] [her] will and that [he] [she] signs it willingly (or willingly directs another to sign for [him] [her]), and that [he] [she] executes it as [his] [her] free and voluntary act for the purposes therein expressed, and that each of us, in the conscious presence of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 1
+@sign Witness
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF COLORADO
+@line THE STATE OF ____________________
 @line COUNTY OF ____________________
 
-Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this _____ day of ____________________, 20____.
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this _____ day of _______, ____.
 
-@sign Notary Public
+@line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
 
 @line My commission expires: ____________________
 
-@line (Seal)
 
 === Connecticut
 community: none
@@ -295,28 +380,46 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, attest this instrument as the Last Will and Testament of {{name}}. Each of us signs this Will in the Testator's presence.
+On the date written above, {{name}}, the Testator, subscribed this instrument (or acknowledged to us the Testator's signature already made on it) in our presence and declared it to be the Testator's Last Will and Testament, and requested that we act as witnesses to it. At the Testator's request, in the Testator's presence, and in the presence of each other, we now subscribe our names as attesting witnesses. Each of us is eighteen years of age or older, and to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, memory and judgment, and under no constraint, duress, or undue influence.
 
-@sign Witness
+@sign Witness 1 Signature
 
-@sign Witness
+@sign Printed Name
 
-@sub Self-Proving Affidavit
+@sign Address
 
-@sub OPTIONAL WITNESS PROOF AFFIDAVIT
+@sign Witness 2 Signature
 
-@line STATE OF CONNECTICUT
+@sign Printed Name
+
+@sign Address
+
+@sub Affidavit of Attesting Witnesses
+
+@line STATE OF ____________________
+@line ss. ____________________
 @line COUNTY OF ____________________
 
-We, the undersigned attesting witnesses, being duly sworn, state that {{name}} subscribed the attached instrument as the Testator's Last Will and Testament and that each of us attested and subscribed the Will in the Testator's presence. We state these facts as those to which we would testify in court to prove the Will.
+We, ____________________ and ____________________, the attesting witnesses to the attached or foregoing will of {{name}}, being first duly sworn, depose and say that: the Testator subscribed the will (or acknowledged to us the Testator's signature already made on it) in our presence and declared it to be the Testator's Last Will and Testament; each of us subscribed the will as an attesting witness at the Testator's request, in the Testator's presence, and in the presence of each other; at that time each of us was eighteen years of age or older; and to the best of our knowledge and belief the Testator was then eighteen years of age or older, of sound mind, memory and judgment, and under no constraint, duress, or undue influence. These are the facts to which we would be required to testify in court to prove the will. We make this affidavit at the request of the Testator.
 
-@sign Witness
+@sign Witness 1 Signature
 
-@sign Witness
+@sign Printed Name
 
-Subscribed and sworn before me on ____________________, 20____.
+@sign Witness 2 Signature
 
-@sign Officer Authorized to Administer Oaths
+@sign Printed Name
+
+Subscribed and sworn to before me by ____________________ and ____________________, witnesses, on ____________________, 20____.
+
+@sign Signature of Officer
+
+@sign Printed Name and Title of Officer (Notary Public / Commissioner of the Superior Court)
+
+@line My commission expires: ____________________
+
+@line (Seal)
+
 
 === Delaware
 community: none
@@ -341,21 +444,27 @@ We, the undersigned credible witnesses, attest and subscribe this instrument as 
 @sub Self-Proving Affidavit
 
 @line STATE OF ____________________
+@line SS
 @line COUNTY OF ____________________
 
-Before me personally appeared {{name}}, the Testator, and the undersigned witnesses. Being duly sworn, the Testator declared that this instrument is the Testator's Last Will and Testament, that the Testator willingly signed or directed another to sign it as a free and voluntary act; and each witness stated, in the presence and hearing of the Testator, that the witness signed the Will as witness and, to the best of the witness's knowledge, the Testator was eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+Before me, the subscriber, on this day personally appeared, {{name}}, ____________________ and ____________________ known to me to be the testator and the witnesses, respectively, whose names are signed to the attached or foregoing instrument and, all of these persons being by me first duly sworn {{name}}, the testator, declared to me and to the witnesses in my presence that the instrument is the testator's last will and that had willingly signed or directed another to sign for the testator, and that the testator executed it as a free and voluntary act for the purposes therein expressed; and each of the witnesses stated to me, in the presence and hearing of the testator, that the witness signed the will as witness and that to the best of the witness' knowledge the testator was eighteen years of age or over, of sound mind and under no constraint or undue influence.
 
-@sign Testator
-
-@sign Witness
+@sign {{name}}, Testator
 
 @sign Witness
 
-Subscribed, sworn and acknowledged before me on ____________________, 20____.
+@sign Witness
 
-@sign Officer Authorized to Administer Oaths
+Subscribed, sworn and acknowledged before me by {{name}}, the testator, subscribed and sworn before me by ____________________ and ____________________ witnesses, this ____________________ day of ____________________, A.D., ____________.
 
-@line (Seal)
+@line (SEAL)
+
+@sign (SIGNED)
+
+@sign (OFFICIAL CAPACITY OF OFFICER)
+
+@line My commission expires: ____________________
+
 
 === District of Columbia
 community: none
@@ -371,7 +480,7 @@ I execute this Will on ____________________, 20____ in Washington, District of C
 
 @sub Witness Attestation
 
-We, the undersigned credible witnesses, attest and subscribe this instrument as the Last Will and Testament of {{name}} in the presence of the Testator.
+On the date written above, {{name}}, the Testator, signed this instrument at its end (or acknowledged to us the Testator's signature already made on it) in our presence, and at the same time declared it to be the Testator's Last Will and Testament and requested that we act as witnesses to it. At the Testator's request, in the Testator's presence, and in the presence of each other, we now sign our names below as attesting witnesses. Each of us is eighteen years of age or older, and to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint, duress, or undue influence.
 
 @sign Witness 1 - Signature
 
@@ -384,6 +493,7 @@ We, the undersigned credible witnesses, attest and subscribe this instrument as 
 @sign Printed Name
 
 @sign Address
+
 
 === Florida
 community: homestead
@@ -427,6 +537,7 @@ Acknowledged and subscribed before me by means of ☐ physical presence or ☐ o
 
 @sign Print, type, or stamp commissioned name and affix official seal
 
+
 === Georgia
 community: none
 no_contest: yes
@@ -452,19 +563,24 @@ We, the undersigned competent witnesses, attest and subscribe this instrument as
 @line STATE OF GEORGIA
 @line COUNTY OF ____________________
 
-Before me personally appeared {{name}}, the Testator, and the undersigned witnesses. Being duly sworn, the Testator declared to me and to the witnesses in my presence that this instrument is the Testator's Last Will and Testament and that the Testator willingly made and executed it as a free act and deed. Each witness, on oath and in the presence and hearing of the Testator, stated that the Testator declared the instrument to be the Testator's Will, executed it as such, requested the witness to sign, and that the witness signed in the Testator's presence; and that, to the witness's knowledge, the Testator and witnesses satisfied the statutory age and capacity requirements.
+Before me, the undersigned authority, on this day personally appeared {{name}}, ____________________, and ____________________, known to me to be the testator and the witnesses, respectively, whose names are subscribed to the annexed or foregoing instrument in their respective capacities, and all of said individuals being by me duly sworn, {{name}}, testator, declared to me and to the witnesses in my presence that said instrument is the last will and testament or a codicil to the last will and testament of the testator and that the testator had willingly made and executed it as a free act and deed for the purposes expressed therein. The witnesses, each on oath, stated to me in the presence and hearing of the testator that the testator had declared to them that the instrument is the testator's last will and testament or a codicil to the testator's last will and testament and that the testator executed the instrument as such and wished each of them to sign it as a witness; and under oath each witness stated further that the witness had signed the same as witness in the presence of the testator and at the testator's request; that the testator was 14 years of age or over and of sound mind; and that each of the witnesses was then at least 14 years of age.
 
-@sign Testator
-
-@sign Witness
+@sign {{name}}, Testator
 
 @sign Witness
 
-Sworn to and subscribed before me on ____________________, 20____.
+@sign Witness
 
-@sign Notary Public
+Sworn to and subscribed before me by {{name}}, testator, and sworn to and subscribed before me by ____________________ and ____________________, witnesses, this ____ day of ____________________, ________.
 
-@line (Seal)
+@line (SEAL)
+
+@sign (Signed)
+
+@sign (Official Capacity of Officer)
+
+@line My commission expires: ____________________
+
 
 === Hawaii
 community: none
@@ -496,34 +612,41 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Will willingly and as my free and voluntary act, that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Will willingly, and that each of us signed as a witness in the presence and hearing of the Testator, and that to the best of our knowledge the Testator was eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this _____ day of _________, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1 - Signature
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as the testator's will and that the testator signs it willingly (or willingly directs another to sign for the testator), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+@sign Witness
 
-@sign Witness 2 - Signature
-
-@sign Printed Name
-
-@sign Address
-
-@line State of ____________________
+@line The State of ____________________
 @line County of ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses, on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign My Commission Expires
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________, and ____________________, witness, this _____ day of __________.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
+@sub Notary Certification
+
+@line Doc. Date: ____________________     # Pages: __________
+@line Notary Name: ____________________     __________ Judicial Circuit
+@line Doc. Description: Self-Proving Affidavit to the Last Will and Testament of {{name}}
+
+@sign Notary Signature
+
+@line Date: ____________________
+
+@line (Stamp or Seal)
+
 
 === Idaho
 community: plain
@@ -555,34 +678,29 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will, that I sign it willingly as my free and voluntary act, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and that each of us, in the presence and hearing of the Testator, signed as a witness, and that to the best of our knowledge the Testator was eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this _____ day of ____________________, ________, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1 - Signature
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as his last will and that he signs it willingly (or willingly directs another to sign for him), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of his knowledge the testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+@sign Witness
 
-@sign Witness 2 - Signature
-
-@sign Printed Name
-
-@sign Address
-
-@line State of ____________________
+@line The State of ____________________
 @line County of ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, and subscribed and sworn to before me by the two witnesses, on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign My Commission Expires
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator and subscribed and sworn to before me by ____________________, and ____________________, witnesses, this _____ day of ____________________.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Illinois
 community: none
@@ -614,8 +732,6 @@ We, the undersigned credible witnesses, attest that {{name}} signed this instrum
 
 @sub Witness Proof Clause
 
-@sub ILLINOIS PROOF CLAUSE / WITNESS AFFIDAVIT
-
 Each undersigned witness states that the witness was present and saw {{name}} sign this Will, or heard the Testator acknowledge the signature as the Testator’s act; that the witness attested and signed in the Testator’s presence; and that the witness believed the Testator to be of sound mind and memory at that time.
 
 @sign Witness 1 - Signature
@@ -629,6 +745,7 @@ Each undersigned witness states that the witness was present and saw {{name}} si
 @sign Printed Name
 
 @sign Address
+
 
 === Indiana
 community: none
@@ -660,31 +777,31 @@ We, the undersigned witnesses, declare that {{name}} signified that this instrum
 
 @sub Self-Proving Clause
 
-We, the undersigned Testator and witnesses, declare:
+UNDER PENALTIES FOR PERJURY, we, the undersigned testator and the undersigned witnesses, respectively, whose names are signed to the attached or foregoing instrument declare:
 
-(1) {{name}} executed this instrument as the Testator’s Will;
+(1) that the testator executed the instrument as the testator's will;
 
-(2) in the presence of both witnesses, the Testator signed, acknowledged a signature already made, or directed another to sign for the Testator in the Testator’s presence;
+(2) that, in the presence of both witnesses, the testator signed or acknowledged the signature already made or directed another to sign for the testator in the testator's presence;
 
-(3) the Testator executed the Will freely and voluntarily for the purposes expressed in it;
+(3) that the testator executed the will as a free and voluntary act for the purposes expressed in it;
 
-(4) each witness, in the presence of the Testator and the other witness, signed as a witness;
+(4) that each of the witnesses, in the presence of the testator and of each other, signed the will as a witness;
 
-(5) the Testator was of sound mind when the Will was executed; and
+(5) that the testator was of sound mind when the will was executed; and
 
-(6) to the best knowledge of each witness, the Testator was at least eighteen years of age or otherwise within the statutory age-status exception.
+(6) that to the best knowledge of each of the witnesses the testator was, at the time the will was executed, at least eighteen (18) years of age or was a member of the armed forces or of the merchant marine of the United States or its allies.
 
 @sign {{name}}, Testator
 
 @line Date: ____________________, 20____
 
-@sign Witness 1 - Signature
+@sign Witness
 
 @sign Printed Name
 
 @sign Address
 
-@sign Witness 2 - Signature
+@sign Witness
 
 @sign Printed Name
 
@@ -721,34 +838,31 @@ We, the undersigned witnesses, declare that {{name}} exhibited this instrument t
 
 @sub Self-Proving Affidavit
 
-@sub AFFIDAVIT
+@line Affidavit
 
-@line State of ____________________
-@line County of ____________________
+@line State of ____________________ )
+@line County of ____________________ ) ss
 
-We, {{name}} and the undersigned witnesses, being first duly sworn, declare that on the date of this instrument we knew the identity of each other; the instrument was exhibited to the witnesses by the Testator, who declared it to be the Testator’s Last Will and Testament; the Testator signed or directed another to sign it in the presence of the witnesses; and the witnesses, at the Testator’s request and in the presence of the Testator and each other, subscribed their names as attesting witnesses. Each witness was at least sixteen years of age.
+We, the undersigned, {{name}}, ____________________ and ____________________, the testator and the witnesses, respectively, whose names are signed to the attached or foregoing instrument, being first duly sworn, declare to the undersigned authority that at the date of the instrument, we all knew the identity of each other; the instrument was exhibited to the witnesses by the testator, who declared it to be the testator's last will and testament and was signed by the testator or by another at the direction of the testator at ____________________, in the County of ____________________, State of ____________________, on the date shown in the instrument, and in the presence of each other as subscribing witnesses; that we, as witnesses, declare to the undersigned authority that in our presence the testator executed and acknowledged such will as the testator's will and that we, in the testator's presence, at the testator's request, and in the presence of each other, did subscribe our names thereto as attesting witnesses on the date of such will; and that the witnesses were sixteen years of age or older.
 
 @sign {{name}}, Testator
 
-@sign Witness 1 - Signature
+@sign Witness
+
+@sign Witness
+
+Subscribed, sworn and acknowledged before me by {{name}}, the testator; and subscribed and sworn before me by ____________________ and ____________________, witnesses, this _____ day of ____________________ (month), ________ (year)
+
+@sign Signature of notarial officer
+
+@line (Stamp)
 
 @sign Printed Name
 
-@sign Address
+@sign Title of office
 
-@sign Witness 2 - Signature
+@line My commission expires: ____________________
 
-@sign Printed Name
-
-@sign Address
-
-Subscribed, sworn, and acknowledged before me by {{name}}, and subscribed and sworn before me by the two witnesses, on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign My Commission Expires
-
-@line (Seal)
 
 === Kansas
 community: none
@@ -780,22 +894,29 @@ We, the undersigned witnesses, attest that {{name}} declared this instrument to 
 
 @sub Self-Proving Affidavit
 
-Before me personally appeared {{name}} and the undersigned witnesses. All being duly sworn, the Testator declared that this instrument is the Testator's Last Will and Testament and that the Testator willingly executed it as a free and voluntary act. Each witness stated, in the presence and hearing of the Testator, that the Testator declared the instrument to be the Testator's Last Will and Testament, that the witness signed at the Testator's request in the presence of the Testator and the other witness, and that the Testator was of lawful age, of sound mind, and under no restraint.
+@line State of ____________________
+@line County of ____________________ ss.
+
+Before me, the undersigned authority, on this day personally appeared {{name}}, ____________________, and ____________________, known to me to be the testator and the witnesses, respectively, whose names are subscribed to the annexed or foregoing instrument in their respective capacities, and, all of such persons being by me first duly sworn, such {{name}}, testator, declared to me and to the witnesses in my presence that such instrument is the testator's last will and testament, and that the testator had willingly made and executed it as the testator's free and voluntary act and deed for the purposes therein expressed. Such witnesses, each on the witness' oath stated to me, in the presence and hearing of the testator, that the testator had declared to them that such instrument is the testator's last will and testament, and that the testator executed same as such and wanted each witness to sign it as a witness. Upon their oaths each witness stated further that they did sign the will as witnesses in the presence of each other and in the presence of the testator and at the testator's request, and that the testator at that time possessed the rights of majority, was of sound mind and under no restraint.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+@sign Witness
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF KANSAS
-@line COUNTY OF ____________________
-
-Subscribed, acknowledged, and sworn to before me on ____________________, 20____.
-
-@sign Notarial Officer
+Subscribed, acknowledged and sworn to before me by {{name}}, testator, and ____________________ and ____________________, witnesses, this _____ day of ____________________, A.D. ________.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign Printed Name
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Kentucky
 community: none
@@ -827,24 +948,31 @@ We, the undersigned credible witnesses, declare that {{name}} signed or acknowle
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will willingly, as my free and voluntary act, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator's Last Will willingly; that each of us, in the presence and hearing of the Testator and in the presence of the other witness, signs as a witness; and that to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this _____ day of ____________________, 20____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as his last will and that he signs it willingly (or willingly directs another to sign for him), and that each of us, in the presence and hearing of the testator and in the presence of the other subscribing witness, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF KENTUCKY
+@sign Witness
+
+@line THE STATE OF ____________________
 @line COUNTY OF ____________________
 
-Subscribed, sworn to, and acknowledged before me by the Testator and subscribed and sworn to before me by the witnesses on ____________________, 20____.
-
-@sign Notarial Officer
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator and subscribed and sworn to before me by ____________________, and ____________________, witnesses, this _____ day of ____________________, 20____.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign Printed Name
+
+@sign (OFFICIAL CAPACITY OF OFFICER)
+
+@line My commission expires: ____________________
+
 
 === Louisiana
 community: plain
@@ -877,6 +1005,7 @@ In our presence the testator has declared or signified that this instrument is t
 
 @sign Printed Name / Notary Identification Number
 
+
 === Maine
 community: none
 no_contest: yes
@@ -907,24 +1036,29 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will, willingly and as my free and voluntary act, and that I am eighteen years of age or older or otherwise legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator's Last Will willingly, and that each of us signed as a witness in the Testator's presence and hearing, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, on this _____ day of ____________________, 20____, being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), as my free and voluntary act and that I am eighteen years of age or older or am a legally emancipated minor, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+We, ____________________, ____________________, the witnesses, being first duly sworn, do hereby declare to the undersigned authority that the testator has signed and executed this instrument as (his) (her) last will and that (he) (she) signed it willingly (or willingly directed another to sign for (him) (her)), and that each of us, in the presence and hearing of the testator, signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is eighteen years of age or older or is a legally emancipated minor, of sound mind and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF MAINE
-@line COUNTY OF ____________________
+@sign Witness
 
-Subscribed, sworn to, and acknowledged before me by the Testator and subscribed and sworn to before me by the witnesses on ____________________, 20____.
+@line The State of ____________________
+@line County of ____________________
 
-@sign Notarial Officer
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this _____ day of ____________________, 20____.
 
-@line (Seal)
+@sign (Signed)
+
+@sign Printed Name
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Maryland
 community: none
@@ -962,6 +1096,7 @@ We, the undersigned witnesses, certify that {{name}} signed or acknowledged this
 
 @sign Witness 2
 
+
 === Massachusetts
 community: none
 no_contest: yes
@@ -992,24 +1127,33 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this _____ day of ____________________, 20____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as [his] [her] will and that [he] [she] signs it willingly (or willingly directs another to sign for [him] [her]), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF MASSACHUSETTS
-@line COUNTY OF ____________________
+@sign Witness
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+@sign {{name}}, Testator
 
-@sign Notarial Officer
+@line The State of ____________________
+@line County of ____________________
+
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________, and ____________________, witness, this _____ day of ____________________, 20____.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign Printed Name
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Michigan
 community: none
@@ -1041,24 +1185,34 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this document on ____________________, 20____. I have taken an oath, administered by the officer whose signature and seal appear on this document, swearing that the statements in this document are true. I declare to that officer that this document is my will; that I sign it willingly or willingly direct another to sign for me; that I execute it as my voluntary act for the purposes expressed in this will; that I am 18 years of age or older and under no constraint or undue influence; and that I have sufficient mental capacity to make this will.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+We, ____________________ and ____________________, the witnesses, sign our names to this document and have taken an oath, administered by the officer whose signature and seal appear on this document, to swear that all of the following statements are true: the individual signing this document as the testator executes the document as his or her will, signs it willingly or willingly directs another to sign for him or her, and executes it as his or her voluntary act for the purposes expressed in this will; each of us, in the testator's presence, signs this will as witness to the testator's signing; and, to the best of our knowledge, the testator is 18 years of age or older, is under no constraint or undue influence, and has sufficient mental capacity to make this will.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF MICHIGAN
-@line COUNTY OF ____________________
+@sign Witness
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+@line The State of ____________________
+@line County of ____________________
 
-@sign Notarial Officer
+Sworn to and signed in my presence by {{name}}, the testator, and sworn to and signed in my presence by ____________________ and ____________________, witnesses, on ____________________, 20____.
 
-@line (Seal)
+@line (SEAL)
+
+@sign Signed
+
+@sign (official capacity of officer)
+
+@sign Printed name of notary public (exactly as on commission application)
+
+@line Notary public, State of Michigan, County of ____________________.
+@line My commission expires ____________________.
+@line Acting in the County of ____________________.
+@line Date of notarial act: ____________________, 20____
+
 
 === Minnesota
 community: none
@@ -1090,24 +1244,31 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this _____ day of ____________________, 20____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as the testator's will and that the testator signs it willingly (or willingly directs another to sign for the testator), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF MINNESOTA
-@line COUNTY OF ____________________
+@sign Witness
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+@line State of ____________________
+@line County of ____________________
 
-@sign Notarial Officer
+Subscribed, sworn to, and acknowledged in my presence by {{name}}, the testator, and subscribed and sworn to in my presence by ____________________, and ____________________, witnesses, this _____ day of ____________________, 20____.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign Printed Name
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Mississippi
 community: none
@@ -1137,26 +1298,35 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sign Address
 
-@sub Self-Proving Affidavit
-
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-@sign {{name}}, Testator
-
-@sign Witness 1
-
-@sign Witness 2
+@sub Affidavit of Subscribing Witnesses
 
 @line STATE OF MISSISSIPPI
 @line COUNTY OF ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+Personally appeared before me, the undersigned authority in and for the county and state aforesaid, ____________________ and ____________________, the subscribing witnesses to the foregoing instrument, who, being by me first duly sworn, each state on oath: that {{name}}, the Testator, published and declared the foregoing instrument to be the Testator's Last Will and Testament; that the Testator signed the instrument in the presence of each of us; that each of us subscribed our names to the instrument as attesting witnesses at the Testator's request, in the presence of the Testator, and in the presence of each other; and that at the time of the execution of the instrument the Testator was eighteen (18) years of age or older and of sound and disposing mind and memory.
 
-@sign Notarial Officer
+@sign Witness 1 - Signature
+
+@sign Printed Name
+
+@sign Residence Address
+
+@sign Witness 2 - Signature
+
+@sign Printed Name
+
+@sign Residence Address
+
+Sworn to and subscribed before me by ____________________ and ____________________, witnesses, this _____ day of ____________________, 20____.
+
+@sign Notary Public
+
+@sign Printed Name
+
+@line My commission expires: ____________________
 
 @line (Seal)
+
 
 === Missouri
 community: none
@@ -1186,26 +1356,25 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sign Address
 
-@sub Self-Proving Affidavit
+@sub Self-Proving Certificate
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
-
-@sign {{name}}, Testator
-
-@sign Witness 1
-
-@sign Witness 2
-
-@line STATE OF MISSOURI
+@line THE STATE OF ____________________
 @line COUNTY OF ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+I, the undersigned, an officer authorized to administer oaths, certify that {{name}}, the testator, and the witnesses, whose names are signed to the attached or foregoing instrument, having appeared together before me and having been first duly sworn, each then declared to me that the testator signed and executed the instrument as his last will, and that he had willingly signed or willingly directed another to sign for him, and that he executed it as his free and voluntary act for the purposes therein expressed; and that each of the witnesses, in the presence and hearing of the testator, signed the will as witness and that to the best of his knowledge the testator was at that time eighteen or more years of age, of sound mind, and under no constraint or undue influence.
 
-@sign Notarial Officer
+In witness whereof I have hereunto subscribed my name and affixed my official seal this _____ day of ____________________, 20____.
 
-@line (Seal)
+@sign (Signed)
+
+@line (SEAL)
+
+@sign (Official capacity of officer)
+
+@sign Printed Name
+
+@line My commission expires: ____________________
+
 
 === Montana
 community: none
@@ -1237,24 +1406,31 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+// MCA 72-2-524(1), statutory form
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this ______ day of ____________________, 20____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will, that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes expressed in it, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as the testator's will, that the testator signs it willingly (or willingly directs another to sign for the testator), that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF MONTANA
+@sign Witness
+
+@line THE STATE OF ____________________
 @line COUNTY OF ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+Subscribed, sworn to, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this ______ day of ____________________, 20____.
 
-@sign Notarial Officer
+@line (SEAL)
 
-@line (Seal)
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Nebraska
 community: none
@@ -1286,24 +1462,31 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+// Neb. Rev. Stat. 30-2329(1), statutory form
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+I, {{name}} the testator, sign my name to this instrument this ______ day of ____________________ 20____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly or willingly direct another to sign for me, that I execute it as my free and voluntary act for the purposes therein expressed and that I am eighteen years of age or older or am not at this time a minor, and am of sound mind and under no constraint or undue influence.
 
-@sign {{name}}, Testator
+@sign Testator
 
-@sign Witness 1
+We, ____________________ and ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as his or her last will and that he or she signs it willingly or willingly directs another to sign for him or her, and that he or she executes it as his or her free and voluntary act for the purposes therein expressed, and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of his or her knowledge the testator is eighteen years of age or older or is not at this time a minor, and is of sound mind and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF NEBRASKA
+@sign Witness
+
+@line THE STATE OF ____________________
 @line COUNTY OF ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+Subscribed, sworn to, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this ______ day of ____________________ 20____.
 
-@sign Notarial Officer
+@line (SEAL)
 
-@line (Seal)
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Nevada
 community: plain
@@ -1319,40 +1502,44 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator's Last Will and Testament in our presence and that each of us signs as a witness to that act.
+We, the undersigned witnesses, declare that {{name}} signed this instrument in our presence and declared it to be the Testator's Last Will and Testament, and that each of us, at the request of the Testator, subscribes our name to this Will as a witness in the presence of the Testator and in the presence of each other.
 
-@sign Witness 1
-
-@sign Printed Name
-
-@sign Address
-
-@sign Witness 2
+@sign Witness 1 - Signature
 
 @sign Printed Name
 
 @sign Address
 
-@sub Self-Proving Affidavit
+@sign Witness 2 - Signature
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+@sign Printed Name
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+@sign Address
 
-@sign {{name}}, Testator
+@sub Affidavit of Attesting Witnesses
 
-@sign Witness 1
+// NRS 133.050(2), statutory form
 
-@sign Witness 2
+@line State of Nevada
+@line ss.
+@line County of ____________________
 
-@line STATE OF NEVADA
-@line COUNTY OF ____________________
+@line (Date) ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+Then and there personally appeared ____________________ and ____________________, who, being duly sworn, depose and say: That they witnessed the execution of the foregoing will of the testator, {{name}}; that the testator subscribed the will and declared it to be his or her last will and testament in their presence; that they thereafter subscribed the will as witnesses in the presence of the testator and in the presence of each other and at the request of the testator; and that the testator at the time of the execution of the will appeared to them to be of full age and of sound mind and memory.
 
-@sign Notarial Officer
+@sign Affiant
+
+@sign Affiant
+
+Subscribed and sworn to before me this ______ day of the month of ____________________ of the year ______
+
+@sign Notary Public
 
 @line (Seal)
+
+@line My commission expires: ____________________
+
 
 === New Hampshire
 community: none
@@ -1368,7 +1555,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator's Last Will and Testament in our presence and that each of us signs as a witness to that act.
+We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator's Last Will and Testament in our presence, and that each of us, at the request of the Testator and in the Testator's presence, and in the presence of each other, signs as a witness to attest to the Testator's signature.
 
 @sign Witness 1
 
@@ -1384,24 +1571,29 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+// RSA 551:2-a, I, statutory form
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+@line State of ____________________
+@line County of ____________________
 
-@sign {{name}}, Testator
+The foregoing instrument was acknowledged before me this ____________________ (day) by {{name}}, the testator; ____________________ and ____________________, the witnesses, who under oath do swear as follows:
 
-@sign Witness 1
+1. The testator signed the instrument as the testator's will or expressly directed another to sign for the testator.
 
-@sign Witness 2
+2. This was the testator's free and voluntary act for the purposes expressed in the will.
 
-@line STATE OF NEW HAMPSHIRE
-@line COUNTY OF ____________________
+3. Each witness signed at the request of the testator, in the testator's presence, and in the presence of the other witness.
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+4. To the best of my knowledge, at the time of the signing the testator was at least 18 years of age, or if under 18 years was a married person, and was of sane mind and under no constraint or undue influence.
 
-@sign Notarial Officer
+@sign Signature
+
+@sign Official Capacity
 
 @line (Seal)
+
+@line My commission expires: ____________________
+
 
 === New Jersey
 community: none
@@ -1433,24 +1625,29 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament willingly and as my free and voluntary act; that I am legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+// N.J.S.A. 3B:3-4, statutory form
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed or acknowledged this instrument as the Testator's Last Will and Testament, that each of us signed as a witness in the Testator's presence, and that to the best of our knowledge the Testator was legally eligible to make a Will, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this ______ day of ____________________, 20____, and being duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign {{name}}, Testator
+@sign Testator
 
-@sign Witness 1
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, and, being duly sworn, do hereby declare to the undersigned authority that the testator signs and executes this instrument as the testator's last will and that the testator signs it willingly (or willingly directs another to sign for him), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF NEW JERSEY
-@line COUNTY OF ____________________
+@sign Witness
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the undersigned witnesses on ____________________, 20____.
+@line The State of ____________________
+@line County of ____________________
 
-@sign Notarial Officer
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this ______ day of ____________________, 20____.
 
-@line (Seal)
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === New Mexico
 community: plain
@@ -1466,7 +1663,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator as required by the law of New Mexico.
+We, the undersigned witnesses, declare that each of us witnessed {{name}} sign this instrument as the Testator's Last Will and Testament, and that, after witnessing that signing, each of us signs as a witness in the presence of the Testator and in the presence of each other.
 
 @sign Witness 1 - Signature
 
@@ -1482,34 +1679,31 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament; that I sign it willingly, or willingly direct another to sign for me; that I execute it as my free and voluntary act for the purposes expressed in it; and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+// NMSA 1978, 45-2-504(A), statutory form
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament; that the Testator signed it willingly, or willingly directed another to sign for the Testator; that each of us signs as a witness to the Testator’s signing; and that, to the best of our knowledge, the Testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, swear or affirm under penalty of perjury on this ______ day of ____________________, 20____, that I request ____________________ and ____________________ to act as witnesses to my will; that I declare to them and the undersigned authority that this document is my will; that I sign this will in the presence of both witnesses; that they sign the will as witnesses in my presence and in the presence of each other; that the will was read by me (or read and explained to me) after being prepared and before I sign it; that it clearly and accurately expresses my wishes; that I sign it willingly (or willingly directed another to sign for me); that I make and sign the will as my free and voluntary act for the purposes expressed in the will; that I am eighteen years of age or older; that I am mentally capable of disposing of my estate by will; and that I am not acting under duress, menace, fraud or undue influence of any person.
 
-@sign {{name}}, Testator
+@sign Testator
 
-@sign Witness 1 - Signature
+We, ____________________ and ____________________, the witnesses, do hereby swear or affirm under penalty of perjury on this ______ day of ____________________, 20____ to the undersigned authority that the testator, {{name}}, declares that the attached document is his or her will; that the testator signs it willingly (or willingly directs another to sign for him or her); that the testator signs it in the presence of both of us and requests both of us to sign as witnesses; that each of us, in the presence of the testator and in the presence of each other, signs this will as witness to the testator's signing; that so far as we can determine, the testator is eighteen years of age or older; that the testator is not acting under duress, menace, fraud or undue influence of any person; and that the testator, in our opinion, is mentally capable of disposing of his or her estate by will.
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+@sign Witness
 
-@sign Witness 2 - Signature
+@line State of ____________________
+@line County of ____________________
 
-@sign Printed Name
-
-@sign Address
-
-@line STATE OF NEW MEXICO
-@line COUNTY OF ____________________
-
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
+Subscribed and sworn to, or affirmed under penalty of perjury, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to, or affirmed under penalty of perjury, before me by ____________________ and ____________________, witnesses, this ______ day of ____________________, 20____.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === New York
 community: none
@@ -1531,40 +1725,60 @@ The Testator declared to each of us that this instrument is the Testator’s Las
 
 @sign Printed Name
 
-@sign Address
+@sign Residence Address
 
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
-@sign Address
+@sign Residence Address
 
 @sub Affidavit of Attesting Witnesses
 
-@line STATE OF NEW YORK
-@line COUNTY OF ____________________
+// SCPA 1406; New York prescribes no form, so this states the facts the witnesses would prove in court
 
-We, the undersigned attesting witnesses, being duly sworn, state that {{name}} declared this instrument to be the Testator’s Last Will and Testament; signed the Will in our presence or acknowledged the Testator’s signature to each of us; requested each of us to sign as a witness; and, at the time of execution, appeared to be of sound mind and memory and free from restraint. Each of us signed within the statutory thirty-day period.
+@line STATE OF NEW YORK
+@line COUNTY OF ____________________  ss.:
+
+Each of the undersigned, individually and severally, being duly sworn, deposes and says:
+
+The within Will was subscribed at the end thereof by {{name}}, the within-named Testator, in the presence of each of the undersigned, or the Testator acknowledged that signature to each of the undersigned to have been made by the Testator, on the ______ day of ____________________, 20____, at ____________________, New York.
+
+At the time of making or acknowledging that subscription, the Testator declared the instrument so subscribed to be the Testator's Last Will and Testament.
+
+Each of the undersigned thereupon signed the undersigned's name as a witness at the end of the Will, at the request of the Testator, in the presence of the Testator and in the presence of each other.
+
+The Testator was, at the time of so executing the Will, over the age of eighteen years and, in the respective opinions of the undersigned, of sound mind, memory and understanding, and not under any restraint or in any respect incompetent to make a Will.
+
+In the respective opinions of the undersigned, the Testator could read, write and converse in the English language, and was suffering from no defect of sight, hearing or speech, or from any other physical or mental impairment which would affect the Testator's capacity to make a valid Will.
+
+The Will was executed as a single, original instrument and was not executed in counterparts.
+
+Each of the undersigned is over the age of eighteen years. The within Will was shown to the undersigned at the time this affidavit was made and was examined by each of them as to the signature of the Testator and of the undersigned.
 
 @sign Witness 1 - Signature
 
 @sign Printed Name
 
-@sign Address
+@sign Residence Address
 
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
-@sign Address
+@sign Residence Address
 
-Sworn to before me on ____________________, 20____.
+Severally sworn to before me on ____________________, 20____.
 
-@sign Notary Public / Authorized Officer
+@sign Notary Public
 
-@sign Official Capacity
+@sign Printed Name
 
-@line (Seal)
+@line Notary Public, State of New York
+@line No. ____________________
+@line Qualified in ____________________ County
+@line My commission expires: ____________________
+
 
 === North Carolina
 community: none
@@ -1596,34 +1810,33 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament; that I sign it willingly, or willingly direct another to sign for me; that I execute it as my free and voluntary act for the purposes expressed in it; and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+// N.C.G.S. 31-11.6(a), statutory form
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament; that the Testator signed it willingly, or willingly directed another to sign for the Testator; that each of us signs as a witness to the Testator’s signing; and that, to the best of our knowledge, the Testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this ______ day of ____________________, 20____ and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign {{name}}, Testator
+@sign Testator
 
-@sign Witness 1 - Signature
+We ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as his last will and that he signs it willingly (or willingly directs another to sign for him), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and to the best of our knowledge the testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+
+@sign Witness
+
+@sign Witness
+
+@line THE STATE OF ____________________.
+@line COUNTY OF ____________________.
+
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this ______ day of ____________________, 20____.
+
+@line (SEAL)
+
+@sign (SIGNED)
+
+@sign (OFFICIAL CAPACITY OF OFFICER)
 
 @sign Printed Name
 
-@sign Address
+@line My commission expires: ____________________
 
-@sign Witness 2 - Signature
-
-@sign Printed Name
-
-@sign Address
-
-@line STATE OF NORTH CAROLINA
-@line COUNTY OF ____________________
-
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
-
-@line (Seal)
 
 === North Dakota
 community: none
@@ -1639,7 +1852,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator as required by the law of North Dakota.
+We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator's Last Will and Testament in our presence, and that each of us signs as a witness to that act.
 
 @sign Witness 1 - Signature
 
@@ -1655,34 +1868,31 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament; that I sign it willingly, or willingly direct another to sign for me; that I execute it as my free and voluntary act for the purposes expressed in it; and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+// N.D.C.C. 30.1-08-04(1), statutory form
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament; that the Testator signed it willingly, or willingly directed another to sign for the Testator; that each of us signs as a witness to the Testator’s signing; and that, to the best of our knowledge, the Testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
-
-@sign {{name}}, Testator
-
-@sign Witness 1 - Signature
-
-@sign Printed Name
-
-@sign Address
-
-@sign Witness 2 - Signature
-
-@sign Printed Name
-
-@sign Address
-
-@line STATE OF NORTH DAKOTA
+@line STATE OF ____________________
 @line COUNTY OF ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses on ____________________, 20____.
+I, {{name}}, the testator, sign my name to this instrument this ______ day of ____________________, 20____, and being first sworn, declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly or willingly direct another to sign for me, that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Notary Public / Authorized Officer
+@sign Testator
 
-@sign Official Capacity
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, and being first sworn, declare to the undersigned authority that the testator signs and executes this instrument as the testator's will and that the testator signs it willingly or willingly directs another to sign for the testator, and that each of us, in the presence and hearing of the testator, signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@line (Seal)
+@sign Witness
+
+@sign Witness
+
+Subscribed, sworn to, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this ______ day of ____________________, 20____.
+
+@line (SEAL)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Ohio
 community: none
@@ -1712,6 +1922,7 @@ We, the undersigned competent witnesses, attest that {{name}} signed this Will a
 
 @sign Address
 
+
 === Oklahoma
 community: none
 no_contest: yes
@@ -1726,7 +1937,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator as required by the law of Oklahoma.
+We, the undersigned witnesses, declare that {{name}} subscribed this instrument at the end in our presence, or acknowledged that subscription to each of us to have been made by the Testator or by the Testator's authority, and at that time declared to us that this instrument is the Testator's Last Will and Testament; and that each of us signs our name as a witness at the end of this Will at the Testator's request and in the Testator's presence.
 
 @sign Witness 1 - Signature
 
@@ -1742,34 +1953,33 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-@line STATE OF OKLAHOMA
+// 84 O.S. 55(5)(a), statutory form
+
+@line THE STATE OF OKLAHOMA
 @line COUNTY OF ____________________
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament; that I sign it willingly, or willingly direct another to sign for me; that I execute it as my free and voluntary act for the purposes expressed in it; and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+Before me, the undersigned authority, on this day personally appeared {{name}}, ____________________, and ____________________, known to me to be the testator and the witnesses, respectively, whose names are subscribed to the annexed or foregoing instrument in their respective capacities, and, all of said persons being by me first duly sworn, said {{name}}, testator, declared to me and to the said witnesses in my presence that said instrument is his last will and testament or a codicil to his last will and testament, and that he had willingly made and executed it as his free and voluntary act and deed for the purposes therein expressed; and the said witnesses, each on his oath stated to me, in the presence and hearing of the said testator, that the said testator had declared to them that said instrument is his last will and testament or codicil to his last will and testament, and that he executed same as such and wanted each of them to sign it as a witness; and upon their oaths each witness stated further that they did sign the same as witnesses in the presence of the said testator and at his request and that said testator was at that time eighteen (18) years of age or over and was of sound mind.
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament; that the Testator signed it willingly, or willingly directed another to sign for the Testator; that each of us signs as a witness to the Testator’s signing; and that, to the best of our knowledge, the Testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+@sign Testator
 
-@sign {{name}}, Testator
+@sign Witness (signature)
 
-@sign Witness 1 - Signature
+@sign Name and Residence (printed)
 
-@sign Printed Name
+@sign Witness (signature)
 
-@sign Address
+@sign Name and Residence (printed)
 
-@sign Witness 2 - Signature
+Subscribed and acknowledged before me by the said {{name}}, testator, and subscribed and sworn before me by the said ____________________, and ____________________ witnesses, this ______ day of ____________________, A.D., 20____.
 
-@sign Printed Name
+@line (SEAL)
 
-@sign Address
+@sign (SIGNED)
 
-Subscribed, acknowledged, and sworn to before me by the Testator and subscribed and sworn to before me by the witnesses on ____________________, 20____.
+@sign (OFFICIAL CAPACITY OF OFFICER)
 
-@sign Notary Public / Authorized Officer
+@line My commission expires: ____________________
 
-@sign Official Capacity
-
-@line (Seal)
 
 === Oregon
 community: none
@@ -1785,7 +1995,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator as required by the law of Oregon.
+We, the undersigned witnesses, declare that {{name}}, in the presence of each of us, signed this instrument as the Testator's Last Will and Testament or acknowledged the signature previously made on it; that each of us saw the Testator sign or heard the Testator acknowledge the signature; and that each of us signs as a witness.
 
 @sign Witness 1 - Signature
 
@@ -1804,7 +2014,7 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 @line STATE OF OREGON
 @line COUNTY OF ____________________
 
-We, {{name}}, the Testator, and the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Will willingly and as a free and voluntary act; that each witness signed as a witness to the Testator’s signing; and that, to the best of each witness’s knowledge, the Testator was eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+We, {{name}}, the Testator, and the undersigned witnesses, being first duly sworn, declare that the Testator, in the presence of each witness, signed and executed this instrument as the Testator's Will, or acknowledged the signature previously made on it, willingly and as a free and voluntary act; that each witness saw the Testator sign or heard the Testator acknowledge the signature, and signed as a witness; and that, to the best of each witness's knowledge, the Testator was eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
@@ -1820,13 +2030,16 @@ We, {{name}}, the Testator, and the undersigned witnesses, being first duly swor
 
 @sign Address
 
-Subscribed and sworn to before me on ____________________, 20____.
+Subscribed and sworn to before me on ____________________, 20____, by {{name}}, the Testator, and by ____________________ and ____________________, witnesses.
 
 @sign Notary Public / Authorized Officer
 
 @sign Official Capacity
 
 @line (Seal)
+
+@line My commission expires: ____________________
+
 
 === Pennsylvania
 community: none
@@ -1856,34 +2069,44 @@ We, the undersigned witnesses, attest that {{name}} signed this instrument at th
 
 @sign Address
 
-@sub Self-Proving Affidavit
+@sub Acknowledgment
 
-@line COMMONWEALTH OF PENNSYLVANIA
-@line COUNTY OF ____________________
+// 20 Pa.C.S. 3132.1(b), statutory form
 
-Before me, the undersigned officer, personally appeared {{name}}, the Testator, and the undersigned witnesses. The Testator acknowledged that the Testator signed and executed this instrument as the Testator’s Will, and the witnesses, being duly sworn, stated that they witnessed the execution or acknowledgment of the Will and signed as witnesses.
+@line Commonwealth of Pennsylvania (or State of ____________________)
+@line County of ____________________
 
-@sign {{name}}, Testator
+I, {{name}}, the testator whose name is signed to the attached or foregoing instrument, having been duly qualified according to law, do hereby acknowledge that I signed and executed the instrument as my Last Will; and that I signed it willingly and as my free and voluntary act for the purposes therein expressed.
 
-@sign Witness 1 - Signature
+Sworn to or affirmed and acknowledged before me by {{name}}, the testator, this ______ day of ____________________, 20____.
 
-@sign Printed Name
+@sign (Testator)
 
-@sign Address
+@sign (Signature of officer or attorney)
 
-@sign Witness 2 - Signature
+@sign (Seal and official capacity of officer or state of admission of attorney)
 
-@sign Printed Name
+@line My commission expires: ____________________
 
-@sign Address
+@sub Affidavit
 
-Subscribed, sworn to, and acknowledged before me on ____________________, 20____.
+@line Commonwealth of Pennsylvania (or State of ____________________)
+@line County of ____________________
 
-@sign Notary Public / Authorized Officer
+We (or I), ____________________ and ____________________, the witness(es) whose name(s) are (is) signed to the attached or foregoing instrument, being duly qualified according to law, do depose and say that we were (I was) present and saw the testator sign and execute the instrument as his Last Will; that the testator signed willingly and executed it as his free and voluntary act for the purposes therein expressed; that each subscribing witness in the hearing and sight of the testator signed the will as a witness; and that to the best of our (my) knowledge the testator was at that time 18 or more years of age, of sound mind and under no constraint or undue influence.
 
-@sign Official Capacity
+Sworn to or affirmed and subscribed to before me by ____________________ and ____________________, witness(es), this ______ day of ____________________, 20____.
 
-@line (Seal)
+@sign Witness
+
+@sign Witness
+
+@sign (Signature of officer or attorney)
+
+@sign (Seal and official capacity of officer or state of admission of attorney)
+
+@line My commission expires: ____________________
+
 
 === Rhode Island
 community: none
@@ -1899,7 +2122,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator as required by the law of Rhode Island.
+We, the undersigned witnesses, declare that {{name}} signed this instrument, or that it was signed for the Testator by another person in the Testator’s presence and by the Testator’s express direction, or that the Testator acknowledged that signature, in our presence, both of us being present at the same time, as the Testator’s Last Will and Testament; and that each of us attests and subscribes this Will as a witness in the presence of the Testator, as required by the law of Rhode Island.
 
 @sign Witness 1 - Signature
 
@@ -1913,32 +2136,25 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sign Address
 
-@sub Self-Proving Affidavit
+@sub Affidavit of Subscribing Witnesses
 
 @line STATE OF RHODE ISLAND
 @line COUNTY OF ____________________
 
-We, the undersigned witnesses, being duly sworn, state that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence; that we signed as witnesses in the presence of the Testator and each other; and that the Testator appeared to be of sound mind and acting voluntarily.
+In ____________________ on this _____ day of ____________________, 20____, before me personally appeared the undersigned, who, being duly sworn, depose and say that: they witnessed the execution of the will (codicil) of {{name}}; that the signature to the will (codicil) is in the handwriting of the testator or was made by some other person for the testator, in the testator's presence and by the testator's express direction; that the testator so subscribed the will (codicil) and declared the same to be his last will (a codicil to his last will) in their presence; that they thereafter subscribed the same as witnesses in the presence of the testator and in the presence of each other; that at the time of execution of the will (codicil) the testator appeared to be of sound mind and eighteen (18) years of age or over; and that the signatures of the witnesses on the will are genuine.
 
-@sign Witness 1 - Signature
+@sign Witness
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+Subscribed and sworn to before me on the day and date first above written,
 
-@sign Witness 2 - Signature
+@sign Notary public
 
-@sign Printed Name
-
-@sign Address
-
-Subscribed and sworn to before me on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
+@line My commission expires: ____________________
 
 @line (Seal)
+
 
 === South Carolina
 community: none
@@ -1970,34 +2186,29 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament; that I sign it willingly, or willingly direct another to sign for me; that I execute it as my free and voluntary act for the purposes expressed in it; and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament; that the Testator signed it willingly, or willingly directed another to sign for the Testator; that each of us signs as a witness to the Testator’s signing; and that, to the best of our knowledge, the Testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
-
-@sign {{name}}, Testator
-
-@sign Witness 1 - Signature
-
-@sign Printed Name
-
-@sign Address
-
-@sign Witness 2 - Signature
-
-@sign Printed Name
-
-@sign Address
-
 @line STATE OF SOUTH CAROLINA
 @line COUNTY OF ____________________
 
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses on ____________________, 20____.
+I, {{name}}, the testator, sign my name to this instrument this ___ day of __________, 20___, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen years of age or older (or if under the age of eighteen, am married or emancipated as decreed by a family court), of sound mind, and under no constraint or undue influence.
 
-@sign Notary Public / Authorized Officer
+@sign Testator
 
-@sign Official Capacity
+We, ____________________ and ____________________, the witnesses, sign our names to this instrument, and at least one of us, being first duly sworn, does hereby declare, generally and to the undersigned authority, that the testator signs and executes this instrument as his last will and that he signs it willingly (or willingly directs another to sign for him), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is eighteen years of age or older (or if under the age of eighteen, was married or emancipated as decreed by a family court), of sound mind, and under no constraint or undue influence.
+
+@sign Witness
+
+@sign Witness
+
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witness(es), this ___ day of __________, 20___.
+
+@line (Signed) ________________________________________
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
 
 @line (Seal)
+
 
 === South Dakota
 community: none
@@ -2029,34 +2240,29 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament; that I sign it willingly, or willingly direct another to sign for me; that I execute it as my free and voluntary act for the purposes expressed in it; and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this ______ day of ____________, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament; that the Testator signed it willingly, or willingly directed another to sign for the Testator; that each of us signs as a witness to the Testator’s signing; and that, to the best of our knowledge, the Testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+@sign Testator
 
-@sign {{name}}, Testator
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as [his] [her] will and that [he] [she] signs it willingly (or willingly directs another to sign for [him] [her]), that [he] [she] executes it as [his] [her] free and voluntary act for the purposes therein expressed, and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 1 - Signature
+@sign Witness
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+@line The State of South Dakota
+@line County of ____________________
 
-@sign Witness 2 - Signature
-
-@sign Printed Name
-
-@sign Address
-
-@line STATE OF SOUTH DAKOTA
-@line COUNTY OF ____________________
-
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________, and ____________________, witnesses, this ______ day of ____________.
 
 @line (Seal)
+
+@line (Signed) ____________________________
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Tennessee
 community: none
@@ -2072,7 +2278,7 @@ I execute this Will on ____________________, 20____ in ____________________ Coun
 
 @sub Witness Attestation
 
-We, the undersigned witnesses, declare that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in our presence, and that each of us signs as a witness in the presence of the Testator and in the presence of each other, as required by the law of Tennessee.
+We, the undersigned attesting witnesses, declare that {{name}}, the Testator, signified to us that this instrument is the Testator’s Last Will and Testament; that the Testator signed this instrument, or acknowledged the Testator’s signature already made, or at the Testator’s direction and in the Testator’s presence had someone else sign the Testator’s name, in our presence, both of us being present at the same time; and that each of us signed this Will as an attesting witness in the presence of the Testator and in the presence of each other.
 
 @sign Witness 1 - Signature
 
@@ -2086,42 +2292,31 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sign Address
 
-@sub Affidavits of Attesting Witnesses
+@sub Affidavit of Attesting Witnesses
 
 @line STATE OF TENNESSEE
 @line COUNTY OF ____________________
 
-I, the undersigned attesting witness, being first duly sworn, state the facts to which I would be required to testify in court to prove this Will: that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in my presence; that I signed as a witness as required by law; and that the Testator appeared to be of sound mind and acting voluntarily.
+We, the undersigned attesting witnesses to the foregoing Last Will and Testament of {{name}}, each being first duly sworn, make this affidavit at the request of the Testator and state the facts to which we would be required to testify in court to prove the Will: that the Testator signified to us that the instrument is the Testator’s Will; that the Testator signed the Will, or acknowledged the Testator’s signature already made, or at the Testator’s direction and in the Testator’s presence had someone else sign the Testator’s name, in our presence, both of us being present at the same time; that each of us signed the Will as an attesting witness in the presence of the Testator and in the presence of each other; and that, at the time, the Testator appeared to be of sound mind, eighteen (18) years of age or older, and under no constraint, duress or undue influence.
 
 @sign Witness 1 - Signature
 
 @sign Printed Name
 
-@sign Address
-
-Sworn to before me on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
-
-@line (Seal)
-
-I, the undersigned attesting witness, being first duly sworn, state the facts to which I would be required to testify in court to prove this Will: that {{name}} signed or acknowledged this instrument as the Testator’s Last Will and Testament in my presence; that I signed as a witness as required by law; and that the Testator appeared to be of sound mind and acting voluntarily.
-
 @sign Witness 2 - Signature
 
 @sign Printed Name
 
-@sign Address
+Sworn to and subscribed before me by ____________________ and ____________________, attesting witnesses, on ____________________, 20____.
 
-Sworn to before me on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
+@sign Notary Public / Officer Authorized to Administer Oaths
 
 @sign Official Capacity
 
+@line My commission expires: ____________________
+
 @line (Seal)
+
 
 === Texas
 community: plain
@@ -2153,32 +2348,27 @@ We, the undersigned credible witnesses, each being fourteen (14) years of age or
 
 @sub Self-Proving Affidavit
 
-@line STATE OF TEXAS
+@line THE STATE OF TEXAS
 @line COUNTY OF ____________________
 
-Before me, the undersigned authority, on this day personally appeared {{name}}, the Testator, and the undersigned witnesses, all known to me to be the Testator and the witnesses whose names are subscribed to this instrument. The Testator declared that this instrument is the Testator’s Will and that the Testator willingly made and executed it as a free act and deed. Each witness declared that the witness signed the Will in the Testator’s presence and at the Testator’s request and, to the best of the witness’s knowledge, the Testator was eighteen (18) years of age or older, or had been lawfully married, or was a member of the armed forces or maritime service, was of sound mind, and was under no constraint or undue influence.
+Before me, the undersigned authority, on this day personally appeared {{name}}, ____________________, and ____________________, known to me to be the testator and the witnesses, respectively, whose names are subscribed to the annexed or foregoing instrument in their respective capacities, and, all of said persons being by me duly sworn, the said {{name}}, testator, declared to me and to the said witnesses in my presence that said instrument is [his/her] will, and that [he/she] had willingly made and executed it as [his/her] free act and deed; and the said witnesses, each on [his/her] oath stated to me, in the presence and hearing of the said testator, that the said testator had declared to them that said instrument is [his/her] will, and that [he/she] executed same as such and wanted each of them to sign it as a witness; and upon their oaths each witness stated further that they did sign the same as witnesses in the presence of the said testator and at [his/her] request; that [he/she] was at that time eighteen years of age or over (or being under such age, was or had been lawfully married, or was then a member of the armed forces of the United States, or an auxiliary of the armed forces of the United States, or the United States Maritime Service) and was of sound mind; and that each of said witnesses was then at least fourteen years of age.
 
 @sign {{name}}, Testator
 
-@sign Witness 1 - Signature
+@sign Witness
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+Subscribed and sworn to before me by the said {{name}}, testator, and by the said ____________________ and ____________________, witnesses, this _____ day of ____________________ A.D. ________.
 
-@sign Witness 2 - Signature
+@line (SEAL)
 
-@sign Printed Name
+@line (Signed) ________________________________________
 
-@sign Address
+@sign (Official Capacity of Officer)
 
-Subscribed, sworn to, and acknowledged before me by the Testator, and subscribed and sworn to before me by the witnesses, on ____________________, 20____.
+@line My commission expires: ____________________
 
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
-
-@line (Seal)
 
 === Utah
 community: none
@@ -2210,34 +2400,29 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament; that I sign it willingly, or willingly direct another to sign for me; that I execute it as my free and voluntary act for the purposes expressed in it; and that I am eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this ____ day of _______, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament; that the Testator signed it willingly, or willingly directed another to sign for the Testator; that each of us signs as a witness to the Testator’s signing; and that, to the best of our knowledge, the Testator is eighteen (18) years of age or older, of sound mind, and under no constraint or undue influence.
+@sign Testator
 
-@sign {{name}}, Testator
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as [his] [her] will and that [he] [she] signs it willingly (or willingly directs another to sign for [him] [her] ), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 1 - Signature
+@sign Witness
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+@line State of Utah
+@line County of ____________________
 
-@sign Witness 2 - Signature
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________, and ____________________, witnesses, this ____ day of _______.
 
-@sign Printed Name
+@line (Signed) ________________________
 
-@sign Address
+@sign (Official capacity of officer)
 
-@line STATE OF UTAH
-@line COUNTY OF ____________________
-
-Subscribed, sworn to, and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
+@line My commission expires: ____________________
 
 @line (Seal)
+
 
 === Vermont
 community: none
@@ -2296,6 +2481,7 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @line (Seal)
 
+
 === Virginia
 community: none
 no_contest: yes
@@ -2327,27 +2513,28 @@ We, the undersigned competent witnesses, being present at the same time, declare
 @sub Self-Proving Affidavit
 
 @line STATE OF VIRGINIA
-@line CITY/COUNTY OF ____________________
+@line COUNTY/CITY OF ____________________
 
-Before me, the undersigned authority, personally appeared {{name}}, the Testator, and the undersigned witnesses. All being first duly sworn, the Testator declared that this instrument is the Testator’s Last Will and Testament, that the Testator willingly signed or directed another to sign it as a free and voluntary act, and that the witnesses signed in the Testator’s presence, at the Testator’s request, and in the presence of each other. The witnesses further state that, at the time of execution, the Testator was over eighteen years of age and of sound and disposing mind and memory.
+Before me, the undersigned authority, on this day personally appeared {{name}}, ____________________, and ____________________, known to me to be the testator and the witnesses, respectively, whose names are signed to the attached or foregoing instrument and, all of these persons being by me first duly sworn, {{name}}, the testator, declared to me and to the witnesses in my presence that said instrument is his last will and testament and that he had willingly signed or directed another to sign the same for him, and executed it in the presence of said witnesses as his free and voluntary act for the purposes therein expressed; that said witnesses stated before me that the foregoing will was executed and acknowledged by the testator as his last will and testament in the presence of said witnesses who, in his presence and at his request, and in the presence of each other, did subscribe their names thereto as attesting witnesses on the day of the date of said will, and that the testator, at the time of the execution of said will, was over the age of eighteen years and of sound and disposing mind and memory.
 
-@sign {{name}}, Testator
+@sign Testator
 
-@sign Witness 1 - Signature
+@sign Witness
 
-@sign Printed Name
+@sign Witness
 
-@sign Witness 2 - Signature
+Subscribed, sworn and acknowledged before me by {{name}}, the testator, and subscribed and sworn before me by ____________________ and ____________________, witnesses, this __________ day of _______________, A.D., __________.
 
-@sign Printed Name
+@line SIGNED ________________________________________
 
-Sworn and acknowledged before me on ____________________, 20____.
+@sign (OFFICIAL CAPACITY OF OFFICER)
 
-@sign Notary Public / Authorized Officer
+@line Notary registration number: ____________________
 
-@sign Official Capacity
+@line My commission expires: ____________________
 
 @line (Seal)
+
 
 === Washington
 community: plain
@@ -2377,12 +2564,20 @@ We, the undersigned competent witnesses, declare that {{name}} signed this Will 
 
 @sign Address
 
-@sub Witness-Proof Affidavit
+@sub Affidavit of Attesting Witnesses
 
 @line STATE OF WASHINGTON
 @line COUNTY OF ____________________
 
-We, the undersigned attesting witnesses, being first duly sworn, state that {{name}} signed or acknowledged the foregoing instrument as the Testator’s Will in our presence and at the Testator’s direction or request; that we signed as attesting witnesses; and that the facts stated in this affidavit are true to the best of our knowledge and belief for purposes of proving the Will.
+We, the undersigned attesting witnesses to the foregoing Last Will and Testament of {{name}}, each being first duly sworn, make this affidavit under RCW 11.20.020(2) at the request of the Testator and state the following facts, to which we would be required to testify in court to prove the Will:
+
+1. Each of us is over the age of eighteen (18) years and is a competent witness.
+
+2. On the date of the Will, the Testator signed the Will, or acknowledged the Testator’s signature on it, in our presence, declared the instrument to be the Testator’s Will, and requested or directed us to attest it.
+
+3. Each of us then signed the Will as an attesting witness, at the Testator’s request or direction and in the Testator’s presence.
+
+4. At that time the Testator appeared to be of sound mind, and the Testator was not acting under duress, menace, fraud, misrepresentation, or undue influence.
 
 @sign Witness 1 - Signature
 
@@ -2396,13 +2591,16 @@ We, the undersigned attesting witnesses, being first duly sworn, state that {{na
 
 @sign Address
 
-Subscribed and sworn to before me on ____________________, 20____.
+Subscribed and sworn to before me by ____________________ and ____________________, attesting witnesses, on ____________________, 20____.
 
-@sign Notary Public / Authorized Officer
+@sign Notary Public in and for the State of Washington
 
-@sign Official Capacity
+@line Residing at: ____________________
+
+@line My commission expires: ____________________
 
 @line (Seal)
+
 
 === West Virginia
 community: none
@@ -2459,6 +2657,7 @@ Subscribed and sworn to before me on ____________________, 20____.
 
 @line (Seal)
 
+
 === Wisconsin
 community: marital
 no_contest: yes
@@ -2489,32 +2688,45 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-@line STATE OF WISCONSIN
-@line COUNTY OF ____________________
+@line State of Wisconsin
+@line County of ____________________
 
-We, {{name}}, the Testator, and the undersigned witnesses, being first duly sworn, acknowledge and state that the Testator signed this instrument as the Testator’s Will, or expressly directed another to sign for the Testator in the presence of two witnesses; that the signing was the Testator’s free and voluntary act for the purposes expressed in the Will; that each witness signed at the Testator’s request and in the Testator’s presence; and that, to the best knowledge of each witness, the Testator was of legal age, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this _____ day of ____________________, and being first duly sworn, declare to the undersigned authority all of the following:
 
-@sign {{name}}, Testator
+1. I execute this instrument as my will.
 
-@sign Witness 1 - Signature
+2. I sign this will willingly, or willingly direct another to sign for me.
 
-@sign Printed Name
+3. I execute this will as my free and voluntary act for the purposes expressed therein.
 
-@sign Address
+4. I am 18 years of age or older, of sound mind and under no constraint or undue influence.
 
-@sign Witness 2 - Signature
+@sign Testator
 
-@sign Printed Name
+We, ____________________, ____________________, the witnesses, being first duly sworn, sign our names to this instrument and declare to the undersigned authority all of the following:
 
-@sign Address
+1. The testator executes this instrument as his or her will.
 
-Subscribed and sworn to before me on ____________________, 20____.
+2. The testator signs it willingly, or willingly directs another to sign for him or her.
 
-@sign Notary Public / Authorized Officer
+3. Each of us, in the conscious presence of the testator, signs this will as a witness.
 
-@sign Official Capacity
+4. To the best of our knowledge, the testator is 18 years of age or older, of sound mind and under no constraint or undue influence.
+
+@sign Witness
+
+@sign Witness
+
+Subscribed and sworn to before me by {{name}}, the testator, and by ____________________, and ____________________, witnesses, this _____ day of ____________________, ________.
 
 @line (Seal)
+
+@line (Signed): ________________________________________
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
+
 
 === Wyoming
 community: none
@@ -2546,31 +2758,30 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 @sub Self-Proving Affidavit
 
-@line STATE OF WYOMING
-@line COUNTY OF ____________________
+I, {{name}}, the testator, sign my name to this instrument this _____ day of ____________________, 20____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am an adult person, of sound mind, and under no constraint or undue influence.
 
-We, {{name}}, the Testator, and the undersigned witnesses, being first duly sworn, acknowledge and state that the Testator signed this instrument as the Testator’s Will, or expressly directed another to sign for the Testator in the presence of two witnesses; that the signing was the Testator’s free and voluntary act for the purposes expressed in the Will; that each witness signed at the Testator’s request and in the Testator’s presence; and that, to the best knowledge of each witness, the Testator was of legal age, of sound mind, and under no constraint or undue influence.
+@sign Testator
 
-@sign {{name}}, Testator
+We, ____________________, ____________________ the witnesses, sign (or electronically sign by secure means) our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as his last will and that he signs it willingly (or willingly directs another to sign for him), and that he executes it as his free and voluntary act for the purposes therein expressed, and that each of us, in the presence and hearing of the testator (or appearing through the use of audio-video communication technology and able to see and hear the testator in real time), hereby signs this will (or electronically signs this will by secure means) as witnesses to the testator's signature and that to the best of our knowledge the testator is an adult person, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 1 - Signature
+@sign Witness
 
-@sign Printed Name
+@sign Witness
 
-@sign Address
+@line STATE OF WYOMING )
+@line ) ss
+@line COUNTY OF ____________________ )
 
-@sign Witness 2 - Signature
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this _____ day of ____________________.
 
-@sign Printed Name
+@line (SEAL)
 
-@sign Address
+@line (Signed) ________________________________________
 
-Subscribed and sworn to before me on ____________________, 20____.
+@sign (Official Capacity of Officer)
 
-@sign Notary Public / Authorized Officer
+@line My commission expires: ____________________
 
-@sign Official Capacity
 
-@line (Seal)
 
 `;
