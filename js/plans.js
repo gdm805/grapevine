@@ -94,9 +94,12 @@ window.GV_PLANS = {
   extra: ['doc', 'health', 'trustpaper'],
   /* the documents that can be bought one at a time, in the order the pricing page lists them */
   trustSide: ['schedulea', 'cert', 'affidavit', 'assignment'],
-  singles: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment'],
+  singles: ['dpoa', 'hcd', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment'],
+  /* a document that is NOT sold on its own goes to this package from its own page (19 Oct 2026, Greg: Dementia Care
+     Preferences belong with the health care directive, so they come only with Essentials, Complete or Health Care) */
+  docPlan: { dementia: 'health' },
   /* which price a single document is sold at: 'doc' ($49 / $79), 'doctrust' ($49 per trust), 'doc19', 'doc29' */
-  docTier: { contacts: 'doc19', schedulea: 'doc19', dementia: 'doc29' },
+  docTier: { contacts: 'doc19', schedulea: 'doc19' },
   docPriceKey: function (docKey) { return this.docTier[docKey] || ((this.trustSide || []).indexOf(docKey) > -1 ? 'doctrust' : 'doc'); },
   /* the price of one single document for this household */
   docPrice: function (docKey, household) { return this.priceFor(this.docPriceKey(docKey), household); },

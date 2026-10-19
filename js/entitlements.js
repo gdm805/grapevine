@@ -52,6 +52,8 @@ window.GVPay = (function () {
   function planForDoc(doc) {
     var singles = (window.GV_PLANS && window.GV_PLANS.singles) || [];
     if (singles.indexOf(doc) > -1) return 'doc';
+    var forced = window.GV_PLANS && window.GV_PLANS.docPlan && window.GV_PLANS.docPlan[doc];
+    if (forced) return forced;
     var list = order();
     for (var i = 0; i < list.length; i++) { if (unlocksFor(list[i]).indexOf(doc) > -1) return list[i]; }
     return 'essentials';

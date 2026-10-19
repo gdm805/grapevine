@@ -5,7 +5,7 @@ window.DEMENTIA_SIGNING = String.raw`
 // ==========================================================================
 #! HOW TO SIGN YOUR CARE PREFERENCES
 
-**When you sign:** sign it the same way, and at the same time, as your health care directive.
+**When you sign:** sign it at the same sitting as your health care directive, in front of the same witnesses or notary, and staple it to the directive. Signing them together helps show that these preferences are part of your directive. In some states, end-of-life instructions carry their full weight only when they are part of a properly signed directive.
 
 **Afterward:** keep it with your health care directive, and give a copy to your health care agent.
 
