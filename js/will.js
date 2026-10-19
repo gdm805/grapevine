@@ -848,6 +848,12 @@
     { id: 'residuary', label: 'Everything else' },
     { id: 'review', label: 'Review and sign' }
   ];
+  /* a state where Tovakin isn't available (GV_CLOSED_STATES in js/plans.js) stops every document on its first screen */
+  function validateStep(id) {
+    var e = KIND.validate(id);
+    var closed = id === 'start' && window.GVClosedState && window.GVClosedState(answers.state);
+    return closed ? e.concat([closed]) : e;
+  }
   function visibleSteps(a) { return KIND.steps.filter(function (s) { return !s.show || s.show(a); }); }
 
   /* ---------- boot ---------- */
@@ -4281,7 +4287,7 @@
     if (!fl || restored) return;
     if (KIND.key === 'pourover' && fl.plan === 'complete') answers.trustOk = true;
     if (stepId !== 'start' || !answers.state) return;
-    try { if (KIND.validate('start').length) return; } catch (e) { return; }
+    try { if (validateStep('start').length) return; } catch (e) { return; }
     var vis = visibleSteps(answers);
     if (vis.length < 2 || vis[0].id !== 'start') return;
     var j = 1, labels = [vis[0].label];
@@ -4717,10 +4723,10 @@
     h.replace(/data-(?:k|list)="([^"]+)"/g, function (_, k) { keys[k] = 1; return _; });
     var list = Object.keys(keys);
     if (!list.length || !list.every(function (k) { return CARRIED[k]; })) return false;
-    try { return !KIND.validate(id).length; } catch (e) { return false; }
+    try { return !validateStep(id).length; } catch (e) { return false; }
   }
   function next() {
-    errors = KIND.validate(stepId);
+    errors = validateStep(stepId);
     var stOff = states.map[answers.state];
     if (stepId === 'start' && stOff && !stOff.supported && errors.indexOf(stOff.note) === -1) errors.push(stOff.note || 'Tovakin isn\u2019t available in that state yet.');
     if (errors.length) { draw(); return; }
@@ -5084,7 +5090,7 @@
     setAnswers: function (o) { Object.assign(answers, o); draw(); },
     load: function (name) { return new Promise(function (ok) { dpLoad(name, ok); }); },
     text: docText, html: function () { return toHtml(docText()); }, blocks: docBlocks, exportOptions: exportOptions,
-    vars: function () { return buildVars(answers, states, tpl.settings); }, validate: function (id) { return KIND.validate(id); }, applyPreset: applyPreset,
+    vars: function () { return buildVars(answers, states, tpl.settings); }, validate: function (id) { return validateStep(id); }, applyPreset: applyPreset,
     /* this document's "How to sign" steps, built fresh from the current answers (the package summary's signing sheet) */
     signing: function () { return toHtml(renderNodes(sign.nodes, buildVars(answers, states, tpl.settings)), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>'); }
   };

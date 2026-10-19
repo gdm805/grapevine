@@ -103,3 +103,8 @@
 /* the required "I agree to the Terms" box above the pay button */
 .terms-ack { margin: 10px 0 4px; padding: 12px 14px; border: 2px solid var(--grape); border-radius: var(--r-sm); background: var(--grape-tint); font-weight: 600; }
 .terms-ack a { color: var(--grape-deep); text-underline-offset: 3px; }
+
+/* the buyer's state, asked at checkout (js/checkout.js statePick) */
+.state-pick { display: grid; gap: 6px; margin: 4px 0 16px; }
+.state-pick label { font-weight: 600; font-size: 15px; }
+.state-pick .state-closed { margin: 4px 0 0; padding: 10px 12px; border-radius: 8px; background: #fdf3e7; color: #6b3d00; font-size: 14px; }

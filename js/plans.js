@@ -48,6 +48,17 @@ window.GV_PAYMENT_CHECK_URL = 'https://grapevine-payment-check.gdm805.workers.de
    registered to true and fill in the county clerk's details -- then the two registration statements appear too. */
 window.GV_CA_LDA = { registered: false, county: '', clerkAddress: '', clerkPhone: '', clerkWebsite: '' };
 
+/* STATES WHERE TOVAKIN ISN'T AVAILABLE: a customer who lives in one of these can't finish a document or pay.
+   Checked on each document's first screen and at checkout (which asks every buyer's state). To open a state,
+   delete its line. Arizona: certified legal document preparer rules (ACJA 7-208). Florida (18 Oct 2026, Greg):
+   unlicensed practice of law is a felony there (Fla. Stat. 454.23), and the Florida Supreme Court has held that
+   nonlawyers drafting living trusts practice law (613 So. 2d 426) -- off until a Florida attorney says otherwise. */
+window.GV_CLOSED_STATES = {
+  'Arizona': 'Tovakin isn\u2019t available in Arizona yet. We\u2019re confirming Arizona\u2019s rules for online document services and hope to offer Arizona documents soon.',
+  'Florida': 'Tovakin isn\u2019t available in Florida yet. We\u2019re confirming Florida\u2019s rules for online document services and hope to offer Florida documents soon.'
+};
+window.GVClosedState = function (state) { return (window.GV_CLOSED_STATES || {})[state] || ''; };
+
 window.GV_BETA = { on: true, code: 'BETANOV', survey: '445AKO' };   /* BETANOV replaced BETA2026 on 13 Oct 2026 (launch moved to Nov 13); expires Nov 12 */
 (function () {
   try {

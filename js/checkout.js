@@ -144,7 +144,11 @@
         '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
         (perTrust ? '<p class="per-trust">Priced per trust. One purchase covers one trust, including a married couple’s joint trust. If you and your spouse or partner each have your own separate trust, you’ll need one for each trust.</p>' : '') +
         (link
-          ? betaSurvey() + caNotice(p, price, includes) + termsFold() + (betaTester() && !surveyDone()
+          ? statePick() + betaSurvey() + caNotice(p, price, includes) + termsFold() + (!buyerState()
+            ? '<button class="btn btn-primary btn-lg" type="button" disabled>Choose the state where you live above</button>'
+            : window.GVClosedState && window.GVClosedState(buyerState())
+            ? '<button class="btn btn-primary btn-lg" type="button" disabled>Not available in ' + esc(buyerState()) + ' yet</button>'
+            : betaTester() && !surveyDone()
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Submit the survey above to unlock this button</button>'
             : isCA() && !caAck
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Confirm you\u2019ve read the California notice above</button>'
@@ -231,6 +235,25 @@
      this box is ticked, every visit. Every path to payment and download comes through this page. The agreement is
      also noted in this browser with the terms' "Last updated" date. At launch, Stripe's own terms box and the payment
      check's REQUIRE_TERMS go on too (cloudflare/payment-check.js), so a payment can't unlock anything without it. */
+  /* THE BUYER'S STATE: asked of everyone at checkout (filled in from their documents when known), because single
+     documents and some packages skip "About you". It decides the California notice and blocks states where
+     Tovakin isn't available (GV_CLOSED_STATES in js/plans.js). Saved to the shared profile. */
+  var STATE_NAMES = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+  function readProf() { try { return JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { return {}; } }
+  function buyerState() { var s = readProf().state || ''; return STATE_NAMES.indexOf(s) > -1 ? s : ''; }
+  function statePick() {
+    var cur = buyerState(), closed = window.GVClosedState ? window.GVClosedState(cur) : '';
+    return '<div class="state-pick"><label for="buyer-state">State where you live</label>' +
+      '<select class="input" id="buyer-state"><option value="">Choose your state</option>' +
+      STATE_NAMES.map(function (s) { return '<option' + (s === cur ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') + '</select>' +
+      (closed ? '<p class="state-closed">' + esc(closed) + '</p>' : '') + '</div>';
+  }
+  root.addEventListener('change', function (e) {
+    if (!e.target || e.target.id !== 'buyer-state') return;
+    try { var pr = readProf(); pr.state = e.target.value; localStorage.setItem('grapevine.profile.v1', JSON.stringify(pr)); } catch (x) { /* storage blocked */ }
+    render();
+  });
+
   var termsAck = false;
   root.addEventListener('change', function (e) {
     if (e.target && e.target.id === 'terms-ack') {
