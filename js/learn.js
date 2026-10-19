@@ -28,7 +28,12 @@
     });
     return list.sort(function (x, y) { return y.date.localeCompare(x.date); });
   }
-  var articles = parse(window.LEARN_ARTICLES);
+  /* SCHEDULED ARTICLES (19 Oct 2026): an article whose date is still in the future stays hidden -- from the
+     list and from its own link -- until that day arrives (by the visitor's own calendar), so a batch can be
+     written ahead and appear one at a time. Add ?preview=1 to the Learn page to see scheduled ones too. */
+  var preview = /[?&]preview=1\b/.test(location.search);
+  var today = (function () { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); })();
+  var articles = parse(window.LEARN_ARTICLES).filter(function (a) { return preview || !a.date || a.date <= today; });
 
   /* ---------- article text -> html ---------- */
   function inline(s) {

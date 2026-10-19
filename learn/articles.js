@@ -273,4 +273,254 @@ Pick people who are trustworthy, calm and willing to act. They can be the same p
 Requirements for these documents differ by state, so follow your state's signing rules.
 
 You can [write your durable power of attorney](dpoa.html) here.
+
+=== what-is-probate
+title: What is probate, and why do people try to avoid it?
+category: Trusts
+date: 2026-10-26
+summary: Probate is the court process for settling an estate. Here is what it involves, why it can be slow and public, and the usual ways around it.
+---
+Probate is the court-supervised process of settling someone's estate after they die. The court confirms the will is valid (or applies state law if there is no will), appoints the person who will handle the estate, and oversees paying debts and passing property to the people who receive it.
+
+## What happens in probate
+
+- **The will is filed with the court.** If there is no will, state law decides who inherits.
+- **A personal representative is appointed.** This is the executor named in the will, or someone the court chooses.
+- **Creditors are notified.** Debts and final bills are paid from the estate.
+- **Property is distributed.** What is left goes to the people named in the will, or to relatives under state law.
+
+## Why people try to avoid it
+
+- **Time.** Probate often takes months, and sometimes more than a year.
+- **Cost.** Court fees, and often attorney and appraisal fees, are paid from the estate.
+- **Privacy.** Probate files are generally public records, so anyone can read the will and see what was left to whom.
+- **More than one state.** Real estate in another state can require a separate probate there.
+
+## Common ways around probate
+
+- **A living trust.** Property held in the trust passes to your beneficiaries without probate. See [what a living trust is](learn.html#what-is-a-living-trust).
+- **Beneficiary designations.** Life insurance, retirement accounts and many bank accounts pass directly to the person you name on the account.
+- **Joint ownership.** Property owned jointly with a right of survivorship usually passes to the surviving owner.
+- **Small-estate procedures.** Many states offer a simpler process when an estate is below a set amount.
+
+Probate isn't always bad. For a simple estate it can be straightforward, and the court's supervision can help settle disputes. How much it costs, and how long it takes, depends a great deal on your state.
+
+You can compare your options on our [Documents & Pricing](pricing.html) page.
+
+=== how-to-fund-a-living-trust
+title: How to fund a living trust (and why it matters)
+category: Trusts
+date: 2026-11-02
+summary: A living trust only controls what's actually in it. Here is what "funding" means and how different kinds of property are moved in.
+---
+Signing a living trust is only the first step. A trust can only manage and pass on the property that is actually in it. Moving your property into the trust is called "funding" it, and a trust that is never funded may not avoid probate at all.
+
+## Why funding matters
+
+If you die with property still in your own name, that property may have to go through probate, even though you have a trust. A pour-over will catches it and sends it to the trust, but usually only after probate. See [what a pour-over will is](learn.html#what-is-a-pour-over-will).
+
+## How different property is moved
+
+- **Your home and other real estate.** A new deed transfers the property from you to yourself as trustee. The deed is then recorded with the county.
+- **Bank and investment accounts.** Your bank or brokerage retitles the account in the trust's name, or opens a new account for the trust. Each institution has its own forms.
+- **Personal belongings.** Furniture, jewelry, art and similar items are usually moved by a written assignment of personal property to the trust.
+- **Vehicles.** Some people retitle vehicles; others leave them out, since many states have simpler ways to transfer a vehicle.
+- **Retirement accounts.** IRAs and 401(k)s are usually not retitled to a trust. Instead, you name beneficiaries on the account. Changing the owner of a retirement account can have tax consequences.
+- **Life insurance.** You can name the trust, or individual people, as beneficiary.
+
+## Keep a list
+
+A Schedule A lists the property you intend to hold in your trust. It helps your successor trustee find everything, but listing an item on it doesn't replace a deed or an account change where one is needed.
+
+## Keep it up to date
+
+When you buy a new home or open a new account, put it in the trust's name from the start. Reviewing your trust's property once a year is a good habit.
+
+You can prepare a [General Assignment of Personal Property](assignment.html) and a [Schedule A](schedulea.html) here.
+
+=== what-a-power-of-attorney-lets-someone-do
+title: What does a power of attorney let someone do?
+category: Incapacity
+date: 2026-11-09
+summary: A durable power of attorney lets someone you trust handle your money and paperwork. Here is what that can include, and its limits.
+---
+A durable power of attorney lets you name someone, called your agent, to handle your financial and legal affairs. "Durable" means it keeps working if you become unable to make decisions yourself, which is when it is usually needed most.
+
+## What an agent can usually do
+
+Depending on the powers you give, your agent may be able to:
+
+- pay your bills and manage your bank accounts;
+- deal with your investments and retirement accounts;
+- file your tax returns and deal with tax agencies;
+- buy, sell, or manage real estate;
+- handle insurance and government benefits; and
+- deal with your mail, contracts and other paperwork.
+
+## What an agent can't do
+
+- **Act against your interests.** An agent must act in your best interest, keep your money separate from their own, and keep records.
+- **Act after you die.** A power of attorney ends at death. After that, your will or trust controls.
+- **Make medical decisions.** Those are covered by a health care directive. See [the difference between the two](learn.html#power-of-attorney-and-health-care-directive).
+- **Some acts need express permission.** In many states, an agent can only make gifts, change beneficiaries or change your estate plan if the document specifically allows it.
+
+## When it starts
+
+Some powers of attorney work as soon as they are signed. Others start only if you become incapacitated, which usually needs to be confirmed, for example by a doctor. The right choice depends on how much you trust your agent and how easily you want them to be able to step in.
+
+## Choosing your agent
+
+Choose someone honest, organized and willing to do the work. Naming a backup is wise. Some people name two agents to serve together, though that can slow things down if they have to agree.
+
+You can [write your durable power of attorney](dpoa.html) here.
+
+=== what-is-a-hipaa-authorization
+title: What is a HIPAA authorization, and why have one?
+category: Incapacity
+date: 2026-11-16
+summary: Privacy law keeps your medical information private, even from family. A HIPAA authorization lets the people you choose talk to your doctors.
+---
+A federal privacy law, known as HIPAA, keeps your medical records private. That's usually a good thing, but it can also mean that your family can't get answers from your doctors or hospital when they need them most.
+
+## What it does
+
+A HIPAA authorization is a short document that names the people your doctors, hospitals and health insurers may share your medical information with. It lets those people:
+
+- talk with your doctors and nurses;
+- get copies of your medical records; and
+- deal with insurers and billing offices about your care.
+
+## How it differs from a health care directive
+
+A health care directive names who makes medical decisions for you and records your wishes. A HIPAA authorization is narrower: it only lets people receive information. Many people sign both, so their health care agent can get the information needed to make good decisions.
+
+## Who to name
+
+You can name your health care agent, family members, or anyone else you'd like to have access. You don't have to give them decision-making power to let them receive information.
+
+## How long it lasts
+
+A HIPAA authorization must state when it ends: a specific date, a specific event, or a period such as your lifetime. You can usually cancel it at any time in writing.
+
+You can [write your HIPAA authorization](hipaa.html) here.
+
+=== leaving-money-to-children
+title: Leaving money to children under 18
+category: Children
+date: 2026-11-23
+summary: Children can't manage an inheritance on their own. Here are the usual ways to leave money to a minor, and what happens if you don't plan for it.
+---
+Children under 18 generally can't own or manage significant property in their own name. If you leave money directly to a minor and don't plan for who manages it, a court may need to appoint someone to do so, which can be slow and expensive.
+
+## Common ways to leave money to a child
+
+- **A trust.** A trust holds the money for the child and a trustee manages it, using it for things like education and health. You choose the age at which the child receives what's left, such as 25 or 30.
+- **A custodian.** Most states have a law, often called the Uniform Transfers to Minors Act, that lets you name a custodian to manage money for a child until a set age, usually 18 or 21.
+- **A person to manage it.** Your will can name someone to manage any property your child receives, so a court doesn't have to choose.
+
+## The guardian and the money manager
+
+The person who raises your children (the guardian) and the person who manages their money don't have to be the same. Some families prefer to separate the two, so each has a clear role. See [how to choose a guardian](learn.html#choosing-a-guardian).
+
+## Questions to think about
+
+- At what age would your children be ready to receive money outright?
+- Who is good with money and would treat your children fairly?
+- Should the money be used for anything in particular, such as education?
+
+## Don't forget beneficiary forms
+
+Life insurance and retirement accounts pass to whoever is named on the account. Naming a minor child directly can cause the same court problems, so many parents name a trust or a custodian instead.
+
+You can [write your will](will.html) or [your living trust](trust.html) here.
+
+=== planning-for-your-pets
+title: Planning for your pets
+category: Wills
+date: 2026-11-30
+summary: Pets can't inherit, but you can name who will care for them and leave money for their care. Here's how.
+---
+Under the law, pets are property, so they can't inherit money themselves. But you can still make sure they are cared for if something happens to you.
+
+## Name a caretaker
+
+Your will can leave your pets to a specific person who has agreed to care for them. Naming a backup is wise, in case your first choice can't take them.
+
+## Leave money for their care
+
+You can leave money to the person who takes your pets and ask that it be used for their care. A simple request like this is not legally binding; the caretaker owns the money outright. For more control, many states allow a **pet trust**, which holds money for an animal's care and names someone to make sure it's spent that way.
+
+## Talk to the caretaker
+
+- Confirm they're willing and able to take your pets.
+- Share your pets' routines, diet, medical needs and vet's contact details.
+- Think about how much care will likely cost over your pets' lifetimes.
+
+## Short-term plans matter too
+
+If you're suddenly in the hospital, someone may need to step in right away. Tell a neighbor or friend where your pets are, and keep their information with your important papers.
+
+You can name a caretaker for your pets when you [write your will](will.html).
+
+=== update-your-will-or-trust
+title: When should you update your will or trust?
+category: Wills
+date: 2026-12-07
+summary: Estate plans go out of date. Here are the life events that are good reasons to review yours.
+---
+A will or trust reflects your life at the moment you sign it. As your family, property and address change, your documents can fall out of step with what you want.
+
+## Good reasons to review your documents
+
+- **Marriage, divorce or a new partner.** In many states, divorce automatically revokes gifts to a former spouse, but not always, and not on every account.
+- **A birth, adoption or death in the family.**
+- **Your children grow up.** A guardian may no longer be needed, and you may want to change the age they receive money.
+- **Someone you named can no longer serve.** Check your executor, trustee, guardian and agents.
+- **You move to another state.** Your documents are generally still valid, but the new state's rules may differ.
+- **You buy or sell significant property,** such as a home or business.
+- **Your wishes change.**
+
+## Don't forget beneficiary forms
+
+Life insurance, retirement accounts and many bank accounts pass to the people named on the account, not under your will. Review those forms whenever you review your will.
+
+## How to make changes
+
+Small changes can sometimes be made with an amendment (to a trust) or a codicil (to a will). For larger changes, many people simply sign a new document. Never write changes on a signed will by hand; that can create confusion or even invalidate it.
+
+A good habit is to review your documents every few years, and after any major life event.
+
+=== after-you-sign-your-documents
+title: What to do with your documents after you sign them
+category: Wills
+date: 2026-12-14
+summary: Signing is only half the job. Here is where to keep your documents, who should have copies, and what to do next.
+---
+Once your documents are signed, a few simple steps make sure they'll actually work when they're needed.
+
+## Keep the originals safe, but findable
+
+Store your originals somewhere secure but accessible, like a fireproof home safe or file. If you use a bank safe-deposit box, make sure someone you trust can get into it, since a box can be hard to open after a death. Some courts and law offices also accept wills for safekeeping.
+
+## Tell the right people where they are
+
+Your executor, successor trustee and agents should know your documents exist and where to find them. They don't need to know everything in them, just how to get to them.
+
+## Give copies where they're useful
+
+- **Health care documents.** Give copies to your health care agent and your doctors.
+- **Power of attorney.** Your agent may need a copy for your bank. Some banks ask to see it ahead of time.
+- **Trust documents.** Your successor trustee may need a copy, or a certification of trust, to show their authority.
+
+## Finish funding your trust
+
+If you have a living trust, move your property into it. See [how to fund a living trust](learn.html#how-to-fund-a-living-trust).
+
+## Check your beneficiary forms
+
+Make sure life insurance, retirement accounts and other accounts name the right people, and match your plan.
+
+## Keep a list of important contacts
+
+A list of your accounts, advisors and key contacts saves your family a great deal of searching. You can make one with [Important Contacts](contacts.html).
 `;
