@@ -226,7 +226,7 @@ If the Trustmaker's marriage or registered domestic partnership is terminated, d
 
 [[else]]
 
-If the Trustmaker dies, becomes incapacitated, resigns, or otherwise ceases to serve as Trustee, the following Successor Co-Trustees shall serve together:
+If the Trustmaker dies, becomes incapacitated, resigns, or otherwise ceases to serve as Trustee, the following Successor Co-Trustees shall serve together[[if cotrustee_separate]], and each may act alone[[end]]:
 
 [[each cotrustees]]
 
@@ -334,11 +334,19 @@ A Successor Trustee has no duty to investigate the acts or omissions of a predec
 
 ## Co-Trustees
 
+[[if cotrustee_separate]]
+Each Co-Trustee may act alone and independently, without the approval or joinder of any other Co-Trustee, and any person dealing with the Trust may rely on the signature and authority of any one Co-Trustee.
+
+If the Co-Trustees disagree about a proposed action, they shall first attempt to resolve the disagreement through mediation. If mediation is unsuccessful, any Co-Trustee may petition a court having jurisdiction over the Trust for appropriate instructions.
+
+[[else]]
 Any Co-Trustee may perform Routine Administrative Acts, as defined in [[ref def_routine]], independently.
 
 Except for Routine Administrative Acts, as defined in [[ref def_routine]], no Co-Trustee may take unilateral action affecting the administration, investment, distribution, or ownership of the Trust Estate unless approved by a majority of the Co-Trustees then serving. If only two Co-Trustees are serving, both Co-Trustees must approve the action.
 
 If the Co-Trustees cannot reach the approval required by this Section, they shall first attempt to resolve the disagreement through mediation. If mediation is unsuccessful, any Co-Trustee may petition a court having jurisdiction over the Trust for appropriate instructions.
+
+[[end]]
 
 ## Delegation of Duties
 

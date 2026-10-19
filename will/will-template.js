@@ -217,8 +217,17 @@ I nominate the person or persons designated in this Will to serve as Personal Re
 
 If a designated Personal Representative is unwilling, unable, or ineligible to serve or ceases to serve before completion of the administration of my estate, the next willing and eligible successor designated in this Will shall serve.
 
+[[if pr_co]]
+The following Co-Personal Representatives shall serve together[[if pr_separate]], and each may act alone[[end]]:
+
+[[each co_prs]]
+@row {{co_pr}} |
+
+[[end]]
+[[else]]
 @row Primary Personal Representative: | {{executor}}
 
+[[end]]
 [[each successors]]
 @row Successor Personal Representative: | {{successor}}
 
@@ -231,6 +240,17 @@ A nominee shall qualify and accept the office in the manner required by applicab
 
 No nominee shall be disqualified solely because the nominee is a beneficiary under this Will, except to the extent applicable law provides otherwise.
 
+[[if pr_co]]
+## Co-Personal Representatives
+
+[[if pr_separate]]
+Each Co-Personal Representative may act alone and independently, without the joinder of any other Co-Personal Representative, to the extent permitted by applicable law. Any person dealing with my estate may rely on the signature and authority of any one Co-Personal Representative. If the Co-Personal Representatives disagree, any of them may seek instructions from the court having jurisdiction over my estate.
+
+[[else]]
+If two or more Personal Representatives serve together, they shall act in the manner required by applicable law. To the extent this Will may control, any Co-Personal Representative may independently perform Routine Administrative Acts. Other material actions require approval of a majority of the Co-Personal Representatives then serving; if only two are serving, both must approve. If they cannot agree, any Co-Personal Representative may seek instructions from the court having jurisdiction over my estate.
+
+[[end]]
+[[end]]
 ## Authority of Personal Representative
 
 My Personal Representative shall have the authority granted by this Will and applicable law to administer my estate, protect and preserve estate property, pay lawful obligations, resolve claims, make distributions, and complete the administration of my estate.

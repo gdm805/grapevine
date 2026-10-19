@@ -216,7 +216,8 @@
       name1: clean(key === 'trustjoint' ? a.name1 : a.name), name2: key === 'trustjoint' ? clean(a.name2) : '',
       signingCounty: a.signingCounty || '', signingDate: a.signingDate || '',
       firstDeathPlan: key === 'trustjoint' ? (a.firstDeathPlan || '') : '',
-      poaTrustPowers: ''   /* the trust's power-of-attorney question was removed 18 Oct 2026 */
+      poaTrustPowers: '',   /* the trust's power-of-attorney question was removed 18 Oct 2026 */
+      people: trustPeopleFrom(a)   /* its successor trustees, for "Same as my trust" */
     };
   }
   function saveTrustFacts(a, kind) {
@@ -773,8 +774,12 @@
     v.prop_alternates = [a.propAlt1].map(clean).filter(Boolean).map(function (x) { return { prop_alt: x }; });
     v.executor = clean(a.executor);
     v.successors = (a.successors || []).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
-    if (a.wantsBackups === 'no') v.successors = [];
+    if (a.wantsBackups === 'no' || planOf(a) === 'one') v.successors = [];
     v.has_successors = v.successors.length > 0;
+    /* co-personal representatives (added 19 Oct 2026): the first person named heads the list */
+    var wPlan = planOf(a);
+    v.pr_co = isCoPlan(wPlan); v.pr_successive = !v.pr_co; v.pr_separate = wPlan === 'separate';
+    v.co_prs = !v.pr_co ? [] : [v.executor].concat((a.coPRs || []).map(function (x) { return clean(x.name); })).filter(Boolean).map(function (n) { return { co_pr: n }; });
     v.gifts = (a.gifts || []).map(function (g) { return { gift: clean(g.item), recipient: clean(g.recipient), gift_entity: giftEntity(g), gift_to_trust: g.to === 'TRUST' }; }).filter(function (g) { return g.gift && g.recipient; });
     v.has_gifts = a.wantsGifts === 'yes' && v.gifts.length > 0;
     v.has_entity_gift = v.has_gifts && v.gifts.some(function (g) { return g.gift_entity; });
@@ -825,12 +830,12 @@
     hasChildren: '', children: [{ name: '', minor: false }],
     guardian: '', altGuardian: '', gAlt2: '', guardianMode: 'same', eachGuardian: {},
     propFid: '', propFidName: '', propAlt1: '',
-    executor: '', successors: [{ name: '' }],
+    executor: '', successors: [{ name: '' }], coPRs: [{ name: '' }],
     wantsGifts: '', gifts: [{ item: '', to: '', recipient: '' }],
     residuary: '', beneficiaries: [{ name: '', share: '', contingent: 'descendants', contName: '' }]
   };
   var ROWS_WILL = {
-    children: { name: '', minor: false }, successors: { name: '' }, gifts: { item: '', to: '', recipient: '' },
+    children: { name: '', minor: false }, successors: { name: '' }, coPRs: { name: '' }, gifts: { item: '', to: '', recipient: '' },
     beneficiaries: { name: '', share: '', contingent: 'descendants', contName: '' }
   };
   function hasMinor(a) {
@@ -1115,21 +1120,12 @@
         (answers.propFid === 'yes' ? field('Who should manage it?', text('propFidName', '')) + field('A backup <em>(optional)</em>', text('propAlt1', '')) : '');
     },
     executor: function () {
-      var rows = '<div class="rowset">' + answers.successors.map(function (s, i) {
-        return '<div class="rowitem"><input class="input" data-list="successors" data-i="' + i + '" data-f="name" value="' + val(s.name) + '" placeholder="Backup ' + (i + 1) + ' full name" aria-label="Backup ' + (i + 1) + '">' +
-          rm('successors', i, 'backup ' + (i + 1), answers.successors.length > 1) + '</div>';
-      }).join('') + '</div><button type="button" class="btn btn-secondary btn-sm" data-add="successors">+ Add another backup</button>';
-      return stepHead('Who should carry out your will?', 'This person pays your debts, handles the paperwork, and gives your property to the people you name. Your will calls this person your Personal Representative. Some states call it an executor.') + coupleRoleNote('Personal Representative') +
-        field('Personal representative\u2019s full name', text('executor', '')) +
-        (function () {
-          if (!answers.wantsBackups && answers.successors.some(function (x) { return clean(x.name); })) answers.wantsBackups = 'yes';
-          var h = anotherPerson('personal representative', '');
-          if (answers.wantsBackups === 'yes') {
-            if (!answers.successors.length) answers.successors = [{ name: '' }];
-            h += field('Backup personal representative(s), in order', rows, 'If your first choice can\u2019t serve, the first backup takes over, then the next.');
-          }
-          return h;
-        })();
+      var plan = planOf(answers);
+      var h = stepHead('Who should carry out your will?', 'This person pays your debts, handles the paperwork, and gives your property to the people you name. Your will calls this person your Personal Representative. Some states call it an executor.') + coupleRoleNote('Personal Representative') +
+        planPicker('personal representative', false);
+      if (!plan) return h;
+      applyPlan(answers, plan, 'co');
+      return h + prFields(plan);
     },
     gifts: function () {
       var rows = '';
@@ -1194,7 +1190,7 @@
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
       var bens = v.beneficiaries.map(function (b) { return esc(b.beneficiary) + ' (' + esc(b.share) + '%)'; }).join(', ');
-      var pr = esc(v.executor) + (v.has_successors ? '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
+      var pr = (v.pr_co ? 'Together' + (v.pr_separate ? ' (each may act alone)' : '') + ': ' + esc(v.co_prs.map(function (x) { return x.co_pr; }).join(', ')) : esc(v.executor)) + (v.has_successors ? '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
       return stepHead('Your will is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
         '<div class="sum">' +
         row('Lives in', esc([v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ')), 'start') +
@@ -1238,8 +1234,8 @@
     } else if (id === 'propfid') {
       propFidErrors(a, e);
     } else if (id === 'executor') {
-      if (!clean(a.executor)) e.push('Enter the name of your personal representative.');
-      anotherErrors(a, e, 'personal representative', false, (a.successors || []).some(function (x) { return clean(x.name); }), 0);
+      if (planOf(a) !== 'trust' && !clean(a.executor)) e.push('Enter the name of your personal representative.');
+      anotherErrors(a, e, 'personal representative', true, (a.successors || []).some(function (x) { return clean(x.name); }), (a.coPRs || []).filter(function (x) { return clean(x.name); }).length);
     } else if (id === 'gifts') {
       if (!a.wantsGifts) e.push('Choose whether to add a special gift.');
       if (a.wantsGifts === 'yes') {
@@ -1288,15 +1284,18 @@
     if (!a.successors.length) a.successors = [{ name: '' }];
     /* answers saved before this screen changed: the Co-Trustees were all in cotrustees */
     if (a.trusteeMode === 'COTRUSTEES' && !clean(a.successors[0].name) && (a.cotrustees || []).some(function (x) { return clean(x.name); })) { a.successors[0].name = clean(a.cotrustees[0].name); a.cotrustees = a.cotrustees.slice(1); }
-    if (!a.wantsBackups && (a.trusteeMode === 'COTRUSTEES' || a.successors.slice(1).some(function (x) { return clean(x.name); }))) { a.wantsBackups = 'yes'; a.otherRole = a.trusteeMode === 'COTRUSTEES' ? 'co' : 'backup'; }
-    var h = field('Successor trustee’s full name', '<input class="input" data-list="successors" data-i="0" data-f="name" value="' + val(a.successors[0].name) + '" placeholder="Full legal name" autocomplete="off" aria-label="Successor trustee">') +
-      anotherPerson('successor trustee', 'Alongside my first choice, serving together as Co-Trustees');
-    if (a.wantsBackups !== 'yes') { a.trusteeMode = 'SUCCESSIVE'; return h; }
-    if (a.otherRole === 'backup') {
+    var plan = planOf(a);
+    if (plan === 'trust') plan = '';
+    var h = planPicker('successor trustee', false);
+    if (!plan) return h;
+    applyPlan(a, plan, 'co');
+    h += field(isCoPlan(plan) ? 'First successor co-trustee’s full name' : 'Successor trustee’s full name', '<input class="input" data-list="successors" data-i="0" data-f="name" value="' + val(a.successors[0].name) + '" placeholder="Full legal name" autocomplete="off" aria-label="Successor trustee">');
+    if (plan === 'one') { a.trusteeMode = 'SUCCESSIVE'; return h; }
+    if (plan === 'backups') {
       a.trusteeMode = 'SUCCESSIVE';
       if (a.successors.length < 2) a.successors.push({ name: '' });
       h += field('Backup successor trustee(s), in order', extraRows('successors', 1, 'Backup') + addBtn('successors', '+ Add another backup'), 'If your first choice can’t serve, the first backup takes over, then the next.');
-    } else if (a.otherRole === 'co') {
+    } else {
       a.trusteeMode = 'COTRUSTEES';
       if (!a.cotrustees.length) a.cotrustees = [{ name: '' }];
       h += field('Other Co-Trustee(s)', nameRows('cotrustees', 'Co-Trustee', 1) + addBtn('cotrustees', '+ Add another'));
@@ -1315,6 +1314,7 @@
     /* one name reads "the following person shall serve as Successor Trustee", not "Trustees ... one at a time" */
     v.one_successor = v.successors.length === 1;
     v.one_backup_trustee = v.backup_trustees.length === 1;
+    v.cotrustee_separate = !!v.is_cotrustees && planOf(a) === 'separate';
   }
   function extraRows(list, from, ph) {
     var rows = '';
@@ -1323,6 +1323,109 @@
         rm(list, i, ph.toLowerCase() + ' ' + (i - from + 1), answers[list].length > from + 1) + '</div>';
     }
     return '<div class="rowset">' + rows + '</div>';
+  }
+  /* WHO SERVES (19 Oct 2026, Greg): one dropdown on every "who acts for you" screen -- the agent (power of
+     attorney, health care directive), the personal representative (will, pour-over will) and the successor
+     trustee (living trust, joint trust):
+       one       one person
+       backups   one person, with backups who serve in order
+       separate  two or more serving at the same time, any one of whom may act alone
+       together  two or more serving at the same time, who must act together
+       trust     the same people, the same way, as the successor trustee(s) of the trust written here
+     Saved as peoplePlan. It sets the older answers the screens and documents already read (wantsBackups,
+     otherRole, coSeparate), and planOf works the plan out from those older answers for anything saved before the
+     dropdown. "Same as my trust" reads the trust's saved facts each time the document is built, so a later change
+     to the trust carries over -- except in the health care directive, which copies the names in once, because
+     each health care agent there also has a phone number. */
+  function planOf(a) {
+    if (a.peoplePlan) return a.peoplePlan;
+    if (a.wantsBackups === 'no') return 'one';
+    if (a.wantsBackups !== 'yes') return '';
+    var r = a.otherRole || (a.agentMode === 'separate' || a.agentMode === 'together' ? a.agentMode : '') || (a.prMode === 'co' || a.trusteeMode === 'COTRUSTEES' ? 'co' : '');
+    if (r === 'backup') return 'backups';
+    if (r === 'separate' || r === 'together') return r;
+    if (r === 'co') return a.coSeparate ? 'separate' : 'together';
+    return '';
+  }
+  /* the older answers a plan stands for. coStyle 'co' = will, pour-over will and trusts (otherRole co, plus
+     coSeparate); 'agent' = power of attorney and health care directive (otherRole separate or together) */
+  function applyPlan(a, plan, coStyle) {
+    if (plan === 'one') { a.wantsBackups = 'no'; a.otherRole = ''; return; }
+    if (plan === 'backups') { a.wantsBackups = 'yes'; a.otherRole = 'backup'; return; }
+    if (plan === 'separate' || plan === 'together') {
+      a.wantsBackups = 'yes';
+      if (coStyle === 'agent') a.otherRole = plan;
+      else { a.otherRole = 'co'; a.coSeparate = plan === 'separate'; }
+    }
+  }
+  function isCoPlan(plan) { return plan === 'separate' || plan === 'together'; }
+  /* the trust's successor trustees, as saved with its facts: first, others (serving at the same time), backups */
+  function trustPeopleFrom(a) {
+    var first = clean(((a.successors || [])[0] || {}).name);
+    if (!first) return null;
+    var plan = planOf(a), later = (a.successors || []).slice(1).map(function (x) { return clean(x.name); }).filter(Boolean);
+    if (isCoPlan(plan)) return { plan: plan, first: first, others: (a.cotrustees || []).map(function (x) { return clean(x.name); }).filter(Boolean), backups: later };
+    if (plan === 'backups' && later.length) return { plan: 'backups', first: first, others: [], backups: later };
+    return { plan: 'one', first: first, others: [], backups: [] };
+  }
+  function trustPeople() { var f = readTrustFacts(); return f && f.people && f.people.first ? f.people : null; }
+  function trustPeopleText(p) {
+    var all = [p.first].concat(p.others || []);
+    var t = all.length > 1 ? all.slice(0, -1).join(', ') + ' and ' + all[all.length - 1] + (p.plan === 'separate' ? ', either may act alone' : ', acting together') : all[0];
+    return t + ((p.backups || []).length ? ', then ' + p.backups.join(', then ') : '');
+  }
+  /* a copy of the answers with the trust's people in place of this document's own */
+  function withTrustPeople(a, coStyle) {
+    var p = trustPeople(); if (!p) return a;
+    var b = clone(a), rows = function (names) { return names.map(function (n) { return { name: n }; }); };
+    if (coStyle === 'agent') { b.agent = p.first; b.coAgents = rows(p.others); b.agentMode = isCoPlan(p.plan) ? p.plan : 'single'; }
+    else { b.executor = p.first; b.coPRs = rows(p.others); b.prMode = isCoPlan(p.plan) ? 'co' : 'successive'; }
+    b.successors = rows(p.backups);
+    applyPlan(b, p.plan, coStyle);
+    b.peoplePlan = p.plan;   /* the trust's own setup, so the document reads it like any other choice */
+    return b;
+  }
+  /* the answers a document is built from, with the older mode fields set from the dropdown, so the document
+     never depends on which screens were last shown */
+  function withPlan(a, coStyle) {
+    var plan = planOf(a);
+    if (plan === 'trust') return withTrustPeople(a, coStyle);
+    if (!plan) return a;
+    var b = clone(a);
+    applyPlan(b, plan, coStyle);
+    if (coStyle === 'agent') b.agentMode = isCoPlan(plan) ? plan : 'single';
+    else { b.prMode = isCoPlan(plan) ? 'co' : 'successive'; b.trusteeMode = isCoPlan(plan) ? 'COTRUSTEES' : 'SUCCESSIVE'; }
+    return b;
+  }
+  function planPicker(noun, trustOk) {
+    var a = answers, plan = planOf(a), p = trustOk ? trustPeople() : null;
+    if (plan === 'trust' && !p) plan = '';
+    var opts = [['', 'Choose one'], ['one', 'One person'], ['backups', 'One person, with backup(s)'],
+      ['separate', 'Two or more people, any one can act alone'], ['together', 'Two or more people, who must act together']];
+    if (p) opts.push(['trust', 'Same as my trust: ' + trustPeopleText(p)]);
+    return field('How do you want to name your ' + noun + '?', '<select class="input" data-k="peoplePlan" data-rerender autocomplete="off" aria-label="How do you want to name your ' + noun + '">' +
+      opts.map(function (o) { return '<option value="' + o[0] + '"' + (plan === o[0] ? ' selected' : '') + '>' + esc(o[1]) + '</option>'; }).join('') + '</select>',
+      'Backups step in only if the person before them can’t serve, in the order you list them.');
+  }
+  function trustNote(noun) {
+    var p = trustPeople();
+    return p ? '<p class="hint">Your ' + noun + ' will be the same as your trust’s successor trustee' + (p.others.length || p.backups.length ? 's' : '') + ': <strong>' + esc(trustPeopleText(p)) + '</strong>. If you change your trust, this changes too.</p>' : '';
+  }
+  /* the personal representative screen's names, after the dropdown (will and pour-over will) */
+  function prFields(plan) {
+    var a = answers;
+    var h = field(isCoPlan(plan) ? 'First personal representative’s full name' : 'Personal representative’s full name', text('executor', ''));
+    if (plan === 'one') { a.prMode = 'successive'; return h; }
+    if (plan === 'backups') {
+      a.prMode = 'successive';
+      if (!a.successors.length) a.successors = [{ name: '' }];
+      return h + field('Backup personal representative(s), in order', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can’t serve, the first backup takes over, then the next.');
+    }
+    a.prMode = 'co';
+    if (!a.coPRs || !a.coPRs.length) a.coPRs = [{ name: '' }];
+    if (!a.successors.length) a.successors = [{ name: '' }];
+    return h + field('Other personal representative(s)', nameRows('coPRs', 'Personal representative', 1) + addBtn('coPRs', '+ Add another')) +
+      field('Backups <em>(optional)</em>', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'Backups step in only if the people above can’t serve, in the order you list them.');
   }
   function anotherPerson(noun, coLabel) {
     var a = answers;
@@ -1333,12 +1436,11 @@
     return h;
   }
   function anotherErrors(a, e, noun, hasCo, backups, coCount) {
-    if (!a.wantsBackups) { e.push('Answer whether you want to name another ' + noun + '.'); return; }
-    if (a.wantsBackups !== 'yes') return;
-    var role = hasCo ? a.otherRole : 'backup';
-    if (!role) { e.push('Choose how the other ' + noun + ' should serve.'); return; }
-    if (role === 'backup' && !backups) e.push('Enter the backup ' + noun + '’s name, or answer No.');
-    if (role === 'co' && !coCount) e.push('Enter the other ' + noun + '’s name, or answer No.');
+    var plan = planOf(a);
+    if (!plan) { e.push('Choose how you want to name your ' + noun + '.'); return; }
+    if (plan === 'trust') { if (!trustPeople()) e.push('Your trust doesn’t name a successor trustee yet. Choose another option.'); return; }
+    if (plan === 'backups' && !backups) e.push('Enter the backup ' + noun + '’s name, or choose “One person.”');
+    if (isCoPlan(plan) && !coCount) e.push('Enter the other ' + noun + '’s name, or choose “One person.”');
   }
   var STEPS_PO = [
     { id: 'start', label: 'Where you live' },
@@ -1421,6 +1523,7 @@
     return [{ applies_to: minors.length === 1 ? minors[0].child : anyChild, guardian: clean(a.guardian), alternates: guardianAlts([firstAlt, a.gAlt2]) }];
   }
   function buildVarsPO(a, states, settings) {
+    a = withPlan(a, 'co');
     var v = {}, st = states.map[a.state] || null;
     var wk = willKids(a), kids = wk.own.map(function (c) { return { child: c.child }; });
     var hasKids = a.hasChildren === 'yes' && kids.length > 0;
@@ -1444,6 +1547,7 @@
     /* the first person named is always "executor"; together, they head the co-personal representative list */
     if (v.pr_co && v.executor && !v.co_prs.some(function (x) { return x.co_pr === v.executor; })) v.co_prs.unshift({ co_pr: v.executor });
     if (a.wantsBackups === 'no') { v.successors = []; v.pr_co = false; v.pr_successive = true; }
+    v.pr_separate = v.pr_co && planOf(a) === 'separate';
     v.guardian_nominations = guardianNoms(a, minors, a.gAlt1, 'any Child of mine');
     v.prop_fid_yes = a.propFid === 'yes'; v.prop_fid = clean(a.propFidName);
     v.prop_alternates = [a.propAlt1].map(clean).filter(Boolean).map(function (x) { return { prop_alt: x }; });
@@ -1507,22 +1611,14 @@
       var a = answers;
       /* answers saved before this screen changed kept every co-personal representative in coPRs */
       if (a.prMode === 'co' && !clean(a.executor) && (a.coPRs || []).some(function (x) { return clean(x.name); })) { a.executor = clean(a.coPRs[0].name); a.coPRs = a.coPRs.slice(1); if (!a.coPRs.length) a.coPRs = [{ name: '' }]; }
-      if (!a.wantsBackups && (a.prMode === 'co' || a.successors.some(function (x) { return clean(x.name); }))) { a.wantsBackups = 'yes'; a.otherRole = a.prMode === 'co' ? 'co' : 'backup'; }
-      var h = stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn\u2019t in your trust. Your will calls this person your Personal Representative. Some states call it an executor.') + coupleRoleNote('Personal Representative') +
-        field('Personal representative\u2019s full name', text('executor', '')) +
-        anotherPerson('personal representative', 'Alongside my first choice, serving together as co-personal representatives');
-      if (a.wantsBackups !== 'yes') { a.prMode = 'successive'; return h; }
-      if (a.otherRole === 'backup') {
-        a.prMode = 'successive';
-        if (!a.successors.length) a.successors = [{ name: '' }];
-        h += field('Backup personal representative(s), in order', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first choice can\u2019t serve, the first backup takes over, then the next.');
-      } else if (a.otherRole === 'co') {
-        a.prMode = 'co';
-        if (!a.coPRs.length) a.coPRs = [{ name: '' }];
-        h += field('Other co-personal representative(s)', nameRows('coPRs', 'Co-personal representative', 1) + addBtn('coPRs', '+ Add another'));
-        h += field('Backups <em>(optional)</em>', nameRows('successors', 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'Backups step in only if the people above can\u2019t serve, in the order you list them.');
-      }
-      return h;
+      var plan = planOf(a);
+      if (plan === 'trust' && !trustPeople()) plan = '';
+      var h = stepHead('Who should carry out your will?', 'This person pays your debts and handles the paperwork for the property that isn’t in your trust. Your will calls this person your Personal Representative. Some states call it an executor.') + coupleRoleNote('Personal Representative') +
+        planPicker('personal representative', true);
+      if (!plan) return h;
+      if (plan === 'trust') return h + trustNote('personal representative');
+      applyPlan(a, plan, 'co');
+      return h + prFields(plan);
     },
     guardian: function () { return guardianScreen('gAlt1'); },
     propfid: function () {
@@ -1536,7 +1632,8 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      var pr = v.pr_co ? 'Together: ' + esc(v.co_prs.map(function (x) { return x.co_pr; }).join(', ')) : esc(v.executor);
+      var pr = v.pr_co ? 'Together' + (v.pr_separate ? ' (each may act alone)' : '') + ': ' + esc(v.co_prs.map(function (x) { return x.co_pr; }).join(', ')) : esc(v.executor);
+      if (planOf(answers) === 'trust') pr = 'Same as your trust: ' + pr;
       if (v.successors.length) pr += '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', '));
       var guardians = v.guardian_nominations.map(function (g) { return (v.guardian_nominations.length > 1 ? esc(g.applies_to) + ': ' : '') + esc(g.guardian); }).join('; ');
       return stepHead('Your pour-over will is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
@@ -1581,7 +1678,7 @@
       if (!a.jointTrust) e.push('Tell us whether it is a joint trust.');
       if (a.jointTrust === 'yes' && !clean(a.otherTrustmaker)) e.push('Enter the other person’s name.');
     } else if (id === 'executor') {
-      if (!clean(a.executor)) e.push('Enter the name of your personal representative.');
+      if (planOf(a) !== 'trust' && !clean(a.executor)) e.push('Enter the name of your personal representative.');
       anotherErrors(a, e, 'personal representative', true, (a.successors || []).some(function (x) { return clean(x.name); }), (a.coPRs || []).filter(function (x) { return clean(x.name); }).length);
     } else if (id === 'guardian') {
       guardianErrors(a, e);
@@ -1645,24 +1742,33 @@
     if ((a.successors || []).some(function (b) { return clean(b.name); })) return 'backup';
     return '';
   }
-  function otherAgents(withContact) {
-    var a = answers;
-    if (!a.wantsBackups && ((a.successors || []).some(function (b) { return clean(b.name); }) || a.agentMode === 'separate' || a.agentMode === 'together')) a.wantsBackups = 'yes';
-    var h = field('Do you want to name another agent?', pills('wantsBackups', [['yes', 'Yes'], ['no', 'No']], true), 'Another agent can be a backup, or can serve alongside your first agent.');
-    if (a.wantsBackups !== 'yes') { a.agentMode = 'single'; return h; }
-    if (!a.otherRole) a.otherRole = otherRoleOf(a);
-    h += field('How should the other agent serve?', pills('otherRole', [
-      ['backup', 'As a backup, only if my first agent can’t serve'],
-      ['separate', 'Alongside my first agent, either one may act alone'],
-      ['together', 'Alongside my first agent, they must act together']
-    ], true));
+  function otherAgents(withContact, firstHtml, trustOk) {
+    var a = answers, plan = planOf(a);
+    var h = planPicker('agent', trustOk);
+    if (plan === 'trust') {
+      var p = trustPeople();
+      if (!p) return h;
+      if (!withContact) return h + trustNote('agent');
+      /* health care directive: copy the trust's people in once, keeping any phone numbers already typed */
+      var known = {};
+      [{ name: a.agent, phone: a.agentPhone, email: a.agentEmail }].concat(a.coAgents || [], a.successors || []).forEach(function (r) { if (clean(r.name)) known[clean(r.name)] = r; });
+      var row = function (n) { var k = known[n] || {}; return { name: n, phone: k.phone || '', email: k.email || '' }; };
+      if (a.agent !== p.first) { a.agentPhone = (known[p.first] || {}).phone || ''; a.agentEmail = (known[p.first] || {}).email || ''; }
+      a.agent = p.first; a.coAgents = p.others.map(row); a.successors = p.backups.map(row);
+      a.peoplePlan = plan = p.plan;
+      h = planPicker('agent', trustOk);
+    }
+    if (!plan) return h;
+    applyPlan(a, plan, 'agent');
+    h += firstHtml || '';
     var blank = withContact ? { name: '', phone: '', email: '' } : { name: '' };
-    if (a.otherRole === 'backup') {
+    if (plan === 'one') { a.agentMode = 'single'; return h; }
+    if (plan === 'backups') {
       a.agentMode = 'single';
       if (!a.successors.length) a.successors = [clone(blank)];
       h += field('Backup agent(s), in order', agentRows('successors', withContact, 'Backup', 1) + addBtn('successors', '+ Add another backup'), 'If your first agent can’t serve, the first backup takes over, then the next.');
-    } else if (a.otherRole === 'separate' || a.otherRole === 'together') {
-      a.agentMode = a.otherRole;
+    } else {
+      a.agentMode = plan;
       if (!a.coAgents.length) a.coAgents = [clone(blank)];
       h += field('Your other agent(s)', agentRows('coAgents', withContact, 'Agent', 2) + addBtn('coAgents', '+ Add another agent'));
       if (!a.successors.length) a.successors = [clone(blank)];
@@ -1671,11 +1777,12 @@
     return h;
   }
   function otherAgentErrors(a, e, withContact) {
-    if (!a.wantsBackups) { e.push('Answer whether you want to name another agent.'); return; }
-    if (a.wantsBackups !== 'yes') return;
-    var role = a.otherRole || otherRoleOf(a);
-    if (!role) { e.push('Choose how the other agent should serve.'); return; }
-    if (role === 'backup' && !(a.successors || []).some(function (b) { return clean(b.name); })) e.push('Enter the backup agent’s name, or answer No.');
+    var plan = planOf(a);
+    if (!plan) { e.push('Choose how you want to name your agent.'); return; }
+    if (plan === 'trust') { if (!trustPeople()) e.push('Your trust doesn\u2019t name a successor trustee yet. Choose another option.'); return; }
+    if (plan === 'one') return;
+    var role = plan === 'backups' ? 'backup' : plan;
+    if (role === 'backup' && !(a.successors || []).some(function (b) { return clean(b.name); })) e.push('Enter the backup agent’s name, or choose “One person.”');
     if (role !== 'backup') coAgentErrors(a, e, withContact);
     if (withContact) (a.successors || []).forEach(function (b, i) {
       var who = clean(b.name) || 'backup ' + (i + 1);
@@ -1725,7 +1832,7 @@
   }
   function dpSet(a, key) { var t = DP_CACHE[dpGov(a)]; return t ? t.settings[key] : undefined; }
   /* power of attorney backups: a Yes/No first, then the names (on the agent screen) */
-  function dpBackups() { return otherAgents(false); }
+  function dpBackups() { return otherAgents(false, '', false); }
   var STEPS_DP = [
     { id: 'start', label: 'Where you live' },
     { id: 'about', label: 'About you' },
@@ -1737,6 +1844,7 @@
     { id: 'review', label: 'Review and sign' }
   ];
   function buildVarsDP(a, states, settings) {
+    a = withPlan(a, 'agent');
     var v = {}, st = states.map[a.state] || null, gs = states.map[dpGov(a)] || null;
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase();
     v.county = clean(a.county).replace(/\s+county$/i, '');
@@ -1798,8 +1906,7 @@
     },
     agent: function () {
       return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Choose someone you trust completely. Many people choose the same person they named to carry out their will. Your document calls this person your Agent.') + coupleRoleNote('Agent') +
-        field('Your agent’s full name', text('agent', '')) +
-        dpBackups();
+        otherAgents(false, field('Your agent’s full name', text('agent', '')), true);
     },
     dproute: function () {
       return stepHead('How do you plan to sign?', 'In ' + esc(answers.state) + ', you can sign your power of attorney in front of a notary public or in front of two qualified witnesses. Your document will include the section for the way you choose.') +
@@ -1859,7 +1966,7 @@
       if (clean(a.name).length < 2) e.push('Enter your full legal name.');
       if (!clean(a.county)) e.push('Enter your county.');
     } else if (id === 'agent') {
-      if (!clean(a.agent)) e.push('Enter the name of your agent.');
+      if (planOf(a) !== 'trust' && !clean(a.agent)) e.push('Enter the name of your agent.');
       otherAgentErrors(a, e, false);
     } else if (id === 'dproute') {
       if (!a.dpRoute) e.push('Choose how you plan to sign.');
@@ -2086,7 +2193,7 @@
     return ['ca_skilled_nursing', 'ct_dmhas', 'ct_dds', 'ct_pregnancy', 'az_unable_to_sign', 'az_psych_admission',
       'az_funeral_authority', 'ne_second_physician', 'oh_unconscious_anh'].some(function (f) { return hcdSet(a, 'ask_' + f) === 'yes'; });
   }
-  function hcdBackups() { return otherAgents(true); }
+  function hcdBackups() { return otherAgents(true, '', false); }
   var STEPS_HCD = [
     { id: 'start', label: 'Where you live' },
     { id: 'about', label: 'About you' },
@@ -2114,6 +2221,7 @@
     return '<select class="input" data-k="' + k + '" autocomplete="off">' + opts + '</select>';
   }
   function buildVarsHCD(a, states, settings) {
+    a = withPlan(a, 'agent');
     var v = {}, st = states.map[a.state] || null;
     v.name = clean(a.name); v.name_caps = v.name.toUpperCase();
     v.dob = longDate(a.dob) || clean(a.dob); v.phone = clean(a.phone); v.address = clean(a.address);
@@ -2172,10 +2280,9 @@
     },
     agent: function () {
       return stepHead('Who should make health care decisions for you?', 'Your health care agent can see your medical information and make treatment decisions if you’re unable to. Choose someone you trust completely.') + coupleRoleNote('health care agent') +
-        field('Your agent’s full name', text('agent', '')) +
-        field('Agent’s phone', text('agentPhone', '', { auto: 'tel' })) +
-        field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' })) +
-        hcdBackups();
+        otherAgents(true, field('Your agent’s full name', text('agent', '')) +
+          field('Agent’s phone', text('agentPhone', '', { auto: 'tel' })) +
+          field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' })), true);
     },
     successor: function () {
       return stepHead('Backup agents', '') + hcdBackups();
@@ -2605,6 +2712,7 @@
     v.has_stepchildren = v.stepchildren.length > 0;
     v.excluded = (a.excluded || []).map(function (x) { return { excluded_name: clean(x.name), excluded_relationship: clean(x.relationship) }; }).filter(function (x) { return x.excluded_name; });
     v.has_excluded = v.excluded.length > 0;
+    if (planOf(a) && planOf(a) !== 'trust') a = withPlan(a, 'co');
     v.trustee_mode = a.trusteeMode === 'COTRUSTEES' ? 'COTRUSTEES' : 'SUCCESSIVE';
     v.is_cotrustees = v.trustee_mode === 'COTRUSTEES';
     v.successors = (a.successors || []).map(function (s) { return { successor: clean(s.name) }; }).filter(function (s) { return s.successor; });
@@ -2827,7 +2935,7 @@
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
         row('Trustmaker', esc(v.name), 'about') +
-        row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') +
+        row('Successor trustee', v.is_cotrustees ? 'Together' + (v.cotrustee_separate ? ' (each may act alone)' : '') + ': ' + v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') + (v.has_backup_trustees ? '<br>Backup(s): ' + v.backup_trustees.map(function (b) { return esc(b.backup_trustee); }).join(', ') : '') : v.successors.map(function (s) { return esc(s.successor); }).join(', then '), 'trustee') +
         (v.has_gifts ? row('Specific gifts', v.gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary); }).join('<br>'), 'gifts') : '') +
         row('Beneficiaries', v.residuary.map(function (r) {
           var how = r.residuary_ongoing ? ', in an ongoing trust: ' + [r.residuary_age1, r.residuary_age2, r.residuary_age3].map(function (x) { return (x.match(/\((\d+)\)/) || [])[1] || '?'; }).join(', ')
@@ -2956,6 +3064,7 @@
     v.has_children = v.children.length > 0;
     v.excluded = (a.excluded || []).map(function (x) { return { excluded_name: clean(x.name), excluded_relationship: clean(x.relationship) }; }).filter(function (x) { return x.excluded_name; });
     v.has_excluded = v.excluded.length > 0;
+    if (planOf(a) && planOf(a) !== 'trust') a = withPlan(a, 'co');
     v.trustee_mode = a.trusteeMode === 'COTRUSTEES' ? 'COTRUSTEES' : 'SUCCESSIVE';
     v.is_cotrustees = v.trustee_mode === 'COTRUSTEES';
     v.successors = (a.successors || []).map(function (s) { return { successor: clean(s.name) }; }).filter(function (s) { return s.successor; });
@@ -3127,7 +3236,7 @@
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
         row('Trustmakers', esc(v.name1) + (v.name2 ? ' and ' + esc(v.name2) : ''), 'about') +
-        row('Successor trustee', v.is_cotrustees ? v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') : v.successors.map(function (s) { return esc(s.successor); }).join(', '), 'trustee') +
+        row('Successor trustee', v.is_cotrustees ? 'Together' + (v.cotrustee_separate ? ' (each may act alone)' : '') + ': ' + v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') + (v.has_backup_trustees ? '<br>Backup(s): ' + v.backup_trustees.map(function (b) { return esc(b.backup_trustee); }).join(', ') : '') : v.successors.map(function (s) { return esc(s.successor); }).join(', then '), 'trustee') +
         (v.has_any_gifts ? row('Specific gifts', [].concat(
           v.tm1_gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary) + ' (when ' + esc(firstName(v.name1)) + ' dies)'; }),
           v.tm2_gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary) + ' (when ' + esc(firstName(v.name2)) + ' dies)'; }),

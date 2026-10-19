@@ -121,7 +121,7 @@ I nominate the person or persons designated below to serve as Personal Represent
 [[end]]
 [[end]]
 [[if pr_co]]
-The following Co-Personal Representatives shall serve together:
+The following Co-Personal Representatives shall serve together[[if pr_separate]], and each may act alone[[end]]:
 
 [[each co_prs]]
 @row {{co_pr}} |
@@ -141,7 +141,13 @@ A nominee is not required to serve and shall qualify and accept office in the ma
 // Here the whole section appears only when they are chosen, so the numbering closes up.
 ## Co-Personal Representatives
 
+[[if pr_separate]]
+Each Co-Personal Representative may act alone and independently, without the joinder of any other Co-Personal Representative, to the extent permitted by applicable law. Any person dealing with my estate may rely on the signature and authority of any one Co-Personal Representative. If the Co-Personal Representatives disagree, any of them may seek instructions from the court having jurisdiction over my estate.
+
+[[else]]
 If two or more Personal Representatives serve together, they shall act in the manner required by applicable law. To the extent this Will may control, any Co-Personal Representative may independently perform Routine Administrative Acts. Other material actions require approval of a majority of the Co-Personal Representatives then serving; if only two are serving, both must approve. If they cannot agree, any Co-Personal Representative may seek instructions from the court having jurisdiction over my estate.
+
+[[end]]
 
 [[end]]
 [[if minor_children_yes]]
