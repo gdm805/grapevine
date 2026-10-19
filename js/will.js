@@ -2502,6 +2502,12 @@
     v.limitations = clean(a.limitations);
     v.expiration_type = a.expirationType; v.expiration_date = a.expirationDate ? longDate(a.expirationDate) : '';
     v.expiration_event = clean(a.expirationEvent); v.expiration_text = clean(a.expirationText);
+    /* the "format B" forms print one expiration line; fill it from the same choice the other forms use */
+    if (!v.expiration_type && v.expiration_text) { v.expiration_type = 'EVENT'; v.expiration_event = v.expiration_text; }
+    v.expiration_text = v.expiration_type === 'DATE' ? (v.expiration_date ? 'This authorization expires on ' + v.expiration_date + '.' : '')
+      : v.expiration_type === 'EVENT' ? (v.expiration_event ? 'This authorization expires upon the following event: ' + v.expiration_event + '.' : '')
+      : v.expiration_type === 'DEATH_PLUS_ADMINISTRATION' ? 'This authorization remains effective during my lifetime and after my death for so long as reasonably necessary to administer my estate, trust, health-care matters, insurance matters, claims, or other affairs for which disclosure is lawfully authorized, subject to any shorter period required by applicable law.'
+      : v.expiration_text;
     v.signed_by_rep = a.signedByRep === 'yes'; v.rep_name = clean(a.repName); v.rep_authority = clean(a.repAuthority);
     return v;
   }
@@ -2574,10 +2580,10 @@
       return h;
     },
     expiration: function () {
-      if (hipaaIsB(answers)) {
-        return stepHead('How long should this last?', 'Leave this blank and it stays in effect for as long as the law allows.') +
-          field('Expiration date or event (optional)', text('expirationText', 'For example: one year from signing, or a specific date'));
-      }
+      /* every state now asks the same required question (19 Oct 2026): federal law requires a HIPAA
+         authorization to state an expiration date or event (45 C.F.R. 164.508(c)(1)(v)); the 21 "format B" states
+         used to make it optional. An older answer typed into expirationText counts as the event. */
+      if (!answers.expirationType && clean(answers.expirationText)) { answers.expirationType = 'EVENT'; answers.expirationEvent = clean(answers.expirationText); }
       var h = stepHead('How long should this authorization last?', '') +
         field('Choose one', pills('expirationType', [
           ['DATE', 'Until a specific date'],
@@ -2631,8 +2637,8 @@
         if (a.authPart2 === 'yes' && !clean(a.part2Recipients)) e.push('Enter who should receive your substance use disorder records.');
       }
     } else if (id === 'expiration') {
-      if (!hipaaIsB(a)) {
-        if (!a.expirationType) e.push('Choose how long this authorization should last.');
+      if (true) {
+        if (!a.expirationType && !clean(a.expirationText)) e.push('Choose how long this authorization should last.');
         if (a.expirationType === 'DATE' && !a.expirationDate) e.push('Enter the expiration date.');
         if (a.expirationType === 'EVENT' && !clean(a.expirationEvent)) e.push('Enter the expiration event.');
       }

@@ -58,7 +58,7 @@ An authorized recipient may request, inspect, obtain, copy, transmit, and receiv
 
 This authorization is effective immediately upon signing unless a state-specific provision below states otherwise. It remains effective until the earliest of: (a) my written revocation to the extent effective under applicable law; (b) any expiration date or event stated below; or (c) any state-law termination rule that cannot lawfully be waived.
 
-@line Optional expiration date/event: {{expiration_text}}
+@line Expiration date or event: {{expiration_text}}
 
 #! Right To Revoke
 
