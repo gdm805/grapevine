@@ -5,7 +5,11 @@ window.SCHEDULEA_SIGNING = String.raw`
 // ==========================================================================
 #! HOW TO SIGN YOUR SCHEDULE A
 
-**Who must be there:** no one. No state requires a witness or notary for this list; just sign and date it. If two Trustmakers are listed, each signs.
+**Who must be there:** [[if la_act]]a notary public and two adult witnesses, all at the same time, plus the trustee or trustees, who sign to accept the property for the trust. Louisiana requires this form, called an authentic act, for a transfer to a trust. Bring photo ID.[[else]]no one. Just sign and date it.[[end]] If two Trustmakers are listed, each signs.
+[[if spouse_consent]]
+
+**Your spouse also signs:** {{spouse_name}} signs the Consent of Spouse[[if la_act]], at the same sitting, in front of the notary and witnesses[[end]]. It doesn't change who owns what; it only consents to the transfer.
+[[end]]
 
 **Afterward:** keep it with your trust. When you buy or sell something significant, sign a new Schedule A.
 

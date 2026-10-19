@@ -122,7 +122,7 @@
     affidavit: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     assignment: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     finalwishes: { name: 'name', state: 'state' },
-    schedulea: { name: 'tm1Name', name2: 'tm2Name' },
+    schedulea: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     contacts: { name: 'name' }
   };
   function readProfile() {
@@ -4173,6 +4173,7 @@
 
   /* ---------- SCHEDULE A (TRUST PROPERTY), as its own document ---------- */
   var EMPTY_SCHEDA = {
+    state: '', spouseMarried: '', spouseName: '',
     trustType: 'SINGLE',
     trustName: '', origTrustDate: '', trustRestated: '', restatementDate: '',
     tm1Name: '', tm2Name: '',
@@ -4195,7 +4196,13 @@
     { id: 'review', label: 'Review and sign' }
   ];
   function buildVarsScheduleA(a, states, settings) {
-    var v = {};
+    var v = {}, st = states.map[a.state] || null;
+    v.state = st ? st.name : ''; v.signing_state = v.state ? trustSlug(v.state) : '';
+    /* same transfer rules as the Assignment (19 Oct 2026): a spouse's consent in community property states, and
+       Louisiana's authentic act, because Schedule A also assigns the listed property to the Trustee */
+    v.spouse_consent = assignAsksSpouse(a) && a.spouseMarried === 'yes' && !!clean(a.spouseName);
+    v.spouse_name = clean(a.spouseName);
+    v.la_act = v.state === 'Louisiana';
     v.trust_type = a.trustType === 'JOINT' ? 'JOINT' : 'SINGLE';
     v.trust_name = capThe(clean(a.trustName)); v.the_trust_name = theTrust(v.trust_name);
     v.orig_trust_date = a.origTrustDate ? longDate(a.origTrustDate) : '';
@@ -4224,7 +4231,11 @@
   }
   var RENDER_SCHEDA = {
     start: function () {
+      var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
+      }).join('');
       return stepHead('First, tell us about your trust', 'Schedule A belongs to a trust you already have, so we need its name and date to identify it.') +
+        field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
         field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
         (handOrig(answers) ? HAND_DATE_NOTE : field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
@@ -4238,6 +4249,11 @@
         h += field('Second Trustmaker’s full legal name', text('tm2Name', ''));
       } else {
         h += field('Trustmaker’s full legal name', text('tm1Name', ''));
+        if (assignAsksSpouse(answers)) {
+          h += field('Are you married or in a registered domestic partnership?', pills('spouseMarried', [['yes', 'Yes'], ['no', 'No']], true),
+            'In ' + esc(answers.state) + ', property you own with your spouse may need your spouse\u2019s consent to move into your trust. If you are married, your Schedule A includes a short consent for your spouse to sign. It does not change who owns what.');
+          if (answers.spouseMarried === 'yes') h += field('Your spouse\u2019s or partner\u2019s full legal name', text('spouseName', ''));
+        }
       }
       return h;
     },
@@ -4291,6 +4307,7 @@
   function validateScheduleA(id) {
     var a = answers, e = [];
     if (id === 'start') {
+      if (!a.state) e.push('Choose your state.');
       if (!clean(a.trustName)) e.push('Name the trust.');
       if (!a.origTrustDate && !handOrig(a)) e.push('Enter the date the trust was originally signed.');
       if (!a.trustRestated) e.push('Answer whether the trust has been restated.');
@@ -4298,6 +4315,8 @@
     } else if (id === 'trustmakers') {
       if (!clean(a.tm1Name)) e.push(a.trustType === 'JOINT' ? 'Enter the first Trustmaker’s full legal name.' : 'Enter the Trustmaker’s full legal name.');
       if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
+      if (assignAsksSpouse(a) && !a.spouseMarried) e.push('Answer whether you are married or in a registered domestic partnership.');
+      if (assignAsksSpouse(a) && a.spouseMarried === 'yes' && !clean(a.spouseName)) e.push('Enter your spouse\u2019s or partner\u2019s full legal name.');
     } else if (id === 'assets') {
       var groups = [['assetRealProperty', 'realProperty', 'address', 'real estate'], ['assetBank', 'bankAccounts', 'institution', 'bank account'], ['assetBrokerage', 'brokerageAccounts', 'institution', 'investment account'], ['assetBusiness', 'businessInterests', 'name', 'business']];
       var any = true;

@@ -170,4 +170,57 @@ The Trustmaker confirms that this Schedule A reflects the property identified fo
 @line {{tm1_name}}, Trustmaker
 
 [[end]]
+
+[[if spouse_consent]]
+@sub Consent of Spouse
+
+I, {{spouse_name}}, am the spouse or registered domestic partner of {{tm1_name}}. I consent to the assignment of property made in this Schedule A to the extent it transfers any community property or other marital interest of mine in that property. This consent does not change the community, separate, or marital character of any property, does not make me a Trustmaker, and does not waive any right I have in that property.
+
+@line Signature: ________________________________________________
+
+@line {{spouse_name}}, Spouse
+
+@line Date: ______
+
+[[end]]
+[[if la_act]]
+@sub Authentic Act
+
+@line State of Louisiana
+
+@line Parish of ____________________________
+
+BE IT KNOWN that on __________________, 20____, before me, the undersigned Notary Public, and in the presence of the undersigned competent witnesses, personally came and appeared the Trustmaker or Trustmakers named above, who signed this Schedule A, together with any spouse who signed the Consent of Spouse, and the Trustee or Trustees named below, who accepted the property assigned on behalf of the Trust.
+
+@line ACCEPTED on behalf of the Trust:
+
+@line ________________________________________
+
+@line ____________________________, Trustee
+
+@line ________________________________________
+
+@line ____________________________, Trustee (if more than one)
+
+@line WITNESSES:
+
+@line ________________________________________
+
+@line Printed Name: ____________________________
+
+@line ________________________________________
+
+@line Printed Name: ____________________________
+
+@line ________________________________________
+
+@line Notary Public
+
+@line Printed Name: ____________________________
+
+@line Notary Identification / Bar Roll No.: ____________________
+
+@line (Seal)
+
+[[end]]
 `;
