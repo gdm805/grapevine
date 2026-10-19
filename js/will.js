@@ -3728,9 +3728,14 @@
     tm1Name: '', tm2Name: '',
     revocability: 'FULLY_REVOCABLE',
     hasProperty: '', property: [{ description: '' }],
-    wantsNotary: '',
+    wantsNotary: '', spouseMarried: '', spouseName: '',
     signingCounty: '', signingDate: ''
   };
+  /* CONSENT OF SPOUSE (19 Oct 2026, Greg chose option A): in these community property states, one spouse alone may not be
+     able to transfer community property (household furnishings especially) into a one-person trust, so a married
+     Trustmaker's spouse signs a consent that changes nothing about the property's character */
+  var ASSIGN_CP_STATES = { 'California': 1, 'Arizona': 1, 'Idaho': 1, 'Nevada': 1, 'New Mexico': 1, 'Texas': 1, 'Washington': 1, 'Wisconsin': 1, 'Louisiana': 1 };
+  function assignAsksSpouse(a) { return a.trustType !== 'JOINT' && !!ASSIGN_CP_STATES[a.state]; }
   var ROWS_ASSIGNMENT = {
     property: { description: '' }
   };
@@ -3766,6 +3771,8 @@
     v.has_property = v.property.length > 0;
     /* Louisiana requires an authentic act (La. R.S. 9:1931-1932; C.C. arts. 1541, 1544), so its notary page always prints */
     v.wants_notary = a.wantsNotary === 'yes' || v.state === 'Louisiana';
+    v.spouse_consent = assignAsksSpouse(a) && a.spouseMarried === 'yes' && !!clean(a.spouseName);
+    v.spouse_name = clean(a.spouseName);
     v.signing_state = v.state ? trustSlug(v.state) : '';
     v.state_note = st ? st.note : '';
     return v;
@@ -3790,6 +3797,11 @@
         h += field('Second Trustmaker’s full legal name', text('tm2Name', ''));
       } else {
         h += field('Trustmaker’s full legal name', text('tm1Name', ''));
+        if (assignAsksSpouse(answers)) {
+          h += field('Are you married or in a registered domestic partnership?', pills('spouseMarried', [['yes', 'Yes'], ['no', 'No']], true),
+            'In ' + esc(answers.state) + ', property you own with your spouse may need your spouse\u2019s consent to move into your trust. If you are married, your document includes a short consent for your spouse to sign. It does not change who owns what.');
+          if (answers.spouseMarried === 'yes') h += field('Your spouse\u2019s or partner\u2019s full legal name', text('spouseName', ''));
+        }
       }
       return h;
     },
@@ -3848,6 +3860,8 @@
     } else if (id === 'trustmakers') {
       if (!clean(a.tm1Name)) e.push(a.trustType === 'JOINT' ? 'Enter the first Trustmaker’s full legal name.' : 'Enter the Trustmaker’s full legal name.');
       if (a.trustType === 'JOINT' && !clean(a.tm2Name)) e.push('Enter the second Trustmaker’s full legal name.');
+      if (assignAsksSpouse(a) && !a.spouseMarried) e.push('Answer whether you are married or in a registered domestic partnership.');
+      if (assignAsksSpouse(a) && a.spouseMarried === 'yes' && !clean(a.spouseName)) e.push('Enter your spouse\u2019s or partner\u2019s full legal name.');
     } else if (id === 'revocability') {
       if (!a.revocability) e.push('Answer whether the trust is revocable.');
     } else if (id === 'property') {

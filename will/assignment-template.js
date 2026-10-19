@@ -219,6 +219,18 @@ The Assignors execute this Assignment on {{signing_date}} in {{exec_place}}.
 
 [[end]]
 
+[[if spouse_consent]]
+@sub Consent of Spouse
+
+I, {{spouse_name}}, am the spouse or registered domestic partner of {{tm1_name}}. I consent to this Assignment to the extent it transfers any community property or other marital interest of mine in the property assigned. This consent does not change the community, separate, or marital character of any property, does not make me a Trustmaker, and does not waive any right I have in that property.
+
+@line Signature: ________________________________________________
+
+@line {{spouse_name}}, Spouse
+
+@line Date: ______
+
+[[end]]
 [[if wants_notary]]
 
 @sub Notary Acknowledgment

@@ -168,7 +168,7 @@ window.ASSIGNMENT_SHARED['assignment_ack'] = String.raw`
 [[elif signing_state=LOUISIANA]]
 @line State of Louisiana
 @line Parish of ____________________________
-BE IT KNOWN that on __________________, 20____, before me, the undersigned Notary Public, and in the presence of the undersigned competent witnesses, personally came and appeared the Assignor or Assignors named above, who signed this Assignment, and the Trustee or Trustees named below, who accepted it on behalf of the Trust.
+BE IT KNOWN that on __________________, 20____, before me, the undersigned Notary Public, and in the presence of the undersigned competent witnesses, personally came and appeared the Assignor or Assignors named above, who signed this Assignment, together with any spouse who signed the Consent of Spouse, and the Trustee or Trustees named below, who accepted it on behalf of the Trust.
 @line ACCEPTED on behalf of the Trust:
 @line ________________________________________
 @line ____________________________, Trustee
