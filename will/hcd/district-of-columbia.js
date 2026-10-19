@@ -90,7 +90,7 @@ The Principal appoints the following person to serve as Attorney in Fact:
 
 [[if has_co_agents]]
 
-In addition to the Attorney in Fact named above, I appoint the following persons to serve at the same time. Each person named in this paragraph is my Attorney in Fact, and all of them together are my "co-agents":
+In addition to the Attorney in Fact named above, I appoint the following [[if one_co_agent]]person[[else]]persons[[end]] to serve at the same time. Each person named in this paragraph is my Attorney in Fact, and all of them together are my "co-agents":
 
 [[each co_agents]]
 

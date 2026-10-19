@@ -128,7 +128,7 @@ The Principal appoints the following person to serve as Agent:
 
 [[if has_co_agents]]
 
-In addition to the Agent named above, I appoint the following persons to serve at the same time. Each person named in this paragraph is my Agent, and all of them together are my "co-agents":
+In addition to the Agent named above, I appoint the following [[if one_co_agent]]person[[else]]persons[[end]] to serve at the same time. Each person named in this paragraph is my Agent, and all of them together are my "co-agents":
 
 [[each co_agents]]
 

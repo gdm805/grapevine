@@ -71,7 +71,7 @@ I appoint {{agent}} to serve as my Agent.
 
 [[if has_co_agents]]
 
-I also appoint the following persons to serve at the same time as {{agent}}. Each person named in this paragraph is my Agent, and all of them together are my "co-Agents":
+I also appoint the following [[if one_co_agent]]person[[else]]persons[[end]] to serve at the same time as {{agent}}. Each person named in this paragraph is my Agent, and all of them together are my "co-Agents":
 
 [[each co_agents]]
 

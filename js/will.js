@@ -1703,6 +1703,7 @@
     }).filter(function (x) { return x.co_agent; });
     v.co_agents = list;
     v.has_co_agents = list.length > 0;
+    v.one_co_agent = list.length === 1;
     v.co_separate = mode === 'separate';
     if (a.wantsBackups === 'no' || otherRoleOf(a) === 'backup') { v.co_agents = []; v.has_co_agents = false; v.co_separate = false; }
   }
