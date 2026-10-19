@@ -130,7 +130,7 @@
       '<div class="paid-card">' +
       '<div class="paid-badge"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>' +
       '<h1>You’re all set</h1>' +
-      '<p class="lead">' + what + ' is unlocked. Download ' + (plan === 'doc' ? 'it' : 'your documents') + ' now, then follow the signing steps for each one.</p>' +
+      '<p class="lead">' + what + ' is unlocked. Download ' + (plan === 'doc' ? 'it now, then follow its signing steps.' : 'your documents now, then follow the signing steps for each one.') + '</p>' +
       '<div class="paid-actions"><a class="btn btn-primary btn-lg" href="' + esc(downloadHref) + '">Download your ' + (plan === 'doc' ? 'document' : 'documents') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
       '<a class="btn btn-secondary btn-lg" href="' + esc(signHref) + '">How to sign ' + (plan === 'doc' ? 'it' : 'your documents') + '</a></div>' +
       '<p class="paid-sign"><strong>Don’t sign yet.</strong> ' + (plan === 'doc' ? 'Your document has' : 'Each document has') + ' its own signing steps, such as who must be there when you sign. Read them first.</p>' +
