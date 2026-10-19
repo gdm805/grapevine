@@ -148,13 +148,13 @@ A Successor Attorney in Fact shall have the same authority as the originally app
 
 Except for the co-agents named above, only one person shall serve as my Attorney in Fact at a time. The appointment of successors does not grant concurrent authority to more than one successor at a time, and a successor serves only if no co-agent is able to serve.
 
-[[else]]
+[[elif has_successors]]
 
 ## No Simultaneous Authority
 
 Only one Attorney in Fact shall serve at a time.
 
-The appointment of Successor Attorney in Facts does not grant concurrent authority to more than one person.
+The appointment of Successor Attorneys in Fact does not grant concurrent authority to more than one person.
 
 [[end]]
 

@@ -146,7 +146,7 @@ A Successor Health Care Agent shall have the same authority as the originally ap
 
 Except for the co-agents named above, only one person shall serve as my Health Care Agent at a time. The appointment of successors does not grant concurrent authority to more than one successor at a time, and a successor serves only if no co-agent is able to serve.
 
-[[else]]
+[[elif has_successors]]
 
 ## No Simultaneous Authority
 
