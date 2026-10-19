@@ -632,9 +632,9 @@ We witnessed the Principal’s signing in the presence of each other and the Pri
 
 @sub ACKNOWLEDGMENT
 
-@line State of ______________________________
+@line State of Iowa
 
-@line [County] of ______________________________
+@line County of {{county}}
 
 @line This record was acknowledged before me on __________________ (Date) by {{name}}.
 

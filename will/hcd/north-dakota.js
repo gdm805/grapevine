@@ -608,7 +608,9 @@ The Principal executes this Health Care Directive voluntarily.
 
 @sub STATEMENT OF WITNESSES
 
-We verify the Principal’s signature and declare that we are each at least eighteen years of age and satisfy the witness qualifications required by North Dakota law.
+We verify the Principal’s signature and declare that we are each at least eighteen years of age. Neither of us is the Agent or alternate Agent; the Principal’s spouse or heir; related to the Principal by blood, marriage, or adoption; entitled to any part of the Principal’s estate or a creditor with a claim against it; directly financially responsible for the Principal’s medical care; or the Principal’s attending physician. At least one of us is not a health care provider giving direct care to the Principal or an employee of such a provider.
+
+The notary, if one is used, must meet the same requirements, except that a notary may be an employee of a health care provider.
 
 @line Witness 1 Signature: ____________________
 

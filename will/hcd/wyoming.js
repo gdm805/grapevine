@@ -604,7 +604,7 @@ The Principal executes this Advance Health Care Directive voluntarily.
 
 @sub STATEMENT OF WITNESSES
 
-I declare under penalty of perjury under the laws of Wyoming that the person who signed or acknowledged this document is known to me to be the Principal, and the Principal signed or acknowledged this document in my presence.
+I declare under penalty of perjury under the laws of Wyoming that the person who signed or acknowledged this document is known to me to be the Principal, and the Principal signed or acknowledged this document in my presence. I am not the agent named in this document, a health care provider treating the Principal or an employee of that provider, or an operator or employee of a community care facility or residential care facility.
 
 @line Witness 1 Signature: ____________________
 

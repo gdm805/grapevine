@@ -612,7 +612,7 @@ The Principal declares that the Principal understands the nature and purpose of 
 
 @sub WITNESSES
 
-Each of us declares that we are of lawful age; that we are not the Agent; that we are not related to the Principal by blood, marriage or adoption; that we are not entitled to any portion of the Principal's estate; and that we are not financially responsible for the Principal's health care.
+Each of us declares that we are at least eighteen (18) years of age; that we are not the Agent; that we are not related to the Principal by blood, marriage or adoption; that we are not entitled to any portion of the Principal's estate; and that we are not financially responsible for the Principal's health care.
 
 @line Witness 1 Signature: __________________________________
 

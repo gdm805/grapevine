@@ -616,7 +616,7 @@ The Principal executes this Oregon Advance Directive voluntarily.
 
 @sub WITNESSES
 
-We witnessed the Principal sign or acknowledge this Advance Directive and are qualified to serve under Oregon law.
+We witnessed the Principal sign or acknowledge this Advance Directive. Neither of us is the Principal’s attending physician or attending health care provider, or a health care representative or alternate health care representative named in this document. If the Principal is a resident of a long-term care facility, one of us is a person designated by the facility and qualified under the rules of the Oregon Department of Human Services.
 
 @line Witness 1 Signature: ____________________
 

@@ -612,7 +612,7 @@ The Principal declares that the Principal understands the nature and purpose of 
 
 @sub WITNESS ATTESTATION
 
-We witnessed the Principal execute this Patient Advocate Designation. The Principal appeared to be of sound mind and under no duress, fraud, or undue influence. Each witness confirms that the witness is qualified under MCL 700.5506 and is not a disqualified person listed there.
+We witnessed the Principal execute this Patient Advocate Designation. The Principal appeared to be of sound mind and under no duress, fraud, or undue influence. Neither witness is the Principal’s spouse, parent, child, grandchild, sibling, presumptive heir, known devisee, physician, or patient advocate, or an employee of a life or health insurance provider for the Principal, of a health facility treating the Principal, of a home for the aged in which the Principal resides, or of a community mental health services program or hospital providing mental health services to the Principal.
 
 @line Witness 1 Signature: __________________________________
 

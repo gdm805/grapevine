@@ -680,12 +680,6 @@ The Principal acknowledges having read and understood the disclosure statement a
 
 @sub SIGNATURE IN PRESENCE OF TWO COMPETENT ADULT WITNESSES
 
-@line I sign my name to this medical power of attorney on __________ day of __________ (month, year) at ______________________________ (City and State).
-
-@line Signature: ______________________________
-
-@line Print Name: {{name}}
-
 @sub STATEMENT OF FIRST WITNESS.
 
 I am not the person appointed as agent by this document. I am not related to the principal by blood or marriage. I would not be entitled to any portion of the principal's estate on the principal's death. I am not the attending physician of the principal or an employee of the attending physician. I have no claim against any portion of the principal's estate on the principal's death.

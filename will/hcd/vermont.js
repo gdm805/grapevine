@@ -610,7 +610,7 @@ The Principal executes this Advance Directive for Health Care voluntarily.
 
 @sub WITNESSES
 
-We affirm that the Principal appeared to understand the nature of this document and to be free from duress or undue influence at the time the Advance Directive was signed.
+We affirm that the Principal appeared to understand the nature of this document and to be free from duress or undue influence at the time the Advance Directive was signed. Neither of us is the agent or the Principal’s spouse, parent, adult sibling, adult child, or adult grandchild.
 
 @line Witness 1 Signature: ____________________
 

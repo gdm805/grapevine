@@ -610,7 +610,7 @@ The Principal declares that the Principal understands the nature and purpose of 
 
 @sub WITNESS VERIFICATION
 
-The Agent or alternate Agent may not act as a witness. At least one witness must not be a health care provider providing direct care to the Principal or an employee of such a provider on the date of execution.
+By signing below, each witness certifies that the Principal signed this Directive in the witness’s presence or acknowledged to the witness that the Principal signed it. The Agent or alternate Agent may not act as a witness or as the notary. At least one witness must not be a health care provider providing direct care to the Principal or an employee of such a provider on the date of execution.
 
 @line Witness 1 Signature: __________________________________
 

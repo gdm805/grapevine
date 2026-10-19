@@ -626,7 +626,7 @@ The Principal declares that the Principal understands the nature and purpose of 
 
 @sub WITNESSES
 
-The declarant signed this form in my presence or acknowledged signing this form to me. Based upon my personal observation, the declarant appeared to be emotionally and mentally capable of making this advance directive for health care and signed this form willingly and voluntarily.
+The declarant signed this form in my presence or acknowledged signing this form to me. Based upon my personal observation, the declarant appeared to be emotionally and mentally capable of making this advance directive for health care and signed this form willingly and voluntarily. I am at least 18 years of age. I am not the declarant’s health care agent, I will not knowingly inherit anything from or otherwise gain financially from the declarant’s death, and I am not directly involved in the declarant’s health care. Not more than one witness may be an employee, agent, or medical staff member of the health care facility in which the declarant is receiving health care.
 
 @line Signature of First Witness: ______________________________
 

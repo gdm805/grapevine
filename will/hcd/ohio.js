@@ -671,7 +671,7 @@ The Principal executes this Durable Power of Attorney for Health Care and Living
 
 @sub STATEMENT OF WITNESSES
 
-By signing below, each witness attests to the witness’s belief that the Principal appears to be of sound mind and not under or subject to duress, fraud, or undue influence. Each witness is an adult and is eligible to serve under Ohio law.
+By signing below, each witness attests to the witness’s belief that the Principal appears to be of sound mind and not under or subject to duress, fraud, or undue influence. Each witness is an adult. Neither witness is related to the Principal by blood, marriage, or adoption, is the agent or an alternate agent, is the Principal’s attending physician, or is the administrator of a nursing home in which the Principal is receiving care.
 
 @line Witness 1 Signature: ____________________
 

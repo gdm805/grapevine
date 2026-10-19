@@ -630,7 +630,7 @@ The Principal declares that the Principal understands the nature and purpose of 
 
 @sub WITNESSES’ STATEMENT
 
-This document was signed in our presence by {{name}}, the author of this document, who appeared to be eighteen years of age or older, of sound mind and able to understand the nature and consequences of health care decisions at the time this document was signed. The author appeared to be under no improper influence. We have subscribed this document in the author’s presence and at the author’s request and in the presence of each other.
+This document was signed in our presence by {{name}}, the author of this document, who appeared to be eighteen years of age or older, of sound mind and able to understand the nature and consequences of health care decisions at the time this document was signed. The author appeared to be under no improper influence. We have subscribed this document in the author’s presence and at the author’s request and in the presence of each other. Neither of us is the health care representative or alternate health care representative named in this document.
 
 @line Witness 1 Signature: __________________________________
 

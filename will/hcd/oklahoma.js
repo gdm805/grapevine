@@ -602,7 +602,7 @@ The Principal executes this Health Care Power of Attorney and Advance Directive 
 
 @sub WITNESSES
 
-The Principal signed or acknowledged this Directive in our presence. We are adults and are qualified to serve as witnesses under Oklahoma law.
+The Principal signed or acknowledged this Directive in our presence. We are each at least eighteen years of age, and neither of us is a legatee, devisee, or heir at law of the Principal.
 
 @line Witness 1 Signature: ____________________
 

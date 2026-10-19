@@ -634,11 +634,19 @@ We attest that the Principal is of sound mind and free of duress and undue influ
 
 The Principal acknowledges this Advance Directive before a notary public, attorney at law, or other person authorized to administer oaths under New Jersey law.
 
-@line Acknowledged by {{name}} on ______________________________.
+@line State of New Jersey
 
-@line Authorized Officer Signature: ____________________________
+@line County of {{county}} ss.:
 
-@line Title/Capacity: _________________________________________
+On ____________________, before me, the subscriber, personally appeared {{name}}, who I am satisfied is the person who signed this instrument, and who acknowledged signing it as a voluntary act.
+
+@line Signature: ______________________________
+
+@line Printed Name: ______________________________
+
+@line Title (Notary Public, Attorney at Law, or other officer): ______________________________
+
+@line Commission expires or attorney ID: ____________________
 
 [[end]]
 `;

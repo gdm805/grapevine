@@ -610,7 +610,7 @@ The Principal declares that the Principal understands the nature and purpose of 
 
 @sub WITNESS ATTESTATION
 
-In our joint presence, the grantor, who is of sound mind and eighteen (18) years of age, or older, voluntarily dated and signed this writing or directed it to be dated and signed for the grantor.
+In our joint presence, the grantor, who is of sound mind and eighteen (18) years of age, or older, voluntarily dated and signed this writing or directed it to be dated and signed for the grantor. Neither of us is related to the grantor by blood, entitled to any portion of the grantor’s estate under the laws of intestate succession, the grantor’s attending physician, directly financially responsible for the grantor’s health care, or an employee of a health care facility in which the grantor is a patient.
 
 @line Witness 1 Signature: __________________________________
 

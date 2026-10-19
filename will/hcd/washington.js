@@ -610,7 +610,7 @@ The Principal executes this Health Care Power of Attorney and Health Care Direct
 
 @sub WITNESSES
 
-We declare that the Principal signed or acknowledged this directive in our presence. We are not related to the Principal by blood or marriage, are not entitled to any portion of the Principal’s estate under a will or by operation of law, are not the attending physician or an employee of the attending physician or a health facility in which the Principal is a patient, and have no claim against the Principal’s estate.
+We declare that the Principal signed or acknowledged this directive in our presence. We are not the Agent, and we are not related to the Principal or to the Agent by blood, marriage, or state registered domestic partnership. We are not home care providers for the Principal or care providers at an adult family home or long-term care facility in which the Principal resides. We are not entitled to any portion of the Principal’s estate under a will or by operation of law, are not the attending physician or an employee of the attending physician or a health facility in which the Principal is a patient, and have no claim against the Principal’s estate.
 
 @line Witness 1 Signature: ____________________
 

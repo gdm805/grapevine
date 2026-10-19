@@ -602,7 +602,7 @@ I declare that I understand the nature and purpose of this Health Care Proxy and
 
 @sub STATEMENT BY WITNESSES
 
-I declare that the person who signed this document is personally known to me and appears to be of sound mind and acting of his or her own free will. The Principal signed, or asked another to sign, this document in my presence.
+I declare that the person who signed this document is personally known to me and appears to be of sound mind and acting of his or her own free will. The Principal signed, or asked another to sign, this document in my presence. I am not the person appointed as agent by this document.
 
 @line Witness 1 Signature: ____________________
 

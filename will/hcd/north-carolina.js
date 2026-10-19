@@ -624,9 +624,13 @@ I also state that I am not the Principal's attending physician, nor a licensed h
 
 @line Witness 1 Signature: ____________________
 
+@line Witness 1 Printed Name: ______________________________
+
 @line Date: __________
 
 @line Witness 2 Signature: ____________________
+
+@line Witness 2 Printed Name: ______________________________
 
 @line Date: __________
 

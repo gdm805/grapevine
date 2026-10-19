@@ -644,7 +644,7 @@ Witness/Notary Verification: The principal of this document directly indicated t
 
 @sub SIGNATURE OF WITNESS
 
-I was present when this form was signed (or marked). The principal appeared to be of sound mind and was not forced to sign this form. I affirm that I meet the requirements to be a witness under Arizona law.
+I was present when this form was signed (or marked). The principal appeared to be of sound mind and was not forced to sign this form. I affirm that I meet the requirements to be a witness under Arizona law: I am not the agent named in this document and I am not directly involved in providing health care to the principal. If I am the only witness, I am not related to the principal by blood, marriage, or adoption and I am not entitled to any part of the principal’s estate.
 
 @line Witness Signature: _______________________________________
 

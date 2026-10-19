@@ -658,15 +658,37 @@ I declare under penalty of perjury that the person who signed or acknowledged th
 
 @line Residence Address: ______________________________
 
-[[elif exec_route=NOTARY]]
+@sub DECLARATION OF ONE WITNESS
 
-@sub ONE NOTARY PUBLIC
+At least one of the witnesses above must also sign this declaration:
 
-@line Signature: ______________________________, Notary Public
+I further declare under penalty of perjury that I am not related to the principal by blood, marriage, or adoption, and, to the best of my knowledge, I am not entitled to any part of the estate of the principal upon the death of the principal under a will now existing or by operation of law.
+
+@line Signature: ______________________________
 
 @line Print Name: ______________________________
 
-@line Date: __________
+[[elif exec_route=NOTARY]]
+
+@sub ACKNOWLEDGMENT
+
+@line State of Rhode Island
+
+@line County of {{county}}
+
+On ____________________, before me personally appeared {{name}}, personally known to me or proved on the basis of satisfactory evidence to be the person whose name is subscribed to this instrument, and acknowledged that the person executed it.
+
+@line Notary Public: ______________________________
+
+@line Print Name: ______________________________
+
+@line My commission expires: ____________________
+
+@sub DECLARATION OF NOTARY
+
+I further declare under penalty of perjury that I am not related to the principal by blood, marriage, or adoption, and, to the best of my knowledge, I am not entitled to any part of the estate of the principal upon the death of the principal under a will now existing or by operation of law.
+
+@line Notary Public: ______________________________
 
 [[end]]
 `;
