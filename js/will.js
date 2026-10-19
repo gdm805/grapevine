@@ -216,7 +216,7 @@
       name1: clean(key === 'trustjoint' ? a.name1 : a.name), name2: key === 'trustjoint' ? clean(a.name2) : '',
       signingCounty: a.signingCounty || '', signingDate: a.signingDate || '',
       firstDeathPlan: key === 'trustjoint' ? (a.firstDeathPlan || '') : '',
-      poaTrustPowers: key === 'trust' ? (a.poaReservedPowers || '') : ''
+      poaTrustPowers: ''   /* the trust's power-of-attorney question was removed 18 Oct 2026 */
     };
   }
   function saveTrustFacts(a, kind) {
@@ -374,7 +374,7 @@
     function fill(k, v) { if (v && (a[k] === '' || a[k] === undefined)) a[k] = v; }
     var k = kind.key;
     /* the single trust's answer about a power-of-attorney agent carries into that person's power of attorney */
-    if (k === 'dpoa') { if (!SPOUSE2 && !f.joint && f.poaTrustPowers) fill('trustPowers', f.poaTrustPowers); return; }
+    if (k === 'dpoa') return;
     if (k === 'pourover') {
       fill('trustName', f.trustName); fill('trustDate', f.origDate);
       fill('jointTrust', f.joint ? 'yes' : 'no');
@@ -1727,7 +1727,6 @@
     { id: 'effective', label: 'When it starts', show: function (a) { return dpSet(a, 'effective_choice') !== 'no'; } },
     { id: 'more', label: 'One more thing', show: function (a) { return (dpSet(a, 'ask_determiner') === 'yes' && a.effective === 'incapacity') || dpSet(a, 'ask_facility') === 'yes'; } },
     /* Minnesota's statutory form can't be added to, so it can't grant trust powers: not asked there */
-    { id: 'trustpower', label: 'Your trust', show: function (a) { return dpSet(a, 'trust_power_ok') !== 'no'; } },
     { id: 'dproute', label: 'How you\u2019ll sign', show: function (a) { return !!dpSet(a, 'exec_routes'); } },
     { id: 'review', label: 'Review and sign' }
   ];
@@ -1761,7 +1760,8 @@
     v.statutory_form = sf === 'yes' || (sf === 'single_agent' && !v.has_co_agents);
     v.state_note = (v.has_co_agents && dpSet(a, 'sign_note_co_agents')) || dpSet(a, 'sign_note') || (gs ? gs.note : '');
     /* trust powers: carried from the living trust made here, or answered on the "Your trust" screen */
-    v.trust_powers_yes = a.trustPowers === 'yes';
+    /* the "Your trust" question was removed 18 Oct 2026 (Greg): the power of attorney grants no trust powers */
+    v.trust_powers_yes = false;
     /* Washington's form can be signed before a notary OR two witnesses: only the chosen one is printed */
     if (dpSet(a, 'exec_routes')) {
       v.dp_route = a.dpRoute || 'NOTARY';
@@ -1798,11 +1798,6 @@
     dproute: function () {
       return stepHead('How do you plan to sign?', 'In ' + esc(answers.state) + ', you can sign your power of attorney in front of a notary public or in front of two qualified witnesses. Your document will include the section for the way you choose.') +
         field('Choose one', pills('dpRoute', [['NOTARY', 'A notary public'], ['WITNESSES', 'Two witnesses']], true));
-    },
-    trustpower: function () {
-      return stepHead('Your revocable living trust', 'If you have a revocable living trust, your agent can change it only if this power of attorney says so, and your trust also allows it.') +
-        field('Should your agent be able to amend, restate, or revoke your revocable living trust, and withdraw property from it, on your behalf?', pills('trustPowers', [['yes', 'Yes'], ['no', 'No'], ['none', 'I don\u2019t have a revocable living trust']], true)) +
-        '<p class="hint">If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
     },
     effective: function () {
       return stepHead('When should your agent’s power start?', 'You can cancel this document at any time while you have capacity.') +
@@ -1862,8 +1857,6 @@
       otherAgentErrors(a, e, false);
     } else if (id === 'dproute') {
       if (!a.dpRoute) e.push('Choose how you plan to sign.');
-    } else if (id === 'trustpower') {
-      if (!a.trustPowers) e.push('Answer the question about your trust.');
     } else if (id === 'effective') {
       if (!a.effective) e.push('Choose when your agent’s power should start.');
     } else if (id === 'more') {
@@ -2571,7 +2564,6 @@
     { id: 'about', label: 'About you' },
     { id: 'family', label: 'Family' },
     { id: 'trustee', label: 'Successor trustee' },
-    { id: 'powers', label: 'While you’re incapacitated' },
     { id: 'gifts', label: 'Specific gifts' },
     { id: 'pets', label: 'Pets' },
     { id: 'residuary', label: 'Everything else' },
@@ -2612,7 +2604,11 @@
     v.successors = (a.successors || []).map(function (s) { return { successor: clean(s.name) }; }).filter(function (s) { return s.successor; });
     v.cotrustees = (a.cotrustees || []).map(function (s) { return { cotrustee: clean(s.name) }; }).filter(function (s) { return s.cotrustee; });
     trusteeVars(a, v);
-    v.poa_reserved_powers = a.poaReservedPowers === 'yes';
+    /* POWERS OF ATTORNEY AND THE TRUST (18 Oct 2026, Greg): the question "should your power-of-attorney agent be able to
+       amend, revoke, or restate this trust?" was removed from the trust (and the matching one from the power of attorney):
+       most people can't answer it. The trust says only that no one else may exercise the reserved powers except as
+       applicable law permits; the power of attorney grants no trust powers. */
+    v.poa_reserved_powers = false;
     v.gifts = (a.gifts || []).map(function (g) {
       return {
         gift_description: clean(g.description), gift_beneficiary: clean(g.beneficiary), gift_entity: giftEntity(g), gift_to_trust: g.to === 'TRUST',
@@ -2771,10 +2767,6 @@
     trustee: function () {
       return stepHead('Who should manage your trust if you can’t?', 'Your successor trustee takes over if you resign, become incapacitated, or die. You are the initial Trustee.') + trusteeFields();
     },
-    powers: function () {
-      return stepHead('If you become incapacitated', 'You already have full control over your trust while you’re able to manage your own affairs. This is about someone else acting for you if you can’t.') +
-        field('If you also sign a power of attorney, should that agent be able to amend, revoke, or restate this trust on your behalf?', pills('poaReservedPowers', [['yes', 'Yes'], ['no', 'No — only I can amend or revoke my trust']], true), 'Your successor trustee can still manage trust property either way — this is only about changing the trust’s terms.');
-    },
     gifts: function () {
       if (!answers.wantsGifts && (answers.gifts || []).some(function (g) { return clean(g.description) || clean(g.beneficiary); })) answers.wantsGifts = 'yes';
       var h = stepHead('Do you want to leave any specific gifts?', 'For example, jewelry, a car, or a sum of money to a specific person, before everything else is divided. You can skip this.') +
@@ -2867,8 +2859,6 @@
     } else if (id === 'trustee') {
       if (!clean(((a.successors || [])[0] || {}).name)) e.push('Enter the name of your successor trustee.');
       anotherErrors(a, e, 'successor trustee', true, (a.successors || []).slice(1).some(function (x) { return clean(x.name); }), (a.cotrustees || []).filter(function (x) { return clean(x.name); }).length);
-    } else if (id === 'powers') {
-      if (!a.poaReservedPowers) e.push('Answer the power-of-attorney question.');
     } else if (id === 'gifts') {
       if (!a.wantsGifts) e.push('Choose whether you want to leave any specific gifts.');
       else if (a.wantsGifts === 'yes') {

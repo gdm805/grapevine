@@ -285,27 +285,12 @@ A valid restatement replaces the governing provisions of this Trust Agreement wh
 
 Upon the Trustmaker's Incapacity as determined under [[ref def_incapacity]], the Trustmaker may not personally exercise the powers reserved under this Article.
 
-[[if poa_reserved_powers]]
-
-## Exercise by Attorney-in-Fact
-
-During the Trustmaker's Incapacity, an attorney-in-fact acting under a valid power of attorney may exercise the Trustmaker's powers to amend, revoke, restate, or withdraw property from this Trust only to the extent the applicable power is expressly granted by the power of attorney and permitted by applicable law.
-
-[[end]]
 
 ## Personal Nature of Reserved Powers
 
 The powers reserved under this Article are personal to the Trustmaker.
 
-[[if poa_reserved_powers]]
-
-Except as provided under the following Section or applicable law, no guardian, conservator, attorney-in-fact, Trustee, or other person may exercise the Trustmaker's reserved powers.
-
-[[else]]
-
 Except as permitted by applicable law, no guardian, conservator, attorney-in-fact, Trustee, or other person may exercise the Trustmaker's reserved powers.
-
-[[end]]
 
 ## Termination of Reserved Powers
 
