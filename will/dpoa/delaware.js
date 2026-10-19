@@ -89,11 +89,21 @@ My co-Agents shall act together. Any power exercised under this Power of Attorne
 
 [[end]]
 
-If a co-Agent dies, resigns, becomes incapacitated, or is unable or unwilling to serve, the remaining co-Agents shall continue to serve. A successor Agent named in this Power of Attorney serves, in the order listed, only if no co-Agent is able to serve.
+If a co-Agent dies, resigns, becomes incapacitated, or is unable or unwilling to serve, the remaining co-Agents shall continue to serve.[[if has_successors]] A successor Agent named in this Power of Attorney serves, in the order listed, only if no co-Agent is able to serve.[[end]]
 
 [[end]]
 
+[[if has_successors]]
+
+[[if one_successor]]
+
+If that Agent dies, resigns, becomes incapacitated, is unwilling or unable to serve, or is otherwise ineligible, I appoint the following person to serve as my successor Agent:
+
+[[else]]
+
 If that Agent dies, resigns, becomes incapacitated, is unwilling or unable to serve, or is otherwise ineligible, I appoint the following persons to serve successively in the order listed:
+
+[[end]]
 
 [[each successors]]
 
@@ -102,6 +112,8 @@ If that Agent dies, resigns, becomes incapacitated, is unwilling or unable to se
 [[end]]
 
 A successor Agent shall have the same authority as the original Agent unless this Power of Attorney expressly provides otherwise.
+
+[[end]]
 
 ## Acceptance, Resignation, and Vacancy
 

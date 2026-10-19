@@ -1749,7 +1749,7 @@
       : [place ? (/\b(county|parish|borough|area|city|municipality)$/i.test(place) || v.state === 'Alaska' ? place : place + ' County') : '____________________ County', v.state].filter(Boolean).join(', ');
     v.agent = clean(a.agent);
     v.successors = (a.wantsBackups === 'no' ? [] : (a.successors || [])).map(function (x) { return { successor: clean(x.name) }; }).filter(function (x) { return x.successor; });
-    v.has_successors = v.successors.length > 0;
+    v.has_successors = v.successors.length > 0; v.one_successor = v.successors.length === 1;
     coAgentVars(a, v);
     var choice = dpSet(a, 'effective_choice') !== 'no';
     v.upon_incapacity = choice && a.effective === 'incapacity'; v.effective_immediately = !v.upon_incapacity;
@@ -2124,7 +2124,7 @@
     v.successors = (a.wantsBackups === 'no' ? [] : (a.successors || [])).map(function (x) {
       return { successor: clean(x.name), successor_contact: [clean(x.phone), clean(x.email)].filter(Boolean).join(' | ') };
     }).filter(function (x) { return x.successor; });
-    v.has_successors = v.successors.length > 0;
+    v.has_successors = v.successors.length > 0; v.one_successor = v.successors.length === 1;
     coAgentVars(a, v);
     v.life_support = a.lifeSupport; v.nutrition = a.nutrition; v.hydration = a.hydration;
     v.anatomical_gift = a.anatomicalGift; v.anatomical_gift_text = clean(a.anatomicalGiftText);
