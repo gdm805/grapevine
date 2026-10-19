@@ -31,10 +31,20 @@
       '<h1>We couldn’t confirm that payment</h1>' +
       '<p class="lead paid-error">' + msg + '</p>' +
       '<div class="paid-actions">' + (retry ? '<a class="btn btn-primary" href="' + esc(location.href) + '">Try again</a> ' : '') +
-      '<a class="btn ' + (retry ? 'btn-secondary' : 'btn-primary') + '" href="' + esc(window.GVUrl('checkout.html')) + '">Back to checkout</a></div>' +
+      '<a class="btn ' + (retry ? 'btn-secondary' : 'btn-primary') + '" href="' + esc(backToCheckout()) + '">Back to checkout</a></div>' +
       '</div>';
   }
 
+  /* "Back to checkout" returns to what was being bought (plan, household and, for one document, which one),
+     not to the bare checkout page, which shows Essentials by default */
+  function backToCheckout() {
+    var p = GV.plans && GV.plans[plan] ? plan : '', d = '';
+    if (p === 'doc') { d = qs('doc') || ''; if (!d) { try { d = localStorage.getItem('grapevine.pending.doc') || ''; } catch (e) { d = ''; } } }
+    if (!p) return window.GVUrl('pricing.html');
+    /* checkout knows which document from the page it was opened from (?return=dpoa.html and so on) */
+    var back = d && KNOWN_PAGES.indexOf(d + '.html') > -1 ? d + '.html' : (ret || '');
+    return window.GVUrl('checkout.html') + '?plan=' + encodeURIComponent(p) + '&household=' + encodeURIComponent(household) + (back ? '&return=' + encodeURIComponent(back) : '');
+  }
   var CHECK_URL = String(window.GV_PAYMENT_CHECK_URL || '').trim();
   var ASK_EMAIL = ' If you were charged, reply to your Stripe receipt email and we’ll unlock your documents by hand.';
 
