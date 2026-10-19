@@ -1,44 +1,19 @@
 window.FINALWISHES_SIGNING = String.raw`
 // ==========================================================================
-//  GRAPEVINE  |  SIGNING INSTRUCTIONS for Final Wishes.
-//  Same rules as will-template.js (see the notes at the top of that file). Unlike most other
-//  documents on this site, exactly what's required to sign this one genuinely depends on your
-//  state -- some need only your signature, some need one or two witnesses, some need a notary,
-//  some need both, and a few (Indiana, Iowa, Kentucky) build a second, separate declaration right
-//  into this same document. Who must be there is worked out from the signing section of the person's own
-//  document (fwSigningFacts in js/will.js), so these steps always match it.
+//  TOVAKIN  |  SIGNING INSTRUCTIONS for Final Wishes.
+//  Same rules as will-template.js (see the notes at the top of that file). Since 19 Oct 2026 Final
+//  Wishes states wishes only and appoints no one, so it signs the same way in every state: the
+//  person's own signature and the date.
 // ==========================================================================
 #! HOW TO SIGN YOUR FINAL WISHES
 
-[[if fw_who]]
-**Who must be there:** {{fw_who}}[[if fw_witness_note]] A witness should not be the person you named to handle your arrangements.[[end]]
+**Who must be there:** no one else. Your signature and the date are enough. These Final Wishes state your wishes for your family; they don't appoint anyone, so no witnesses or notary are needed.
 
-**When you sign:** {{fw_when}}
-[[if fw_accept]]
+**When you sign:** sign and date it.
 
-**The person you named:** {{fw_accept}}
-[[end]]
-[[else]]
-**Who must be there:** follow the signing section at the end of your document, written for {{state}}. It shows whether you need witnesses, a notary, or neither. A witness should not be the person you named to handle your arrangements.
-[[end]]
-[[if signing_state=INDIANA]]
+**Afterward:** keep it where your family can find it, and give copies to the people most likely to make your arrangements. Tell them where the original is.
 
-**Also sign the separate declaration** included in your document.
-[[end]]
-[[if signing_state=IOWA]]
+**If you want a particular person to have legal authority** over your funeral and burial arrangements, your state may have its own form for that, separate from this document.
 
-**Also sign the separate declaration** included in your document.
-[[end]]
-[[if signing_state=KENTUCKY]]
-
-**Also sign the separate declaration** included in your document.
-[[end]]
-
-**Afterward:** keep it where your family can find it, and give a copy to the person handling your arrangements.
-
-[[if state_note]]
-{{state_note}}
-
-[[end]]
 If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;

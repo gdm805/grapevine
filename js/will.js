@@ -3817,7 +3817,9 @@
   }
 
   /* ---------- FINAL WISHES ---------- */
-  var UNOFFERED_FINALWISHES_STATES = { 'Mississippi': 1, 'South Carolina': 1 };
+  /* Final Wishes is a statement of wishes only (19 Oct 2026): it appoints no one, so no state needs its own form
+     and every state is offered, Mississippi and South Carolina included */
+  var UNOFFERED_FINALWISHES_STATES = {};
   var EMPTY_FINALWISHES = {
     state: '', signingDate: '', fwNotary: '', fwRoute: '',
     name: '',
@@ -3838,7 +3840,6 @@
     { id: 'service', label: 'Funeral or memorial' },
     { id: 'personal', label: 'Personal requests' },
     { id: 'prearrangements', label: 'Prearrangements' },
-    { id: 'agent', label: 'Who decides' },
     { id: 'signing', label: 'Signing' },
     { id: 'review', label: 'Review and sign' }
   ];
@@ -3867,15 +3868,16 @@
     v.reference = clean(a.reference);
     v.has_document_location = a.hasDocumentLocation === 'yes' && !!clean(a.documentLocation);
     v.document_location = clean(a.documentLocation);
-    v.has_agent = !FW_NO_AGENT_STATES[a.state] && a.hasAgent === 'yes' && !!clean(a.agentName);
-    v.no_agent = !v.has_agent;
+    /* no appointment and no state signing section any more: the person signs and dates it */
+    v.has_agent = false;
+    v.no_agent = false;
     v.agent_name = clean(a.agentName);
     v.has_alt_agent = v.has_agent && a.hasAltAgent === 'yes' && !!clean(a.altAgentName);
     v.alt_agent_name = clean(a.altAgentName);
     v.state_note = st ? st.note : '';
-    v.fw_exec = !(FW_NOTARY_OPTIONAL[a.state] && a.fwNotary === 'no') && !(FW_SELF_OK[a.state] && a.fwRoute === 'SELF');
-    v.fw_witness = fwRouteAsked(a, v.has_agent) && a.fwRoute === 'WITNESS';
-    fwSigningFacts(v);
+    v.has_prepaid_or_records = v.has_prepaid || v.has_document_location;
+    v.fw_exec = false; v.fw_witness = false;
+    v.state_note = '';
     return v;
   }
   /* Final Wishes signing steps say exactly who must be there (8 Oct 2026). They're read from the person's own
@@ -3934,7 +3936,7 @@
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
         return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + '>' + esc(s.name) + '</option>';
       }).join('');
-      return stepHead('First, where do you live?', 'This is the state whose law governs how these Final Wishes are signed.') +
+      return stepHead('First, where do you live?', '') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         (UNOFFERED_FINALWISHES_STATES[answers.state] ? '<p class="hint">We can’t offer Final Wishes in ' + esc(answers.state) + ' yet — that state’s own rules for this kind of document need a specific state-prescribed form or route that isn’t available here. Talk to a local attorney, or a funeral home familiar with ' + esc(answers.state) + ' law, about your options.</p>' : '');
     },
@@ -3981,14 +3983,7 @@
         (answers.hasAgent === 'yes' && answers.hasAltAgent === 'yes' ? field('Backup’s full legal name', text('altAgentName', '')) : '');
     },
     signing: function () {
-      return stepHead('Signing', '') +
-        (fwRouteAsked(answers) ? field('How do you plan to sign?', pills('fwRoute', (FW_SELF_OK[answers.state] ? [['SELF', 'Sign it myself']] : []).concat([['NOTARY', 'In front of a notary'], ['WITNESS', FW_WITNESS_OPTION[answers.state] === 1 ? 'In front of one witness' : 'In front of two witnesses']]), true),
-          FW_SELF_OK[answers.state]
-            ? 'In ' + esc(answers.state) + ', these Final Wishes need only your signature and the date. You can also sign in front of a notary public or in front of ' + (FW_WITNESS_OPTION[answers.state] === 1 ? 'one adult witness' : 'two adult witnesses') + '. Your document includes a notary or witness section only if you choose one.'
-            : 'In ' + esc(answers.state) + ', you can sign these Final Wishes in front of a notary public or in front of ' + (FW_WITNESS_OPTION[answers.state] === 1 ? 'one adult witness' : 'two adult witnesses') + '. Your document will include the section for the way you choose.') : '') +
-        (FW_NOTARY_OPTIONAL[answers.state] ? field('How do you plan to sign?', pills('fwNotary', [['no', 'Sign it myself'], ['yes', 'Sign in front of a notary']], true),
-          'In ' + esc(answers.state) + ', these Final Wishes need only your signature and the date. You can also sign in front of a notary public. Your document includes a notary section only if you choose it.') : '') +
-        signDateField();
+      return stepHead('Signing', 'You sign and date your Final Wishes yourself. No witnesses or notary are needed.') + signDateField();
     },
     review: function () {
       var v = buildVarsFinalWishes(answers, states, tpl.settings);
@@ -4037,8 +4032,6 @@
       if (a.hasAgent === 'yes' && !clean(a.agentName)) e.push('Enter that person’s full legal name.');
       if (a.hasAgent === 'yes' && a.hasAltAgent === 'yes' && !clean(a.altAgentName)) e.push('Enter the backup’s full legal name, or answer No.');
     } else if (id === 'signing') {
-      if (FW_NOTARY_OPTIONAL[a.state] && !a.fwNotary) e.push('Choose how you plan to sign.');
-      if (fwRouteAsked(a) && !a.fwRoute) e.push('Choose how you plan to sign.');
     }
     return e;
   }

@@ -1,110 +1,100 @@
 window.FINALWISHES_TEMPLATE = String.raw`
 // ==========================================================================
-//  GRAPEVINE  |  FINAL WISHES
-//  Drafted from your national baseline (Grapevine_Final_Wishes_National_Master_Single_V7...docx)
-//  plus your 51 controlled Final_Wishes_<State>.docx files. Articles One through Five (this
-//  document's actual wishes and preferences) are word-for-word identical across all 51 of your
-//  state files -- only Article Six/Seven's state routing note and execution formalities vary,
-//  taken word for word from each state's own controlled file. See will/finalwishes-state-text.js
-//  for that, and will/NOTES-ON-YOUR-FINAL-WISHES.txt for what was left out and why (including the
-//  two states your own source material flags as needing a form Tovakin doesn't have on file).
+//  TOVAKIN  |  FINAL WISHES
+//  A STATEMENT OF WISHES ONLY (19 Oct 2026, Greg). It no longer appoints anyone to control disposition
+//  of remains: that appointment is what each state regulates with its own form, witnesses or notary
+//  (and Mississippi and South Carolina require state forms), so it was taken out, along with the
+//  state-specific provisions and signing sections that only served it. One version now serves every
+//  state; the person signs and dates it. The old state text is still in will/finalwishes-state-text.js,
+//  unused, and the earlier template is in git history.
 // ==========================================================================
 @set draft_watermark = yes
 @set draft_label = Preview - Not for Signing
 
 @center **FINAL WISHES**
 
-# GENERAL DECLARATION OF FINAL WISHES
+# STATEMENT OF FINAL WISHES
 
 ## Purpose
 
-{{name}} (the “Declarant”) makes the following directions and states the following wishes concerning the care and disposition of the Declarant's remains and the arrangements following death. These provisions are intended to express and, to the extent permitted by applicable law, carry out the Declarant's directions and wishes.
+{{name}} (the “Declarant”) states the following wishes concerning the care and disposition of the Declarant's remains and the arrangements following death, to guide the Declarant's family and the persons who make those arrangements.
 
-## Governing Law
+## Nature of These Wishes
 
-These Final Wishes shall be interpreted and given effect under the law governing disposition of the Declarant's remains.
+These Final Wishes are a statement of the Declarant's wishes. They do not appoint any person to control the disposition of the Declarant's remains. The person who has authority under applicable law to make those decisions is asked to follow these wishes as closely as reasonably practicable.
 
 ## No Change to Estate Distributions
 
-These Final Wishes do not dispose of property under the Declarant's trust or will, change a beneficiary designation, or alter a fiduciary's powers except to the limited extent that applicable law gives a designated person authority over disposition of remains or final arrangements.
-
-# DISPOSITION OF REMAINS
-
-## Declarant's Direction
+These Final Wishes do not dispose of property under the Declarant's trust or will, change a beneficiary designation, or alter any fiduciary's powers.
 
 [[if has_disposition]]
+# DISPOSITION OF REMAINS
 
-The Declarant directs or, where applicable law treats the following as nonbinding, expresses the preference that the Declarant's remains be handled as follows:
+## The Declarant's Wishes
 
 [[if disposition=BURIAL]]
 
-The Declarant prefers burial.
+The Declarant wishes to be buried.
 
 [[elif disposition=CREMATION]]
 
-The Declarant prefers cremation.
+The Declarant wishes to be cremated.
 
 [[elif disposition=GREEN_BURIAL]]
 
-The Declarant prefers natural or green burial, to the extent lawful and reasonably available.
+The Declarant wishes to have a natural or green burial, to the extent lawful and reasonably available.
 
 [[elif disposition=DONATION]]
 
-The Declarant prefers donation of the Declarant's body for anatomical, medical, educational, or scientific purposes to the extent separately authorized and accepted under applicable law.
+The Declarant wishes to donate the Declarant's body for anatomical, medical, educational, or scientific purposes, to the extent separately authorized and accepted under applicable law.
 
 [[elif disposition=OTHER]]
 
-The Declarant states the following other preference concerning disposition of remains: {{disposition_other_text}}.
+The Declarant states the following wish concerning disposition of remains: {{disposition_other_text}}.
 
 [[elif disposition=NO_PREFERENCE]]
 
-The Declarant does not state a preference concerning the method of disposition and leaves that decision to the person legally authorized to control disposition of the Declarant's remains.
+The Declarant does not state a preference concerning the method of disposition and leaves that decision to the person who has authority under applicable law to make it.
 
 [[end]]
-
-[[end]]
-
-## Place of Disposition
 
 [[if has_location]]
+## Place of Disposition
 
-If reasonably practicable, the Declarant prefers that burial, interment, scattering, placement, donation, or other disposition occur at or in connection with: {{location}}.
+If reasonably practicable, the Declarant would like burial, interment, scattering, placement, donation, or other disposition to occur at or in connection with: {{location}}.
 
 [[end]]
-
-## Additional Instructions Concerning Remains
-
 [[if has_remains_details]]
+## Additional Wishes Concerning Remains
 
-The Declarant states the following additional instructions concerning the Declarant's remains: {{remains_details}}.
+The Declarant states the following additional wishes concerning the Declarant's remains: {{remains_details}}.
 
 [[end]]
+## Practical Limits
 
-## Practical and Lawful Performance
+These wishes are subject to applicable law and reasonable practical limits, including availability, timing, public-health requirements, and available funds. The person making the arrangements may make only those adjustments reasonably necessary to carry out the Declarant's wishes as closely as practicable.
 
-A direction is subject to applicable law and reasonable practical limits, including availability, timing, public-health requirements, and available funds. A person acting under this document may make only those adjustments reasonably necessary to carry out the Declarant's intent as closely as practicable.
-
+[[end]]
+[[if has_service]]
 # FUNERAL, MEMORIAL, AND PERSONAL WISHES
 
 ## Funeral, Memorial, or Celebration
 
-[[if has_service]]
-
 [[if service=FUNERAL]]
 
-The Declarant prefers a funeral service.
+The Declarant would like a funeral service.
 
 [[elif service=MEMORIAL]]
 
-The Declarant prefers a memorial service.
+The Declarant would like a memorial service.
 
 [[elif service=CELEBRATION]]
 
-The Declarant prefers a celebration of life.
+The Declarant would like a celebration of life.
 
 [[elif service=NONE]]
 
-The Declarant prefers that no formal funeral, memorial service, or celebration of life be held.
+The Declarant would like no formal funeral, memorial service, or celebration of life to be held.
 
 [[elif service=NO_PREFERENCE]]
 
@@ -112,86 +102,43 @@ The Declarant leaves the nature of any funeral, memorial, celebration, or gather
 
 [[end]]
 
-[[end]]
-
-## Additional Service Details
-
 [[if has_service_details]]
+## Additional Service Details
 
 The Declarant expresses the following additional wishes concerning any service or gathering: {{service_details}}.
 
 [[end]]
-
-## Personal Requests
-
+[[end]]
 [[if has_personal_requests]]
+## Personal Requests
 
 The Declarant expresses the following additional personal requests concerning final arrangements: {{personal_requests}}.
 
 [[end]]
-
+[[if has_prepaid_or_records]]
 # PREARRANGEMENTS AND RECORDS
 
-## Prearranged or Prepaid Arrangements
-
 [[if has_prepaid]]
+## Prearranged or Prepaid Arrangements
 
 The Declarant has indicated that funeral, burial, cremation, cemetery, memorial, donation, or related arrangements may have been made or prepaid with {{provider}}, located at {{provider_location}}, reference {{reference}}. The person handling final arrangements should contact the identified provider to determine the current terms and status of any arrangement.
 
 [[end]]
-
-## Location of Supporting Records
-
 [[if has_document_location]]
+## Location of Supporting Records
 
 Supporting records concerning the Declarant's final arrangements may be located at: {{document_location}}.
 
 [[end]]
-
-# PERSON AUTHORIZED TO CONTROL DISPOSITION
-
-## Designation
-
-[[if has_agent]]
-
-To the extent permitted by applicable law, the Declarant designates {{agent_name}} to control disposition of the Declarant's remains and final arrangements, subject to the directions stated in this document.
-
-[[if has_alt_agent]]
-
-If that person cannot or will not serve, the Declarant designates {{alt_agent_name}} as successor.
-
 [[end]]
-
-[[end]]
-
-## No Designation
-
-[[if no_agent]]
-
-If the Declarant has not made an effective designation of a person to control disposition, applicable law will determine authority.
-
-[[end]]
-
-# STATE-SPECIFIC PROVISIONS
-
-## Governing State Provisions
-
-The provisions of this Article apply under the law of the Declarant's governing state and control over any inconsistent general language in this document.
-
-[[include finalwishes_state]]
-
-# EXECUTION
+# SIGNATURE
 
 ## Declarant Signature
 
-The Declarant signs these Final Wishes to confirm the directions, wishes, and appointments stated in this instrument.
+The Declarant signs these Final Wishes to confirm the wishes stated in them.
 
 @line Dated: {{signing_date}}
 
 @line ________________________________________
 @line {{name}}, Declarant
-
-[[if fw_exec]]
-[[include finalwishes_execution]]
-[[end]]
 `;
