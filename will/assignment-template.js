@@ -85,6 +85,10 @@ In addition to the general assignment above, the following specifically identifi
 
 [[end]]
 
+[[elif signing_state=NEW_YORK]]
+
+Under New York EPTL 7-1.18, property not described with particularity in this Assignment or a schedule to it may not be treated as transferred to the Trust.
+
 [[else]]
 
 No separate itemized schedule is required for the general assignment made under this instrument.
@@ -195,7 +199,7 @@ If any provision of this Assignment is determined to be invalid, ineffective, or
 
 [[if trust_type=SINGLE]]
 
-The Assignor executes this Assignment on {{signing_date}} in {{county}} {{county_label}}, {{state}}.
+The Assignor executes this Assignment on {{signing_date}} in {{exec_place}}.
 
 @line Signature: ________________________________________________
 
@@ -203,7 +207,7 @@ The Assignor executes this Assignment on {{signing_date}} in {{county}} {{county
 
 [[else]]
 
-The Assignors execute this Assignment on {{signing_date}} in {{county}} {{county_label}}, {{state}}.
+The Assignors execute this Assignment on {{signing_date}} in {{exec_place}}.
 
 @line Signature: ________________________________________________
 
@@ -223,20 +227,14 @@ The Assignors execute this Assignment on {{signing_date}} in {{county}} {{county
 @box A notary public or other officer completing this certificate verifies only the identity of the individual who signed the document to which this certificate is attached, and not the truthfulness, accuracy, or validity of that document.
 @line State of California
 @line County of ________________________________
-@line On __________________ before me, ________________________________, personally appeared _______________________________, who proved to me on the basis of satisfactory evidence to be the person(s) whose name(s) is/are subscribed to the instrument and acknowledged execution in the authorized capacity(ies), and that by the signature(s) on the instrument the person(s), or the entity upon behalf of which the person(s) acted, executed the instrument.
+@line On __________________ before me, ________________________________ (insert name and title of the officer), personally appeared _______________________________, who proved to me on the basis of satisfactory evidence to be the person(s) whose name(s) is/are subscribed to the instrument and acknowledged execution in the authorized capacity(ies), and that by the signature(s) on the instrument the person(s), or the entity upon behalf of which the person(s) acted, executed the instrument.
 @line I certify under PENALTY OF PERJURY under the laws of the State of California that the foregoing paragraph is true and correct.
 @line WITNESS my hand and official seal.
 @line ________________________________________
 @line Signature of Notary Public
 @line (Seal)
 [[else]]
-@line State of {{state}}
-@line County/Parish of ________________________________
-@line This instrument was acknowledged before me on ____________________________ by ____________________________.
-@line ________________________________________
-@line Notary Public
-@line My Commission Expires: ____________________
-@line (Seal)
+[[include assignment_ack]]
 [[end]]
 
 [[end]]

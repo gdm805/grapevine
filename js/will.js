@@ -554,7 +554,7 @@
           return MARK.fill + v + MARK.close;
         }).split('\n').filter(function (l) { return l.indexOf(MARK.drop) < 0; }).join('\n');
       } else if (n.t === 'include') {
-        var sh = (window.DPOA_SHARED || {})[n.k] || (window.TRUST_SHARED || {})[n.k] || (window.CERT_SHARED || {})[n.k] || (window.AFFIDAVIT_SHARED || {})[n.k] || (window.FINALWISHES_SHARED || {})[n.k];
+        var sh = (window.DPOA_SHARED || {})[n.k] || (window.TRUST_SHARED || {})[n.k] || (window.CERT_SHARED || {})[n.k] || (window.AFFIDAVIT_SHARED || {})[n.k] || (window.FINALWISHES_SHARED || {})[n.k] || (window.ASSIGNMENT_SHARED || {})[n.k];
         if (sh) out += '\n\n' + renderNodes(parseTemplate(sh).nodes, scope) + '\n\n';
       } else if (n.t === 'tail') {
         out += renderNodes(scope.__tail || [], scope);
@@ -3750,6 +3750,8 @@
        off if someone typed it themselves (e.g. "Orleans Parish"), so it doesn't double up */
     v.county = clean(a.signingCounty).replace(/\s+(county|parish)$/i, '');
     v.county_label = v.state === 'Louisiana' ? 'Parish' : 'County';
+    /* where it's signed: Alaska has no counties and the District of Columbia none either */
+    v.exec_place = v.state === 'District of Columbia' ? 'the District of Columbia' : v.state === 'Alaska' ? (v.county ? v.county + ', ' : '') + 'Alaska' : [v.county ? v.county + ' ' + v.county_label : '', v.state].filter(Boolean).join(', ');
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.trust_type = a.trustType === 'JOINT' ? 'JOINT' : 'SINGLE';
     v.trust_name = capThe(clean(a.trustName));
@@ -3762,7 +3764,8 @@
     v.revocability = a.revocability || 'FULLY_REVOCABLE';
     v.property = (a.property || []).map(function (p) { return { property_description: clean(p.description) }; }).filter(function (p) { return p.property_description; });
     v.has_property = v.property.length > 0;
-    v.wants_notary = a.wantsNotary === 'yes';
+    /* Louisiana requires an authentic act (La. R.S. 9:1931-1932; C.C. arts. 1541, 1544), so its notary page always prints */
+    v.wants_notary = a.wantsNotary === 'yes' || v.state === 'Louisiana';
     v.signing_state = v.state ? trustSlug(v.state) : '';
     v.state_note = st ? st.note : '';
     return v;
@@ -3796,6 +3799,7 @@
     },
     property: function () {
       return stepHead('Specific property (optional)', 'This Assignment already covers your personal property in general. List specific items here only if you want them called out by name — for example, because a particular item matters to you or a recipient wants it itemized.') +
+        (answers.state === 'New York' ? '<p class="hint">New York law treats personal property as moved into a trust only if it is described with particularity, so list each item or group of items of real value here (for example, “Steinway piano, serial no. 12345” or “all jewelry kept in my bedroom safe”).</p>' : '') +
         field('Is there specific property you want to list by name?', pills('hasProperty', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.hasProperty === 'yes' ? field('Property', '<div class="rowset">' + answers.property.map(function (p, i) {
           return '<div class="rowitem"><input class="input" data-list="property" data-i="' + i + '" data-f="description" value="' + val(p.description) + '" placeholder="For example, my grandmother’s writing desk">' +
@@ -3803,6 +3807,7 @@
         }).join('') + '</div>' + addBtn('property', '+ Add another item')) : '');
     },
     notary: function () {
+      if (answers.state === 'Louisiana') return stepHead('Notary and two witnesses', 'In Louisiana, a gift of property to a trust must be made by authentic act: you sign in front of a notary and two witnesses, and the trustee signs to accept it. Your document includes that page.');
       return stepHead('Notarization', 'No state requires this document to be notarized. Add it only if a specific bank, brokerage, or title company asked for a notarized signature, or you’d simply like one.') +
         field('Add an optional notary acknowledgment page?', pills('wantsNotary', [['yes', 'Yes'], ['no', 'No — just the signature']], true));
     },
@@ -3847,8 +3852,10 @@
       if (!a.revocability) e.push('Answer whether the trust is revocable.');
     } else if (id === 'property') {
       if (!a.hasProperty) e.push('Answer whether you want to list specific property.');
+      /* New York EPTL 7-1.18: property not described with particularity may not be treated as transferred (19 Oct 2026) */
+      if (a.state === 'New York' && a.hasProperty !== 'yes') e.push('In New York, list the items of real value you are moving into your trust.');
     } else if (id === 'notary') {
-      if (!a.wantsNotary) e.push('Answer whether you want the optional notary page.');
+      if (!a.wantsNotary && a.state !== 'Louisiana') e.push('Answer whether you want the optional notary page.');
     } else if (id === 'signing') {
       if (!clean(a.signingCounty)) e.push('Enter the county where you’ll sign.');
     }
