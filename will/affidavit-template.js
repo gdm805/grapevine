@@ -177,7 +177,7 @@ Both Trustmakers are deceased. The Trust and any continuing separate trusts or s
 
 ## Current Validity
 
-The Trust has not been revoked, terminated, modified, amended, restated, or otherwise changed in any manner that would cause a representation made in this Affidavit to be incorrect as of the date signed.
+Except as stated in this Affidavit, the Trust has not been revoked, terminated, modified, amended, restated, or otherwise changed in any manner that would cause a representation made in this Affidavit to be incorrect as of the date signed.
 
 # TRUSTEE AUTHORITY
 
@@ -249,7 +249,12 @@ This Affidavit does not disclose dispositive provisions of the Trust except to t
 
 ## Real Property and Recording
 
-If this Affidavit will be recorded or used in connection with real property, the applicable real-property and recorder rules should be confirmed before relying on it. This Affidavit does not replace a recordable Certification, Memorandum, Extract, legal description, deed, or other instrument required by the jurisdiction where the property is located.
+If this Affidavit will be recorded or used in connection with real property, the applicable real-property and recorder rules should be confirmed before relying on it. This Affidavit does not replace a recordable Certification, Memorandum, Extract, legal description, deed, or other instrument required by the jurisdiction where the property is located. If the Trustee's succession resulted from a Trustmaker's death, a certified copy of the death certificate may also be required.
+
+[[if aff_state_note]]
+{{aff_state_note}}
+
+[[end]]
 
 # EXECUTION
 

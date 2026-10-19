@@ -28,15 +28,16 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 
 [[elif signing_state=ALASKA]]
 
-@line Executed in {{signing_city}}, {{county}} County, {{state}}, on {{signing_date}}.
+@line Executed in {{signing_city}}, Alaska, on {{signing_date}}.
 @line ________________________________________
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF ALASKA
-@line ____________________________
+@line ______ JUDICIAL DISTRICT
 @line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public in and for the State of Alaska
 @line My Commission Expires: ____________________
+@line (Seal)
 
 
 [[elif signing_state=ARIZONA]]
@@ -46,7 +47,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF ARIZONA
 @line COUNTY OF ____________________________
-@line Subscribed and sworn before me this ____________________________ by ____________________________.
+@line Subscribed and sworn to (or affirmed) before me this ______ day of ______________, 20____, by ____________________________.
 @line ________________________________________
 @line NOTARY PUBLIC
 @line (Seal)
@@ -60,7 +61,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF ARKANSAS
 @line COUNTY OF ____________________________
-@line Subscribed and sworn to before me on ____________________________ by ____________________________.
+@line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line NOTARY PUBLIC
 @line (Seal)
@@ -102,11 +103,12 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF CONNECTICUT
-@line COUNTY OF ____________________________
+@line COUNTY OF ____________________________    ss. ______________ (town)
 @line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public / Commissioner of the Superior Court
-@line My Commission Expires: ____________________
+@line Printed Name: ____________________
+@line My Commission Expires (if Notary): ____________________
 
 
 [[elif signing_state=DELAWARE]]
@@ -150,6 +152,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Print, Type, or Stamp Commissioned Name of Notary Public: ____________________
 @line (Seal)
 @line Personally Known ☐  OR  Produced Identification ☐
+@line Type of Identification Produced: ____________________
 
 
 [[elif signing_state=GEORGIA]]
@@ -159,7 +162,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF GEORGIA
 @line COUNTY OF ____________________________
-@line Sworn to and subscribed before me on ____________________________ by ____________________________.
+@line Sworn to (or affirmed) and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line NOTARY PUBLIC
 @line My Commission Expires: ____________________
@@ -172,10 +175,12 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF HAWAII
-@line COUNTY OF ____________________________
+@line CITY AND COUNTY OF / COUNTY OF ____________________________
 @line Subscribed and sworn to (or affirmed) before me this ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public, State of Hawaii
+@line Printed Name of Notary: ____________________
+@line ______________ Judicial Circuit
 @line My Commission Expires: ____________________
 @line (Seal)
 
@@ -220,6 +225,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line NOTARY PUBLIC
 @line Printed Name: ____________________
 @line Commission Number: ____________________
+@line County of Commission: ____________________
 @line My Commission Expires: ____________________
 @line (Seal)
 
@@ -250,7 +256,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line Notary Public
 @line (Seal)
-@line My Appointment Expires: ____________________
+@line My Commission Expires: ____________________
 
 
 [[elif signing_state=KENTUCKY]]
@@ -277,6 +283,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line SWORN TO AND SUBSCRIBED before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line NOTARY PUBLIC
+@line Printed Name: ____________________
 @line Notary Identification / Bar Roll No.: ____________________
 
 
@@ -301,7 +308,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF MARYLAND
-@line COUNTY OF ____________________________
+@line COUNTY/CITY OF ____________________________
 @line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
@@ -316,9 +323,10 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line COMMONWEALTH OF MASSACHUSETTS
 @line COUNTY OF ____________________________
-@line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
+@line On this ______ day of ______________, 20____, before me, the undersigned notary public, ____________________________ (name of document signer) personally appeared, proved to me through satisfactory evidence of identification, which were ____________________, to be the person who signed the preceding or attached document in my presence and who swore or affirmed to me that the contents of the document are truthful and accurate to the best of (his)(her) knowledge and belief.
 @line ________________________________________
 @line Notary Public
+@line Printed Name: ____________________
 @line My Commission Expires: ____________________
 @line (Seal)
 
@@ -330,8 +338,9 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF MICHIGAN
 @line COUNTY OF ____________________________
-@line Subscribed and sworn to before me on ____________________________ by ____________________________.
+@line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
+@line Printed Name: ____________________
 @line Notary Public, State of Michigan, County of ____________________
 @line Acting in the County of ____________________________
 @line My Commission Expires: ____________________
@@ -372,8 +381,8 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line ________________________________________
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF MISSOURI
-@line COUNTY OF ____________________________
-@line On ____________________________, before me, the undersigned notary, personally appeared ____________________________, proved to me by satisfactory evidence to be the person who signed this document in my presence and who swore or affirmed that its contents are truthful and accurate to the best of the Affiant’s knowledge and belief.
+@line COUNTY (AND/OR CITY) OF ____________________________
+@line On this ______ day of ______________, 20____, before me, the undersigned notary, personally appeared ____________________________ (name of document signer), (☐ personally known to me) (☐ proved to me through identification documents, which were ____________________) (☐ proved to me on the oath or affirmation of ____________________, who is personally known to me) to be the person who signed the preceding or attached document in my presence and who swore or affirmed to me that the contents of the document are truthful and accurate to the best of (his)(her) knowledge and belief.
 @line ________________________________________
 @line Notary Public
 @line (Seal)
@@ -449,6 +458,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
+@line Printed Name: ____________________
 @line (Seal)
 @line My Commission Expires: ____________________
 
@@ -474,9 +484,11 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF NEW YORK
 @line COUNTY OF ____________________________
-@line Sworn to before me on ____________________________ by ____________________________.
+@line Sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
+@line Printed Name: ____________________
 @line Notary Public, State of New York
+@line Reg./Official No.: ____________________
 @line Qualified in ____________________ County
 @line Commission Expires: ____________________
 
@@ -490,7 +502,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line COUNTY OF ____________________________
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
-@line Notary Public
+@line Printed Name: ____________________, Notary Public
 @line (Seal)
 @line My Commission Expires: ____________________
 
@@ -519,6 +531,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Sworn to or affirmed and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
+@line Printed Name: ____________________
 @line (Seal)
 @line My Commission Expires: ____________________
 
@@ -575,6 +588,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
+@line Printed Name: ________________  Commission/ID No.: ________________
 @line (Seal)
 @line My Commission Expires: ____________________
 
@@ -586,7 +600,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF SOUTH CAROLINA
 @line COUNTY OF ____________________________
-@line Sworn to and subscribed before me on ____________________________ by ____________________________.
+@line Sworn to (or affirmed) and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public for South Carolina
 @line (Seal)
@@ -600,7 +614,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF SOUTH DAKOTA
 @line COUNTY OF ____________________________
-@line Subscribed and sworn to before me on ____________________________ by ____________________________.
+@line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public - South Dakota
 @line (Seal)
@@ -614,7 +628,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF TENNESSEE
 @line COUNTY OF ____________________________
-@line Sworn to and subscribed before me on ____________________________ by ____________________________.
+@line Sworn to (or affirmed) and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
 @line (Seal)
@@ -628,7 +642,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF TEXAS
 @line COUNTY OF ____________________________
-@line Sworn to and subscribed before me on ____________________________ by ____________________________.
+@line Sworn to (or affirmed) and subscribed before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public, State of Texas
 @line (Seal)
@@ -642,7 +656,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line STATE OF UTAH
 @line COUNTY OF ____________________________
-@line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
+@line Subscribed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
 @line (Seal)
@@ -659,6 +673,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
+@line Printed Name: ________________  Commission/ID No.: ________________
 @line (Seal)
 @line My Commission Expires: ____________________
 
@@ -670,9 +685,10 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
 @line CITY/COUNTY OF ____________________________
 @line COMMONWEALTH OF VIRGINIA
-@line The foregoing instrument was subscribed and sworn before me on ____________________________ by ____________________________.
+@line The foregoing instrument was subscribed and sworn (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Notary Public
+@line Printed Name of Notary: ____________________
 @line (Seal)
 @line Notary Registration Number: ____________________    My Commission Expires: ____________________
 
@@ -687,6 +703,7 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
 @line ________________________________________
 @line Signature of Notary Public
+@line Printed Name: ________________  Commission No.: ________________
 @line Official Stamp / Title of Office: ____________________
 @line My Commission Expires: ____________________
 

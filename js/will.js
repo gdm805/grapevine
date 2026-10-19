@@ -3582,6 +3582,16 @@
     v.has_restriction = a.hasRestriction === 'yes' && !!clean(a.transactionRestriction);
     v.transaction_restriction = clean(a.transactionRestriction);
     v.state_note = st ? st.note : '';
+    /* real-estate notes from the 19 Oct 2026 statute check: states whose own recordable instrument a title
+       company or recorder will expect instead of this general affidavit */
+    v.aff_state_note = ({
+      CALIFORNIA: 'In California, to record a trustee’s death against real property, use the Affidavit – Death of Trustee under Probate Code sections 210 to 212, with a certified copy of the death certificate and the legal description attached. This Affidavit is not that document. A Preliminary Change of Ownership Report may also be required.',
+      COLORADO: 'For Colorado real property, a Statement of Authority under C.R.S. § 38-30-172 may be required.',
+      OHIO: 'For Ohio real property, a title company may require an affidavit of facts relating to title under R.C. 5301.252 or a memorandum of trust under R.C. 5301.255.',
+      MICHIGAN: 'If this Affidavit will be recorded with a register of deeds, it must also comply with MCL 565.451a, including a legal description. For conveyances, a certificate of trust existence and authority or a certification of trust under MCL 700.7913 may be required.',
+      MASSACHUSETTS: 'For Massachusetts real estate, registries and title insurers generally expect a trustee’s certificate under G.L. c. 184, § 35, or a certification of trust under G.L. c. 203E, § 1013.',
+      LOUISIANA: 'For immovable property in Louisiana, the parish conveyance records generally require an extract of trust under La. R.S. 9:2092.'
+    })[v.signing_state] || '';
     return v;
   }
   var RENDER_AFFIDAVIT = {
