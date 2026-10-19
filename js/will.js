@@ -3371,7 +3371,36 @@
     v.certification_date = v.signing_date;
     v.certifying_trustee = v.trustees[0] ? v.trustees[0].trustee_name : '';
     v.state_note = st ? st.note : '';
+    certStateRules(a, v, !!ownC);
     return v;
+  }
+  /* STATE RULES FOR THE CERTIFICATION (19 Oct 2026, a 51-state check of each certification statute; see the
+     commit message). Every state now prints one signature block per acting trustee. On top of that:
+     taxpayer ID required in the document (a blank line the trustee fills in by hand -- the site never collects
+     a Social Security number); sworn or penalty-of-perjury wording; and a few states' extra statements. */
+  var CERT_TIN_STATES = { ALABAMA: 1, ALASKA: 1, CONNECTICUT: 1, DELAWARE: 1, DISTRICT_COLUMBIA: 1, ILLINOIS: 1, MASSACHUSETTS: 1,
+    MARYLAND: 1, MISSOURI: 1, NEW_HAMPSHIRE: 1, NEW_MEXICO: 1, NORTH_CAROLINA: 1, OKLAHOMA: 1, OREGON: 1, PENNSYLVANIA: 1, VIRGINIA: 1, WEST_VIRGINIA: 1 };
+  var CERT_SWORN = { IDAHO: 1, NEBRASKA: 1, NEVADA: 1, MICHIGAN: 1, VERMONT: 1, MINNESOTA: 1 };
+  var CERT_PERJURY = { CALIFORNIA: 1, IOWA: 1 };
+  function certStateRules(a, v, own) {
+    var S = v.signing_state, f = own ? readTrustFacts() : null, p = f && f.people;
+    v.tin_required = !!CERT_TIN_STATES[S];
+    v.tin_label = S === 'OREGON' ? 'Last four digits of the Settlor\u2019s Social Security number, or the Trust\u2019s employer identification number' : 'Taxpayer Identification Number';
+    v.tin_note = S === 'MARYLAND' ? 'If the Trust\u2019s taxpayer identification number is the Social Security number of a Settlor, it is omitted as permitted by Md. Code, Est. & Trusts \u00a7 14.5-910(a)(7).'
+      : S === 'NORTH_CAROLINA' ? 'In a real property transaction, if this number is a Settlor\u2019s Social Security number, it may be withheld as permitted by N.C. Gen. Stat. \u00a7 36C-10-1013(j).'
+      : S === 'ALASKA' ? 'Required if the Trust has a taxpayer identification number.' : '';
+    v.cert_sworn = !!CERT_SWORN[S]; v.cert_perjury = !!CERT_PERJURY[S]; v.cert_pains = S === 'MASSACHUSETTS';
+    v.cert_amend = S === 'ILLINOIS' || S === 'OREGON';
+    v.cert_successors = S === 'TENNESSEE' || S === 'MISSISSIPPI';
+    v.successor_names = p ? [p.first].concat(p.others || [], p.backups || []).filter(Boolean).join(', ') : '______________________________';
+    v.cert_original = S === 'VERMONT' || S === 'SOUTH_DAKOTA' || S === 'MINNESOTA';
+    v.original_trustees = own && v.trustmaker_names ? v.trustmaker_names : '______________________________';
+    v.cert_court = S === 'VERMONT' || S === 'SOUTH_DAKOTA';
+    v.cert_vt_nolimits = S === 'VERMONT';
+    v.cert_sd_prior = S === 'SOUTH_DAKOTA';
+    v.cert_mn = S === 'MINNESOTA';
+    v.cert_fl_direction = S === 'FLORIDA';
+    v.cert_title_note = (S === 'LOUISIANA' || S === 'RHODE_ISLAND') ? 'For a transaction involving real estate, a title company may require the separate form that ' + v.state + ' law provides for that purpose.' : '';
   }
   var RENDER_CERT = {
     start: function () {

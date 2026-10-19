@@ -78,7 +78,7 @@ Ark. Code § 28-73-1013.
 
 @line STATE OF ARKANSAS
 @line COUNTY OF _______________________________
-@line On this the _____ day of __________________, 20____, before me, ________________________________, the undersigned notary, personally appeared ________________________________, known to me or satisfactorily proven to be the person whose name is subscribed to the within instrument and acknowledged that the signer executed the same for the purposes therein contained.
+@line On this the _____ day of __________________, 20____, before me, ________________________________, the undersigned notary, personally appeared ________________________________, known to me or satisfactorily proven to be the person whose name is subscribed to the within instrument and acknowledged that the signer executed the same as Trustee of {{trust_name}} for the purposes therein contained.
 @line In witness whereof I hereunto set my hand and official seal.
 @line ________________________________________
 @line Signature of Notary Public
@@ -170,8 +170,7 @@ D.C. Code § 19-1310.13.
 
 @sub Notary Acknowledgment
 
-@line State of District of Columbia
-@line County of ________________________________
+@line District of Columbia, ss:
 @line This instrument was acknowledged before me on __________________, 20____, by ____________________________, as Trustee of {{trust_name}}.
 @line ________________________________________
 @line Notary Public / Notarial Officer
@@ -231,6 +230,9 @@ Haw. Rev. Stat. § 554D-1013.
 @line State of Hawaii
 @line County of ________________________________
 @line On __________________, before me, the undersigned Notary Public, personally appeared ____________________________, who was proved to me through satisfactory evidence of identification to be the person whose name is signed on this instrument and acknowledged that the instrument was executed freely and voluntarily in the stated capacity as Trustee of {{trust_name}}.
+@line Doc. Date: __________________   # Pages: ______
+@line Document Description: Certification of Trust
+@line Notary Name: ________________________   ______________ Circuit
 @line Notary Public: ________________________________________
 @line Printed Name: _________________________________________
 @line My Commission Expires: ________________________________
@@ -247,7 +249,7 @@ Idaho Code §§ 68-114 to 68-116.
 
 @line State of Idaho
 @line County of ________________________________
-@line On this ______ day of __________________, 20____, before me, the undersigned Notary Public, personally appeared ____________________________, known or identified to me to be the person whose name is subscribed to this instrument, and acknowledged that the person executed the same in the stated capacity as Trustee of {{trust_name}}.
+@line Subscribed and sworn to before me, and acknowledged before me, on this ______ day of __________________, 20____, by ____________________________, known or identified to me to be the person(s) whose name(s) are subscribed to this instrument, as Trustee(s) of {{trust_name}}.
 @line Notary Public: ________________________________________
 @line Residing at: __________________________________________
 @line Commission Expires: ___________________________________
@@ -347,6 +349,7 @@ La. R.S. § 9:2092.
 
 @sub Notary Acknowledgment
 
+@line State of Louisiana
 @line Parish of ________________________________
 @line Before me, the undersigned Notary Public, duly commissioned and qualified in and for the Parish and State aforesaid, personally came and appeared ____________________________, who acknowledged that the foregoing Certification of Trust / Extract of Trust was executed freely and voluntarily in the stated capacity for the purposes set forth herein.
 @line Thus done and signed on __________________, 20____.
@@ -412,7 +415,12 @@ MCL § 700.7913.
 
 @sub Notary Acknowledgment
 
-@line State of Michigan, County of __________________________
+@line State of Michigan
+@line County of ________________________________
+@line Subscribed and sworn to before me on __________________, 20____, by ____________________________, as Trustee(s) of {{trust_name}}.
+@line ________________________________________
+@line Notary Public, State of Michigan, County of __________________________
+@line Printed Name: ________________________________
 @line My Commission Expires: ________________________________
 @line Acting in the County of: ______________________________
 @line (Seal)
@@ -494,7 +502,7 @@ Neb. Rev. Stat. §§ 30-38,102 through 30-38,104.
 
 @line State of Nebraska
 @line County of ________________________________
-@line This Certification of Trust, in affidavit form, was acknowledged before me on __________________, 20____, by the Trustee(s) whose signature(s) appear above.
+@line Subscribed and sworn to and acknowledged before me on __________________, 20____, by ____________________________, as Trustee(s) of {{trust_name}}.
 @line ________________________________________
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
@@ -512,7 +520,7 @@ Nev. Rev. Stat. §§ 164.400–164.410.
 
 @line State of Nevada
 @line County of ________________________________
-@line This Certification of Trust, in affidavit form, was acknowledged before me on __________________, 20____, by the Trustee(s) whose signature(s) appear above.
+@line Subscribed and sworn to and acknowledged before me on __________________, 20____, by ____________________________, as Trustee(s) of {{trust_name}}.
 @line ________________________________________
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
@@ -584,7 +592,7 @@ EPTL Article 7 (no dedicated certification-of-trust statute).
 
 @line State of New York
 @line County of ________________________________
-@line On __________________, 20____, before me, the undersigned, personally appeared the signer(s), personally known to me or proved to me on the basis of satisfactory evidence to be the individual(s) whose name(s) are subscribed to this instrument and acknowledged executing the same in the stated capacity.
+@line On the _____ day of __________________ in the year 20____, before me, the undersigned, personally appeared ____________________________, personally known to me or proved to me on the basis of satisfactory evidence to be the individual(s) whose name(s) is (are) subscribed to the within instrument and acknowledged to me that he/she/they executed the same in his/her/their capacity(ies), and that by his/her/their signature(s) on the instrument, the individual(s), or the person upon behalf of which the individual(s) acted, executed the instrument.
 @line ________________________________________
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
@@ -602,7 +610,8 @@ N.C. Gen. Stat. § 36C-10-1013.
 
 @line State of North Carolina
 @line County of ________________________________
-@line I certify that the following person personally appeared before me this day and acknowledged the due execution of the foregoing instrument: ____________________________, Trustee.
+@line I certify that the following person personally appeared before me this day and acknowledged the due execution of the foregoing instrument: ____________________________, as Trustee(s) of {{trust_name}}.
+@line Date: __________________, 20____
 @line ________________________________________
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
@@ -650,7 +659,7 @@ Ohio Rev. Code § 5810.13.
 
 @sub Statutory Reference
 
-Okla. Stat. tit. 60, § 175.6a.
+Okla. Stat. tit. 60, § 1609.7.
 
 @sub Notary Acknowledgment
 
@@ -704,13 +713,13 @@ Or. Rev. Stat. § 130.860.
 
 @sub Statutory Reference
 
-R.I. Gen. Laws tit. 18 (no dedicated certification-of-trust statute).
+R.I. Gen. Laws § 34-4-27 (memorandum of trust for real estate). Rhode Island has no general certification-of-trust statute.
 
 @sub Notary Acknowledgment
 
 @line State of Rhode Island
 @line County of ________________________________
-@line On __________________, 20____, before me, personally appeared the signer(s) of this Certification and acknowledged the instrument to be the signer(s) free act and deed in the stated capacity.
+@line On __________________, 20____, before me, personally appeared ____________________________, as Trustee(s) of {{trust_name}}, and acknowledged the instrument to be the signer(s)’ free act and deed in that capacity.
 @line ________________________________________
 @line Notary Public / Notarial Officer
 @line Printed Name: ________________________________
@@ -794,7 +803,7 @@ Prop. Code § 114.086.
 
 @sub Statutory Reference
 
-Utah Code § 75-7-1013.
+Utah Code § 75B-2-1013.
 
 @sub Notary Acknowledgment
 
