@@ -109,8 +109,8 @@
 
   /* the home page's "What do people like me choose?" questions send their suggestion as ?need=will|essentials|complete.
      The visitor lands at the top of this page as usual (prices, single or couple) with a note naming the
-     suggested plan; that plan's card is outlined and labelled "Suggested for you", and the page's standing
-     "Recommended" label is hidden for this visit so there's only one suggestion on screen. */
+     suggested plan; that plan's card is outlined and labelled "Often chosen in similar situations" (never "recommended":
+     Tovakin doesn't tell anyone which documents to use), and any other plan label is hidden for this visit. */
   try {
     var need = new URLSearchParams(location.search).get('need');
     var pickCta = need && !form && document.querySelector('.plan [data-plan="' + need + '"]');
