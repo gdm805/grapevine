@@ -4739,7 +4739,7 @@
     if (sw) sw.hidden = true;
   }
   function pkgName(f) {
-    var short = { health: 'Health Care', trustpaper: 'Trust Paperwork', doc: 'Document' };
+    var short = { health: 'Health Care', trustpaper: 'Trust Paperwork', trustonly: 'Living Trust', doc: 'Document' };
     return short[f.plan] || (f.plan.charAt(0).toUpperCase() + f.plan.slice(1));
   }
   function renderPkgTrack(f, idx) {

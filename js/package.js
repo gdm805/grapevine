@@ -34,7 +34,7 @@
     return;
   }
 
-  var names = { will: 'Will', essentials: 'Essentials', complete: 'Complete', health: 'Health Care', trustpaper: 'Trust Paperwork', doc: 'Document' };
+  var names = { will: 'Will', essentials: 'Essentials', complete: 'Complete', health: 'Health Care', trustpaper: 'Trust Paperwork', trustonly: 'Living Trust', doc: 'Document' };
   var pkg = names[f.plan] || f.plan;
   var household = f.couple ? 'couple' : 'single';
   var paid = window.GVPay ? f.docs.every(function (k) { return window.GVPay.hasPaid(F.baseOf(k)); }) : true;

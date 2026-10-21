@@ -46,7 +46,10 @@
        shipped once already; url.href resolves correctly either way. */
     document.querySelectorAll('a[data-cta]').forEach(function (a) {
       try {
-        var url = new URL(a.getAttribute('href'), location.href);
+        /* a card whose couple version is a different page (Living Trust: the joint trust) */
+        if (!a.hasAttribute('data-single-href')) a.setAttribute('data-single-href', a.getAttribute('href'));
+        var base = household === 'couple' && a.getAttribute('data-couple-href') ? a.getAttribute('data-couple-href') : a.getAttribute('data-single-href');
+        var url = new URL(base, location.href);
         url.searchParams.set('household', household);
         a.setAttribute('href', url.href);
       } catch (e) {}

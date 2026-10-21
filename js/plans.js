@@ -90,18 +90,20 @@ window.GV_PLANS = {
     doc19: { single: 19, couple: 19 },
     doc29: { single: 29, couple: 29 },
     health: { single: 129, couple: 199 },
-    trustpaper: { single: 129, couple: 129 }
+    trustpaper: { single: 129, couple: 129 },
+    /* just a living trust, new or a restatement (21 Oct 2026, Greg): one person's trust, or a couple's joint trust */
+    trustonly: { single: 349, couple: 429 }
   },
   /* plans that are sold from the "Need a smaller package?" part of the pricing page rather than as one of
      the three main plans. They are looked up like any plan (prices, checkout, unlocking) but stay out of
      `order`, which is the list the checkout page offers as "choose a different plan". */
-  extra: ['doc', 'health', 'trustpaper'],
+  extra: ['doc', 'health', 'trustpaper', 'trustonly'],
   /* the documents that can be bought one at a time, in the order the pricing page lists them */
   trustSide: ['schedulea', 'cert', 'affidavit', 'assignment'],
   singles: ['dpoa', 'hcd', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment'],
   /* a document that is NOT sold on its own goes to this package from its own page (19 Oct 2026, Greg: Dementia Care
      Preferences belong with the health care directive, so they come only with Essentials, Complete or Health Care) */
-  docPlan: { dementia: 'health' },
+  docPlan: { dementia: 'health', trust: 'trustonly', trustjoint: 'trustonly' },
   /* which price a single document is sold at: 'doc' ($49 / $79), 'doctrust' ($49 per trust), 'doc19', 'doc29' */
   docTier: { contacts: 'doc19', schedulea: 'doc19' },
   docPriceKey: function (docKey) { return this.docTier[docKey] || ((this.trustSide || []).indexOf(docKey) > -1 ? 'doctrust' : 'doc'); },
@@ -179,6 +181,18 @@ window.GV_PLANS = {
       why: 'For someone who already has a trust and needs the documents that go with it.',
       unlocks: ['schedulea', 'cert', 'affidavit', 'assignment'],
       goesTo: 'schedulea.html'
+    },
+    trustonly: {
+      name: 'Living Trust',
+      tag: 'Just a living trust, new or a restatement.',
+      lead: 'Your living trust',
+      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'A new trust, or a restatement of a trust you already have', 'Schedule A (Trust Property), inside the trust'],
+      cta: 'Start your living trust',
+      why: 'For someone who wants a living trust on its own, without the other documents.',
+      /* a single person writes trust.html; a couple writes the joint trust (trust-joint.html). Bought from either
+         page directly (GV_PLANS.docPlan), not as a package flow. */
+      unlocks: ['trust', 'trustjoint'],
+      goesTo: 'trust.html'
     }
   }
 };
