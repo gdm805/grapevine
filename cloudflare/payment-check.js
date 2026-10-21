@@ -27,7 +27,9 @@ var PAYMENT_LINKS = {
   'https://buy.stripe.com/test_fZu8wPelo7wP0Yp3MV5EY08': { plan: 'health', household: 'single' },
   'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09': { plan: 'health', household: 'couple' },
   'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a': { plan: 'trustpaper', household: 'single' },
-  'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b': { plan: 'trustpaper', household: 'couple' }
+  'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b': { plan: 'trustpaper', household: 'couple' },
+  'https://buy.stripe.com/test_3cIbJ1a58g3lcH75V35EY0g': { plan: 'trustonly', household: 'single' },
+  'https://buy.stripe.com/test_00wbJ1cdg6sL22tbfn5EY0h': { plan: 'trustonly', household: 'couple' }
   /* the lower-priced single documents (9 Oct 2026). tier says which documents a link may unlock (see DOC_TIER) */
   , 'https://buy.stripe.com/test_aFa8wP6SWdVd5eF2IR5EY0e': { plan: 'doc', household: 'single', tier: 19 }
   , 'https://buy.stripe.com/test_bJefZhelo8ATdLb0AJ5EY0f': { plan: 'doc', household: 'single', tier: 29 }

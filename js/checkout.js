@@ -47,7 +47,7 @@
     health: { single: 'https://buy.stripe.com/test_fZu8wPelo7wP0Yp3MV5EY08', couple: 'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09' },
     trustpaper: { single: 'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a', couple: 'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b' },
     /* Living Trust on its own ($349 one person / $429 a couple's joint trust) */
-    trustonly: { single: '', couple: '' }
+    trustonly: { single: 'https://buy.stripe.com/test_3cIbJ1a58g3lcH75V35EY0g', couple: 'https://buy.stripe.com/test_00wbJ1cdg6sL22tbfn5EY0h' }
   };
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
