@@ -93,7 +93,7 @@
       field('City', input('city', 'text', '', 'address-level2')) +
       field('State', stateSelect()) +
       /* a state Tovakin doesn't serve yet: say so right away, naming only that state (js/plans.js GV_CLOSED_STATES) */
-      (window.GVClosedState && window.GVClosedState(p.state) ? '<div class="errs" role="alert"><strong>' + esc(p.state) + '</strong><p>' + esc(window.GVClosedState(p.state)) + '</p></div>' : '') +
+      (window.GVClosedState && window.GVClosedState(p.state) ? '<div class="errs" role="alert"><p>' + esc(window.GVClosedState(p.state)) + '</p></div>' : '') +
       field('County', countySelect()) +
       field('ZIP code', input('zip', 'text', '5-digit ZIP', 'postal-code')) +
       (couple ? person('2', 'Your spouse or partner') : '') +

@@ -55,13 +55,21 @@ window.GV_CA_LDA = { registered: false, county: '', clerkAddress: '', clerkPhone
    nonlawyers drafting living trusts practice law (613 So. 2d 426) -- off until a Florida attorney says otherwise. Missouri (18 Oct 2026, Greg): Janson v. LegalZoom (W.D. Mo.
    2011) let a class action over document software go forward, and Missouri lets buyers sue for three times the price. North Carolina (20 Oct 2026, Greg): G.S. 84-2.2 requires
    State Bar registration AND review of every template by an NC-licensed attorney -- off until that review is done. California (20 Oct 2026, Greg): Legal Document Assistant
-   registration and bond (Bus. & Prof. Code 6400 and after) -- off until confirmed or registered. */
+   registration and bond (Bus. & Prof. Code 6400 and after) -- off until confirmed or registered. Ohio, Minnesota, Kentucky,
+   Connecticut, New Jersey (22 Oct 2026, Greg): elevated UPL risk for answer-driven document software -- Ohio Board on UPL
+   Adv. Op. 2008-03; Minn. Stat. 481.02 subd. 1 (wills/trusts for another); KBA U-63; Conn. UPL is a felony (C.G.S. 51-88);
+   New Jersey: active UPL class actions against LegalZoom. Research: grapevine-private-notes/STATE-RULES-RESEARCH-OCT-2026.txt */
 window.GV_CLOSED_STATES = {
   'California': 'Tovakin isn\u2019t available in California yet. We\u2019re confirming California\u2019s rules for online document services and hope to offer California documents soon.',
   'Arizona': 'Tovakin isn\u2019t available in Arizona yet. We\u2019re confirming Arizona\u2019s rules for online document services and hope to offer Arizona documents soon.',
   'Florida': 'Tovakin isn\u2019t available in Florida yet. We\u2019re confirming Florida\u2019s rules for online document services and hope to offer Florida documents soon.',
   'Missouri': 'Tovakin isn\u2019t available in Missouri yet. We\u2019re confirming Missouri\u2019s rules for online document services and hope to offer Missouri documents soon.',
-  'North Carolina': 'Tovakin isn\u2019t available in North Carolina yet. We\u2019re completing North Carolina\u2019s requirements for online document services and hope to offer North Carolina documents soon.'
+  'North Carolina': 'Tovakin isn\u2019t available in North Carolina yet. We\u2019re confirming North Carolina\u2019s rules for online document services and hope to offer North Carolina documents soon.',
+  'Ohio': 'Tovakin isn\u2019t available in Ohio yet. We\u2019re confirming Ohio\u2019s rules for online document services and hope to offer Ohio documents soon.',
+  'Minnesota': 'Tovakin isn\u2019t available in Minnesota yet. We\u2019re confirming Minnesota\u2019s rules for online document services and hope to offer Minnesota documents soon.',
+  'Kentucky': 'Tovakin isn\u2019t available in Kentucky yet. We\u2019re confirming Kentucky\u2019s rules for online document services and hope to offer Kentucky documents soon.',
+  'Connecticut': 'Tovakin isn\u2019t available in Connecticut yet. We\u2019re confirming Connecticut\u2019s rules for online document services and hope to offer Connecticut documents soon.',
+  'New Jersey': 'Tovakin isn\u2019t available in New Jersey yet. We\u2019re confirming New Jersey\u2019s rules for online document services and hope to offer New Jersey documents soon.'
 };
 window.GVClosedState = function (state) { return (window.GV_CLOSED_STATES || {})[state] || ''; };
 

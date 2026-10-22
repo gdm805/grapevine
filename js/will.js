@@ -4532,7 +4532,7 @@
       skipNote = null;
     }
     var st = states.map[answers.state];
-    var unsupported = stepId === 'start' && st && !st.supported ? '<div class="errs"><strong>' + esc(st.name) + '</strong><p>' + esc(st.note || 'We can\u2019t offer a will in this state yet.') + '</p></div>' : '';
+    var unsupported = stepId === 'start' && st && !st.supported ? '<div class="errs"><p>' + esc(st.note || 'We can\u2019t offer a will in this state yet.') + '</p></div>' : '';
     var nav = stepId === 'review' ? '<div class="nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button></div>' :
       '<div class="nav-row">' + (idx > 0 ? '<button type="button" class="btn btn-secondary" data-back>Back</button>' : '<span></span>') +
       '<button type="button" class="btn btn-primary" data-next>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>';
