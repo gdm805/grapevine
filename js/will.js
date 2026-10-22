@@ -500,7 +500,7 @@
       if (p.length < 4) return;
       var s = { name: p[0], witnesses: parseInt(p[1], 10) || 2, selfProving: /^y/i.test(p[2]), supported: /^y/i.test(p[3]), note: p[4] || '', community: (p[5] || 'none').toLowerCase() };
       var off = window.GVClosedState && window.GVClosedState(s.name);   /* states switched off for launch (js/plans.js) */
-      if (off) { s.supported = false; s.note = off; }
+      if (off) { s.supported = false; s.note = off; s.closed = true; }
       map[s.name] = s; list.push(s);
     });
     return { map: map, list: list };
@@ -1081,7 +1081,7 @@
     pets: function () { return petsScreen(); },
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'Your state\u2019s rules decide how a will must be signed.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -1580,7 +1580,7 @@
   var RENDER_PO = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'Your state’s rules decide how a will must be signed.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -1892,7 +1892,7 @@
     start: function () {
       function opts(sel, blank) {
         return '<option value="">' + blank + '</option>' + states.list.map(function (s) {
-          return '<option value="' + esc(s.name) + '"' + (sel === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+          return '<option value="' + esc(s.name) + '"' + (sel === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
         }).join('');
       }
       return stepHead('First, where do you live?', 'A power of attorney is governed by state law. Each state has its own form, its own required notices and its own signing rules.') +
@@ -2047,11 +2047,11 @@
   var RENDER_DEM = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       var h = stepHead('Let’s start with the basics', 'This document goes with your health-care directive. It doesn’t appoint anyone or change any powers on its own.') +
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
-        field('State where you live', '<select class="input" data-k="state" autocomplete="off">' + opts + '</select>') +
+        field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         '<div class="checks">' +
         (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="capableOk"' + (answers.capableOk ? ' checked' : '') + '><span>I am 18 or older, and I am making this of my own free will.</span></label>') +
         '</div>' +
@@ -2265,7 +2265,7 @@
   var RENDER_HCD = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'A health care directive is governed by your state’s law, and the wording your state requires is different from every other state’s.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -2516,7 +2516,7 @@
   var RENDER_HIPAA = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'A HIPAA authorization is governed by your state’s law as well as federal law, and a few states ask for more than HIPAA alone requires.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -2847,7 +2847,7 @@
     pets: function () { return petsScreen(); },
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -3134,7 +3134,7 @@
     pets: function () { return petsScreen(); },
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', 'This is the state whose law will govern your trust, and where you’ll sign it.' + (answers.state ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -3407,7 +3407,7 @@
   var RENDER_CERT = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, tell us about your trust', 'This is the state whose law governs your trust, and where you’ll sign this Certification in front of a notary.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -3599,7 +3599,7 @@
   var RENDER_AFFIDAVIT = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, tell us about your trust', 'This is the state whose law governs your trust, and where you’ll sign this Affidavit in front of a notary.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -3782,7 +3782,7 @@
   var RENDER_ASSIGNMENT = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, tell us about your trust', 'No state requires anything special to sign this document, so this is just for the header and the execution line.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -3996,7 +3996,7 @@
   var RENDER_FINALWISHES = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, where do you live?', '') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
@@ -4234,7 +4234,7 @@
   var RENDER_SCHEDA = {
     start: function () {
       var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
-        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported ? '' : ' disabled') + '>' + esc(s.name) + (s.supported ? '' : ' (not available yet)') + '</option>';
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
       }).join('');
       return stepHead('First, tell us about your trust', 'Schedule A belongs to a trust you already have, so we need its name and date to identify it.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
