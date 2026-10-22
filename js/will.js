@@ -934,6 +934,10 @@
       '<div class="nav-row"><span></span><a class="btn btn-primary" href="' + esc(location.pathname.split('/').pop()) + (SPOUSE2 ? '?spouse=2' : '') + '">Start filling it in <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>';
   }
   function renderDoc() {
+    /* a state Tovakin doesn't serve yet (js/plans.js GV_CLOSED_STATES): no document text for it, in the preview or the
+       blank template -- just the one-sentence notice for that state */
+    var stOff = states.map[answers.state];
+    if (stOff && stOff.closed) { docEl.classList.remove('draft'); docEl.innerHTML = '<p style="text-align:center;margin:48px 16px">' + esc(stOff.note) + '</p>'; return; }
     docEl.innerHTML = (draft ? '<div class="wm-print" aria-hidden="true">' + esc(draftLabel) + '</div>' : '') + blocksToHtml(docBlocks());
     docEl.classList.toggle('draft', draft);
     lockPreview();
