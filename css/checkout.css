@@ -108,3 +108,7 @@
 .state-pick { display: grid; gap: 6px; margin: 4px 0 16px; }
 .state-pick label { font-weight: 600; font-size: 15px; }
 .state-pick .state-closed { margin: 4px 0 0; padding: 10px 12px; border-radius: 8px; background: #fdf3e7; color: #6b3d00; font-size: 14px; }
+
+/* refund policy line above the Terms checkbox (shown before payment) */
+.refund-note { margin: 4px 0 10px; padding: 10px 14px; border-left: 3px solid var(--grape); background: var(--white); font: 400 14px/1.5 var(--sans); color: var(--ink); }
+.refund-note strong { font-weight: 700; }
