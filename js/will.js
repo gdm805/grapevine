@@ -5316,9 +5316,14 @@
   if (/[?&]download=all\b/.test(location.search) && window.GVFlow && window.GVFlow.current() && !/[?&]export=1\b/.test(location.search)) {
     location.replace(window.GVUrl('package.html') + '?download=all');
   } else if (/[?&]download=all\b/.test(location.search)) {
+    /* one document (a single document or the Living Trust): open its last screen, where Download PDF and Print are,
+       and bring the Download button into view -- never leave the person at the top of the page (22 Oct 2026) */
+    if (stepId !== 'review' && KIND.steps.some(function (s) { return s.id === 'review'; })) go('review', { quiet: true });
     setTimeout(function () {
       var box = document.getElementById('pkg-complete');
-      if (box) { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); var b = box.querySelector('[data-pkg-pdf]'); if (b) b.focus(); }
+      if (box) { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); var b = box.querySelector('[data-pkg-pdf]'); if (b) b.focus(); return; }
+      var pdf = stepEl.querySelector('[data-pdf]');
+      if (pdf) { pdf.scrollIntoView({ behavior: 'smooth', block: 'center' }); pdf.focus(); status('Your document is unlocked. Click Download PDF to save it.'); }
     }, 500);
   }
 })();

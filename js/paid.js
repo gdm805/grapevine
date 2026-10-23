@@ -116,24 +116,26 @@
     if (plan !== 'doc' && window.GVFlow && (!fl || fl.plan !== plan || !!fl.couple !== (household === 'couple'))) {
       fl = window.GVFlow.rebuild(plan, household) || fl;
     }
-    var goTo = (fl && fl.plan === plan && plan !== 'doc') ? 'package.html' : (ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : p.goesTo));
+    /* the Living Trust is one document (one person's trust, or a couple's joint trust), like a single document */
+    var one = plan === 'doc' || plan === 'trustonly';
+    var goTo = (fl && fl.plan === plan && !one) ? 'package.html' : (ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : plan === 'trustonly' ? (household === 'couple' ? 'trust-joint.html' : 'trust.html') : p.goesTo));
     var unlockedNames = { will: 'your will', pourover: 'your pour-over will', dpoa: 'your power of attorney', dementia: 'your care preferences', hcd: 'your health care directive', hipaa: 'your HIPAA authorization', trust: 'your living trust', trustjoint: 'your joint living trust', cert: 'your certification of trust', affidavit: 'your affidavit of trustee', assignment: 'your assignment of personal property', finalwishes: 'your final wishes', contacts: 'your important contacts', schedulea: 'your Schedule A' };
     var unlocked = (plan === 'doc' ? [docKey] : (p.unlocks || [])).map(function (k) { return unlockedNames[k] || k; });
 
     /* back to the finished documents, with the download box brought into view (js/will.js reads ?download=all) */
     var downloadHref = window.GVUrl(goTo) + (goTo.indexOf('?') > -1 ? '&' : '?') + 'download=all';
     /* and straight to the signing steps: a package's are all on its summary; a single document's are on its own page */
-    var signHref = plan === 'doc' ? window.GVUrl(goTo) + '#how-to-sign' : window.GVUrl('questions.html') + '#how-to-sign';
-    var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : 'Your ' + esc(p.name) + ' package';
+    var signHref = one ? window.GVUrl(goTo) + '#how-to-sign' : window.GVUrl('questions.html') + '#how-to-sign';
+    var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : plan === 'trustonly' ? 'Your living trust' : 'Your ' + esc(p.name) + ' package';
     var amount = wasFree ? '$0 (beta tester)' : money(plan === 'doc' && GV.docPrice ? GV.docPrice(docKey, (GV.trustSide || []).indexOf(docKey) > -1 ? 'single' : household) : GV.priceFor(plan, household)) + ', one-time';
     root.innerHTML =
       '<div class="paid-card">' +
       '<div class="paid-badge"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg></div>' +
       '<h1>You’re all set</h1>' +
-      '<p class="lead">' + what + ' is unlocked. Download ' + (plan === 'doc' ? 'it now, then follow its signing steps.' : 'your documents now, then follow the signing steps for each one.') + '</p>' +
-      '<div class="paid-actions"><a class="btn btn-primary btn-lg" href="' + esc(downloadHref) + '">Download your ' + (plan === 'doc' ? 'document' : 'documents') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
-      '<a class="btn btn-secondary btn-lg" href="' + esc(signHref) + '">How to sign ' + (plan === 'doc' ? 'it' : 'your documents') + '</a></div>' +
-      '<p class="paid-sign"><strong>Don’t sign yet.</strong> ' + (plan === 'doc' ? 'Your document has' : 'Each document has') + ' its own signing steps, such as who must be there when you sign. Read them first.</p>' +
+      '<p class="lead">' + what + ' is unlocked. Download ' + (one ? 'it now, then follow its signing steps.' : 'your documents now, then follow the signing steps for each one.') + '</p>' +
+      '<div class="paid-actions"><a class="btn btn-primary btn-lg" href="' + esc(downloadHref) + '">Download your ' + (one ? 'document' : 'documents') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
+      '<a class="btn btn-secondary btn-lg" href="' + esc(signHref) + '">How to sign ' + (one ? 'it' : 'your documents') + '</a></div>' +
+      '<p class="paid-sign"><strong>Don’t sign yet.</strong> ' + (one ? 'Your document has' : 'Each document has') + ' its own signing steps, such as who must be there when you sign. Read them first.</p>' +
       '<div class="paid-summary">' +
       '<div class="sum-row"><span class="sum-l">' + (plan === 'doc' ? 'Document' : 'Plan') + '</span><span class="sum-v">' + esc(plan === 'doc' && window.GVFlow ? window.GVFlow.baseLabel(docKey) : p.name) + '</span></div>' +
       '<div class="sum-row"><span class="sum-l">Amount</span><span class="sum-v">' + amount + '</span></div>' +
