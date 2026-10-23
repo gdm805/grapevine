@@ -862,6 +862,13 @@
     return closed ? e.concat([closed]) : e;
   }
   function visibleSteps(a) { return KIND.steps.filter(function (s) { return !s.show || s.show(a); }); }
+  /* the screens before the last one that still have something missing (the same checks Continue makes) */
+  function missingSteps() {
+    return visibleSteps(answers).filter(function (s) {
+      if (s.id === 'review') return false;
+      try { return validateStep(s.id).length > 0; } catch (e) { return false; }
+    });
+  }
 
   /* ---------- boot ---------- */
   var root = document.getElementById('will-app');
@@ -4553,9 +4560,15 @@
     stepEl.innerHTML = backToSum + note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
     /* key words in this screen's questions get a tap-to-see definition (js/glossary.js) */
     if (window.GVGlossary) { window.GVGlossary.close(); window.GVGlossary.decorate(stepEl); }
+    /* the last screen says exactly what's still missing, with a link to each screen (22 Oct 2026) */
+    if (stepId === 'review' && !BLANK) {
+      var miss = missingSteps();
+      if (miss.length) stepEl.insertAdjacentHTML('afterbegin', '<div class="errs" role="alert"><strong>' + (miss.length === 1 ? 'One screen still needs an answer' : miss.length + ' screens still need answers') + '</strong>' +
+        '<ul>' + miss.map(function (s) { return '<li><button type="button" class="link" data-goto="' + esc(s.id) + '">' + esc(s.label || s.id) + '</button>: ' + esc(validateStep(s.id)[0] || '') + '</li>'; }).join('') + '</ul></div>');
+    }
+    if (stepId === 'review' && flow && flow.docs.indexOf(docId) > -1 && !missingSteps().length) window.GVFlow.markDone(docId);
     if (stepId === 'review') {
       if (inFlow) {
-        window.GVFlow.markDone(docId);
         if (isLastInFlow) {
           /* the last document: next stop is the package summary, where everything can be reviewed before
              paying and downloading */
@@ -5306,7 +5319,8 @@
   draw(null);
   if (location.hash === '#how-to-sign') setTimeout(function () { var hs = document.getElementById('how-to-sign'); if (hs) hs.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 500);
   /* arriving from the "payment received" page (?download=all): bring the download box into view */
-  if (/[?&]download=all\b/.test(location.search) && window.GVFlow && window.GVFlow.current() && !/[?&]export=1\b/.test(location.search)) {
+  var dlFlow = window.GVFlow && window.GVFlow.current();
+  if (/[?&]download=all\b/.test(location.search) && dlFlow && !(dlFlow.plan === 'doc' && dlFlow.docs.length === 1) && dlFlow.docs.indexOf(docId) > -1 && !/[?&]export=1\b/.test(location.search)) {
     location.replace(window.GVUrl('package.html') + '?download=all');
   } else if (/[?&]download=all\b/.test(location.search)) {
     /* one document (a single document or the Living Trust): open its last screen, where Download PDF and Print are,

@@ -27,6 +27,12 @@
   /* documents opened from here show a "Back to your package summary" link (js/will.js) */
   try { sessionStorage.setItem('gv.fromSummary', '1'); } catch (e) { /* ignore */ }
   var f = F && F.current();
+  /* one document bought on its own isn't a package: send the person to that document's last screen, where its
+     Download PDF button is (22 Oct 2026, Greg landed on a summary that called his finished document unfinished) */
+  if (f && f.plan === 'doc' && f.docs && f.docs.length === 1) {
+    location.replace(docHref(f.docs[0], 'review=1' + (/[?&]download=all\b/.test(location.search) ? '&download=all' : '')));
+    return;
+  }
   if (!f || !f.docs || !f.docs.length) {
     root.innerHTML = '<div class="pkg-summary"><h1>No package in progress</h1>' +
       '<p class="lead">Choose a plan on the Pricing page to start. Your answers are saved in this browser as you go.</p>' +
@@ -64,7 +70,7 @@
   if (paid) {
     action = '<div class="pkg-sum-pay"><h2>Download your documents</h2>' +
       '<p>Download all ' + n + ' at once as one PDF, then print from that file. Keep the file: your purchase is remembered only in this browser.</p>' +
-      '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + n + ' (PDF)</button>' +</div>' +
+      '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + n + ' (PDF)</button></div>' +
       '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
   } else {
     var b = beta();
