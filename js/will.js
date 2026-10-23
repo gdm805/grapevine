@@ -4565,6 +4565,8 @@
       }
     }
     stepEl.innerHTML = backToSum + note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
+    /* key words in this screen's questions get a tap-to-see definition (js/glossary.js) */
+    if (window.GVGlossary) { window.GVGlossary.close(); window.GVGlossary.decorate(stepEl); }
     if (stepId === 'review') {
       if (inFlow) {
         window.GVFlow.markDone(docId);
