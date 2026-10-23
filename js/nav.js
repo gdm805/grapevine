@@ -163,10 +163,27 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
     function save() { try { sessionStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* ignore */ } }
     function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
     /* plain text, with web addresses on tovakin.com and the support email made into links */
+    /* a short name for a site link in a chat answer, instead of the whole address (22 Oct 2026):
+       www.tovakin.com/glossary.html#successor-trustee -> "Successor Trustee"; pricing.html -> "Documents & Pricing" */
+    var PAGE_NAMES = { 'pricing.html': 'Documents & Pricing', 'questions.html': 'Questions', 'glossary.html': 'Terms Explained', 'learn.html': 'Learn',
+      'terms.html': 'Terms and Conditions', 'privacy.html': 'Privacy Policy', '#finder': 'What do people like me choose?' };
+    /* glossary term names by link id -- a copy from js/glossary.js; refresh it if a term is added or renamed */
+    var TERM_NAMES = {"estate":"Estate","last-will-and-testament":"Last Will and Testament","testator":"Testator","executor":"Executor","alternate":"Alternate","beneficiary":"Beneficiary","contingent-beneficiary":"Contingent Beneficiary","specific-gift":"Specific Gift","residuary-estate":"Residuary Estate","per-stirpes":"Per Stirpes","per-capita":"Per Capita","lapse":"Lapse","intestate":"Intestate / Intestacy","probate":"Probate","non-probate-asset":"Non-Probate Asset","letters-testamentary":"Letters Testamentary","self-proving-affidavit":"Self-Proving Affidavit","codicil":"Codicil","holographic-will":"Holographic Will","pour-over-will":"Pour-Over Will","guardian-of-a-minor":"Guardian of a Minor","conservator":"Conservator","custodian":"Custodian (UTMA)","pet-caretaker":"Pet Caretaker","trust":"Trust","revocable-living-trust":"Revocable Living Trust","joint-trust":"Joint Trust","trustmaker":"Trustmaker","trustee":"Trustee","successor-trustee":"Successor Trustee","co-trustees":"Co-Trustees","trust-estate":"Trust Estate","funding-a-trust":"Funding a Trust","schedule-a":"Schedule A","certification-of-trust":"Certification of Trust","affidavit-of-trustee":"Affidavit of Trustee","general-assignment":"General Assignment","restatement":"Restatement","amendment":"Amendment","beneficiary-trust":"Beneficiary Trust","special-needs-trust":"Special Needs Trust","survivors-trust":"Survivor's Trust / Family Trust","fiduciary":"Fiduciary","community-property":"Community Property","separate-property":"Separate Property","joint-tenancy-with-right-of-survivorship":"Joint Tenancy with Right of Survivorship","tenancy-by-the-entirety":"Tenancy by the Entirety","transfer-on-death":"Transfer-on-Death (TOD) / Payable-on-Death (POD)","beneficiary-designation":"Beneficiary Designation","deed":"Deed","power-of-attorney":"Power of Attorney","principal":"Principal","agent":"Agent","durable-power-of-attorney":"Durable Power of Attorney","springing-power-of-attorney":"Springing Power of Attorney","co-agents":"Co-Agents","incapacity":"Incapacity","health-care-directive":"Health Care Directive","health-care-agent":"Health Care Agent","living-will":"Living Will","life-sustaining-treatment":"Life-Sustaining Treatment","dnr":"DNR / POLST","hipaa-authorization":"HIPAA Authorization","dementia-care-preferences":"Dementia Care Preferences","organ-and-tissue-donation":"Organ and Tissue Donation","final-wishes":"Final Wishes","witness":"Witness","notary-public":"Notary Public","acknowledgment":"Acknowledgment","attestation-clause":"Attestation Clause","execute":"Execute (a Document)","revoke":"Revoke","notarial-testament":"Notarial Testament","forced-heirship":"Forced Heirship","usufruct":"Usufruct / Naked Ownership","tutor":"Tutor / Tutorship","succession":"Succession"};
+    function linkName(u) {
+      var m = u.match(/^www\.[^/]+\/?([^#?]*)(?:\?[^#]*)?(?:#(.*))?$/), page = m ? m[1].replace(/^index\.html$/, '') : '', hash = m && m[2] ? decodeURIComponent(m[2]) : '';
+      if (page === 'glossary.html' && hash) {
+        return TERM_NAMES[hash] || 'Terms Explained';
+      }
+      if (page === 'learn.html' && hash) return 'Learn article';
+      if (!page && hash === 'finder') return PAGE_NAMES['#finder'];
+      if (PAGE_NAMES[page]) return PAGE_NAMES[page];
+      if (!page) return 'tovakin.com';
+      return u.replace(/^www\./, '');
+    }
     function format(s) {
       return esc(s).replace(/(https?:\/\/)?(www\.(?:tovakin|grapevinedocs)\.com[^\s<),]*)/g, function (_, p, u) {
         var href = 'https://' + u.replace(/[.]$/, ''), tail = /[.]$/.test(u) ? '.' : '';
-        return '<a href="' + href + '">' + u.replace(/[.]$/, '') + '</a>' + tail;
+        return '<a href="' + href + '">' + esc(linkName(u.replace(/[.]$/, ''))) + '</a>' + tail;
       }).replace(new RegExp(EMAIL.replace(/[.]/g, '\\.'), 'g'), '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>').replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');   /* **bold** from the chat shows as bold */
     }
     function bubble(role, text) {
