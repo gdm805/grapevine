@@ -157,6 +157,34 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
     var KEY = 'gv.chat.v1', EMAIL = 'support@tovakin.com';
     var GREETING = 'Hi! I can help with using Tovakin: finding your documents, paying, downloading, printing and signing steps. I can\u2019t give legal advice about your situation.';
     var log = root.querySelector('.gv-chat-log'), form = root.querySelector('.gv-chat-form'), input = root.querySelector('#gv-chat-in');
+    /* a glossary term in a chat answer opens its definition inside the chat, so nobody leaves the page they're on
+       (22 Oct 2026). The term list (js/glossary.js) loads the first time one is tapped. */
+    function withGlossary(cb) {
+      if (window.GV_GLOSSARY) return cb();
+      var me = [].filter.call(document.scripts, function (sc) { return /js\/nav\.js/.test(sc.src); })[0];
+      var v = me && (me.src.match(/[?&]v=([^&]+)/) || [])[1];
+      var sc = document.createElement('script');
+      sc.src = (window.GVUrl ? window.GVUrl('js/glossary.js') : 'js/glossary.js') + (v ? '?v=' + v : '');
+      sc.onload = cb; sc.onerror = cb;
+      document.head.appendChild(sc);
+    }
+    log.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[data-gl-id]');
+      if (!a) return;
+      e.preventDefault();
+      var id = a.getAttribute('data-gl-id'), open = a.nextElementSibling && a.nextElementSibling.classList.contains('gv-chat-def');
+      if (open) { a.nextElementSibling.remove(); a.setAttribute('aria-expanded', 'false'); return; }
+      withGlossary(function () {
+        var g = (window.GV_GLOSSARY || []).filter(function (x) { return x.id === id; })[0];
+        if (!g) { window.open(a.href, '_blank', 'noopener'); return; }
+        var box = document.createElement('span');
+        box.className = 'gv-chat-def';
+        box.innerHTML = '<strong>' + esc(g.term) + '</strong> ' + esc(g.def) + (g.varies ? ' <em>The rules for this vary by state.</em>' : '') +
+          ' <a href="' + esc(a.href) + '" target="_blank" rel="noopener">Open in Terms Explained</a>';
+        a.insertAdjacentElement('afterend', box);
+        a.setAttribute('aria-expanded', 'true');
+      });
+    });
     var sendBtn = root.querySelector('.gv-chat-send');
     var state = { id: '', messages: [] };
     try { state = JSON.parse(sessionStorage.getItem(KEY) || 'null') || state; } catch (e) { /* new chat */ }
@@ -183,7 +211,8 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
     function format(s) {
       return esc(s).replace(/(https?:\/\/)?(www\.(?:tovakin|grapevinedocs)\.com[^\s<),]*)/g, function (_, p, u) {
         var href = 'https://' + u.replace(/[.]$/, ''), tail = /[.]$/.test(u) ? '.' : '';
-        return '<a href="' + href + '">' + esc(linkName(u.replace(/[.]$/, ''))) + '</a>' + tail;
+        var gl = u.match(/glossary\.html#([a-z0-9-]+)/);
+        return '<a href="' + href + '" target="_blank" rel="noopener"' + (gl ? ' data-gl-id="' + gl[1] + '"' : '') + '>' + esc(linkName(u.replace(/[.]$/, ''))) + '</a>' + tail;
       }).replace(new RegExp(EMAIL.replace(/[.]/g, '\\.'), 'g'), '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>').replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');   /* **bold** from the chat shows as bold */
     }
     function bubble(role, text) {

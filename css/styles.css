@@ -521,3 +521,7 @@ details[id] { scroll-margin-top: 110px; }
 .gl-see { font-size: 14px; }
 .gl-topic { font: 600 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 4px 0 0 !important; }
 .gl-note { font-size: 14px; color: var(--ink-soft); margin-top: 28px; max-width: 72ch; }
+
+/* a glossary definition opened inside a help chat answer (js/nav.js) */
+.gv-chat-def { display: block; margin: 8px 0 6px; padding: 10px 12px; border-left: 3px solid var(--grape); background: var(--white, #fff); border-radius: 8px; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.gv-chat-def a { display: inline-block; margin-top: 4px; }
