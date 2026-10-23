@@ -340,3 +340,14 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .revoke-note { margin: -4px 0 16px; padding: 12px 14px; background: var(--sand); border-left: 4px solid var(--grape); border-radius: var(--r-sm); font-size: 0.92rem; line-height: 1.5; }
 /* California's notary notice, in the box the statute's form shows */
 .doc .ackbox { border: 1px solid #17181c; padding: 8px 10px; font-size: 0.9em; line-height: 1.45; margin: 6px 0 12px; text-align: left !important; }
+
+/* PREVIEW FRONT PAGES (22 Oct 2026): on screen, the cover and the table of contents look like their own pages,
+   each followed by a gray gap like the space between pages in a PDF viewer, so the cover is easy to see.
+   Screen only -- printing and the PDF already put each on its own page. */
+@media screen {
+  .doc { --doc-pad: clamp(24px, 3.4vw, 44px); --page-gap: 22px; }
+  .doc .cover { position: relative; min-height: 380px; display: flex; flex-direction: column; justify-content: center; border-bottom: 0; padding: 40px 0 var(--doc-pad); margin-bottom: calc(var(--page-gap) + var(--doc-pad)); }
+  .doc .toc { position: relative; border-bottom: 0; padding-bottom: var(--doc-pad); margin-bottom: calc(var(--page-gap) + var(--doc-pad)); }
+  .doc .cover::after, .doc .toc::after { content: ""; position: absolute; left: calc(-1 * var(--doc-pad)); right: calc(-1 * var(--doc-pad)); bottom: calc(-1 * var(--page-gap)); height: var(--page-gap); background: #e7e9ee; border-top: 1px solid rgba(37, 36, 41, .12); border-bottom: 1px solid rgba(37, 36, 41, .12); }
+  .doc .pagebreak.front-end { display: none; }
+}
