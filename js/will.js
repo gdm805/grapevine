@@ -794,7 +794,7 @@
       /* a trust has no descendants: that choice doesn't apply to one (the others share it, or the remote rule) */
       if (tr && (c === 'descendants' || c === 'charityrule')) c = 'remote';
       if (ty === 'CHARITY' && c === 'descendants') c = 'charityrule';
-      return { beneficiary: nm, share: clean(b.share), cont_name: clean(b.contName), is_trust: tr, is_snt: snt, res_type: ty,
+      return { beneficiary: nm, share: clean(String(b.share || '').replace(/[^\d.]/g, '')), cont_name: clean(b.contName), is_trust: tr, is_snt: snt, res_type: ty,
         is_ongoing: ty === 'ONGOING', bt_age1: ageWords(b.age1), bt_age2: ageWords(b.age2), bt_age3: ageWords(b.age3),
         snt_for: snt ? clean(b.sntFor) : '', snt_date: snt && b.sntDate ? longDate(b.sntDate) : '',
         cont_charity_rule: !snt && c === 'charityrule',
@@ -1607,7 +1607,7 @@
     children: function () { return RENDER_WILL.children(); },
     trust: function () {
       return stepHead('Tell us about your trust', 'Your pour-over will sends anything left outside your trust into it. Copy these details from your signed trust document.') +
-        field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust.') +
+        field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if your trust\u2019s name begins that way.') +
         (newTrustHere(answers) ? '<p class="hint"><strong>Trust date:</strong> your trust is new, written here, so this will calls it a trust agreement \u201cof even date herewith\u201d, meaning signed the same day. No date is needed. Sign your trust first, then this will, on the same day.</p>'
           : handOrig(answers) ? HAND_DATE_NOTE : field('Date your trust was first signed', '<input class="input" type="date" data-k="trustDate" value="' + val(answers.trustDate) + '">', 'Use the original date, not the date of any later amendment.')) +
         field('Is it a joint trust, one that you and another person made together (for example, with your spouse)?', pills('jointTrust', [['yes', 'Yes'], ['no', 'No']], true)) +
@@ -2747,7 +2747,7 @@
     v.gifts_to_trust = v.gifts.some(function (g) { return g.gift_to_trust; });
     v.residuary = (a.residuary || []).map(function (r) {
       var ty = resType(r);
-      return { residuary_name: clean(r.name), residuary_pct: clean(r.pct), residuary_type: ty,
+      return { residuary_name: clean(r.name), residuary_pct: clean(String(r.pct || '').replace(/[^\d.]/g, '')), residuary_type: ty,
         residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT', residuary_person: ty === 'PERSON' || ty === 'ONGOING' || ty === '',
         residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
         residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
@@ -2807,7 +2807,7 @@
           }
           return '<div class="resrow">' + sel +
             '<div class="rowitem two"><input class="input" data-list="residuary" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="' + esc(RES_PH[ty] || 'Full name') + '">' +
-            '<input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="%" inputmode="decimal" style="max-width:90px">' +
+            '<span class="pct"><input class="input" data-list="residuary" data-i="' + i + '" data-f="pct" value="' + val(r.pct) + '" placeholder="50" inputmode="decimal" aria-label="Share ' + (i + 1) + ' percent"><b>%</b></span>' +
             rm('residuary', i, 'beneficiary ' + (i + 1), answers.residuary.length > 1) + '</div>' + extra + '</div>';
         }).join('') + '</div>' + addBtn('residuary', '+ Add another'), 'Percentages should add up to 100%.');
   }
@@ -2858,8 +2858,8 @@
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
         /* a restatement keeps the original trust's name: that is the only name asked for */
         (answers.trustType === 'RESTATEMENT' ?
-          field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
-          field('Name your trust', text('trustName', 'For example, Maria Elena Alvarez Living Trust'), 'You can change this later. Many people use their own name.')) +
+          field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if your trust\u2019s name begins that way.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
+          field('Name your trust', text('trustName', 'For example, The Maria Elena Alvarez Living Trust'), 'Start the name with \u201cThe,\u201d for example \u201cThe Maria Elena Alvarez Living Trust.\u201d You can change this later. Many people use their own name.')) +
         '<div class="checks">' +
         (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am creating this trust of my own free will.</span></label>') +
@@ -3096,7 +3096,7 @@
     v.has_any_gifts = v.has_first_death_gifts || v.has_survivor_death_gifts;
     v.residuary = (a.residuary || []).map(function (r) {
       var ty = resType(r);
-      return { residuary_name: clean(r.name), residuary_pct: clean(r.pct), residuary_type: ty,
+      return { residuary_name: clean(r.name), residuary_pct: clean(String(r.pct || '').replace(/[^\d.]/g, '')), residuary_type: ty,
         residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT', residuary_person: ty === 'PERSON' || ty === 'ONGOING' || ty === '',
         residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
         residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
@@ -3145,8 +3145,8 @@
         field('Is this a brand-new trust, or a restatement of one you already signed?', pills('trustType', [['NEW', 'A new trust'], ['RESTATEMENT', 'A restatement']], true)) +
         /* a restatement keeps the original trust's name: that is the only name asked for */
         (answers.trustType === 'RESTATEMENT' ?
-          field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
-          field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'You can change this later.')) +
+          field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if your trust\u2019s name begins that way.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
+          field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Start the name with \u201cThe,\u201d for example \u201cThe Alvarez Family Trust.\u201d You can change this later.')) +
         '<div class="checks">' +
         (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>We are both 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>We are creating this trust of our own free will.</span></label>') +
@@ -3415,7 +3415,7 @@
       }).join('');
       return stepHead('First, tell us about your trust', 'This is the state whose law governs your trust, and where you’ll sign this Certification in front of a notary.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
-        field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust.') +
+        field('Name of your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on your trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if your trust\u2019s name begins that way.') +
         (handOrig(answers) ? HAND_DATE_NOTE : field('Date your trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has your trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '') +
@@ -3608,7 +3608,7 @@
       return stepHead('First, tell us about your trust', 'This is the state whose law governs your trust, and where you’ll sign this Affidavit in front of a notary.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
-        field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
+        field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if the trust\u2019s name begins that way.') +
         (handOrig(answers) ? HAND_DATE_NOTE : field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has the trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
@@ -3791,7 +3791,7 @@
       return stepHead('First, tell us about your trust', 'No state requires anything special to sign this document, so this is just for the header and the execution line.') +
         field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
-        field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
+        field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if the trust\u2019s name begins that way.') +
         (handOrig(answers) ? HAND_DATE_NOTE : field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has the trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
@@ -4243,7 +4243,7 @@
       return stepHead('First, tell us about your trust', 'Schedule A belongs to a trust you already have, so we need its name and date to identify it.') +
         field('State where you live', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
         field('Is this a single-trustmaker trust or a joint trust?', pills('trustType', [['SINGLE', 'Single trustmaker'], ['JOINT', 'Joint (married couple or partners)']], true)) +
-        field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust.') +
+        field('Name of the trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Type it exactly as it appears on the trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if the trust\u2019s name begins that way.') +
         (handOrig(answers) ? HAND_DATE_NOTE : field('Date the trust was originally signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">')) +
         field('Has the trust been restated since then?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.trustRestated === 'yes' && handRest(answers) ? HAND_DATE_NOTE : '') + (answers.trustRestated === 'yes' && !handRest(answers) ? field('Date of the most recent restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '');
@@ -4347,6 +4347,12 @@
   /* PETS (will, single trust, joint trust): an optional caretaker for the person's pets, a backup, and an
      optional sum of money given to whoever takes them -- with a request, not a requirement, that it be used
      for their care (no pet trust, nothing enforceable). */
+  /* a dollar amount as the document shows it: "5000", "$5,000" or "5,000.50" all become "$5,000" / "$5,000.50" */
+  function money(x) {
+    var n = parseFloat(String(x || '').replace(/[^\d.]/g, ''));
+    if (!(n > 0)) return '';
+    return '$' + n.toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+  }
   var PET_EMPTY = { hasPets: '', petDescription: '', petCaretaker: '', petAltCaretaker: '', petGiftYes: '', petGift: '' };
   function petsScreen() {
     var a = answers;
@@ -4357,7 +4363,7 @@
       field('Who should take your pets?', text('petCaretaker', 'Full name')) +
       field('A backup, if that person can’t <em>(optional)</em>', text('petAltCaretaker', 'Full name')) +
       field('Do you want to leave the caretaker some money for the pets’ care?', pills('petGiftYes', [['yes', 'Yes'], ['no', 'No']], true));
-    if (a.petGiftYes === 'yes') h += field('How much?', text('petGift', 'For example, $5,000'), 'It goes to whoever takes your pets, with a request that it be used for their care.');
+    if (a.petGiftYes === 'yes') h += field('How much?', '<span class="money"><b>$</b><input class="input" data-k="petGift" value="' + val(a.petGift) + '" placeholder="5,000" inputmode="decimal" autocomplete="off" aria-label="Amount in dollars"></span>', 'Type the amount; the dollar sign is added for you. It goes to whoever takes your pets, with a request that it be used for their care.');
     return h + '<p class="hint">If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>';
   }
   function petsErrors(a, e) {
@@ -4365,14 +4371,14 @@
     if (a.hasPets !== 'yes') return;
     if (!clean(a.petCaretaker)) e.push('Enter the name of the person who should take your pets.');
     if (!a.petGiftYes) e.push('Answer whether you want to leave the caretaker some money.');
-    if (a.petGiftYes === 'yes' && !clean(a.petGift)) e.push('Enter the amount for the pets’ care, or answer No.');
+    if (a.petGiftYes === 'yes' && !money(a.petGift)) e.push('Enter the amount for the pets’ care as a number, or answer No.');
   }
   function petVars(a, v) {
     v.has_pets = a.hasPets === 'yes' && !!clean(a.petCaretaker);
     v.pet_caretaker = clean(a.petCaretaker);
     v.pet_description = clean(a.petDescription); v.has_pet_description = !!v.pet_description;
     v.pet_alt_caretaker = clean(a.petAltCaretaker); v.has_pet_alt = !!v.pet_alt_caretaker;
-    v.pet_gift = clean(a.petGift); v.has_pet_gift = v.has_pets && a.petGiftYes === 'yes' && !!v.pet_gift;
+    v.pet_gift = money(a.petGift); v.has_pet_gift = v.has_pets && a.petGiftYes === 'yes' && !!v.pet_gift;
   }
   Object.assign(EMPTY_WILL, PET_EMPTY); Object.assign(EMPTY_TRUST, PET_EMPTY); Object.assign(EMPTY_TRUST_JOINT, PET_EMPTY);
   var KINDS = {

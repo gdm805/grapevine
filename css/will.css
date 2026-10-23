@@ -70,6 +70,9 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 .rowitem.grid4 .rm { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
 .pct { display: flex; align-items: center; gap: 6px; width: 104px; flex: none; }
 .pct b { font-weight: 600; color: var(--ink-soft); }
+/* a dollar box: "$" shown before the number, so nobody wonders whether to type it */
+.money { display: flex; align-items: center; gap: 6px; max-width: 220px; }
+.money b { font-weight: 600; color: var(--ink-soft); }
 .rm { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--field-line); background: var(--white); font-size: 22px; line-height: 1; cursor: pointer; color: var(--ink-soft); flex: none; }
 .rm:hover { background: var(--grape-tint); }
 .errs { background: #fbe4e4; color: #9c2f2f; border-radius: var(--r-md); padding: 14px 16px; font-size: 15px; }
