@@ -118,6 +118,15 @@
       show();
     });
   }
+  /* a bar's lawyer referral page opens in a separate pop-up window on top of this page, so the person never loses
+     their place (23 Oct 2026). If the browser blocks pop-ups, it opens in a new tab instead. */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('.gv-lawyer-link a, .lawyer-pick-out a');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    var w = Math.min(1100, screen.availWidth - 80), h = Math.min(850, screen.availHeight - 80);
+    var win = window.open(a.href, 'tovakin-lawyer', 'popup=yes,width=' + w + ',height=' + h + ',left=' + Math.round((screen.availWidth - w) / 2) + ',top=' + Math.round((screen.availHeight - h) / 2));
+    if (win) { e.preventDefault(); try { win.opener = null; } catch (x) {} win.focus(); }
+  });
   window.GVLawyerLinks = { links: LINKS, any: ANY, decorate: decorate, pickers: pickers };
   function start() {
     decorate(document.body);
