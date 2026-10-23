@@ -979,7 +979,7 @@
       var what = ph.getAttribute('data-doc');
       ph.textContent = locked ? 'A preview of your ' + what : 'Your ' + what;
     }
-    if (!locked) return;
+    if (!locked || !window.GV_PREVIEW_BLUR) return;
     var blocks = Array.prototype.filter.call(docEl.children, function (el) { return !el.classList.contains('wm-print') && !el.classList.contains('cover') && !el.classList.contains('toc') && !el.classList.contains('front-end'); });
     /* the readable opening: up to 12 blocks, but only about the first tenth of a short document (at least the
        title), so a short one like Schedule A isn't left entirely readable */

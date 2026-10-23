@@ -27,6 +27,12 @@ window.GVUrl = function (path) { return path; };
      false     no watermark anywhere, not even on the free preview */
 window.GV_SAMPLE_WATERMARK = 'unpaid';
 
+/* THE FREE PREVIEW (23 Oct 2026, Greg): the whole document is readable before paying, so the customer sees exactly
+   what they're buying (several states expect the template or the finished document to be viewable before purchase).
+   It stays marked "Preview - Not for Signing," and its text can't be selected, copied or printed; the clean copy comes
+   only by paying and downloading. true = the old way: standard wording blurred after the opening, answers readable. */
+window.GV_PREVIEW_BLUR = false;
+
 /* THE PAYMENT CHECK: the web address of your Cloudflare payment-check program (cloudflare/payment-check.js;
    setup steps are in HOW-TO-EDIT.txt section 3d). Once it is filled in, paid.html asks Stripe, through that
    program, whether each payment is real before unlocking anything, so typing paid.html?plan=... into a
