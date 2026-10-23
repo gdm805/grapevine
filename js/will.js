@@ -4789,8 +4789,7 @@
     box.id = 'how-to-sign';
     if (!clean(answers.signingDate)) box.insertAdjacentHTML('beforeend', '<p class="instr-date"><strong>The date:</strong> it isn\u2019t filled in ahead of time. Every date line in the document is left blank, so you write in the date by hand on the day you sign.</p>');
     var label = (window.GVFlow && window.GVFlow.baseLabel) ? window.GVFlow.baseLabel(docId) : 'Your document';
-    box.insertAdjacentHTML('beforeend', '<div class="instr-btns"><button type="button" class="btn btn-secondary btn-sm" data-sign-pdf>Download signing steps (PDF)</button>' +
-      '<button type="button" class="btn btn-secondary btn-sm" data-sign-print>Print signing steps</button></div>' +
+    box.insertAdjacentHTML('beforeend', '<div class="instr-btns"><button type="button" class="btn btn-secondary btn-sm" data-sign-pdf>Download signing steps (PDF)</button></div>' +
       '<p class="hint instr-note" role="status">The signing steps print on their own pages, separate from your document.</p>');
     var msg = box.querySelector('.instr-note');
     function sheet() {
