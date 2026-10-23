@@ -892,7 +892,7 @@
      page's built-in "starter text, can't be signed" notice (which is right only when every copy is a sample) */
   if (draftBar && draft && wmSetting === 'unpaid') {
     var barBox = draftBar.querySelector('.container') || draftBar;
-    barBox.innerHTML = '<strong>Preview - Not for Signing.</strong> Once you pay for this document, your download and print copies come out clean, ready to sign.';
+    barBox.innerHTML = '<strong>Preview - Not for Signing.</strong> Once you pay for this document, your downloaded PDF comes out clean, ready to print and sign.';
   }
 
   /* ---------- the document ---------- */
@@ -986,7 +986,7 @@
     blocks.forEach(function (el, i) { if (i >= open && !mine(el)) { el.classList.add('pv-blur'); if (ALL_BLUR[kindKey]) el.classList.add('pv-all'); } });
     var note = document.createElement('div');
     note.className = 'pv-note';
-    note.innerHTML = ALL_BLUR[kindKey] ? '<strong>The rest of your list is blurred until checkout.</strong> Pay once to read, download and print it. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">See the blank template</a>.' : '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">Read every word in the blank template</a>.';
+    note.innerHTML = ALL_BLUR[kindKey] ? '<strong>The rest of your list is blurred until checkout.</strong> Pay once to read and download it. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">See the blank template</a>.' : '<strong>Standard wording is blurred until checkout.</strong> Every heading, and every part written from your answers, stays readable so you can check it. Pay once to read, download and print the full text. <a href="' + esc(blankHref()) + '" target="_blank" rel="noopener">Read every word in the blank template</a>.';
     docEl.insertBefore(note, blocks[open]);
   }
   ['copy', 'cut', 'contextmenu', 'selectstart', 'dragstart'].forEach(function (ev) {
@@ -1197,7 +1197,7 @@
       }
       var bens = v.beneficiaries.map(function (b) { return esc(b.beneficiary) + ' (' + esc(b.share) + '%)'; }).join(', ');
       var pr = (v.pr_co ? 'Together' + (v.pr_separate ? ' (each may act alone)' : '') + ': ' + esc(v.co_prs.map(function (x) { return x.co_pr; }).join(', ')) : esc(v.executor)) + (v.has_successors ? '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
-      return stepHead('Your will is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
+      return stepHead('Your will is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below.') +
         '<div class="sum">' +
         row('Lives in', esc([v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ')), 'start') +
         row('Name', esc(v.name) + (v.has_spouse ? ', married to ' + esc(v.spouse) : ''), 'about') +
@@ -1209,7 +1209,6 @@
         row('Everything else', bens, 'residuary') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -1642,7 +1641,7 @@
       if (planOf(answers) === 'trust') pr = 'Same as your trust: ' + pr;
       if (v.successors.length) pr += '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', '));
       var guardians = v.guardian_nominations.map(function (g) { return (v.guardian_nominations.length > 1 ? esc(g.applies_to) + ': ' : '') + esc(g.guardian); }).join('; ');
-      return stepHead('Your pour-over will is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
+      return stepHead('Your pour-over will is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below.') +
         '<div class="sum">' +
         row('Lives in', esc([v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ')), 'start') +
         row('Name', esc(v.name) + (v.married_or_dp ? ', with ' + esc(v.spouse) : ''), 'about') +
@@ -1653,7 +1652,6 @@
         (v.minor_children_yes ? row('Manages a minor’s property', v.prop_fid_yes ? esc(v.prop_fid) : 'Not chosen', 'propfid') : '') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your will</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -1944,7 +1942,7 @@
       }
       var agent = esc(v.agent) + (v.has_co_agents ? ' and ' + esc(v.co_agents.map(function (x) { return x.co_agent; }).join(', ')) + (v.co_separate ? ' (each may act alone)' : ' (must act together)') : '') + (v.has_successors ? '<br>Backup(s): ' + esc(v.successors.map(function (x) { return x.successor; }).join(', ')) : '');
       var starts = dpSet(answers, 'effective_choice') === 'no' ? 'Right away (the only option in ' + esc(v.governing_state) + ')' : (answers.effective === 'incapacity' ? 'Only if I become incapacitated' : (answers.effective === 'now' ? 'Right away' : ''));
-      return stepHead('Your power of attorney is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
+      return stepHead('Your power of attorney is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below.') +
         '<div class="sum">' +
         row('Lives in', esc([v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ')), 'start') +
         row('Form used', esc(v.governing_state), 'start') +
@@ -1953,7 +1951,6 @@
         row('Starts', starts, dpSet(answers, 'effective_choice') === 'no' ? 'start' : 'effective') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -2128,7 +2125,7 @@
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
       var approachLabel = { full: 'Treat everything, at every stage', balanced: 'Balance treatment with comfort as it gets worse', comfort: 'Comfort first, from the start' }[answers.approach];
-      return stepHead('Your care preferences are ready to review', 'Read every word. Then print it and attach it to your health-care directive.') +
+      return stepHead('Your care preferences are ready to review', 'Read every word. Then download the PDF, print it, and attach it to your health-care directive.') +
         '<div class="sum">' +
         row('Name', esc(v.name), 'start') +
         row('State', esc(v.state), 'start') +
@@ -2136,7 +2133,6 @@
         row('Hospital transfer', answers.hospitalization === 'beneficial' ? 'Hospitalize when it helps' : (answers.hospitalization === 'limit' ? 'Treat me where I am when possible' : ''), 'choices') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -2370,7 +2366,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      return stepHead('Your health care directive is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
+      return stepHead('Your health care directive is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below.') +
         '<div class="sum">' +
         row('State', esc(v.state), 'start') +
         row('Name', esc(v.name), 'about') +
@@ -2378,7 +2374,6 @@
         row('Life-sustaining treatment', { DO_NOT_PROLONG: 'Let me go naturally', PROLONG: 'Prolong my life', AGENT_DECIDES: 'Let my agent decide' }[answers.lifeSupport] || '', 'treatment') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -2610,14 +2605,13 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      return stepHead('Your HIPAA authorization is ready to review', 'Read every word. Then print it and sign it — no witness or notary is required.') +
+      return stepHead('Your HIPAA authorization is ready to review', 'Read every word. Then download the PDF, print it, and sign it — no witness or notary is required.') +
         '<div class="sum">' +
         row('State', esc(v.state), 'start') +
         row('Name', esc(v.name), 'about') +
         row('Recipients', hipaaIsB(answers) ? esc(v.agent_name) : v.recipients.map(function (r) { return esc(r.recip_name); }).join(', '), 'recipients') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -2943,7 +2937,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      return stepHead('Your trust is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
+      return stepHead('Your trust is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below.') +
         '<div class="sum">' +
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
@@ -2957,7 +2951,6 @@
         }).join('<br>'), 'residuary') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -3244,7 +3237,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      return stepHead('Your trust is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
+      return stepHead('Your trust is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below.') +
         '<div class="sum">' +
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
@@ -3257,7 +3250,6 @@
         row('Final beneficiaries', v.residuary.map(function (r) { return esc(r.residuary_name) + (r.residuary_pct ? ' (' + esc(r.residuary_pct) + '%)' : ''); }).join('<br>'), 'residuary') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your trust</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -3480,7 +3472,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      return stepHead('Your Certification is ready to review', 'Read every word. Then print it and follow the signing steps below.') +
+      return stepHead('Your Certification is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below.') +
         '<div class="sum">' +
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
@@ -3488,7 +3480,6 @@
         row('Current trustee(s)', v.trustees.map(function (t) { return esc(t.trustee_name); }).join(', '), 'trustees') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -3676,7 +3667,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      return stepHead('Your Affidavit is ready to review', 'Read every word. Then print it and follow the signing steps below — it must be sworn before a notary, not just signed.') +
+      return stepHead('Your Affidavit is ready to review', 'Read every word. Then download the PDF, print it, and follow the signing steps below — it must be sworn before a notary, not just signed.') +
         '<div class="sum">' +
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
@@ -3684,7 +3675,6 @@
         row('Current trustee(s)', v.trustees.map(function (t) { return esc(t.trustee_name); }).join(', '), 'trustees') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -3840,14 +3830,13 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      return stepHead('Your Assignment is ready to review', 'Read every word, then print it and sign — no witness or notary is required unless you chose to add one.') +
+      return stepHead('Your Assignment is ready to review', 'Read every word, then download the PDF, print it and sign — no witness or notary is required unless you chose to add one.') +
         '<div class="sum">' +
         row('Trust name', esc(v.trust_name), 'start') +
         row('State', esc(v.state), 'start') +
         row('Trustmaker(s)', [v.tm1_name, v.tm2_name].filter(Boolean).map(esc).join(' and '), 'trustmakers') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -4064,7 +4053,6 @@
         row('Disposition preference', esc(v.disposition || ''), 'disposition') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -4112,7 +4100,7 @@
   };
   var STEPS_CONTACTS = [
     { id: 'contacts', label: 'Your contacts' },
-    { id: 'review', label: 'Review and print' }
+    { id: 'review', label: 'Review and download' }
   ];
   function buildVarsContacts(a, states, settings) {
     var v = {};
@@ -4148,13 +4136,12 @@
     review: function () {
       var v = buildVarsContacts(answers, states, tpl.settings);
       var instr = toHtml(renderNodes(sign.nodes, v), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>');
-      return stepHead('Your Important Contacts list is ready', 'Print it and keep it with your other documents.') +
+      return stepHead('Your Important Contacts list is ready', 'Download the PDF, print it, and keep it with your other documents.') +
         '<div class="sum">' +
         '<div class="sum-row"><div><span class="sum-l">Prepared for</span><span class="sum-v">' + (esc(v.name) || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="contacts">Change</button></div>' +
         '<div class="sum-row"><div><span class="sum-l">Contacts listed</span><span class="sum-v">' + v.contacts.length + '</span></div><button type="button" class="link" data-goto="contacts">Change</button></div></div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         '<div class="instr">' + instr + '</div>' +
@@ -4295,14 +4282,13 @@
       if (v.asset_brokerage) counts.push(v.brokerage_accounts.length + ' investment');
       if (v.asset_business) counts.push(v.business_interests.length + ' business');
       if (v.asset_tangible) counts.push('household goods');
-      return stepHead('Your Schedule A is ready to review', 'Read every word, then print it and sign. No witness or notary is required.') +
+      return stepHead('Your Schedule A is ready to review', 'Read every word, then download the PDF, print it and sign. No witness or notary is required.') +
         '<div class="sum">' +
         row('Trust name', esc(v.trust_name), 'start') +
         row('Trustmaker(s)', [v.tm1_name, v.tm2_name].filter(Boolean).map(esc).join(' and '), 'trustmakers') +
         row('Property listed', esc(counts.join(', ')), 'assets') + '</div>' +
         '<div class="actions">' +
         '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
-        '<button type="button" class="btn btn-secondary" data-print>Print</button>' +
         '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
@@ -4556,7 +4542,7 @@
       if (seenSum && heroEl && !heroEl.querySelector('.back-to-sum')) {
         var top = document.createElement('div'); top.className = 'back-to-sum';
         top.innerHTML = '<a href="' + esc(window.GVUrl('package.html')) + '">&larr; Back to your package summary</a>' +
-          (paidUp() ? '<button type="button" class="btn btn-primary btn-sm" data-top-pdf>Download this document (PDF)</button><button type="button" class="btn btn-secondary btn-sm" data-top-print>Print this document</button><span class="pkg-status" id="pkg-status" role="status"></span>' : '');
+          (paidUp() ? '<button type="button" class="btn btn-primary btn-sm" data-top-pdf>Download this document (PDF)</button><span class="pkg-status" id="pkg-status" role="status"></span>' : '');
         heroEl.insertBefore(top, heroEl.firstChild);
         /* these sit above the app, so they get their own clicks */
         var tp = top.querySelector('[data-top-pdf]'), tr = top.querySelector('[data-top-print]');
@@ -4608,8 +4594,8 @@
         packageSigning();
         /* inside a package, nothing is printed or signed document by document: one plain line says what happens */
         var sub = stepEl.querySelector('.q-sub');
-        if (sub) sub.textContent = paidUp() ? 'Read it over. Download or print it below, or get every document at once from your package summary.'
-          : 'Read it over. When your package is finished, you\u2019ll pay once, then download and print everything.';
+        if (sub) sub.textContent = paidUp() ? 'Read it over. Download it below, or get every document at once from your package summary.'
+          : 'Read it over. When your package is finished, you\u2019ll pay once, then download everything.';
       }
       signingHelp();
       reviewBeforePay();
@@ -4769,7 +4755,7 @@
   }
   function renderPkgSummaryLink(f) {
     return '<div class="actions pkg-continue">' +
-      '<p class="pkg-continue-note">That\u2019s the last document. ' + (paidUp() ? 'Next: download or print all ' + f.docs.length + ' at once.' : 'Next: pay once, then download and print all ' + f.docs.length + '.') + '</p>' +
+      '<p class="pkg-continue-note">That\u2019s the last document. ' + (paidUp() ? 'Next: download all ' + f.docs.length + ' at once.' : 'Next: pay once, then download all ' + f.docs.length + '.') + '</p>' +
       '<a class="btn btn-primary btn-lg" href="' + esc(window.GVUrl('package.html')) + '">' + (paidUp() ? 'Go to your downloads' : 'Finish: pay and download') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
       '</div>';
   }
@@ -4838,7 +4824,7 @@
     var title = stepEl.querySelector('.q-title'), sub = stepEl.querySelector('.q-sub');
     if (title) title.textContent = 'Your answers are complete';
     var msg = 'Check your answers below. The preview shows your answers and the headings; the rest of the wording is blurred until you pay.' +
-      (inFlowNow() ? ' When your package is finished, you\u2019ll pay once, then download and print everything.' : '') +
+      (inFlowNow() ? ' When your package is finished, you\u2019ll pay once, then download everything.' : '') +
       ' To read every word before you buy, open the full blank template.';
     if (sub) sub.textContent = msg;
     var anchor = sub || title;
@@ -4875,17 +4861,17 @@
     var rows = f.docs.map(function (k) {
       var label = window.GVFlow.labelFor(k);
       if (k === thisKind) return '<div class="pkg-done-row pkg-current-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><span class="pkg-here">You’re here</span></div>';
-      return '<div class="pkg-done-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><a class="link" href="' + esc(pageUrl(k)) + '">' + (paid ? 'View, download or print' : 'Open') + '</a></div>';
+      return '<div class="pkg-done-row"><span class="pkg-check">✓</span><span class="pkg-doc-name">Your ' + esc(label) + '</span><a class="link" href="' + esc(pageUrl(k)) + '">' + (paid ? 'View or download' : 'Open') + '</a></div>';
     }).join('');
     var n = f.docs.length, o = payOffer(f);
     if (paid) {
       var allPdfBtn = n > 1 ? '<button type="button" class="btn btn-primary pay-btn" data-pkg-pdf>Download all ' + n + ' documents (PDF)</button>' : '';
       return '<div class="pkg-complete" id="pkg-complete"><h3>' + (f.plan === 'doc' ? 'Your documents are unlocked' : 'Your ' + esc(pkgName(f)) + ' package is unlocked') + '</h3>' +
-        '<p>Download everything in one PDF, or open any document to download or print it on its own. Save your files now: your purchase is remembered only in this browser.</p>' +
+        '<p>Download everything in one PDF, or open any document to download it on its own. Save your files now: your purchase is remembered only in this browser.</p>' +
         allPdfBtn + (n > 1 ? '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div>' : '') + '<div class="pkg-done-list">' + rows + '</div></div>';
     }
     return '<div class="pkg-complete" id="pkg-complete"><h3>All ' + n + ' documents are ready</h3>' +
-      '<p>' + (o.beta ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your documents are free to download and print.' : 'Pay ' + (o.priceText || '') + ' once to download and print them all.') + ' Previewing and changing your answers stay free.</p>' +
+      '<p>' + (o.beta ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your documents are free to download.' : 'Pay ' + (o.priceText || '') + ' once to download them all.') + ' Previewing and changing your answers stay free.</p>' +
       payButton(o) + '<div class="pkg-done-list">' + rows + '</div></div>';
   }
   function insertHtmlBefore(html, ref) {
@@ -4900,7 +4886,7 @@
       var o = payOffer(fl && fl.docs.indexOf(docId) > -1 ? fl : null);
       var banner = document.createElement('div');
       banner.className = 'unlock-banner';
-      banner.innerHTML = '<p><strong>Your document is ready.</strong> ' + (o.beta ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your document is free to download and print.' : 'Pay ' + (o.priceText || '') + ' once to download and print it.') + ' Previewing and changing your answers stay free.</p>' + payButton(o);
+      banner.innerHTML = '<p><strong>Your document is ready.</strong> ' + (o.beta ? 'Last step: answer a short survey (about 5 minutes) and submit it. Then your document is free to download.' : 'Pay ' + (o.priceText || '') + ' once to download it.') + ' Previewing and changing your answers stay free.</p>' + payButton(o);
       actions.parentNode.insertBefore(banner, actions);
     }
     /* not paid yet: the download buttons stay out of sight (they would only bounce to checkout) so the

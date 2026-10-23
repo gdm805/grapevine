@@ -62,16 +62,15 @@
   /* the one next step, at the TOP of the page: pay, then download (or, once paid, download) */
   var n = f.docs.length, action;
   if (paid) {
-    action = '<div class="pkg-sum-pay"><h2>Download and print your documents</h2>' +
-      '<p>Download or print all ' + n + ' at once. Save your files now: your purchase is remembered only in this browser.</p>' +
-      '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + n + ' (PDF)</button>' +
-      '<button type="button" class="btn btn-secondary" id="print-all">Print all ' + n + '</button></div>' +
+    action = '<div class="pkg-sum-pay"><h2>Download your documents</h2>' +
+      '<p>Download all ' + n + ' at once as one PDF, then print from that file. Keep the file: your purchase is remembered only in this browser.</p>' +
+      '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + n + ' (PDF)</button>' +</div>' +
       '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
   } else {
     var b = beta();
     action = '<div class="pkg-sum-pay"><h2>' + (open.length ? 'When they\u2019re all answered' : 'Three steps left') + '</h2>' +
       '<ol class="pkg-paysteps"><li>' + (b ? 'Answer a short survey (about 5 minutes) and submit it. Beta testers pay nothing.' : 'Pay ' + (price ? '$' + price : '') + ' once for all ' + n + ' documents.') + '</li>' +
-      '<li>Download and print them.</li>' +
+      '<li>Download them, then print the PDF.</li>' +
       '<li>Sign each one, following its signing steps (on this page).</li></ol>' +
       '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Take the survey' : 'Pay ' + (price ? '$' + price : '') + ' and download') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
       '<p class="pkg-free">Checking and changing your answers stays free, before and after you pay.</p></div>';
@@ -89,7 +88,7 @@
     '<p class="overline">Your ' + esc(pkg) + ' package' + (f.couple ? ' for both of you' : '') + '</p>' +
     '<h1>' + (open.length ? 'Almost done' : 'Your documents are ready') + '</h1>' +
     note + action +
-    '<h2 class="pkg-sum-h">Your documents</h2><p class="pkg-sum-sub">Choose \u201cCheck or change\u201d to look over a document or change an answer.' + (paid ? ' Each also has its own Download and Print buttons.' : '') + '</p>' +
+    '<h2 class="pkg-sum-h">Your documents</h2><p class="pkg-sum-sub">Choose \u201cCheck or change\u201d to look over a document or change an answer.' + (paid ? ' Each also has its own Download PDF button.' : '') + '</p>' +
     '<div class="pkg-sum-list">' + rows + '</div></div>';
 
   /* ---------- Download all: one PDF built from every document ---------- */

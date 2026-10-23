@@ -135,7 +135,7 @@
          they're buying -- the whole package, or the one document -- and goes straight to paying */
       '<h1>' + (docLabel ? (plan === 'doc' ? 'Unlock ' + esc(docLabel) : 'Unlock your ' + esc(p.name) + ' package') : 'Choose your plan') + '</h1>' +
       (docLabel
-        ? '<p class="lead">Your answers are saved in this browser. ' + (plan === 'doc' ? 'Pay once, and this document unlocks for download and printing.' : 'Pay once, and every document in your ' + esc(p.name) + ' package unlocks for download and printing.') + '</p>'
+        ? '<p class="lead">Your answers are saved in this browser. ' + (plan === 'doc' ? 'Pay once, and this document unlocks for download.' : 'Pay once, and every document in your ' + esc(p.name) + ' package unlocks for download.') + '</p>'
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
       (docLabel
         ? '<p class="household-label">' + (household === 'couple' ? 'Pricing for you and your spouse or partner' : 'Pricing for one person') + '</p>'
@@ -182,7 +182,7 @@
     var src = 'https://tally.so/embed/' + encodeURIComponent(window.GV_BETA.survey) + '?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1';
     return '<div class="beta-box"><p class="beta-kicker">Beta tester</p>' +
       '<h3>Last step: answer a few questions</h3>' +
-      '<ol class="beta-steps"><li>Answer the short survey below (about 5 minutes) and click <strong>Submit</strong> at the end.</li><li>Then click the purple button under the survey. Your total will be $0.00.</li><li>Download and print your documents.</li></ol>' +
+      '<ol class="beta-steps"><li>Answer the short survey below (about 5 minutes) and click <strong>Submit</strong> at the end.</li><li>Then click the purple button under the survey. Your total will be $0.00.</li><li>Download your documents, then print them from the PDF.</li></ol>' +
       '<iframe class="beta-survey" data-tally-src="' + src + '" loading="lazy" width="100%" height="700" frameborder="0" title="Tovakin beta tester survey"></iframe></div>';
   }
   /* Tally's own embed script sizes the survey to its full height (no scrolling inside the box). If it can't
@@ -214,7 +214,7 @@
      California. The bold statements are the ones 6410(b) requires in 12-point bold; (b)(3) and (b)(5) -- the
      county clerk's details -- appear only once GV_CA_LDA.registered is true (js/plans.js). */
   var caAck = false;
-  var TERMS_VERSION = 'October 21, 2026';   /* the "Last updated" date on terms.html */
+  var TERMS_VERSION = 'October 23, 2026';   /* the "Last updated" date on terms.html */
   function isCA() {
     try { return ((JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || '') === 'California'; } catch (e) { return false; }
   }
