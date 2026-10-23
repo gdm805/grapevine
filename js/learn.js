@@ -40,6 +40,9 @@
     var h = esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     return h.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (m, label, url) {
       var u = url.replace(/&amp;/g, '&');
+      /* a link to another Learn article that isn't published yet stays plain words until its date arrives */
+      var to = /^(?:learn\.html)?#([\w-]+)$/.exec(u);
+      if (to && !articles.some(function (x) { return x.slug === to[1]; })) return label;
       return /^(https?:\/\/|mailto:|[\w#\-\/.?=&]+$)/.test(u) ? '<a href="' + esc(u) + '">' + label + '</a>' : label;
     });
   }

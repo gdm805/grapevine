@@ -35,7 +35,13 @@ window.GV_GLOSSARY = [
    "guardian-of-a-minor",
    "witness"
   ],
-  "learn": []
+  "learn": [
+   {
+    "slug": "what-is-a-will",
+    "title": "What is a will, and do I need one?",
+    "date": "2026-09-22"
+   }
+  ]
  },
  {
   "id": "testator",
@@ -60,7 +66,13 @@ window.GV_GLOSSARY = [
    "probate",
    "letters-testamentary"
   ],
-  "learn": []
+  "learn": [
+   {
+    "slug": "choosing-an-executor",
+    "title": "How to choose an executor",
+    "date": "2026-09-19"
+   }
+  ]
  },
  {
   "id": "alternate",
@@ -164,7 +176,13 @@ window.GV_GLOSSARY = [
   "def": "Dying without a valid will. State law then decides who inherits, usually the closest relatives in a set order, and a court appoints someone to manage the estate.",
   "varies": true,
   "see": [],
-  "learn": []
+  "learn": [
+   {
+    "slug": "dying-without-a-will",
+    "title": "What happens if you die without a will?",
+    "date": "2026-09-20"
+   }
+  ]
  },
  {
   "id": "probate",
@@ -177,7 +195,13 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "what-is-probate",
-    "title": "What is probate, and why do people try to avoid it?"
+    "title": "What is probate, and why do people try to avoid it?",
+    "date": "2026-10-26"
+   },
+   {
+    "slug": "will-vs-living-trust",
+    "title": "Will or living trust: which is right for you?",
+    "date": "2026-09-21"
    }
   ]
  },
@@ -241,7 +265,13 @@ window.GV_GLOSSARY = [
   "see": [
    "funding-a-trust"
   ],
-  "learn": []
+  "learn": [
+   {
+    "slug": "what-is-a-pour-over-will",
+    "title": "What is a pour-over will?",
+    "date": "2026-09-23"
+   }
+  ]
  },
  {
   "id": "guardian-of-a-minor",
@@ -257,7 +287,13 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "leaving-money-to-children",
-    "title": "Leaving money to children under 18"
+    "title": "Leaving money to children under 18",
+    "date": "2026-11-23"
+   },
+   {
+    "slug": "choosing-a-guardian",
+    "title": "How to choose a guardian for your children",
+    "date": "2026-09-18"
    }
   ]
  },
@@ -286,7 +322,8 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "leaving-money-to-children",
-    "title": "Leaving money to children under 18"
+    "title": "Leaving money to children under 18",
+    "date": "2026-11-23"
    }
   ]
  },
@@ -301,7 +338,8 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "planning-for-your-pets",
-    "title": "Planning for your pets"
+    "title": "Planning for your pets",
+    "date": "2026-11-30"
    }
   ]
  },
@@ -313,7 +351,13 @@ window.GV_GLOSSARY = [
   "def": "An arrangement in which one person or institution (the trustee) holds and manages property for the benefit of others (the beneficiaries), following written instructions in a trust document.",
   "varies": false,
   "see": [],
-  "learn": []
+  "learn": [
+   {
+    "slug": "what-is-a-living-trust",
+    "title": "What is a living trust?",
+    "date": "2026-10-13"
+   }
+  ]
  },
  {
   "id": "revocable-living-trust",
@@ -326,7 +370,18 @@ window.GV_GLOSSARY = [
    "funding-a-trust",
    "successor-trustee"
   ],
-  "learn": []
+  "learn": [
+   {
+    "slug": "what-is-a-living-trust",
+    "title": "What is a living trust?",
+    "date": "2026-10-13"
+   },
+   {
+    "slug": "will-vs-living-trust",
+    "title": "Will or living trust: which is right for you?",
+    "date": "2026-09-21"
+   }
+  ]
  },
  {
   "id": "joint-trust",
@@ -376,7 +431,13 @@ window.GV_GLOSSARY = [
   "def": "The person named to take over managing a trust when the current trustee dies, resigns or becomes unable to manage it.",
   "varies": false,
   "see": [],
-  "learn": []
+  "learn": [
+   {
+    "slug": "what-is-a-living-trust",
+    "title": "What is a living trust?",
+    "date": "2026-10-13"
+   }
+  ]
  },
  {
   "id": "co-trustees",
@@ -413,7 +474,8 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "how-to-fund-a-living-trust",
-    "title": "How to fund a living trust (and why it matters)"
+    "title": "How to fund a living trust (and why it matters)",
+    "date": "2026-11-02"
    }
   ]
  },
@@ -496,7 +558,8 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "leaving-money-to-children",
-    "title": "Leaving money to children under 18"
+    "title": "Leaving money to children under 18",
+    "date": "2026-11-23"
    }
   ]
  },
@@ -616,7 +679,13 @@ window.GV_GLOSSARY = [
    "durable-power-of-attorney",
    "health-care-directive"
   ],
-  "learn": []
+  "learn": [
+   {
+    "slug": "power-of-attorney-and-health-care-directive",
+    "title": "Power of attorney and health care directive: what's the difference?",
+    "date": "2026-09-17"
+   }
+  ]
  },
  {
   "id": "principal",
@@ -651,7 +720,8 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "what-a-power-of-attorney-lets-someone-do",
-    "title": "What does a power of attorney let someone do?"
+    "title": "What does a power of attorney let someone do?",
+    "date": "2026-11-09"
    }
   ]
  },
@@ -695,7 +765,13 @@ window.GV_GLOSSARY = [
   "def": "A document that records a person's wishes about medical treatment and may name someone to make health care decisions if they can't. States use different names, including \"advance health care directive,\" \"living will\" and \"health care power of attorney.\"",
   "varies": true,
   "see": [],
-  "learn": []
+  "learn": [
+   {
+    "slug": "power-of-attorney-and-health-care-directive",
+    "title": "Power of attorney and health care directive: what's the difference?",
+    "date": "2026-09-17"
+   }
+  ]
  },
  {
   "id": "health-care-agent",
@@ -751,7 +827,8 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "what-is-a-hipaa-authorization",
-    "title": "What is a HIPAA authorization, and why have one?"
+    "title": "What is a HIPAA authorization, and why have one?",
+    "date": "2026-11-16"
    }
   ]
  },
@@ -1052,6 +1129,12 @@ window.GVGlossary = (function () {
   document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && pop) { var b = openBtn; close(); if (b) b.focus(); } });
   window.addEventListener('resize', close);
 
+  /* a Learn article whose date hasn't come yet is hidden on the Learn page (js/learn.js), so it isn't linked here
+     until it's published; ?preview=1 shows every link, the same as the Learn page */
+  var PREVIEW = /[?&]preview=1\b/.test(location.search);
+  var TODAY = (function () { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); })();
+  function published(l) { return PREVIEW || !l.date || l.date <= TODAY; }
+
   /* ---------- glossary.html ---------- */
   function renderPage(root) {
     var TOPICS = ['All'].concat(D.reduce(function (a, e) { if (a.indexOf(e.topic) === -1) a.push(e.topic); return a; }, []));
@@ -1066,9 +1149,9 @@ window.GVGlossary = (function () {
           '<h3>' + esc(e.term) + (e.aka && e.aka.length ? ' <span class="gl-aka">also called ' + esc(e.aka.join(', ')) + '</span>' : '') + '</h3>' +
           '<p>' + esc(e.def) + '</p>' +
           (e.varies ? '<p class="gl-varies">The rules for this vary by state.</p>' : '') +
-          ((e.see && e.see.length) || (e.learn && e.learn.length) ? '<p class="gl-see">' +
+          ((e.see && e.see.length) || (e.learn || []).some(published) ? '<p class="gl-see">' +
             (e.see || []).filter(function (id) { return BY[id]; }).map(function (id) { return '<a href="#' + esc(id) + '">' + esc(BY[id].term) + '</a>'; }).concat(
-            (e.learn || []).map(function (l) { return '<a href="' + esc(url('learn.html')) + '#' + esc(l.slug) + '">Read: ' + esc(l.title) + '</a>'; })).join('<span aria-hidden="true"> \u00b7 </span>') + '</p>' : '') +
+            (e.learn || []).filter(published).map(function (l) { return '<a href="' + esc(url('learn.html')) + '#' + esc(l.slug) + '">Read: ' + esc(l.title) + '</a>'; })).join('<span aria-hidden="true"> \u00b7 </span>') + '</p>' : '') +
           '<p class="gl-topic">' + esc(e.topic) + '</p></article>';
       }).join('') + '</div><p class="gl-none" hidden>No terms match. Try a shorter word, or email <a href="mailto:support@tovakin.com">support@tovakin.com</a>.</p>';
     var input = root.querySelector('.gl-search'), count = root.querySelector('.gl-count'), none = root.querySelector('.gl-none');
