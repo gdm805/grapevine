@@ -4570,6 +4570,17 @@
     stepEl.innerHTML = backToSum + note + err + (SPOUSE2 && (stepId === 'start' || (startSkip && stepId === startSkip.landing)) ? mirrorBox() : '') + unsupported + KIND.render[stepId]() + nav;
     /* key words in this screen's questions get a tap-to-see definition (js/glossary.js) */
     if (window.GVGlossary) { window.GVGlossary.close(); window.GVGlossary.decorate(stepEl); }
+    /* HARD STOP for a closed state (23 Oct 2026, Greg): the first screen shows only the state question and the one-sentence
+       notice -- no other questions, no "Almost there" list, and no Continue button. Choosing another state brings them back. */
+    if (stepId === 'start' && closedState()) {
+      var offNote = closedState().note;
+      stepEl.querySelectorAll('.errs').forEach(function (el) { if (el.textContent.trim() !== offNote) el.remove(); });
+      if (!stepEl.querySelector('.errs')) stepEl.insertAdjacentHTML('afterbegin', '<div class="errs" role="alert"><p>' + esc(offNote) + '</p></div>');
+      stepEl.querySelectorAll('.nav-row, .q-sub').forEach(function (el) { el.remove(); });
+      stepEl.querySelectorAll('.f, .checks, label.check, .check, .mirror, .restored').forEach(function (el) { if (!el.querySelector('select[data-k="state"]')) { el.hidden = true; el.style.display = 'none'; } });
+      var stF = stepEl.querySelector('select[data-k="state"]'), box = stepEl.querySelector('.errs');
+      if (stF && box) { var fld = stF.closest('.f') || stF; fld.insertAdjacentElement('afterend', box); }
+    }
     /* the last screen says exactly what's still missing, with a link to each screen (22 Oct 2026) */
     if (stepId === 'review' && !BLANK) {
       var miss = missingSteps();

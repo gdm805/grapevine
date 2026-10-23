@@ -83,6 +83,8 @@
       '<label class="check"><input type="checkbox" data-k="freeOk' + n + '"' + (p['freeOk' + n] ? ' checked' : '') + '><span>' + (n ? 'They are making their documents of their own free will.' : 'I am making my documents of my own free will.') + '</span></label>';
   }
   function draw() {
+    var off = window.GVClosedState && window.GVClosedState(p.state);
+    if (off) errors = [];   /* a closed state is a hard stop: just its notice, no "Almost there" list (23 Oct 2026) */
     var err = errors.length ? '<div class="errs" role="alert"><strong>Almost there.</strong><ul>' + errors.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul></div>' : '';
     root.innerHTML = err +
       '<h2 class="q-title">' + (couple ? 'About the two of you' : 'About you') + '</h2>' +
@@ -94,10 +96,11 @@
       field('State', stateSelect()) +
       /* a state Tovakin doesn't serve yet: say so right away, naming only that state (js/plans.js GV_CLOSED_STATES) */
       (window.GVClosedState && window.GVClosedState(p.state) ? '<div class="errs" role="alert"><p>' + esc(window.GVClosedState(p.state)) + '</p></div>' : '') +
+      (off ? '' :
       field('County', countySelect()) +
       field('ZIP code', input('zip', 'text', '5-digit ZIP', 'postal-code')) +
       (couple ? person('2', 'Your spouse or partner') : '') +
-      '<div class="nav-row"><span></span><button type="button" class="btn btn-primary" data-save>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>';
+      '<div class="nav-row"><span></span><button type="button" class="btn btn-primary" data-save>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>');
   }
   function validate() {
     var e = [];
