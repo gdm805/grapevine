@@ -81,7 +81,7 @@
     while ((n = walker.nextNode())) found.push(n);
     found.forEach(function (t) {
       var el = t.parentElement;
-      if (!el || el.closest('.doc, #will-doc, script, style, a') || el.querySelector('.gv-lawyer-link')) return;
+      if (!el || el.closest('.doc, #will-doc, script, style, a, [data-no-lawyer-link]') || el.querySelector('.gv-lawyer-link')) return;
       var span = document.createElement('span');
       span.className = 'gv-lawyer-link';
       span.appendChild(document.createTextNode(' To find one in ' + (LINKS[st] ? st : 'your state') + ': '));
@@ -93,9 +93,35 @@
       if (t.nextSibling) el.insertBefore(span, t.nextSibling); else el.appendChild(span);
     });
   }
-  window.GVLawyerLinks = { links: LINKS, any: ANY, decorate: decorate };
+  /* "Find a lawyer in your state" picker (Questions page, "Do I still need a lawyer?"): choose a state, get that state
+     bar's lawyer referral link. Starts on the state saved on "About you", if there is one. */
+  function pickers(root) {
+    (root || document).querySelectorAll('[data-lawyer-picker]:not([data-ready])').forEach(function (box) {
+      box.setAttribute('data-ready', '1');
+      var st = state();
+      box.innerHTML = '<label class="lawyer-pick-l" for="lawyer-st">Find a lawyer in your state</label>' +
+        '<select class="input" id="lawyer-st"><option value="">Choose your state</option>' +
+        Object.keys(LINKS).map(function (k) { return '<option' + (k === st ? ' selected' : '') + '>' + k + '</option>'; }).join('') + '</select>' +
+        '<p class="lawyer-pick-out" aria-live="polite"></p>';
+      var sel = box.querySelector('select'), out = box.querySelector('.lawyer-pick-out');
+      function show() {
+        var hit = LINKS[sel.value];
+        out.innerHTML = '';
+        var a = document.createElement('a');
+        a.href = (hit || ANY)[1]; a.target = '_blank'; a.rel = 'noopener';
+        a.textContent = (hit || ANY)[0];
+        out.appendChild(document.createTextNode(hit ? '' : 'Or use '));
+        out.appendChild(a);
+        out.appendChild(document.createTextNode(hit ? '' : '.'));
+      }
+      sel.addEventListener('change', show);
+      show();
+    });
+  }
+  window.GVLawyerLinks = { links: LINKS, any: ANY, decorate: decorate, pickers: pickers };
   function start() {
     decorate(document.body);
+    pickers(document);
     if (!window.MutationObserver) return;
     var pending = false;
     new MutationObserver(function (list) {
