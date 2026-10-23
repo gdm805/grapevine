@@ -167,7 +167,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
       return esc(s).replace(/(https?:\/\/)?(www\.(?:tovakin|grapevinedocs)\.com[^\s<),]*)/g, function (_, p, u) {
         var href = 'https://' + u.replace(/[.]$/, ''), tail = /[.]$/.test(u) ? '.' : '';
         return '<a href="' + href + '">' + u.replace(/[.]$/, '') + '</a>' + tail;
-      }).replace(new RegExp(EMAIL.replace(/[.]/g, '\\.'), 'g'), '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>').replace(/\n/g, '<br>');
+      }).replace(new RegExp(EMAIL.replace(/[.]/g, '\\.'), 'g'), '<a href="mailto:' + EMAIL + '">' + EMAIL + '</a>').replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');   /* **bold** from the chat shows as bold */
     }
     function bubble(role, text) {
       var d = document.createElement('div');
