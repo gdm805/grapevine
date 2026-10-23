@@ -737,7 +737,14 @@
     front.push({ k: 'frontend' });
     return front.concat(blocks);
   }
-  function docBlocks() { return withFront(toBlocks(docText())); }
+  /* a state Tovakin doesn't serve yet (js/plans.js GV_CLOSED_STATES): no document is built for it at all -- not for
+     Download PDF, not for a package's combined PDF -- whatever route someone took to get here (23 Oct 2026) */
+  function closedState() { var s = states && states.map && states.map[answers.state]; return s && s.closed ? s : null; }
+  function docBlocks() {
+    var off = closedState();
+    if (off) return toBlocks(off.note);
+    return withFront(toBlocks(docText()));
+  }
 
   /* the words that change from state to state (pour-over will) */
   function parseStateText(raw) {
@@ -859,7 +866,7 @@
   function validateStep(id) {
     var e = KIND.validate(id);
     var closed = id === 'start' && window.GVClosedState && window.GVClosedState(answers.state);
-    return closed ? e.concat([closed]) : e;
+    return closed && e.indexOf(closed) === -1 ? e.concat([closed]) : e;
   }
   function visibleSteps(a) { return KIND.steps.filter(function (s) { return !s.show || s.show(a); }); }
   /* the screens before the last one that still have something missing (the same checks Continue makes) */
@@ -4500,6 +4507,9 @@
 
   /* ---------- show the current step ---------- */
   function draw(focusSel) {
+    /* a closed state can't get past the first screen by any route (a link to a later screen, a saved document,
+       a state carried over from "About you"): the first screen, with its notice, is the only screen shown */
+    if (!BLANK && stepId !== 'start' && closedState()) { stepId = 'start'; errors = []; startSkip = null; }
     if (kindKey === 'dpoa') {
       var gov = dpGov(answers);
       if (gov && !DP_CACHE[gov] && !DP_FAIL[gov] && !DP_PENDING[gov]) dpLoad(gov, function () { draw(focusSel); });
@@ -4535,7 +4545,7 @@
       skipNote = null;
     }
     var st = states.map[answers.state];
-    var unsupported = stepId === 'start' && st && !st.supported ? '<div class="errs"><p>' + esc(st.note || 'We can\u2019t offer a will in this state yet.') + '</p></div>' : '';
+    var unsupported = stepId === 'start' && st && !st.supported && errors.indexOf(st.note) === -1 ? '<div class="errs"><p>' + esc(st.note || 'We can\u2019t offer a will in this state yet.') + '</p></div>' : '';
     var nav = stepId === 'review' ? '<div class="nav-row"><button type="button" class="btn btn-secondary" data-back>Back</button></div>' :
       '<div class="nav-row">' + (idx > 0 ? '<button type="button" class="btn btn-secondary" data-back>Back</button>' : '<span></span>') +
       '<button type="button" class="btn btn-primary" data-next>Continue <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>';
@@ -5220,6 +5230,7 @@
       .catch(function () { job.cancel(); status('', false); pageFallback(); });
   }
   function runExport(kind) {
+    if (closedState()) { status(closedState().note, true); return Promise.resolve(); }
     if (!window.GVExport) { status('The export tools did not load. Try Print instead.', true); return; }
     var opts = exportOptions(), blocks = docBlocks();
     status(kind === 'pdf' ? 'Preparing your PDF...' : 'Preparing your Word file...');
@@ -5289,10 +5300,10 @@
   window.GrapevineWill = {
     setAnswers: function (o) { Object.assign(answers, o); draw(); },
     load: function (name) { return new Promise(function (ok) { dpLoad(name, ok); }); },
-    text: docText, html: function () { return toHtml(docText()); }, blocks: docBlocks, exportOptions: exportOptions,
+    text: function () { var o = closedState(); return o ? o.note : docText(); }, html: function () { var o = closedState(); return toHtml(o ? o.note : docText()); }, blocks: docBlocks, exportOptions: exportOptions,
     vars: function () { return buildVars(answers, states, tpl.settings); }, validate: function (id) { return validateStep(id); }, applyPreset: applyPreset,
     /* this document's "How to sign" steps, built fresh from the current answers (the package summary's signing sheet) */
-    signing: function () { return toHtml(renderNodes(sign.nodes, buildVars(answers, states, tpl.settings)), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>'); }
+    signing: function () { if (closedState()) return toHtml(closedState().note); return toHtml(renderNodes(sign.nodes, buildVars(answers, states, tpl.settings)), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>'); }
   };
 
   /* a "See the blank template" link above every document preview; on the blank page itself, the heading says so */
