@@ -31,6 +31,8 @@ title: What is a will, and do I need one?
 category: Wills
 date: 2026-09-22
 summary: A will says who gets your property and who raises your children. Here is what it does, what it doesn't, and who should have one.
+image: learn-will
+alt: A fountain pen and lavender on a handwritten page
 ---
 A will is a legal document that says what happens to your property after you die. It also lets you name the person who will carry out your wishes, called your executor, and, if you have children under 18, the person you would want to raise them, called a guardian.
 
@@ -60,6 +62,8 @@ title: Will or living trust: which is right for you?
 category: Trusts
 date: 2026-09-21
 summary: Both say who gets your property. They differ on probate, privacy, cost and what happens if you become unable to manage your own affairs.
+image: learn-will-or-trust
+alt: A couple talking together at their kitchen table
 ---
 Both a will and a living trust let you decide who receives your property. They work differently, and many families use both.
 
@@ -89,6 +93,8 @@ title: What happens if you die without a will?
 category: Wills
 date: 2026-09-20
 summary: Without a will, state law decides who inherits and a court decides who raises your children. Here's how that generally works.
+image: learn-intestate
+alt: Hands opening an old family photo album
 ---
 When someone dies without a valid will, they are said to have died "intestate." The law of their state then decides what happens to their property.
 
@@ -122,6 +128,8 @@ title: What is a living trust?
 category: Trusts
 date: 2026-10-13
 summary: A living trust holds your property while you are alive and passes it to the people you choose after you die, usually without going through probate court.
+image: learn-trust-home
+alt: A brick family home with a front lawn
 ---
 A living trust is a legal arrangement you set up during your lifetime. You move property such as your home and accounts into the trust, and the trust's written instructions say who manages it and who receives it. Most people use a revocable living trust, which means you can change it or cancel it at any time while you have capacity.
 
@@ -156,6 +164,8 @@ title: What is a pour-over will?
 category: Wills
 date: 2026-09-23
 summary: A pour-over will is the safety net for your living trust. It sends anything you forgot to put in the trust into it after you die.
+image: learn-pour-over
+alt: An open drawer of filed papers
 ---
 A pour-over will is a will that works together with a living trust. Instead of leaving your property to individual people, it leaves whatever is not already in your trust to your trust, so it "pours over" into it. From there, your trust's instructions decide who receives it.
 
@@ -185,6 +195,8 @@ title: How to choose an executor
 category: Wills
 date: 2026-09-19
 summary: Your executor carries out your will. Here is what the job involves and what to look for.
+image: learn-executor
+alt: An older couple smiling at each other outdoors
 ---
 Your executor is the person you name in your will to handle your estate after you die. It is one of the most important choices in your will, and one of the easiest to put off.
 
@@ -217,6 +229,8 @@ title: How to choose a guardian for your children
 category: Children
 date: 2026-09-18
 summary: A guardian would raise your children if you couldn't. Here is how to think through the choice.
+image: learn-guardian
+alt: A mother and her young daughter laughing together on a couch
 ---
 If you have children under 18, naming a guardian is often the most important reason to write a will. A guardian is the person you nominate to care for your children if you die and there is no other parent who can.
 
@@ -246,6 +260,8 @@ title: Power of attorney and health care directive: what's the difference?
 category: Incapacity
 date: 2026-09-17
 summary: One handles your money and paperwork. The other handles your medical decisions. Both matter if you couldn't speak for yourself.
+image: learn-poa
+alt: Two people holding hands
 ---
 A will only takes effect after you die. Two other documents help if you become unable to make decisions while you are alive: a power of attorney and a health care directive.
 

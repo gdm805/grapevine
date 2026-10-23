@@ -96,7 +96,8 @@
       '</div></section>';
   }
   /* an article's photo (optional "image:" and "alt:" lines; the files are in images/photos, see CREDITS.txt there) */
-  var PHOTO_H = { 'learn-pets': 1142, 'learn-keys': 1067, 'learn-doctor': 900 };
+  var PHOTO_H = { 'learn-pets': 1142, 'learn-keys': 1067, 'learn-doctor': 900, 'learn-will': 1080, 'learn-will-or-trust': 900, 'learn-intestate': 1066,
+    'learn-trust-home': 1096, 'learn-pour-over': 1065, 'learn-executor': 1066, 'learn-guardian': 1008, 'learn-poa': 1060 };
   function photo(a, sizes) {
     if (!a.image) return '';
     var v = (document.querySelector('script[src*="js/learn.js"]') || {}).src, q = v && v.indexOf('?v=') > -1 ? v.slice(v.indexOf('?v=')) : '';
