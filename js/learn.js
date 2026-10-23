@@ -18,7 +18,7 @@
       var slug = chunk.slice(0, nl).trim();
       var rest = chunk.slice(nl + 1), cut = rest.search(/^---\s*$/m);
       if (cut < 0) return;
-      var a = { slug: slug, title: slug, category: 'General', date: '', summary: '', body: rest.slice(cut).replace(/^---\s*\n/, '').trim() };
+      var a = { slug: slug, title: slug, category: 'General', date: '', summary: '', image: '', alt: '', body: rest.slice(cut).replace(/^---\s*\n/, '').trim() };
       rest.slice(0, cut).split('\n').forEach(function (l) {
         var m = /^(\w+):\s*(.*)$/.exec(l.trim());
         if (m && a.hasOwnProperty(m[1])) a[m[1]] = m[2].trim();
@@ -87,10 +87,19 @@
       '<div class="filters" role="group" aria-label="Filter by topic">' + cats.map(function (c) {
         return '<button type="button" class="chip" data-filter="' + esc(c) + '" aria-pressed="' + (c === filter ? 'true' : 'false') + '">' + esc(c) + '</button>';
       }).join('') + '</div>' +
-      (feat ? '<a class="feat" href="#' + esc(feat.slug) + '"><span class="post-cat">' + esc(feat.category) + '</span><h2>' + esc(feat.title) + '</h2><p>' + esc(feat.summary) + '</p>' +
-        '<span class="post-meta">' + esc(fmtDate(feat.date)) + ' &middot; ' + feat.minutes + ' min read</span><span class="feat-go">Read the article <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>' : '<p>No articles yet.</p>') +
+      (feat ? '<a class="feat' + (feat.image ? ' feat-photo' : '') + '" href="#' + esc(feat.slug) + '">' + photo(feat, '(min-width: 900px) 420px, 94vw') + '<span class="feat-text"><span class="post-cat">' + esc(feat.category) + '</span><h2>' + esc(feat.title) + '</h2><p>' + esc(feat.summary) + '</p>' +
+        '<span class="post-meta">' + esc(fmtDate(feat.date)) + ' &middot; ' + feat.minutes + ' min read</span><span class="feat-go">Read the article <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>' : '<p>No articles yet.</p>') +
       (rest.length ? '<ul class="post-list">' + rest.map(row).join('') + '</ul>' : '') +
       '</div></section>';
+  }
+  /* an article's photo (optional "image:" and "alt:" lines; the files are in images/photos, see CREDITS.txt there) */
+  var PHOTO_H = { 'learn-pets': 1142, 'learn-keys': 1067, 'learn-doctor': 900 };
+  function photo(a, sizes) {
+    if (!a.image) return '';
+    var v = (document.querySelector('script[src*="js/learn.js"]') || {}).src, q = v && v.indexOf('?v=') > -1 ? v.slice(v.indexOf('?v=')) : '';
+    var base = window.GVUrl ? window.GVUrl('images/photos/' + a.image) : 'images/photos/' + a.image;
+    return '<figure class="photo photo-article"><picture><source type="image/webp" srcset="' + esc(base) + '-800.webp' + q + ' 800w, ' + esc(base) + '-1600.webp' + q + ' 1600w" sizes="' + sizes + '">' +
+      '<img src="' + esc(base) + '-1600.jpg' + q + '" alt="' + esc(a.alt) + '" width="1600" height="' + (PHOTO_H[a.image] || 1000) + '" decoding="async"></picture></figure>';
   }
   function articleView(a) {
     var related = articles.filter(function (x) { return x.slug !== a.slug && x.category === a.category; }).slice(0, 2);
@@ -99,6 +108,7 @@
       '<a class="back" href="#"><svg class="ico flip" aria-hidden="true"><use href="#i-arrow"/></svg> All articles</a>' +
       '<p class="post-cat">' + esc(a.category) + '</p><h1>' + esc(a.title) + '</h1>' +
       '<p class="post-meta">' + esc(fmtDate(a.date)) + ' &middot; ' + a.minutes + ' min read</p>' +
+      photo(a, '(min-width: 760px) 720px, 94vw') +
       '<div class="prose">' + body(a.body) + '</div>' +
       '<p class="note"><strong>General information, not legal advice.</strong> Laws differ by state and change over time. Tovakin is not a law firm. For advice about your situation, talk to a licensed attorney in your state.</p>' +
       '<aside class="cta-card"><div><h2>Ready to put this into action?</h2><p>Answer a few plain questions and we\u2019ll point you to the plan that fits.</p></div><a class="btn btn-primary" href="index.html#finder">Find my plan <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></aside>' +

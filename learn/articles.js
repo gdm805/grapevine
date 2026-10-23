@@ -12,6 +12,8 @@ window.LEARN_ARTICLES = String.raw`
 //      category: Wills
 //      date: 2026-09-22
 //      summary: One or two sentences for the article list.
+//      image: learn-pets        (optional photo, a file name in images/photos without -800/-1600)
+//      alt: A short description of the photo, for screen readers
 //      ---
 //      Your article text. Leave a blank line between paragraphs.
 //
@@ -312,6 +314,8 @@ title: How to fund a living trust (and why it matters)
 category: Trusts
 date: 2026-11-02
 summary: A living trust only controls what's actually in it. Here is what "funding" means and how different kinds of property are moved in.
+image: learn-keys
+alt: A hand holding house keys at a front door
 ---
 Signing a living trust is only the first step. A trust can only manage and pass on the property that is actually in it. Moving your property into the trust is called "funding" it, and a trust that is never funded may not avoid probate at all.
 
@@ -379,6 +383,8 @@ title: What is a HIPAA authorization, and why have one?
 category: Incapacity
 date: 2026-11-16
 summary: Privacy law keeps your medical information private, even from family. A HIPAA authorization lets the people you choose talk to your doctors.
+image: learn-doctor
+alt: A doctor talking with a patient in a medical office
 ---
 A federal privacy law, known as HIPAA, keeps your medical records private. That's usually a good thing, but it can also mean that your family can't get answers from your doctors or hospital when they need them most.
 
@@ -439,6 +445,8 @@ title: Planning for your pets
 category: Wills
 date: 2026-11-30
 summary: Pets can't inherit, but you can name who will care for them and leave money for their care. Here's how.
+image: learn-pets
+alt: A woman hugging her dog outdoors
 ---
 Under the law, pets are property, so they can't inherit money themselves. But you can still make sure they are cared for if something happens to you.
 
