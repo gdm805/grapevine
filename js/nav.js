@@ -263,3 +263,21 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', openHash); else openHash();
   window.addEventListener('hashchange', openHash);
 })();
+
+/* POP-UP LINKS (23 Oct 2026): links from the help chat and from the definition boxes in the document questions open
+   in a separate pop-up window on top of the page, so nobody loses their place. A blocked pop-up falls back to a new
+   tab. (The state bar links do the same, in js/lawyer-links.js.) */
+(function () {
+  var SEL = '.gv-chat-log a[href^="http"]:not([data-gl-id]), .gv-chat-def a[href^="http"], .gl-pop a[href]';
+  window.GVPopup = function (url, name) {
+    var w = Math.min(1100, screen.availWidth - 80), h = Math.min(850, screen.availHeight - 80);
+    var win = window.open(url, name || 'tovakin-popup', 'popup=yes,width=' + w + ',height=' + h + ',left=' + Math.round((screen.availWidth - w) / 2) + ',top=' + Math.round((screen.availHeight - h) / 2));
+    if (win) { try { win.opener = null; } catch (x) {} win.focus(); }
+    return !!win;
+  };
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest(SEL);
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    if (window.GVPopup(a.href, 'tovakin-popup')) e.preventDefault();
+  });
+})();
