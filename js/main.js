@@ -76,8 +76,10 @@
     var done = answered === QUESTIONS.length;
     if (kicker) kicker.hidden = !done;
     if (cta) cta.style.display = done ? '' : 'none';
+    /* nothing shows under the questions until all six are answered (the intro above already says so -- Greg, 25 Oct 2026) */
+    if (list.parentNode.classList.contains('results')) list.parentNode.hidden = !done;
     if (!done) {
-      title.textContent = answered ? 'Answer all six to see what people in similar situations often choose (' + answered + ' of 6 answered).' : 'Answer all six questions to see what people in similar situations often choose.';
+      title.textContent = '';
       if (why) why.textContent = '';
       list.innerHTML = '';
       return;
