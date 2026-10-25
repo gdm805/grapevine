@@ -32,7 +32,7 @@ category: Wills
 date: 2026-09-22
 summary: A will says who gets your property and who raises your children. Here is what it does, what it doesn't, and who should have one.
 image: learn-will
-alt: A fountain pen and lavender on a handwritten page
+alt: A printed Last Will and Testament
 ---
 A will is a legal document that says what happens to your property after you die. It also lets you name the person who will carry out your wishes, called your executor, and, if you have children under 18, the person you would want to raise them, called a guardian.
 
