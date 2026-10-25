@@ -36,7 +36,7 @@
    needs to be removed when the beta ends (though this block can be deleted then). */
 (function () {
   'use strict';
-  var BETA_UNTIL = new Date('2026-11-13T00:00:00');   /* launch day; the beta ends the day before (launch moved to Nov 13, 2026) */
+  var BETA_UNTIL = new Date('2026-10-25T00:00:00');   /* beta testing ended Oct 25, 2026 */
   var EMAIL = 'support@tovakin.com';
   if (new Date() >= BETA_UNTIL) return;
   var tester = false;

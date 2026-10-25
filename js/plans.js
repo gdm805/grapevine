@@ -79,7 +79,7 @@ window.GV_CLOSED_STATES = {
 };
 window.GVClosedState = function (state) { return (window.GV_CLOSED_STATES || {})[state] || ''; };
 
-window.GV_BETA = { on: true, code: 'BETANOV', survey: '445AKO' };   /* BETANOV replaced BETA2026 on 13 Oct 2026 (launch moved to Nov 13); expires Nov 12 */
+window.GV_BETA = { on: false, code: 'BETANOV', survey: '445AKO' };   /* beta testing ended Oct 25, 2026 (on: false turns off the free beta checkout and survey) */
 (function () {
   try {
     if (window.GV_BETA && window.GV_BETA.on && /[?&]beta=1\b/.test(location.search)) localStorage.setItem('grapevine.beta', '1');
