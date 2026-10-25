@@ -165,7 +165,7 @@ category: Wills
 date: 2026-09-23
 summary: A pour-over will is the safety net for your living trust. It sends anything you forgot to put in the trust into it after you die.
 image: learn-pour-over
-alt: An open drawer of filed papers
+alt: Water being poured into a pottery pitcher
 ---
 A pour-over will is a will that works together with a living trust. Instead of leaving your property to individual people, it leaves whatever is not already in your trust to your trust, so it "pours over" into it. From there, your trust's instructions decide who receives it.
 

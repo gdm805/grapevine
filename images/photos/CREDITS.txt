@@ -12,7 +12,7 @@ learn-will          Melinda Gimpel        https://unsplash.com/photos/last-will-
 learn-will-or-trust Vitaly Gariev         https://unsplash.com/photos/couple-sharing-a-morning-moment-in-the-kitchen-n0iJ3TaQjXU
 learn-intestate     Laura Fuhrman         https://unsplash.com/photos/person-opening-photo-album-displaying-grayscale-photos-73OJLcahQHg
 learn-trust-home    Micah Carlson         https://unsplash.com/photos/white-car-near-white-and-brown-house-qN-T-pY17Vc
-learn-pour-over     Maksym Kaharlytskyi   https://unsplash.com/photos/file-cabinet-Q9y3LRuuxmg
+learn-pour-over     Teslariu Mihai        https://unsplash.com/photos/water-pouring-from-brown-ceramic-vase-wA_qXJ32PKU   (replaced the file-drawer photo, 25 Oct 2026)
 learn-executor      Nappy                 https://unsplash.com/photos/a-man-and-woman-smiling-S7yToJo84tE
 learn-guardian      Vivek Kumar           https://unsplash.com/photos/woman-and-child-laughing-on-sofa-a-_1PPjnbUg
 learn-poa           Nani Chavez           https://unsplash.com/photos/two-people-holding-hands-EKHB_4kEYzw
