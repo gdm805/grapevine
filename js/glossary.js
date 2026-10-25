@@ -377,6 +377,11 @@ window.GV_GLOSSARY = [
     "date": "2026-10-13"
    },
    {
+    "slug": "why-a-living-trust",
+    "title": "Living trust or will: six differences to know",
+    "date": "2026-10-25"
+   },
+   {
     "slug": "will-vs-living-trust",
     "title": "Will or living trust: which is right for you?",
     "date": "2026-09-21"

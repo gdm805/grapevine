@@ -47,14 +47,24 @@
     });
   }
   function body(text) {
-    var html = '', para = [], ul = [];
+    var html = '', para = [], ul = [], tbl = [];
+    function cells(l) { return l.replace(/^\|/, '').replace(/\|$/, '').split('|').map(function (c) { return c.trim(); }); }
     function flush() {
       if (para.length) { html += '<p>' + inline(para.join(' ')) + '</p>'; para = []; }
       if (ul.length) { html += '<ul>' + ul.map(function (x) { return '<li>' + inline(x) + '</li>'; }).join('') + '</ul>'; ul = []; }
+      /* a table (25 Oct 2026): rows written as | cell | cell |, the first row is the heading row */
+      if (tbl.length) {
+        var rows = tbl.filter(function (l) { return !/^\|[\s:|-]+\|?$/.test(l); }).map(cells);
+        html += '<div class="table-wrap"><table class="art-table"><thead><tr>' + rows[0].map(function (c) { return '<th scope="col">' + inline(c) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+          rows.slice(1).map(function (r) { return '<tr>' + r.map(function (c, i) { return i === 0 ? '<th scope="row">' + inline(c) + '</th>' : '<td>' + inline(c) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+        tbl = [];
+      }
     }
     text.split('\n').forEach(function (raw) {
       var line = raw.trim(), m;
       if (!line) { flush(); return; }
+      if (line.charAt(0) === '|') { if (para.length || ul.length) { var t = tbl; tbl = []; flush(); tbl = t; } tbl.push(line); return; }
+      if (tbl.length) flush();
       if ((m = /^##\s+(.*)$/.exec(line))) { flush(); html += '<h2>' + inline(m[1]) + '</h2>'; }
       else if ((m = /^-\s+(.*)$/.exec(line))) { if (para.length) flush(); ul.push(m[1]); }
       else { if (ul.length) flush(); para.push(line); }

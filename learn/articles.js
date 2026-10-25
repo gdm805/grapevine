@@ -547,4 +547,99 @@ Make sure life insurance, retirement accounts and other accounts name the right 
 ## Keep a list of important contacts
 
 A list of your accounts, advisors and key contacts saves your family a great deal of searching. You can make one with [Important Contacts](contacts.html).
+
+=== why-a-living-trust
+title: Living trust or will: six differences to know
+category: Trusts
+date: 2026-10-25
+summary: Both say who receives your property. They differ on probate, privacy, incapacity, how an inheritance is paid out, and cost. Here are the facts, side by side.
+---
+A will and a revocable living trust both say who receives your property. They work differently in several ways. Here are six differences, a side-by-side comparison, and what each one does not do.
+
+## 1. Probate
+
+A will does not avoid probate. Probate is the court process for settling a person's estate after death. Depending on the state and the estate, it can involve court filings, attorney fees, administrative costs and time before beneficiaries receive their inheritance.
+
+Assets held in a properly funded living trust generally pass to beneficiaries without probate.
+
+**What this means:** with a funded trust, those assets can usually be distributed without court proceedings. Assets that pass under a will generally go through probate first.
+
+## 2. Privacy
+
+When a will goes through probate, information about the estate can become part of the public record. A living trust generally does not go through the same public court process.
+
+**What this means:** the terms of a trust and the assets in it generally stay out of public court records.
+
+## 3. Incapacity
+
+A will takes effect only at death. It gives no one authority to manage your assets during your lifetime.
+
+A living trust names a successor trustee who can manage the trust's assets if you become unable to manage them yourself, according to the trust's terms.
+
+**What this means:** with a trust, someone you chose can manage trust assets without a court appointment. With only a will, a court process may be needed to give someone that authority (a durable power of attorney can also cover many financial matters).
+
+## 4. How an inheritance is paid out
+
+With a simple will, beneficiaries usually receive their inheritance outright once the estate is settled. A living trust can set conditions and timing. For example, it can say that:
+
+- Children receive one-third of their inheritance at age 25, another third at 30, and the rest at 35.
+- Money stays available for a child's education, health and general welfare.
+- A beneficiary receives distributions under a trustee's supervision.
+- Assets are held for a surviving spouse for life, with the remainder passing to children.
+
+A will can also create trusts like these (called testamentary trusts), but those generally come into being through probate.
+
+**What this means:** both can control timing; a living trust does it without probate.
+
+## 5. After death
+
+When someone dies with only a will, the family may need to go through probate before certain assets can be distributed.
+
+With a properly funded living trust, the successor trustee generally has authority to handle the trust's assets without first being appointed by a probate court.
+
+**What this means:** the steps the family takes after a death differ depending on which document holds the assets.
+
+## 6. Control during your lifetime
+
+Putting assets in a revocable living trust does not mean giving up control. With a typical revocable trust, you can be your own trustee and can generally:
+
+- Buy and sell trust property.
+- Manage your investments.
+- Add or remove assets.
+- Change your beneficiaries.
+- Amend the trust.
+- Revoke the trust entirely.
+
+A will can also be changed or replaced at any time while you are legally competent.
+
+## Side by side
+
+| Feature | Last will and testament | Revocable living trust |
+|---|---|---|
+| Avoids probate | ❌ Generally no | ✅ Yes, for properly funded trust assets |
+| Privacy | ❌ Probate records are generally public | ✅ Generally stays private |
+| Takes effect | At death | During your lifetime |
+| Covers incapacity | ❌ No | ✅ A successor trustee can manage trust assets |
+| Controls who receives what | ✅ Yes, through estate administration | ✅ Yes, with more options |
+| Inheritance in stages | ⚠️ Needs added trust provisions | ✅ Can be built into the trust |
+| Court involvement | ❌ Probate may be required | ✅ Can greatly reduce court involvement |
+| Property in more than one state | ⚠️ May require probate in each state | ✅ Can avoid multiple probate proceedings |
+| Can be changed during your life | ✅ Yes, while you are legally competent | ✅ Yes, while you are legally competent |
+| Names guardians for minor children | ✅ Yes, subject to court approval | ❌ Needs a will or other authorized nomination |
+| Initial cost | Generally lower | Generally higher |
+| After death | May involve probate costs | May reduce probate costs and delays |
+
+## Cost, and what a trust does not do
+
+A will usually costs less to prepare. A living trust usually costs more up front, and it may reduce probate-related costs and delays later.
+
+A revocable living trust does not by itself reduce estate taxes, protect assets from your own creditors, or eliminate every expense. It also has to be funded: assets left outside the trust may still need probate unless they pass some other legal way, such as a beneficiary designation. See [how to fund a living trust](learn.html#how-to-fund-a-living-trust).
+
+## A trust usually comes with a will
+
+A living trust plan usually also includes a [pour-over will](learn.html#what-is-a-pour-over-will). It moves anything left outside the trust into the trust after death, and it is where parents name guardians for minor children. Assets that pass through a pour-over will may still go through probate.
+
+## Summary
+
+A will says who receives your property and can name guardians for children. A funded revocable living trust can also avoid probate for trust assets, keep them out of public court records, provide for management during incapacity, and set the timing of distributions. Which fits a particular person depends on their circumstances. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 `;
