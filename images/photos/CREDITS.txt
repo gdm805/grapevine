@@ -7,7 +7,7 @@ pricing-porch  Thomas Park            https://unsplash.com/photos/a-porch-with-a
 learn-pets     Wade Austin Ellis      https://unsplash.com/photos/woman-hugging-a-dog-FtuJIuBbUhI
 learn-keys     Jakub Zerdzicki        https://unsplash.com/photos/holding-house-keys-in-front-of-the-entrance-bqUZEAeWuok
 learn-doctor   Vitaly Gariev          https://unsplash.com/photos/doctor-consults-with-patient-in-medical-office-iyeUwItlIPk
-home-family         TopSphere Media       https://unsplash.com/photos/man-carrying-baby-and-kissing-face-0mRerwRVqVA   (replaced the grandmother photo, 23 Oct 2026)
+home-family         Gift Habeshaw         https://unsplash.com/photos/two-person-holding-a-kid-close-up-photography-Hud9VDXzA9s   (25 Oct 2026; earlier: father and baby, grandmother and child)
 learn-will          Melinda Gimpel        https://unsplash.com/photos/last-will-and-testament-white-printer-paper-wkfZyteTMOA   (replaced the pen-and-lavender photo, 25 Oct 2026)
 learn-will-or-trust Vitaly Gariev         https://unsplash.com/photos/couple-sharing-a-morning-moment-in-the-kitchen-n0iJ3TaQjXU
 learn-intestate     Laura Fuhrman         https://unsplash.com/photos/person-opening-photo-album-displaying-grayscale-photos-73OJLcahQHg

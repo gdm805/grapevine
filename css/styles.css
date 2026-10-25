@@ -545,7 +545,7 @@ details[id] { scroll-margin-top: 110px; }
 .photo-how { aspect-ratio: 4 / 3; }
 .band-split { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
 .photo-band { aspect-ratio: 4 / 5; box-shadow: 0 18px 44px rgba(0, 0, 0, .28); }
-.photo-band img { object-position: 45% 40%; }
+.photo-band img { object-position: 52% 45%; }
 @media (max-width: 900px) {
   .photo-hero { aspect-ratio: 4 / 3; border-radius: 18px; }
   .photo-wide { aspect-ratio: 16 / 8; border-radius: 18px; }
