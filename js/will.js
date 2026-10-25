@@ -4839,11 +4839,7 @@
       sheet().then(function (blob) { saveBlob(blob, FILE); msg.textContent = 'Your signing steps are downloading to your Downloads folder.'; })
         .catch(function () { msg.textContent = 'We could not build the signing steps PDF. Please reload the page and try again.'; });
     });
-    box.querySelector('[data-sign-print]').addEventListener('click', function () {
-      var job = window.GVExport.printStart();
-      sheet().then(function (blob) { return job.show(blob, FILE, saveBlob); }).then(function (m) { msg.textContent = m; })
-        .catch(function () { job.cancel(); msg.textContent = 'We could not build the signing steps PDF. Please reload the page and try again.'; });
-    });
+    /* (the "Print signing steps" button was removed 23 Oct 2026; its leftover click hookup broke this screen until 25 Oct) */
   }
   /* the blank template of this document, set to the person's state (North Carolina requires that a customer can
      see the document's wording before buying: N.C. Gen. Stat. 84-2.2; the blank template is never blurred) */
