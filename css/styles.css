@@ -559,3 +559,7 @@ details[id] { scroll-margin-top: 110px; }
   .photo-how { aspect-ratio: 16 / 9; }
   .photo-band { aspect-ratio: 16 / 11; }
 }
+
+/* Terms: the arbitration notice under the date (26 Oct 2026) */
+.arb-notice { margin: 14px 0 22px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r-md); font-size: 14.5px; line-height: 1.5; }
+.arb-notice a { color: inherit; }

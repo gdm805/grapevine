@@ -214,7 +214,7 @@
      California. The bold statements are the ones 6410(b) requires in 12-point bold; (b)(3) and (b)(5) -- the
      county clerk's details -- appear only once GV_CA_LDA.registered is true (js/plans.js). */
   var caAck = false;
-  var TERMS_VERSION = 'October 23, 2026';   /* the "Last updated" date on terms.html */
+  var TERMS_VERSION = 'October 26, 2026';   /* the "Last updated" date on terms.html */
   function isCA() {
     try { return ((JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || '') === 'California'; } catch (e) { return false; }
   }
@@ -277,7 +277,7 @@
     /* the refund policy, shown before payment (21 Oct 2026): several states (New York GBL 218-a, Ohio CSPA and others)
        require a no-refund policy to be disclosed conspicuously before purchase. Keep in step with terms.html section 7. */
     return '<p class="refund-note"><strong>All sales are final once your documents are delivered.</strong> We refund a duplicate charge, a wrong amount, or a problem on our side that stops you downloading. Email us within 30 days. <a href="' + url + '#s7" target="_blank" rel="noopener">Refund policy</a></p>' +
-      '<label class="check terms-ack"><input type="checkbox" id="terms-ack"' + (termsAck ? ' checked' : '') + '><span>I have read and agree to the <a href="' + url + '" target="_blank" rel="noopener">Terms and Conditions</a>, and I understand all sales are final once my documents are delivered.</span></label>' +
+      '<label class="check terms-ack"><input type="checkbox" id="terms-ack"' + (termsAck ? ' checked' : '') + '><span>I have read and agree to the <a href="' + url + '" target="_blank" rel="noopener">Terms and Conditions</a>, and I understand all sales are final once my documents are delivered and that <strong>disputes are resolved by individual arbitration, not class actions or jury trials</strong> (Section 14).</span></label>' +
       '<details class="terms-fold"><summary>Read the Terms and Conditions</summary>' +
       '<div class="terms-box" data-terms tabindex="0">Loading…</div>' +
       '<p class="terms-open"><a href="' + url + '" target="_blank" rel="noopener">Open the terms in a new tab</a></p></details>';
