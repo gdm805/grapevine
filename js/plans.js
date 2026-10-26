@@ -67,7 +67,8 @@ window.GV_CA_LDA = { registered: false, county: '', clerkAddress: '', clerkPhone
    New Jersey: active UPL class actions against LegalZoom. Illinois (25 Oct 2026, Greg): 815 ILCS 505/2BB bars non-lawyer
    "assembly, drafting, execution, and funding of a living trust document" (no forms/software exemption). Louisiana, Rhode Island, Mississippi
    (26 Oct 2026, Greg): La. R.S. 37:212 (drawing papers for a fee; civil law); R.I.G.L. 11-27-2(4) (drafting a will "for another
-   person", criminal); Miss. Code 73-3-55 (writing a will for a fee). Research: grapevine-private-notes/UPL-50-STATE-REVIEW-OCT-26-2026.txt; grapevine-private-notes/STATE-RULES-RESEARCH-OCT-2026.txt */
+   person", criminal); Miss. Code 73-3-55 (writing a will for a fee). Georgia (26 Oct 2026, Greg): O.C.G.A.
+   15-19-50/51/56/60 (broad; treble-damage consumer suits; HB 1433 felony bill died in committee 2026, may return 2027). Research: grapevine-private-notes/UPL-50-STATE-REVIEW-OCT-26-2026.txt; grapevine-private-notes/STATE-RULES-RESEARCH-OCT-2026.txt */
 window.GV_CLOSED_STATES = {
   'California': 'Tovakin isn\u2019t available in California yet. We\u2019re confirming California\u2019s rules for online document services and hope to offer California documents soon.',
   'Arizona': 'Tovakin isn\u2019t available in Arizona yet. We\u2019re confirming Arizona\u2019s rules for online document services and hope to offer Arizona documents soon.',
@@ -82,7 +83,8 @@ window.GV_CLOSED_STATES = {
   'Illinois': 'Tovakin isn\u2019t available in Illinois yet. We\u2019re confirming Illinois\u2019s rules for online document services and hope to offer Illinois documents soon.',
   'Louisiana': 'Tovakin isn\u2019t available in Louisiana yet. We\u2019re confirming Louisiana\u2019s rules for online document services and hope to offer Louisiana documents soon.',
   'Rhode Island': 'Tovakin isn\u2019t available in Rhode Island yet. We\u2019re confirming Rhode Island\u2019s rules for online document services and hope to offer Rhode Island documents soon.',
-  'Mississippi': 'Tovakin isn\u2019t available in Mississippi yet. We\u2019re confirming Mississippi\u2019s rules for online document services and hope to offer Mississippi documents soon.'
+  'Mississippi': 'Tovakin isn\u2019t available in Mississippi yet. We\u2019re confirming Mississippi\u2019s rules for online document services and hope to offer Mississippi documents soon.',
+  'Georgia': 'Tovakin isn\u2019t available in Georgia yet. We\u2019re confirming Georgia\u2019s rules for online document services and hope to offer Georgia documents soon.'
 };
 window.GVClosedState = function (state) { return (window.GV_CLOSED_STATES || {})[state] || ''; };
 
