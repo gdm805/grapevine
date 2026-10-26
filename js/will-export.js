@@ -312,6 +312,26 @@
       /* a combined package PDF marks where each document starts ({k:'break', footer:...}), so every
          document gets its own footer and its own "Page X of Y" */
       var sections = [{ start: 1, front: 1, footer: o.footer }];
+      /* NOTICE PAGE (26 Oct 2026, Greg): every downloaded document or package starts with one page of its own that
+         says, clearly and conspicuously, that the forms are not a substitute for the advice of an attorney (Texas
+         Gov't Code 81.101(c); Wyoming Bar Rule 7(c)(11)). It is NOT part of any document: no footer, not counted in
+         "Page X of Y", and it tells the reader to remove it before signing. Turned on with o.notice. */
+      if (o.notice) {
+        noFoot[1] = true;
+        y = M + 40;
+        wrapCentered('IMPORTANT NOTICE', 20, true, 1.2); y += 4;
+        doc.setLineWidth(0.8); doc.line(PW / 2 - 60, y + 6, PW / 2 + 60, y + 6); y += 30;
+        wrapCentered('This page is not part of your document.', 13, true, 0.2);
+        wrapCentered('Remove it before you sign.', 13, true, 0.2); y += 26;
+        doc.setLineWidth(1.2); var boxTop = y; y += 18;
+        para('**These documents are not a substitute for the advice of an attorney.**', { size: 15, left: 18, right: 18, justify: false, after: 10 });
+        para('Tovakin is not a law firm and does not give legal advice. You prepared these documents yourself using self-help software. No one at Tovakin reviewed your answers or your documents for legal sufficiency.', { size: 12.5, left: 18, right: 18, justify: false, after: 10 });
+        para('If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.', { size: 12.5, left: 18, right: 18, justify: false, after: 4 });
+        y += 12; doc.rect(M, boxTop, W, y - boxTop); y += 30;
+        para('Each document must be signed, and witnessed or notarized where required, exactly as its signing instructions describe. A document that is not signed as required may not be valid.', { size: 12, justify: false, after: 0 });
+        newPage();
+        sections[0].start = sections[0].front = doc.getNumberOfPages();
+      }
       blocks.forEach(function (b, bi) {
         switch (b.k) {
           case 'cover': {

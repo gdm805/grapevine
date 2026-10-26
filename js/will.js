@@ -5218,7 +5218,7 @@
   }
   function exportOptions() {
     var info = exportInfo();
-    return { footer: info.footer, draftLabel: draft ? draftLabel : '', title: info.footer, base: info.base };
+    return { footer: info.footer, draftLabel: draft ? draftLabel : '', title: info.footer, base: info.base, notice: true };
   }
   /* Print opens the finished PDF (footer, "Page X of Y" and all) instead of printing the web page: browsers
      like Safari and DuckDuckGo ignore the page-footer instructions the web page's own print mode relies on,
@@ -5296,7 +5296,7 @@
         allBlocks.forEach(function (r, i) { if (i > 0) combined.push({ k: 'break', footer: r.footer }); combined.push.apply(combined, r.blocks); });
         var who = clean(readProfile().name || footerName());
         var file = who.replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
-        var opts = { footer: (allBlocks[0] && allBlocks[0].footer) || (pkgName(f) + ' Package of ' + (who || 'Your Documents')), draftLabel: draft ? draftLabel : '', title: pkgName(f) + ' Package', base: 'Tovakin-' + pkgName(f) + '-Package' + (file ? '-' + file : '') };
+        var opts = { footer: (allBlocks[0] && allBlocks[0].footer) || (pkgName(f) + ' Package of ' + (who || 'Your Documents')), draftLabel: draft ? draftLabel : '', title: pkgName(f) + ' Package', base: 'Tovakin-' + pkgName(f) + '-Package' + (file ? '-' + file : ''), notice: true };
         return window.GVExport.pdf(combined, opts).then(function (blob) { offerSave(blob, opts.base + '.pdf'); return deliver(blob, opts.base + '.pdf'); });
       })
       .then(function () { status('Done. Your package PDF is downloading to your Downloads folder. It has every document, with page numbers running all the way through.'); })

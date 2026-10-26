@@ -161,7 +161,7 @@
       var who = '';
       try { who = (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).name || ''; } catch (e) { who = ''; }
       var file = String(who).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
-      var opts = { footer: sheet ? window.GVExport.sheetFooter : ((out[0] && out[0].footer) || (pkg + ' Package')), draftLabel: '', title: pkg + ' Package', base: 'Tovakin-' + pkg.replace(/\s+/g, '-') + '-Package' + (file ? '-' + file : '') };
+      var opts = { footer: sheet ? window.GVExport.sheetFooter : ((out[0] && out[0].footer) || (pkg + ' Package')), draftLabel: '', title: pkg + ' Package', base: 'Tovakin-' + pkg.replace(/\s+/g, '-') + '-Package' + (file ? '-' + file : ''), notice: true };
       return window.GVExport.pdf(combined, opts).then(function (blob) { return { blob: blob, filename: opts.base + '.pdf' }; });
     });
   }
