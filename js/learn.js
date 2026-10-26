@@ -125,7 +125,7 @@
       photo(a, '(min-width: 760px) 720px, 94vw') +
       '<div class="prose">' + body(a.body) + '</div>' +
       '<p class="note"><strong>General information, not legal advice.</strong> Laws differ by state and change over time. Tovakin is not a law firm. For advice about your situation, talk to a licensed attorney in your state.</p>' +
-      '<aside class="cta-card"><div><h2>Ready to put this into action?</h2><p>Answer a few plain questions and we\u2019ll point you to the plan that fits.</p></div><a class="btn btn-primary" href="index.html#finder">Find my plan <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></aside>' +
+      '<aside class="cta-card"><div><h2>Ready to put this into action?</h2><p>See what each document does, then answer a few plain questions to make yours.</p></div><a class="btn btn-primary" href="index.html#finder">Compare the documents <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></aside>' +
       (related.length ? '<section class="related"><h3>Keep reading</h3><ul class="post-list">' + related.map(row).join('') + '</ul></section>' : '') +
       '</div></article>';
   }
