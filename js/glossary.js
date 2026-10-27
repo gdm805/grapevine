@@ -38,7 +38,7 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "what-is-a-will",
-    "title": "What is a will, and do I need one?",
+    "title": "What is a will?",
     "date": "2026-09-22"
    }
   ]
@@ -69,7 +69,7 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "choosing-an-executor",
-    "title": "How to choose an executor",
+    "title": "What does an executor do?",
     "date": "2026-09-19"
    }
   ]
@@ -200,7 +200,7 @@ window.GV_GLOSSARY = [
    },
    {
     "slug": "will-vs-living-trust",
-    "title": "Will or living trust: which is right for you?",
+    "title": "Will or living trust: how they differ",
     "date": "2026-09-21"
    }
   ]
@@ -240,7 +240,7 @@ window.GV_GLOSSARY = [
   "term": "Codicil",
   "aka": [],
   "topic": "Wills",
-  "def": "A separate document that changes part of an existing will. It must be signed with the same formalities as a will. Many people simply replace the whole will instead.",
+  "def": "A separate document that changes part of an existing will. It must be signed with the same formalities as a will. A will can also be replaced entirely by a new one.",
   "varies": false,
   "see": [],
   "learn": []
@@ -292,7 +292,7 @@ window.GV_GLOSSARY = [
    },
    {
     "slug": "choosing-a-guardian",
-    "title": "How to choose a guardian for your children",
+    "title": "Naming a guardian for your children",
     "date": "2026-09-18"
    }
   ]
@@ -383,7 +383,7 @@ window.GV_GLOSSARY = [
    },
    {
     "slug": "will-vs-living-trust",
-    "title": "Will or living trust: which is right for you?",
+    "title": "Will or living trust: how they differ",
     "date": "2026-09-21"
    }
   ]
@@ -832,7 +832,7 @@ window.GV_GLOSSARY = [
   "learn": [
    {
     "slug": "what-is-a-hipaa-authorization",
-    "title": "What is a HIPAA authorization, and why have one?",
+    "title": "What is a HIPAA authorization?",
     "date": "2026-11-16"
    }
   ]

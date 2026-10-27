@@ -27,10 +27,10 @@ window.LEARN_ARTICLES = String.raw`
 // ==========================================================================
 
 === what-is-a-will
-title: What is a will, and do I need one?
+title: What is a will?
 category: Wills
 date: 2026-09-22
-summary: A will says who gets your property and who raises your children. Here is what it does, what it doesn't, and who should have one.
+summary: A will says who receives your property and who you would want to raise your children. Here is what it does, and what it doesn't.
 image: learn-will
 alt: A printed Last Will and Testament
 ---
@@ -45,27 +45,27 @@ A will is a legal document that says what happens to your property after you die
 
 ## What a will does not do
 
-A will does not control everything you own. Some property passes by its own rules, no matter what your will says. This usually includes retirement accounts and life insurance with a named beneficiary, property you own jointly with a right of survivorship, and anything you have placed in a trust. It is worth checking that those beneficiary forms are up to date.
+A will does not control everything you own. Some property passes by its own rules, no matter what your will says. This usually includes retirement accounts and life insurance with a named beneficiary, property you own jointly with a right of survivorship, and anything you have placed in a trust.
 
-## Do you need one?
+## Without a will
 
-Most adults with children, a home, savings, or particular wishes benefit from having a will. If you die without one, state law decides who receives your property and a court decides who raises your children. That result may not be what you would have chosen.
+If you die without a will, state law decides who receives your property, and a court decides who raises your children under 18. That result may differ from what you would have chosen.
 
 ## What makes a will valid
 
-The rules vary by state, but a will generally needs to be written, signed by you, and signed by witnesses who watched you sign. A few states also involve a notary; in Louisiana, for example, the will is signed in front of a notary and two witnesses. You must be an adult of sound mind, acting of your own free will. Following your state's signing steps carefully matters, because a will that isn't signed correctly may not be honored.
+The rules vary by state, but a will generally needs to be written, signed by you, and signed by witnesses who watched you sign. A few states also involve a notary; in Louisiana, for example, the will is signed in front of a notary and two witnesses. You must be an adult of sound mind, acting of your own free will. A will that isn't signed as the law requires may not be honored.
 
-A will usually goes through probate, which is the court process of settling an estate. If you want to avoid probate, read [our comparison of wills and living trusts](learn.html#will-vs-living-trust).
+A will usually goes through probate, which is the court process of settling an estate. For how a will and a living trust differ, read [our comparison of wills and living trusts](learn.html#will-vs-living-trust).
 
 === will-vs-living-trust
-title: Will or living trust: which is right for you?
+title: Will or living trust: how they differ
 category: Trusts
 date: 2026-09-21
 summary: Both say who gets your property. They differ on probate, privacy, cost and what happens if you become unable to manage your own affairs.
 image: learn-will-or-trust
 alt: A couple talking together at their kitchen table
 ---
-Both a will and a living trust let you decide who receives your property. They work differently, and many families use both.
+Both a will and a living trust let you decide who receives your property. They work differently, and some people have both.
 
 ## The short answer
 
@@ -78,15 +78,11 @@ Compared with administering a trust, settling an estate under a will is usually 
 - **If you become unable to manage your affairs.** A will only takes effect after you die. A living trust can name someone to manage trust property while you are still alive but unable to.
 - **Cost and effort.** A will is typically simpler and less expensive to create. A trust takes more work, because you must transfer your property into it, such as retitling a house.
 
-## The step people forget
+## Funding a trust
 
-A trust only controls property that has actually been placed in it. A trust that is created but never funded may do little. This is why people with a trust often also sign a [pour-over will](learn.html#what-is-a-pour-over-will), which sends anything left outside the trust into it at death.
+A trust only controls property that has actually been placed in it. A trust that is created but never funded may do little. A [pour-over will](learn.html#what-is-a-pour-over-will) works with a trust: it sends anything left outside the trust into it at death.
 
-## Which one fits you
-
-A will may be enough if your property is modest, you are comfortable with probate, and you mainly want to name an executor and a guardian. A trust is worth a closer look if you own real estate, want to keep your affairs private, own property in more than one state, or want to avoid probate.
-
-The right answer depends on your family, your property and your state's law. If your situation is complicated, speak with a licensed attorney in your state.
+How these differences apply depends on your family, your property and your state's law. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 
 === dying-without-a-will
 title: What happens if you die without a will?
@@ -119,9 +115,9 @@ If you have children under 18, and no other parent is able to care for them, a c
 
 A court will appoint someone, often called an administrator, to settle your affairs. They may be a person you would not have chosen, and they may need to post a bond, which adds cost.
 
-## Why a will helps
+## What a will changes
 
-A will lets you choose who receives your property, name your executor, and nominate a guardian for your children. It usually takes less time and costs less than leaving these decisions to a court. To see what a will involves, read [What is a will, and do I need one?](learn.html#what-is-a-will)
+A will lets you choose who receives your property, name your executor, and nominate a guardian for your children. To see what a will involves, read [What is a will?](learn.html#what-is-a-will)
 
 === what-is-a-living-trust
 title: What is a living trust?
@@ -131,18 +127,18 @@ summary: A living trust holds your property while you are alive and passes it to
 image: learn-trust-home
 alt: A brick family home with a front lawn
 ---
-A living trust is a legal arrangement you set up during your lifetime. You move property such as your home and accounts into the trust, and the trust's written instructions say who manages it and who receives it. Most people use a revocable living trust, which means you can change it or cancel it at any time while you have capacity.
+A living trust is a legal arrangement you set up during your lifetime. You move property such as your home and accounts into the trust, and the trust's written instructions say who manages it and who receives it. This article is about a revocable living trust, which you can change or cancel at any time while you have capacity.
 
 ## Who does what
 
 - **You are the trustmaker.** You create the trust and decide its terms. Some states use the words settlor or grantor.
 - **You are usually the first trustee.** You keep managing your own property just as before.
-- **A successor trustee takes over** if you die or can no longer manage your affairs. This is someone you choose, such as a spouse, a grown child or a trusted friend.
+- **A successor trustee takes over** if you die or can no longer manage your affairs. This is the person you name in the trust.
 - **Beneficiaries receive the property** under the trust's instructions, now or later.
 
-Married couples often make one joint trust together. Each spouse can also have a separate trust.
+Married couples can make one joint trust together, or each spouse can have a separate trust.
 
-## Why people choose one
+## What it can do
 
 - **It can avoid probate.** Property that is in the trust when you die passes under the trust's terms, generally without a court case. That can save time and expense, especially if you own real estate in more than one state.
 - **It stays private.** A will usually becomes a public court record once it goes through probate. A trust generally does not.
@@ -151,13 +147,13 @@ Married couples often make one joint trust together. Each spouse can also have a
 
 ## What it does not do
 
-A trust only controls property that has actually been placed in it. Signing the trust is the first step. You also need to retitle your home and accounts in the name of the trust, or name the trust as beneficiary where that is allowed. Anything left outside the trust may still go through probate, which is why people with a trust also sign a pour-over will.
+A trust only controls property that has actually been placed in it. Property is added by retitling it in the name of the trust, or by naming the trust as beneficiary where that is allowed. Anything left outside the trust may still go through probate. A pour-over will sends that property to the trust, generally after probate.
 
 A revocable living trust generally does not reduce income taxes or shield property from your own creditors while you are alive.
 
 ## Getting started
 
-You can [write your living trust](trust.html) here, or a [joint trust](trust-joint.html) with your spouse. To compare it with a will, read [Will or living trust: which is right for you?](learn.html#will-vs-living-trust)
+You can [write your living trust](trust.html) here, or a [joint trust](trust-joint.html) with your spouse. To compare it with a will, read [Will or living trust: how they differ](learn.html#will-vs-living-trust)
 
 === what-is-a-pour-over-will
 title: What is a pour-over will?
@@ -169,7 +165,7 @@ alt: Water being poured into a pottery pitcher
 ---
 A pour-over will is a will that works together with a living trust. Instead of leaving your property to individual people, it leaves whatever is not already in your trust to your trust, so it "pours over" into it. From there, your trust's instructions decide who receives it.
 
-## Why people with a trust still need one
+## Why it exists
 
 A trust only controls the property that has actually been placed in it. Over a lifetime, it is easy for something to be left out: a new bank account, a car, an inheritance, or a house you meant to retitle. A pour-over will catches those assets and sends them to the same place as everything else.
 
@@ -182,23 +178,23 @@ A trust only controls the property that has actually been placed in it. Over a l
 
 ## What it does not do
 
-A pour-over will does not avoid probate for the property that passes under it. Property that passes under a will generally goes through probate first, and only then moves to the trust. The best protection is to move your major assets into your trust while you are alive, for example by retitling your home and your accounts. Some states have simpler court procedures for small estates.
+A pour-over will does not avoid probate for the property that passes under it. Property that passes under a will generally goes through probate first, and only then moves to the trust. Property retitled into the trust during your lifetime does not pass under the pour-over will. Some states have simpler court procedures for small estates.
 
-## Keep your documents in step
+## The will and the trust together
 
-Your pour-over will refers to your trust by name and date. If you change your trust's name, restate it, or set up a new one, review your will too. After a marriage, divorce, birth or move to a new state, look over both documents.
+Your pour-over will refers to your trust by name and date. If the trust's name or date changes, or a new trust replaces it, the will's description of the trust no longer matches.
 
-If you already have a living trust, you can [write your pour-over will](pour-over.html) here. If you don't have one and only need a will, read [Will or living trust: which is right for you?](learn.html#will-vs-living-trust)
+If you already have a living trust, you can [write your pour-over will](pour-over.html) here. To compare a will with a living trust, read [Will or living trust: how they differ](learn.html#will-vs-living-trust)
 
 === choosing-an-executor
-title: How to choose an executor
+title: What does an executor do?
 category: Wills
 date: 2026-09-19
-summary: Your executor carries out your will. Here is what the job involves and what to look for.
+summary: Your executor carries out your will. Here is what the job involves.
 image: learn-executor
 alt: An older couple smiling at each other outdoors
 ---
-Your executor is the person you name in your will to handle your estate after you die. It is one of the most important choices in your will, and one of the easiest to put off.
+Your executor is the person you name in your will to handle your estate after you die.
 
 ## What an executor does
 
@@ -208,50 +204,41 @@ Your executor is the person you name in your will to handle your estate after yo
 - Gives your property to the people named in your will.
 - Keeps records and reports to the court, if required.
 
-## What to look for
+## Who can serve
 
-Choose someone who is an adult, organized, honest and calm under pressure. They do not need to be a lawyer or a financial expert, and they can hire professionals to help. It also helps if they live close by, or can travel when needed, because some tasks are hard to do from far away. Some states limit who can serve from out of state. Florida, for example, allows a nonresident executor only if they are a close relative, and other states may require an out-of-state executor to post a bond or name a local agent.
+An executor must generally be an adult who is legally able to serve. They do not need to be a lawyer or a financial expert, and they can hire professionals to help. Some states limit who can serve from out of state. Florida, for example, allows a nonresident executor only if they are a close relative, and other states may require an out-of-state executor to post a bond or name a local agent.
 
-Many people choose a spouse, an adult child, a sibling or a trusted friend. If your estate is complicated, you might choose a professional, such as a bank or trust company.
+An executor can be a family member, a friend, or a professional such as a bank or trust company.
 
-## Name a backup
+## Backups
 
-Your first choice may be unable or unwilling to serve when the time comes. Naming a backup executor avoids a court having to pick someone for you.
+A will can name a backup executor. If no executor named in the will can serve, a court appoints someone.
 
-## Talk to them first
+## Pay and the bond
 
-Ask before you name someone, and tell them where your signed will is kept. Being an executor takes time, and the person should agree to it. Executors are generally entitled to reasonable pay and to be reimbursed for their expenses.
+Being an executor takes time, and a person named as executor can decline to serve. Executors are generally entitled to reasonable pay and to be reimbursed for their expenses.
 
-Your will can also say whether your executor must post a bond, which is a kind of insurance policy. Many people choose to waive this, where the law allows.
+Your will can also say whether your executor must post a bond, which is a kind of insurance policy. Where the law allows, a will can waive the bond.
 
 === choosing-a-guardian
-title: How to choose a guardian for your children
+title: Naming a guardian for your children
 category: Children
 date: 2026-09-18
-summary: A guardian would raise your children if you couldn't. Here is how to think through the choice.
+summary: A guardian would raise your children if you couldn't. Here is how a nomination works.
 image: learn-guardian
 alt: A mother and her young daughter laughing together on a couch
 ---
-If you have children under 18, naming a guardian is often the most important reason to write a will. A guardian is the person you nominate to care for your children if you die and there is no other parent who can.
+If you have children under 18, a will is where you nominate a guardian for them. A guardian is the person you nominate to care for your children if you die and there is no other parent who can.
 
 ## A court has the final say
 
 A court decides who becomes guardian, and it will act in your children's best interests. A nomination in your will carries real weight, and judges generally follow it unless there is a good reason not to. Without a nomination, the court has to choose without knowing what you wanted.
 
-## Questions to ask yourself
-
-- Do they share your values about how to raise children?
-- Are they healthy, stable and able to take on the responsibility?
-- Do your children already know them and feel comfortable with them?
-- Would they be able to care for your children where they live now, or would the children have to move?
-- Do they want the role?
-
 ## Practical points
 
-- **Name a backup.** Your first choice may not be able to serve.
-- **Guardian of the person, and money.** A guardian cares for your child. Money left to a child is often managed separately, so it is worth naming who manages it and until what age.
-- **Talk to them first.** Confirm they are willing, and tell them your wishes.
-- **Review the choice.** Your family and theirs will change. Revisit your choice after major life events.
+- **Backups.** A will can nominate a backup guardian.
+- **Guardian of the person, and money.** A guardian cares for your child. Money left to a child is often managed separately; a will or trust can name who manages it and until what age.
+- **Willingness.** A person nominated as guardian can decline the role.
 
 If you and another parent are both alive, the surviving parent will usually keep custody. A guardian nomination matters most if neither parent can care for your children.
 
@@ -280,15 +267,15 @@ A health care directive covers medical decisions. It usually has two parts:
 
 Privacy law limits who can see your medical records. A HIPAA authorization names the people allowed to receive your health information, so your agent and family can talk to your doctors.
 
-## Why you want all of them
+## Without these documents
 
 Without these documents, your family may have to ask a court to appoint a guardian or conservator to make decisions for you. That process can be slow, expensive and public.
 
-## Choosing your agents
+## Agents and backups
 
-Pick people who are trustworthy, calm and willing to act. They can be the same person or different people. Name backups, talk to them ahead of time, and tell them where your documents are kept.
+The agent under each document can be the same person or different people, and each document can name backups.
 
-Requirements for these documents differ by state, so follow your state's signing rules.
+Requirements for these documents, including how they are signed, differ by state.
 
 You can [write your durable power of attorney](dpoa.html) here.
 
@@ -348,13 +335,13 @@ If you die with property still in your own name, that property may have to go th
 - **Retirement accounts.** IRAs and 401(k)s are usually not retitled to a trust. Instead, you name beneficiaries on the account. Changing the owner of a retirement account can have tax consequences.
 - **Life insurance.** You can name the trust, or individual people, as beneficiary.
 
-## Keep a list
+## Schedule A
 
 A Schedule A lists the property you intend to hold in your trust. It helps your successor trustee find everything, but listing an item on it doesn't replace a deed or an account change where one is needed.
 
-## Keep it up to date
+## Property acquired later
 
-When you buy a new home or open a new account, put it in the trust's name from the start. Reviewing your trust's property once a year is a good habit.
+Property acquired later, such as a new home or account, is in the trust only if it is titled in the trust's name or otherwise transferred to it.
 
 You can prepare a [General Assignment of Personal Property](assignment.html) and a [Schedule A](schedulea.html) here.
 
@@ -386,23 +373,23 @@ Depending on the powers you give, your agent may be able to:
 
 ## When it starts
 
-Some powers of attorney work as soon as they are signed. Others start only if you become incapacitated, which usually needs to be confirmed, for example by a doctor. The right choice depends on how much you trust your agent and how easily you want them to be able to step in.
+Some powers of attorney work as soon as they are signed. Others start only if you become incapacitated, which usually needs to be confirmed, for example by a doctor.
 
-## Choosing your agent
+## Agents and backups
 
-Choose someone honest, organized and willing to do the work. Naming a backup is wise. Some people name two agents to serve together, though that can slow things down if they have to agree.
+A power of attorney can name a backup agent. Some name two agents to serve together; when agents must act together, each decision needs both of them.
 
 You can [write your durable power of attorney](dpoa.html) here.
 
 === what-is-a-hipaa-authorization
-title: What is a HIPAA authorization, and why have one?
+title: What is a HIPAA authorization?
 category: Incapacity
 date: 2026-11-16
 summary: Privacy law keeps your medical information private, even from family. A HIPAA authorization lets the people you choose talk to your doctors.
 image: learn-doctor
 alt: A doctor talking with a patient in a medical office
 ---
-A federal privacy law, known as HIPAA, keeps your medical records private. That's usually a good thing, but it can also mean that your family can't get answers from your doctors or hospital when they need them most.
+A federal privacy law, known as HIPAA, keeps your medical records private. That privacy also applies to family: without an authorization, your family may not be able to get answers from your doctors or hospital.
 
 ## What it does
 
@@ -414,11 +401,11 @@ A HIPAA authorization is a short document that names the people your doctors, ho
 
 ## How it differs from a health care directive
 
-A health care directive names who makes medical decisions for you and records your wishes. A HIPAA authorization is narrower: it only lets people receive information. Many people sign both, so their health care agent can get the information needed to make good decisions.
+A health care directive names who makes medical decisions for you and records your wishes. A HIPAA authorization is narrower: it only lets people receive information. The two are separate documents, and they can name the same people.
 
-## Who to name
+## Who can be named
 
-You can name your health care agent, family members, or anyone else you'd like to have access. You don't have to give them decision-making power to let them receive information.
+An authorization can name your health care agent, family members, or anyone else. Receiving information under it does not give anyone decision-making power.
 
 ## How long it lasts
 
@@ -442,17 +429,11 @@ Children under 18 generally can't own or manage significant property in their ow
 
 ## The guardian and the money manager
 
-The person who raises your children (the guardian) and the person who manages their money don't have to be the same. Some families prefer to separate the two, so each has a clear role. See [how to choose a guardian](learn.html#choosing-a-guardian).
+The person who raises your children (the guardian) and the person who manages their money don't have to be the same. See [naming a guardian](learn.html#choosing-a-guardian).
 
-## Questions to think about
+## Beneficiary forms
 
-- At what age would your children be ready to receive money outright?
-- Who is good with money and would treat your children fairly?
-- Should the money be used for anything in particular, such as education?
-
-## Don't forget beneficiary forms
-
-Life insurance and retirement accounts pass to whoever is named on the account. Naming a minor child directly can cause the same court problems, so many parents name a trust or a custodian instead.
+Life insurance and retirement accounts pass to whoever is named on the account. Naming a minor child directly can cause the same court problems. Many accounts allow a trust or a custodian to be named instead.
 
 You can [write your will](will.html) or [your living trust](trust.html) here.
 
@@ -464,89 +445,77 @@ summary: Pets can't inherit, but you can name who will care for them and leave m
 image: learn-pets
 alt: A woman hugging her dog outdoors
 ---
-Under the law, pets are property, so they can't inherit money themselves. But you can still make sure they are cared for if something happens to you.
+Under the law, pets are property, so they can't inherit money themselves. A will can name a person to take them, and can leave that person money.
 
 ## Name a caretaker
 
-Your will can leave your pets to a specific person who has agreed to care for them. Naming a backup is wise, in case your first choice can't take them.
+Your will can leave your pets to a specific person, and can name a backup if that person can't take them.
 
 ## Leave money for their care
 
-You can leave money to the person who takes your pets and ask that it be used for their care. A simple request like this is not legally binding; the caretaker owns the money outright. For more control, many states allow a **pet trust**, which holds money for an animal's care and names someone to make sure it's spent that way.
-
-## Talk to the caretaker
-
-- Confirm they're willing and able to take your pets.
-- Share your pets' routines, diet, medical needs and vet's contact details.
-- Think about how much care will likely cost over your pets' lifetimes.
-
-## Short-term plans matter too
-
-If you're suddenly in the hospital, someone may need to step in right away. Tell a neighbor or friend where your pets are, and keep their information with your important papers.
+A will can leave money to the person who takes your pets with a request that it be used for their care. A request like this is not legally binding; the caretaker owns the money outright. Many states also allow a **pet trust**, which holds money for an animal's care and names someone to see that it is spent that way.
 
 You can name a caretaker for your pets when you [write your will](will.html).
 
 === update-your-will-or-trust
-title: When should you update your will or trust?
+title: Life events and your will or trust
 category: Wills
 date: 2026-12-07
-summary: Estate plans go out of date. Here are the life events that are good reasons to review yours.
+summary: Estate plans can go out of date. Here are life events that can affect yours.
 ---
 A will or trust reflects your life at the moment you sign it. As your family, property and address change, your documents can fall out of step with what you want.
 
-## Good reasons to review your documents
+## Events that can affect your documents
 
 - **Marriage, divorce or a new partner.** In many states, divorce automatically revokes gifts to a former spouse, but not always, and not on every account.
 - **A birth, adoption or death in the family.**
-- **Your children grow up.** A guardian may no longer be needed, and you may want to change the age they receive money.
-- **Someone you named can no longer serve.** Check your executor, trustee, guardian and agents.
+- **Your children grow up.** A guardian nomination no longer applies once a child turns 18.
+- **Someone you named can no longer serve,** such as an executor, trustee, guardian or agent.
 - **You move to another state.** Your documents are generally still valid, but the new state's rules may differ.
 - **You buy or sell significant property,** such as a home or business.
 - **Your wishes change.**
 
-## Don't forget beneficiary forms
+## Beneficiary forms
 
-Life insurance, retirement accounts and many bank accounts pass to the people named on the account, not under your will. Review those forms whenever you review your will.
+Life insurance, retirement accounts and many bank accounts pass to the people named on the account, not under your will.
 
 ## How to make changes
 
-Small changes can sometimes be made with an amendment (to a trust) or a codicil (to a will). For larger changes, many people simply sign a new document. Never write changes on a signed will by hand; that can create confusion or even invalidate it.
-
-A good habit is to review your documents every few years, and after any major life event.
+Small changes can sometimes be made with an amendment (to a trust) or a codicil (to a will). A new document can also replace the old one entirely. Handwritten changes on a signed will can create confusion or even invalidate it.
 
 === after-you-sign-your-documents
-title: What to do with your documents after you sign them
+title: Your documents after signing
 category: Wills
 date: 2026-12-14
-summary: Signing is only half the job. Here is where to keep your documents, who should have copies, and what to do next.
+summary: Where signed documents are often kept, who uses copies, and how a trust is funded.
 ---
-Once your documents are signed, a few simple steps make sure they'll actually work when they're needed.
+Signed documents only help if the people named in them can find and use them.
 
-## Keep the originals safe, but findable
+## Where originals are kept
 
-Store your originals somewhere secure but accessible, like a fireproof home safe or file. If you use a bank safe-deposit box, make sure someone you trust can get into it, since a box can be hard to open after a death. Some courts and law offices also accept wills for safekeeping.
+Originals are often kept in a fireproof home safe or file. A bank safe-deposit box can be hard for family to open after a death. Some courts and law offices accept wills for safekeeping.
 
-## Tell the right people where they are
+## Who knows where they are
 
-Your executor, successor trustee and agents should know your documents exist and where to find them. They don't need to know everything in them, just how to get to them.
+An executor, successor trustee or agent can act only if they can find the documents.
 
-## Give copies where they're useful
+## How copies are used
 
-- **Health care documents.** Give copies to your health care agent and your doctors.
-- **Power of attorney.** Your agent may need a copy for your bank. Some banks ask to see it ahead of time.
-- **Trust documents.** Your successor trustee may need a copy, or a certification of trust, to show their authority.
+- **Health care documents.** Health care agents and doctors often keep copies.
+- **Power of attorney.** Banks may ask to see it, sometimes ahead of time.
+- **Trust documents.** A successor trustee may need a copy, or a certification of trust, to show their authority.
 
-## Finish funding your trust
+## Funding a trust
 
-If you have a living trust, move your property into it. See [how to fund a living trust](learn.html#how-to-fund-a-living-trust).
+A living trust controls only the property moved into it. See [how to fund a living trust](learn.html#how-to-fund-a-living-trust).
 
-## Check your beneficiary forms
+## Beneficiary forms
 
-Make sure life insurance, retirement accounts and other accounts name the right people, and match your plan.
+Life insurance, retirement accounts and other accounts pass to the people named on them, not under your will or trust.
 
-## Keep a list of important contacts
+## A list of important contacts
 
-A list of your accounts, advisors and key contacts saves your family a great deal of searching. You can make one with [Important Contacts](contacts.html).
+A list of accounts, advisors and key contacts can save a family a great deal of searching. You can make one with [Important Contacts](contacts.html).
 
 === why-a-living-trust
 title: Living trust or will: six differences to know

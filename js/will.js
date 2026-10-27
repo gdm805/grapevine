@@ -447,7 +447,7 @@
     });
     var note = other.length ? '<div class="note revoke-note" role="status"><strong>This doesn’t match your ' + other.join(' and your ') + '.</strong> Your ' + other.join(' and your ') +
       (mine === 'no' ? ' says to cancel it. This ' + docWord + ' now says to keep it.' : ' says to keep it. This ' + docWord + ' now says to cancel it.') +
-      ' These usually should match. You can change either one.</div>' : '';
+      ' You can change either one.</div>' : '';
     return field('If your marriage or partnership ends before you die, should everything in this ' + docWord + ' about that person be cancelled?',
       pills('revokeSpouse', [['yes', 'Yes, cancel it'], ['no', 'No, keep it']], true), 'The law of your state may also affect this.') + note;
   }
@@ -1937,8 +1937,8 @@
     effective: function () {
       return stepHead('When should your agent’s power start?', 'You can cancel this document at any time while you have capacity.') +
         cards('effective', [
-          ['now', 'Right away', 'Your agent’s power starts when you sign, and continues if you later lose capacity. This is the simplest choice, and banks usually find it easiest to accept. You can still manage your own affairs.'],
-          ['incapacity', 'Only if I become incapacitated', 'Your agent’s power starts only after your incapacity has been established the way your document describes. This can slow things down when your agent needs to act.']
+          ['now', 'Right away', 'Your agent’s power starts when you sign, and continues if you later lose capacity. You can still manage your own affairs.'],
+          ['incapacity', 'Only if I become incapacitated', 'Your agent’s power starts only after your incapacity has been established the way your document describes.']
         ]);
     },
     more: function () {
@@ -2075,7 +2075,7 @@
         '</div>' +
         field('Right now, are you able to understand this document and communicate your own wishes?', pills('capacityCheck', [['yes', 'Yes'], ['unsure', 'I’m not sure']], true));
       if (answers.capacityCheck === 'unsure') {
-        h += '<div class="restored">That’s okay — this will be here whenever you’re ready. You may want to talk with your doctor before you complete or sign it. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</div>';
+        h += '<div class="restored">That’s okay — this will be here whenever you’re ready. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</div>';
       }
       return h;
     },
@@ -2570,7 +2570,7 @@
     },
     specialty: function () {
       if (hipaaIsB(answers)) {
-        return stepHead('Any limits on this authorization?', 'Your state’s document leaves this open-ended. Leave it blank for the broadest authorization the law allows.') +
+        return stepHead('Any limits on this authorization?', 'Your state’s document leaves this open-ended. If left blank, the authorization is as broad as the law allows.') +
           field('Limitations (optional)', textarea('limitations', 'For example: does not include psychotherapy notes'));
       }
       var h = stepHead('A few specially protected kinds of records', 'Federal and state law treat these as more sensitive, so HIPAA requires a separate, specific authorization for each one you want included.') +
@@ -2870,7 +2870,7 @@
         /* a restatement keeps the original trust's name: that is the only name asked for */
         (answers.trustType === 'RESTATEMENT' ?
           field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if your trust\u2019s name begins that way.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
-          field('Name your trust', text('trustName', 'For example, The Maria Elena Alvarez Living Trust'), 'Start the name with \u201cThe,\u201d for example \u201cThe Maria Elena Alvarez Living Trust.\u201d You can change this later. Many people use their own name.')) +
+          field('Name your trust', text('trustName', 'For example, The Maria Elena Alvarez Living Trust'), 'Start the name with \u201cThe,\u201d for example \u201cThe Maria Elena Alvarez Living Trust.\u201d You can change this later.')) +
         '<div class="checks">' +
         (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am creating this trust of my own free will.</span></label>') +
@@ -3468,7 +3468,7 @@
       return h;
     },
     powers: function () {
-      return stepHead('Limits on the Trustee', 'Most trusts have none. This only matters if your trust itself says the Trustee needs someone’s permission, or must follow a special rule, before doing certain things, for example “the Trustee may not sell the family home without my daughter’s written consent.” Check the Trustee’s powers section of your trust if you’re not sure.') +
+      return stepHead('Limits on the Trustee', 'This only matters if your trust itself says the Trustee needs someone’s permission, or must follow a special rule, before doing certain things, for example “the Trustee may not sell the family home without my daughter’s written consent.” Check the Trustee’s powers section of your trust if you’re not sure.') +
         field('Does your trust limit what the Trustee can do, or require someone’s consent first?', pills('hasLimitations', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.hasLimitations === 'yes' ? field('Describe the limitation, direction, or required consent', text('limitationsSummary', '')) : '');
     },
@@ -3823,8 +3823,8 @@
         field('Right now, is the trust...', pills('revocability', [['FULLY_REVOCABLE', 'Fully revocable'], ['PARTIALLY_REVOCABLE', 'Revocable as to part, irrevocable as to the rest'], ['IRREVOCABLE', 'Irrevocable']], true));
     },
     property: function () {
-      return stepHead('Specific property (optional)', 'This Assignment already covers your personal property in general. List specific items here only if you want them called out by name — for example, because a particular item matters to you or a recipient wants it itemized.') +
-        (answers.state === 'New York' ? '<p class="hint">New York law treats personal property as moved into a trust only if it is described with particularity, so list each item or group of items of real value here (for example, “Steinway piano, serial no. 12345” or “all jewelry kept in my bedroom safe”).</p>' : '') +
+      return stepHead('Specific property (optional)', 'This Assignment already covers your personal property in general. Items listed here are named individually.') +
+        (answers.state === 'New York' ? '<p class="hint">New York law treats personal property as moved into a trust only if it is described with particularity, for example “Steinway piano, serial no. 12345” or “all jewelry kept in my bedroom safe.”</p>' : '') +
         field('Is there specific property you want to list by name?', pills('hasProperty', [['yes', 'Yes'], ['no', 'No']], true)) +
         (answers.hasProperty === 'yes' ? field('Property', '<div class="rowset">' + answers.property.map(function (p, i) {
           return '<div class="rowitem"><input class="input" data-list="property" data-i="' + i + '" data-f="description" value="' + val(p.description) + '" placeholder="For example, my grandmother’s writing desk">' +
@@ -3833,7 +3833,7 @@
     },
     notary: function () {
       if (answers.state === 'Louisiana') return stepHead('Notary and two witnesses', 'In Louisiana, a gift of property to a trust must be made by authentic act: you sign in front of a notary and two witnesses, and the trustee signs to accept it. Your document includes that page.');
-      return stepHead('Notarization', 'No state requires this document to be notarized. Add it only if a specific bank, brokerage, or title company asked for a notarized signature, or you’d simply like one.') +
+      return stepHead('Notarization', 'No state requires this document to be notarized. Some banks, brokerages and title companies ask for a notarized signature. A notary section is optional.') +
         field('Add an optional notary acknowledgment page?', pills('wantsNotary', [['yes', 'Yes'], ['no', 'No — just the signature']], true));
     },
     signing: function () {
@@ -4359,7 +4359,7 @@
   var PET_EMPTY = { hasPets: '', petDescription: '', petCaretaker: '', petAltCaretaker: '', petGiftYes: '', petGift: '' };
   function petsScreen() {
     var a = answers;
-    var h = stepHead('Do you want to name someone to care for your pets?', 'This names a person to take your pets. You can also leave that person some money and ask that it be used for the pets’ care. It is a request, not a requirement.') +
+    var h = stepHead('Do you want to name someone to care for your pets?', 'This names a person to take your pets.') +
       pills('hasPets', [['yes', 'Yes'], ['no', 'No']], true);
     if (a.hasPets !== 'yes') return h;
     h += field('Your pets <em>(optional)</em>', text('petDescription', 'For example, a dog named Max and a cat named Luna'), 'Leave blank to cover any pets you have at the time.') +
