@@ -332,6 +332,9 @@
      first, with backups after -- such as the successor trustee from the trust. Information only: nothing is
      filled in for them. */
   function coupleRoleNote(role) {
+    /* REMOVED 26 Oct 2026 (Greg): "you can name [spouse] as your Personal Representative, and name backups" read as
+       advice about whom to name. Tovakin doesn't suggest who to name, so this note no longer shows. */
+    return '';
     var p = readProfile(), sh = readShared();
     if (!(p.name2 || sh.marital === 'married' || SPOUSE2)) return '';
     var other = SPOUSE2 ? firstName(p.name) : firstName(p.name2 || sh.spouse);
@@ -1924,7 +1927,7 @@
         field('County where you live', countySelect('county'));
     },
     agent: function () {
-      return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Choose someone you trust completely. Many people choose the same person they named to carry out their will. Your document calls this person your Agent.') + coupleRoleNote('Agent') +
+      return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Your document calls this person your Agent.') + coupleRoleNote('Agent') +
         otherAgents(false, field('Your agent’s full name', text('agent', '')), true);
     },
     dproute: function () {
@@ -2296,7 +2299,7 @@
         field('Home address', textarea('address', 'Street, city, state, ZIP'));
     },
     agent: function () {
-      return stepHead('Who should make health care decisions for you?', 'Your health care agent can see your medical information and make treatment decisions if you’re unable to. Choose someone you trust completely.') + coupleRoleNote('health care agent') +
+      return stepHead('Who should make health care decisions for you?', 'Your health care agent can see your medical information and make treatment decisions if you’re unable to.') + coupleRoleNote('health care agent') +
         otherAgents(true, field('Your agent’s full name', text('agent', '')) +
           field('Agent’s phone', text('agentPhone', '', { auto: 'tel' })) +
           field('Agent’s email (optional)', text('agentEmail', '', { auto: 'email' })), true);
