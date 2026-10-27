@@ -174,22 +174,27 @@ window.FINALWISHES_SHARED['finalwishes_execution'] = String.raw`
 [[if signing_state=ALABAMA]]
 // DRAFTER NOTE: These Final Wishes are wishes/instructions only under the current Alabama route. The acknowledgment below is included as the Tovakin execution standard and is not represented as changing statutory priority or as required for validity.
 @sub Notarial Acknowledgment
-@line State of Alabama
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
+// Alabama, Ala. Code 35-4-29 (individual acknowledgment); seal per Ala. Code 36-20-72
+@line The State of Alabama
+@line ____________________________ County
+@line I, ____________________________, a Notary Public in and for said County in said State, hereby certify that {{name}}, whose name is signed to the foregoing instrument, and who is known to me, acknowledged before me on this day that, being informed of the contents of the instrument, he/she/they executed the same voluntarily on the day the same bears date.
+@line Given under my hand and official seal this ______ day of __________________, 20____.
+@line ________________________________________
+@line Notary Public
+@line My Commission Expires: ____________________
 @line (Seal)
 
 [[elif signing_state=ALASKA]]
 // DRAFTER NOTE: Alaska disposition-document route: the principal signs and the instrument is acknowledged before a notary public.
+// Alaska, AS 09.63.100(a)(1) (individual acknowledgment); seal and expiration per AS 09.63.100(b)
 @line State of Alaska
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
+@line ____________________________ Judicial District
+@line The foregoing instrument was acknowledged before me this ______ day of __________________, 20____, by {{name}}.
+@line ________________________________________
+@line Signature of Person Taking Acknowledgment
+@line Title or Rank: ____________________________
+@line Serial Number, if any: __________________
+@line My Commission Expires: ____________________
 @line (Seal)
 
 [[elif signing_state=ARIZONA]]
@@ -254,13 +259,15 @@ I confirm that I was present when {{name}} signed this declaration. I am at leas
 @line Address: __________________________________________
 @line Date: _____________________________________________
 [[else]]
+// Colorado short form, C.R.S. 24-21-516(1)(a) (individual capacity)
 @line State of Colorado
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 [[end]]
 
 [[elif signing_state=CONNECTICUT]]
@@ -281,24 +288,27 @@ We attest that {{name}} subscribed this written disposition document in our pres
 [[elif signing_state=DELAWARE]]
 // DRAFTER NOTE: Delaware requires a written, dated, signed declaration; acknowledgment is optional. Tovakin includes the notary acknowledgment as its default execution standard.
 @sub Notarial Acknowledgment
+// Delaware short form, 29 Del. C. 4329 (individual capacity)
 @line State of Delaware
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=DISTRICT_COLUMBIA]]
 // DRAFTER NOTE: District of Columbia requires the written directions/designation to be dated and signed. No universal witness or notary validity requirement applies to this route. The acknowledgment below is optional and included as the Tovakin execution standard.
 @sub Notarial Acknowledgment
-@line State of District of Columbia
-@line District of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
+// District of Columbia short form, D.C. Code 1-1231.15 (individual capacity)
+@line District of Columbia
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
 @line (Seal)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=FLORIDA]]
 // DRAFTER NOTE: Florida recognizes written inter vivos directions within its statutory priority framework. The acknowledgment below is included as Tovakin's default execution standard and is not represented as a separate statutory validity requirement.
@@ -330,23 +340,29 @@ The separate Georgia disposition affidavit shall substantially follow the curren
 
 [[elif signing_state=HAWAII]]
 // DRAFTER NOTE: Hawaii standalone disposition directions/designation use the notarial execution route.
+// Hawaii, HRS 502-41 (form 6) and 502-42 (individual acknowledgment); certificate elements per HRS 456-21
 @line State of Hawaii
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
+@line City and County of / County of ____________________________
+@line On ____________________, before me personally appeared {{name}}, to me personally known or proved to me through satisfactory evidence of identity, who, being by me duly sworn or affirmed, did say that such person executed the foregoing instrument as the free act and deed of such person.
+@line ________________________________________
+@line Notary Public, State of Hawaii
+@line Printed Name: ____________________________
+@line ______________ Judicial Circuit
+@line My Commission Expires: ____________________
 @line (Seal)
+@line Doc. Date: __________________   # Pages: ______
+@line Document Description: Final Wishes
 
 [[elif signing_state=IDAHO]]
 // DRAFTER NOTE: Idaho disposition designation must be acknowledged in the manner required for a real-property conveyance instrument.
+// Idaho short form, Idaho Code 51-116(1) (individual capacity)
 @line State of Idaho
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
+@line My commission expires: ____________________
 
 [[elif signing_state=ILLINOIS]]
 // DRAFTER NOTE: Illinois standalone disposition authorization uses the signed and notarized execution route.
@@ -435,26 +451,30 @@ We declare that {{name}} signed this declaration in our presence, and that each 
 @line Address: __________________________________________
 @line Date: _____________________________________________
 [[else]]
+// Iowa Code 144C.6(2)(b); short form 9B.16(1)
 @line State of Iowa
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 [[end]]
 [[end]]
 
 [[elif signing_state=KANSAS]]
 // DRAFTER NOTE: Kansas disposition-agent authority is not created by this Final Wishes document. Any first-priority authority granted to a health-care decision agent must appear in the applicable Kansas health-care instrument. The acknowledgment below is included as the Tovakin execution standard for these written wishes and is not represented as creating disposition-agent priority.
 @sub Notarial Acknowledgment
+// Kansas short form, K.A.R. 7-43-17(a)(1) (individual capacity) (verify against official code)
 @line State of Kansas
-@line County of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Official stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=KENTUCKY]]
 @sub FUNERAL PLANNING DECLARATION
@@ -506,13 +526,16 @@ The Declarant appeared before me and acknowledged that the Declarant voluntarily
 [[elif signing_state=MAINE]]
 // DRAFTER NOTE: Maine requires the designation/instructions used under this route to be written and signed. No universal witness or notary requirement is imposed by the disposition provisions used for this ruleset. The acknowledgment below is optional and included as the Tovakin execution standard.
 @sub Notarial Acknowledgment
+// Maine short form, 4 M.R.S. 1917(1) (individual capacity); printed name required by 1916(1)(F)
 @line State of Maine
-@line County of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line Printed name: ________________________________
+@line (Stamp, if any)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=MARYLAND]]
 // DRAFTER NOTE: Maryland requires the individual and ONE witness to sign in each other's presence. A notary is not substituted for this witness requirement.
@@ -527,12 +550,14 @@ I witnessed {{name}} sign this document in my presence, and I sign this document
 [[elif signing_state=MASSACHUSETTS]]
 // DRAFTER NOTE: This document preserves written funeral and burial wishes; it does not create a standalone statutory disposition-agent appointment. Any controlling Will or estate-administration route remains separate. The acknowledgment below is optional and included as the Tovakin execution standard for the written wishes.
 @sub Notarial Acknowledgment
-@line State of Massachusetts
-@line County of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
+// M.G.L. c. 222, 15(b) acknowledgment; printed name and expiration per c. 222, 8(a)
+@line Commonwealth of Massachusetts
+@line County of ____________________________
+@line On this ______ day of ____________________, 20____, before me, the undersigned notary public, {{name}} (name of document signer) personally appeared, proved to me through satisfactory evidence of identification, which were ____________________________, to be the person whose name is signed on the preceding or attached document, and acknowledged to me that (he) (she) signed it voluntarily for its stated purpose.
+@line ________________________________________
+@line Official signature and seal of notary public
+@line Printed name: ________________________________
+@line My commission expires: ____________________
 @line (Seal)
 
 [[elif signing_state=MICHIGAN]]
@@ -554,13 +579,17 @@ Each of us declares that {{name}} signed this document in our presence, that {{n
 @line Date: _____________________________________________
 [[else]]
 @sub Notarial Acknowledgment
+// Michigan Law on Notarial Acts; no statutory short form; MCL 55.287(2) statements
 @line State of Michigan
-@line County of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line Acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line Printed name of notary public (exactly as on commission application): ________________________________
+@line Notary public, State of Michigan, County of ____________________.
+@line My commission expires ____________________.
+@line Acting in the County of ____________________.
+@line Date of notarial act: ____________________
 [[end]]
 
 [[elif signing_state=MINNESOTA]]
@@ -598,13 +627,14 @@ I witnessed {{name}} sign and date these written final-disposition directions.
 [[elif signing_state=MONTANA]]
 // DRAFTER NOTE: Montana uses separate execution concepts: a controller designation is notarized, while written disposition directions require TWO adult witnesses (unless a qualifying statutory video route is used). Because this file contains both concepts, both blocks are provided and must be routed to the applicable content.
 @sub Controller Designation — Notarial Acknowledgment
+// Montana short form, MCA 1-5-610(1) (individual capacity)
 @line State of Montana
-@line County of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Official stamp)
+@line Printed name and title of officer (if not shown in stamp): ________________________________
 @sub Disposition Directions — Two Witnesses
 
 We witnessed {{name}} sign the written disposition directions and are adults qualified to witness under Montana law.
@@ -622,24 +652,27 @@ We witnessed {{name}} sign the written disposition directions and are adults qua
 [[elif signing_state=NEBRASKA]]
 // DRAFTER NOTE: The Nebraska standalone right-of-disposition designation is made by affidavit before a notary public in substantially the statutory form. Attached lawful directions may be incorporated into that route.
 @sub Notarial Acknowledgment
+// Nebraska Statutory Short Form of Acknowledgment, Neb. Rev. Stat. 64-206(1)
 @line State of Nebraska
-@line County of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
+@line County of ____________________________
+@line The foregoing instrument was acknowledged before me this ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line Title or rank: ________________________________
 @line (Seal)
+@line My commission expires: ____________________
 
 [[elif signing_state=NEVADA]]
 // DRAFTER NOTE: The Nevada standalone designation route uses a statutory affidavit before a notary public. A Will or DPOA route, if selected instead, uses that instrument's execution rules.
 @sub Notarial Acknowledgment
+// Nevada short form, NRS 240.166 (individual capacity)
 @line State of Nevada
-@line County of _________________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by {{name}}.
-@line Notary Public: ________________________________________
-@line Printed Name: _________________________________________
-@line My Commission Expires: ________________________________
-@line (Seal)
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Seal, if any)
+@line Title and rank (optional): ________________________________
 
 [[elif signing_state=NEW_HAMPSHIRE]]
 // DRAFTER NOTE: New Hampshire requires the designation and instructions used under this route to be written and signed. No universal witness or notary validity requirement is stated in the controlling disposition provisions. The acknowledgment below is optional and included as the Tovakin execution standard.

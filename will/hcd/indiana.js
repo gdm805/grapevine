@@ -632,24 +632,17 @@ We are adults and witnessed the Principal sign or acknowledge this Advance Direc
 
 @sub NOTARIAL CERTIFICATE
 
+// Indiana, IC 33-42-9-12 (individual acknowledgment; certificate elements per 33-42-9-12(a)-(b))
 @line State of Indiana
-
-@line County of {{county}}
-
-@line Before me, the undersigned, a Notary Public in and for said County and State, personally appeared {{name}}, and acknowledged the execution of the foregoing instrument this ______ day of __________________, 20______.
-
-Witness my hand and Notarial Seal.
-
-@line Notary Public Signature: ______________________________________________
-
-@line Printed Name: ___________________________________________
-
-@line Title of Office: Notary Public
-
-@line Indiana County of Commission/Employment: ______________________________
-
-@line My Commission Expires: ______________________________
-
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line Printed name: ____________________________
+@line Title of office: ________________________________
+@line Commission number: ____________________
+@line My commission expires: ____________________
+@line Indiana county of commission (or of employment, if a nonresident): ____________________
 @line (Seal)
 
 [[end]]

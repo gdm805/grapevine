@@ -491,16 +491,16 @@ The Principal signed or acknowledged this Power of Attorney in my presence, and 
 
 @line Printed Name: __________________________________
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
+// Est. & Trusts 17-202 statutory form acknowledgment; closing per State Gov't 18-215, 18-216
 @line STATE OF MARYLAND
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+@line (COUNTY) OF ____________________________
+@line This document was acknowledged before me on ____________________ (Date) by {{name}} (Name of Principal) to be his/her act.
+@line ________________________________________
+@line Signature of notarial officer
+@line Title of office: ________________________________
+@line (Stamp)
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

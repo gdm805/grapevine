@@ -469,16 +469,16 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF IOWA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Iowa short form, Iowa Code 9B.16(1) (individual capacity)
+@line State of Iowa
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

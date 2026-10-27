@@ -469,16 +469,18 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF SOUTH DAKOTA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// South Dakota form, SDCL § 18-5-8; acknowledgment required by SDCL § 59-12-4; § 18-5-13
+@line State of South Dakota
+@line County of ____________________________
+@line On this the _____ day of ____________________, 20____, before me, ____________________________, the undersigned officer, personally appeared {{name}}, known to me or satisfactorily proven to be the person whose name is subscribed to the within instrument and acknowledged that he or she executed the same for the purposes therein contained.
+@line In witness whereof I hereunto set my hand and official seal.
+@line ________________________________________
+@line Signature of notary public
+@line Printed name: ____________________________
+@line (Seal)
+@line Title of officer: ________________________________
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

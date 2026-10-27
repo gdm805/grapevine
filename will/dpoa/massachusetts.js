@@ -455,15 +455,15 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF MASSACHUSETTS
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// M.G.L. c. 222, 15(b) acknowledgment; printed name and expiration per c. 222, 8(a)
+@line Commonwealth of Massachusetts
+@line County of ____________________________
+@line On this ______ day of ____________________, 20____, before me, the undersigned notary public, {{name}} (name of document signer) personally appeared, proved to me through satisfactory evidence of identification, which were ____________________________, to be the person whose name is signed on the preceding or attached document, and acknowledged to me that (he) (she) signed it voluntarily for its stated purpose.
+@line ________________________________________
+@line Official signature and seal of notary public
+@line Printed name: ________________________________
 @line My commission expires: ____________________
+@line (Seal)
 `;

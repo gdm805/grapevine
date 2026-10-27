@@ -469,17 +469,16 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF MONTANA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
-@line My commission expires: ____________________
+// Montana short form, MCA 1-5-610(1) (individual capacity)
+@line State of Montana
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Official stamp)
+@line Printed name and title of officer (if not shown in stamp): ________________________________
 
 @sub IMPORTANT INFORMATION FOR AGENT
 

@@ -445,15 +445,16 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF OKLAHOMA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Oklahoma short form, 49 O.S. § 119(1) (individual capacity); 49 O.S. § 5(A)
+@line State of Oklahoma
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Seal)
+@line Title (and Rank): ________________________________
+@line Commission No.: ____________________
 @line My commission expires: ____________________
 `;

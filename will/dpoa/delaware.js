@@ -489,13 +489,15 @@ I witnessed the Principal sign this Power of Attorney. I am an adult, am not rel
 
 @sub Notarial Acknowledgment
 
-@line STATE OF DELAWARE
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notarial Officer
+// Delaware short form, 29 Del. C. 4329 (individual capacity)
+@line State of Delaware
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT
 

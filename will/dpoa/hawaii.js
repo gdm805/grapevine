@@ -471,15 +471,18 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF HAWAII
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
-@line My commission expires: ____________________
+// Hawaii, HRS 502-41 (form 6) and 502-42 (individual acknowledgment); certificate elements per HRS 456-21
+@line State of Hawaii
+@line City and County of / County of ____________________________
+@line On ____________________, before me personally appeared {{name}}, to me personally known or proved to me through satisfactory evidence of identity, who, being by me duly sworn or affirmed, did say that such person executed the foregoing instrument as the free act and deed of such person.
+@line ________________________________________
+@line Notary Public, State of Hawaii
+@line Printed Name: ____________________________
+@line ______________ Judicial Circuit
+@line My Commission Expires: ____________________
+@line (Seal)
+@line Doc. Date: __________________   # Pages: ______
+@line Document Description: Durable Power of Attorney
 
 @sub IMPORTANT INFORMATION FOR AGENT
 

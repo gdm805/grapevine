@@ -455,16 +455,17 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF MAINE
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Maine short form, 4 M.R.S. 1917(1) (individual capacity); printed name required by 1916(1)(F)
+@line State of Maine
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line Printed name: ________________________________
+@line (Stamp, if any)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 
 @sub Notice to the Agent

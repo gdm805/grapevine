@@ -672,7 +672,8 @@ We declare that the principal appears to be of sound mind and free from duress a
 
 @line STATE OF NEW HAMPSHIRE
 
-@line COUNTY OF {{county}}
+// RSA 137-J:20 statutory notary block kept; venue county left blank (county where the notarization takes place)
+@line COUNTY OF ____________________
 
 @line The foregoing advance directive was acknowledged before me this ____ day of __________________, 20____, by {{name}} (the “Principal”).
 

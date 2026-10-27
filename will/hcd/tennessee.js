@@ -624,7 +624,8 @@ The Principal executes this Advance Directive for Health Care voluntarily.
 
 @line STATE OF TENNESSEE
 
-@line COUNTY OF {{county}}
+// Tennessee model Advance Directive notary block kept; venue county left blank (county where the notarization takes place)
+@line COUNTY OF ____________________________
 
 I am a Notary Public in and for the State and County named above. The person who signed this instrument is personally known to me (or proved to me on the basis of satisfactory evidence) to be the person who signed as the patient. The patient personally appeared before me and signed above or acknowledged the signature above as his or her own. I declare under penalty of perjury that the patient appears to be of sound mind and under no duress, fraud, or undue influence.
 

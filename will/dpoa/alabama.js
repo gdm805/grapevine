@@ -479,17 +479,15 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 ## Acknowledgment
 
-@line STATE OF ALABAMA
-
-@line ____________________ COUNTY
-
-I, the undersigned notarial officer, certify that {{name}}, whose name is signed to the foregoing instrument and who is known to me or satisfactorily identified, acknowledged before me that, being informed of the contents of the instrument, the Principal executed it voluntarily.
-
-@line Acknowledged before me on ______________________, 20____.
-
-@sign Notary Public
-
-@line My commission expires: ____________________
+// Alabama, Ala. Code 35-4-29 (individual acknowledgment); seal per Ala. Code 36-20-72
+@line The State of Alabama
+@line ____________________________ County
+@line I, ____________________________, a Notary Public in and for said County in said State, hereby certify that {{name}}, whose name is signed to the foregoing instrument, and who is known to me, acknowledged before me on this day that, being informed of the contents of the instrument, he/she/they executed the same voluntarily on the day the same bears date.
+@line Given under my hand and official seal this ______ day of __________________, 20____.
+@line ________________________________________
+@line Notary Public
+@line My Commission Expires: ____________________
+@line (Seal)
 
 @sub IMPORTANT INFORMATION FOR AGENT
 

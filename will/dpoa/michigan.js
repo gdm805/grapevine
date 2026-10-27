@@ -477,17 +477,19 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF MICHIGAN
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
-@line My commission expires: ____________________
+// MCL 556.205(2)(a); MCL 55.287(2) statements
+@line State of Michigan
+@line County of ____________________________
+@line Acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line Printed name of notary public (exactly as on commission application): ________________________________
+@line Notary public, State of Michigan, County of ____________________.
+@line My commission expires ____________________.
+@line Acting in the County of ____________________.
+@line Date of notarial act: ____________________
 
 @sub AGENT'S ACKNOWLEDGMENT
 

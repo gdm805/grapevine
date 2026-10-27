@@ -473,14 +473,13 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF VERMONT
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Statutory form, 14 V.S.A. § 4051 (acknowledgment portion, verbatim)
+@line State of: Vermont
+@line County of: ____________________________
+@line This document was acknowledged before me on: (Date) ____________________
+@line by {{name}} (Name of Principal).
+@line (Seal, if any): ________________________________
+@line Signature of Notary: ________________________________
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

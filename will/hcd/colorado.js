@@ -637,17 +637,15 @@ We, the undersigned witnesses, declare that the Principal signed this Directive 
 
 The notary taking this acknowledgment may not be the Principal's physician, an employee of the Principal's physician or of a health care facility in which the Principal is a patient, a person with a claim against the Principal's estate, or a person who is or believes he or she is entitled to any part of the Principal's estate.
 
-@line STATE OF COLORADO
-
-@line COUNTY OF {{county}}
-
-@line This instrument was acknowledged before me on __________________ by {{name}}.
-
-@line Signature of Notary Public: ______________________________
-
-(Seal)
-
-@line My commission expires: ________________________________
+// Colorado short form, C.R.S. 24-21-516(1)(a) (individual capacity)
+@line State of Colorado
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[end]]
 `;

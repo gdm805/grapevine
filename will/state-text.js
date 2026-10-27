@@ -96,26 +96,31 @@ We, the undersigned witnesses, sign this Will as witnesses after witnessing the 
 
 @sign Address
 
+// Alabama, Ala. Code 43-8-132(a), statutory self-proving form
 @sub Self-Proving Affidavit
 
-I, {{name}}, the Testator, being first duly sworn, declare that I sign and execute this instrument as my Last Will and Testament, that I sign it willingly as my free and voluntary act, and that I am eighteen years of age or older, of sound mind, and under no constraint or undue influence.
-
-We, the undersigned witnesses, being first duly sworn, declare that the Testator signed and executed this instrument as the Testator’s Last Will and Testament, signed it willingly, and that each of us, in the presence and hearing of the Testator, signs as a witness; and to the best of our knowledge the Testator is eighteen years of age or older, of sound mind, and under no constraint or undue influence.
+I, {{name}}, the testator, sign my name to this instrument this ______ day of ____________________, 20____, and being first duly sworn, do hereby declare to the undersigned authority that I sign and execute this instrument as my last will and that I sign it willingly (or willingly direct another to sign for me), that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
 @sign {{name}}, Testator
 
-@sign Witness 1
+We, ____________________, ____________________, the witnesses, sign our names to this instrument, being first duly sworn, and do hereby declare to the undersigned authority that the testator signs and executes this instrument as his/her last will and that he/she signs it willingly (or willingly directs another to sign for him or her), and that each of us, in the presence and hearing of the testator, hereby signs this will as witness to the testator's signing, and that to the best of our knowledge the testator is 18 years of age or older, of sound mind, and under no constraint or undue influence.
 
-@sign Witness 2
+@sign Witness
 
-@line STATE OF ALABAMA
-@line COUNTY OF ____________________
+@sign Witness
 
-Subscribed, sworn to and acknowledged before me by {{name}}, the Testator, and subscribed and sworn to before me by the two witnesses, this ____________________, 20____.
+@line State of Alabama
+@line County of ____________________
 
-@sign Notarial Officer
+Subscribed, sworn to and acknowledged before me by {{name}}, the testator and subscribed and sworn to before me by ____________________, and ____________________, witnesses, this ______ day of ____________________, 20____.
 
 @line (Seal)
+
+@sign (Signed)
+
+@sign (Official capacity of officer)
+
+@line My commission expires: ____________________
 
 === Alaska
 community: none
@@ -255,7 +260,8 @@ On the date written above, {{name}}, the Testator, declared to us that this inst
 
 @sub Affidavit of Attesting Witnesses
 
-@line STATE OF ____________________
+// Arkansas, venue and closing; seal and expiration per Ark. Code 21-14-107, 21-14-108
+@line STATE OF ARKANSAS
 @line COUNTY OF ____________________
 
 We, ____________________ and ____________________, the attesting witnesses to the attached or foregoing instrument, being first duly sworn, each state on oath that: {{name}}, the Testator, declared to us that the instrument is the Testator's Last Will and Testament; the Testator signed the instrument (or acknowledged to us the Testator's signature already made on it) in our presence; the Testator requested that we sign as witnesses; each of us signed the instrument as a witness at the Testator's request, in the Testator's presence, and in the presence of each other; at that time each of us was eighteen years of age or older; and to the best of our knowledge the Testator was then eighteen years of age or older, of sound mind, and under no constraint, duress, or undue influence. We make this affidavit at the request of the Testator.
@@ -270,12 +276,9 @@ We, ____________________ and ____________________, the attesting witnesses to th
 
 Subscribed and sworn to before me by ____________________ and ____________________, witnesses, on ____________________, 20____.
 
-@sign Signature of Officer
-
-@sign Printed Name and Title of Officer
-
-@line My commission expires: ____________________
-
+@line ________________________________________
+@line Notary Public
+@line My Commission Expires: ____________________
 @line (Seal)
 
 
@@ -622,8 +625,9 @@ We, ____________________, ____________________, the witnesses, sign our names to
 
 @sign Witness
 
-@line The State of ____________________
-@line County of ____________________
+// Hawaii, venue per HRS 502-41; printed name and circuit per HRS 456-21
+@line State of Hawaii
+@line City and County of / County of ____________________
 
 Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________, and ____________________, witness, this _____ day of __________.
 
@@ -637,15 +641,9 @@ Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and s
 
 @sub Notary Certification
 
+@line Printed Name: ____________________________     ______________ Judicial Circuit
 @line Doc. Date: ____________________     # Pages: __________
-@line Notary Name: ____________________     __________ Judicial Circuit
 @line Doc. Description: Self-Proving Affidavit to the Last Will and Testament of {{name}}
-
-@sign Notary Signature
-
-@line Date: ____________________
-
-@line (Stamp or Seal)
 
 
 === Idaho
@@ -840,7 +838,8 @@ We, the undersigned witnesses, declare that {{name}} exhibited this instrument t
 
 @line Affidavit
 
-@line State of ____________________ )
+// Iowa Code 633.279(2)(a) statutory form; jurisdiction per 9B.15
+@line State of Iowa )
 @line County of ____________________ ) ss
 
 We, the undersigned, {{name}}, ____________________ and ____________________, the testator and the witnesses, respectively, whose names are signed to the attached or foregoing instrument, being first duly sworn, declare to the undersigned authority that at the date of the instrument, we all knew the identity of each other; the instrument was exhibited to the witnesses by the testator, who declared it to be the testator's last will and testament and was signed by the testator or by another at the direction of the testator at ____________________, in the County of ____________________, State of ____________________, on the date shown in the instrument, and in the presence of each other as subscribing witnesses; that we, as witnesses, declare to the undersigned authority that in our presence the testator executed and acknowledged such will as the testator's will and that we, in the testator's presence, at the testator's request, and in the presence of each other, did subscribe our names thereto as attesting witnesses on the date of such will; and that the witnesses were sixteen years of age or older.
@@ -894,7 +893,8 @@ We, the undersigned witnesses, attest that {{name}} declared this instrument to 
 
 @sub Self-Proving Affidavit
 
-@line State of ____________________
+// K.S.A. 59-606 statutory form; jurisdiction per K.S.A. 53-5a16
+@line State of Kansas
 @line County of ____________________ ss.
 
 Before me, the undersigned authority, on this day personally appeared {{name}}, ____________________, and ____________________, known to me to be the testator and the witnesses, respectively, whose names are subscribed to the annexed or foregoing instrument in their respective capacities, and, all of such persons being by me first duly sworn, such {{name}}, testator, declared to me and to the witnesses in my presence that such instrument is the testator's last will and testament, and that the testator had willingly made and executed it as the testator's free and voluntary act and deed for the purposes therein expressed. Such witnesses, each on the witness' oath stated to me, in the presence and hearing of the testator, that the testator had declared to them that such instrument is the testator's last will and testament, and that the testator executed same as such and wanted each witness to sign it as a witness. Upon their oaths each witness stated further that they did sign the will as witnesses in the presence of each other and in the presence of the testator and at the testator's request, and that the testator at that time possessed the rights of majority, was of sound mind and under no restraint.
@@ -1046,7 +1046,8 @@ We, ____________________, ____________________, the witnesses, being first duly 
 
 @sign Witness
 
-@line The State of ____________________
+// 18-C M.R.S. 2-503(1) statutory form; jurisdiction per 4 M.R.S. 1916
+@line The State of Maine
 @line County of ____________________
 
 Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this _____ day of ____________________, 20____.
@@ -1195,7 +1196,8 @@ We, ____________________ and ____________________, the witnesses, sign our names
 
 @sign Witness
 
-@line The State of ____________________
+// MCL 700.2504 statutory form; MCL 55.287(2) statements
+@line The State of Michigan
 @line County of ____________________
 
 Sworn to and signed in my presence by {{name}}, the testator, and sworn to and signed in my presence by ____________________ and ____________________, witnesses, on ____________________, 20____.
@@ -1418,7 +1420,8 @@ We, ____________________, ____________________, the witnesses, sign our names to
 
 @sign Witness
 
-@line THE STATE OF ____________________
+// MCA 72-2-524(1) statutory form; venue per MCA 1-5-609
+@line THE STATE OF MONTANA
 @line COUNTY OF ____________________
 
 Subscribed, sworn to, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this ______ day of ____________________, 20____.
@@ -1474,7 +1477,8 @@ We, ____________________ and ____________________, the witnesses, sign our names
 
 @sign Witness
 
-@line THE STATE OF ____________________
+// Neb. Rev. Stat. 30-2329(1) statutory form
+@line THE STATE OF NEBRASKA
 @line COUNTY OF ____________________
 
 Subscribed, sworn to, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witnesses, this ______ day of ____________________ 20____.
@@ -1573,7 +1577,8 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 // RSA 551:2-a, I, statutory form
 
-@line State of ____________________
+// New Hampshire, RSA 551:2-a, I (statutory form); jurisdiction identified per RSA 456-B:7
+@line State of New Hampshire
 @line County of ____________________
 
 The foregoing instrument was acknowledged before me this ____________________ (day) by {{name}}, the testator; ____________________ and ____________________, the witnesses, who under oath do swear as follows:
@@ -1691,7 +1696,8 @@ We, ____________________ and ____________________, the witnesses, do hereby swea
 
 @sign Witness
 
-@line State of ____________________
+// New Mexico, NMSA 1978 § 45-2-504(A) self-proving form; jurisdiction and commission number per § 14-14A-14(A)
+@line State of New Mexico
 @line County of ____________________
 
 Subscribed and sworn to, or affirmed under penalty of perjury, and acknowledged before me by {{name}}, the testator, and subscribed and sworn to, or affirmed under penalty of perjury, before me by ____________________ and ____________________, witnesses, this ______ day of ____________________, 20____.
@@ -1702,6 +1708,7 @@ Subscribed and sworn to, or affirmed under penalty of perjury, and acknowledged 
 
 @sign (Official capacity of officer)
 
+@line Commission number: ____________________
 @line My commission expires: ____________________
 
 
@@ -1870,7 +1877,8 @@ We, the undersigned witnesses, declare that {{name}} signed or acknowledged this
 
 // N.D.C.C. 30.1-08-04(1), statutory form
 
-@line STATE OF ____________________
+// North Dakota, N.D.C.C. § 30.1-08-04(1) (statutory form); jurisdiction per § 44-06.1-14
+@line STATE OF NORTH DAKOTA
 @line COUNTY OF ____________________
 
 I, {{name}}, the testator, sign my name to this instrument this ______ day of ____________________, 20____, and being first sworn, declare to the undersigned authority that I sign and execute this instrument as my will and that I sign it willingly or willingly direct another to sign for me, that I execute it as my free and voluntary act for the purposes therein expressed, and that I am 18 years of age or older, of sound mind, and under no constraint or undue influence.
@@ -1978,6 +1986,9 @@ Subscribed and acknowledged before me by the said {{name}}, testator, and subscr
 
 @sign (OFFICIAL CAPACITY OF OFFICER)
 
+// Oklahoma, 84 O.S. § 55(5)(a) form kept; commission number required by 49 O.S. § 5(A)
+@line Commission No.: ____________________
+
 @line My commission expires: ____________________
 
 
@@ -2030,14 +2041,12 @@ We, {{name}}, the Testator, and the undersigned witnesses, being first duly swor
 
 @sign Address
 
-Subscribed and sworn to before me on ____________________, 20____, by {{name}}, the Testator, and by ____________________ and ____________________, witnesses.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
-
-@line (Seal)
-
+// Oregon short form, ORS 194.285(3); attesting-witness affidavit under ORS 113.055 (venue is the STATE OF OREGON / COUNTY OF caption above)
+@line Signed and sworn to (or affirmed) before me on ____________________ by {{name}}, the Testator, and by ____________________________ and ____________________________, witnesses.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 
 
@@ -2201,12 +2210,12 @@ We, ____________________ and ____________________, the witnesses, sign our names
 
 Subscribed, sworn to and acknowledged before me by {{name}}, the testator, and subscribed and sworn to before me by ____________________ and ____________________, witness(es), this ___ day of __________, 20___.
 
-@line (Signed) ________________________________________
-
-@sign (Official capacity of officer)
-
+// South Carolina closing; officer's name, seal and expiration per S.C. Code §§ 26-1-60, 26-1-90(B)
+@line ________________________________________
+@line Signature of notary public
+@line Notary Public for South Carolina
+@line Printed name: ____________________________
 @line My commission expires: ____________________
-
 @line (Seal)
 
 
@@ -2307,14 +2316,12 @@ We, the undersigned attesting witnesses to the foregoing Last Will and Testament
 
 @sign Printed Name
 
-Sworn to and subscribed before me by ____________________ and ____________________, attesting witnesses, on ____________________, 20____.
-
-@sign Notary Public / Officer Authorized to Administer Oaths
-
-@sign Official Capacity
-
+@sub Jurat
+// T.C.A. § 32-2-110 affidavit of attesting witnesses (no statutory form) (verify against official code); venue is the STATE OF TENNESSEE / COUNTY OF caption above
+@line Sworn to and subscribed before me on ____________________ by ____________________________ and ____________________________, attesting witnesses.
+@line ________________________________________
+@line Notary Public
 @line My commission expires: ____________________
-
 @line (Seal)
 
 
@@ -2473,13 +2480,15 @@ We, {{name}}, the Testator, and the undersigned witnesses, being first duly swor
 
 @sign Address
 
-Subscribed and sworn to before me on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
-
-@line (Seal)
+@sub Verification on Oath or Affirmation
+// 14 V.S.A. § 108 (sworn acknowledgment, no statutory form) (verify against official code); 26 V.S.A. §§ 5367, 5368(3); venue is the STATE OF VERMONT / COUNTY OF caption above
+@line Signed and sworn to (or affirmed) before me on ____________________ by {{name}}, the Testator, and by ____________________________ and ____________________________, witnesses.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
+@line Printed name and commission number (if no stamp is affixed): ________________________________
 
 
 === Virginia
@@ -2650,13 +2659,14 @@ We, the undersigned attesting witnesses, being first duly sworn, state the facts
 
 @sign Address
 
-Subscribed and sworn to before me on ____________________, 20____.
-
-@sign Notary Public / Authorized Officer
-
-@sign Official Capacity
-
-@line (Seal)
+@sub Verification on Oath or Affirmation
+// W. Va. Code § 41-5-15 (no statutory form); short form § 39-4-16(3); venue is the STATE OF WEST VIRGINIA / COUNTY OF caption above
+@line Signed and sworn to (or affirmed) before me on ____________________ by ____________________________ and ____________________________, attesting witnesses.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 
 === Wisconsin

@@ -465,14 +465,15 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF TEXAS
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Statutory form, Tex. Est. Code § 752.051 (acknowledgment portion, verbatim) (verify against official code)
+@line State of Texas
+@line County of ____________________________
+@line This document was acknowledged before me on ____________________ (date) by {{name}} (name of principal).
+@line ________________________________________
+@line (signature of notarial officer)
+@line (Seal, if any, of notary)
+@line ________________________________________
+@line (printed name)
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

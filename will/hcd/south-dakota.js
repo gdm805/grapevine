@@ -616,16 +616,18 @@ We witnessed the Principal sign or acknowledge this instrument and are adults qu
 
 [[elif exec_route=NOTARY]]
 
-@sub ACKNOWLEDGMENT
+@sub Notary Acknowledgment
 
+// South Dakota form, SDCL § 18-5-8; notary route under SDCL §§ 59-7-2.1, 34-12D-2; § 18-5-13
 @line State of South Dakota
-
-@line County of {{county}}
-
-@line This instrument was acknowledged before me on __________ by {{name}}.
-
-@line Notary Public: ______________________________
-
+@line County of ____________________________
+@line On this the _____ day of ____________________, 20____, before me, ____________________________, the undersigned officer, personally appeared {{name}}, known to me or satisfactorily proven to be the person whose name is subscribed to the within instrument and acknowledged that he or she executed the same for the purposes therein contained.
+@line In witness whereof I hereunto set my hand and official seal.
+@line ________________________________________
+@line Signature of notary public
+@line Printed name: ____________________________
+@line (Seal)
+@line Title of officer: ________________________________
 @line My commission expires: ____________________
 
 [[end]]

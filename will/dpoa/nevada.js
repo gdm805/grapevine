@@ -475,17 +475,16 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF NEVADA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
-@line My commission expires: ____________________
+// Nevada short form, NRS 240.166 (individual capacity)
+@line State of Nevada
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Seal, if any)
+@line Title and rank (optional): ________________________________
 
 [[if covered_facility]]
 

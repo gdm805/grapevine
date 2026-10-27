@@ -469,16 +469,16 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF NEBRASKA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Nebraska Statutory Short Form of Acknowledgment, Neb. Rev. Stat. 64-206(1)
+@line State of Nebraska
+@line County of ____________________________
+@line The foregoing instrument was acknowledged before me this ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line Title or rank: ________________________________
+@line (Seal)
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

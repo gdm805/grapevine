@@ -451,15 +451,15 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF VIRGINIA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Virginia short form, Va. Code § 55.1-621(1); § 64.2-1603; § 47.1-16
+@line Commonwealth of Virginia
+@line City/County of ____________________________
+@line The foregoing instrument was acknowledged before me this ______ day of __________________, 20____, by {{name}}.
+@line ________________________________________
+@line Notary Public
+@line Notary registration number: ____________________
 @line My commission expires: ____________________
+@line (Seal)
 `;

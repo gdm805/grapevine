@@ -622,15 +622,13 @@ I did not sign the Principal’s signature above. I am at least 18 years of age 
 
 @sub NOTARIAL ACKNOWLEDGMENT
 
-@line STATE OF ____________________
-
-@line COUNTY OF {{county}}
-
+// Statutory form, W. Va. Code § 16-30-4(i); stamp required by § 39-4-15(b)
+@line STATE OF WEST VIRGINIA
+@line COUNTY OF ____________________________
 @line I, ______________________________, a Notary Public of said county, do certify that {{name}}, as Principal, and ____________________ and ____________________, as witnesses, whose names are signed to the writing above bearing date on the _____ day of ______________, 20___, have this day acknowledged the same before me.
-
 @line Given under my hand this _____ day of _________________, 20___.
-
 @line My commission expires: ______________________________
-
-@line Signature of Notary Public: ______________________________
+@line ________________________________________
+@line Signature of Notary Public
+@line (Stamp)
 `;

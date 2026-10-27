@@ -622,16 +622,16 @@ The notary, if one is used, must meet the same requirements, except that a notar
 
 [[elif exec_route=NOTARY]]
 
-@sub ACKNOWLEDGMENT
+@sub Notary Acknowledgment
 
+// North Dakota short form, N.D.C.C. § 44-06.1-19(1); verification by notary under § 23-06.5-05
 @line State of North Dakota
-
-@line County of {{county}}
-
-@line This instrument was acknowledged before me on __________ by {{name}}.
-
-@line Notary Public: ______________________________
-
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 
 [[end]]

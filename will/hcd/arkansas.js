@@ -636,19 +636,15 @@ The Directive above was signed or acknowledged in our presence by {{name}} as th
 
 @sub ACKNOWLEDGMENT
 
+// Arkansas, Ark. Code 16-47-107(b) (individual acknowledgment); seal and expiration per Ark. Code 21-14-107, 21-14-108
 @line State of Arkansas
-
-@line County of {{county}}
-
-@line On this the ______ day of __________________, 20____, before me, ______________________________________, the undersigned notary, personally appeared {{name}}, known to me (or satisfactorily proven) to be the person whose name is subscribed to the within instrument and acknowledged that he/she/they executed the same for the purposes therein contained.
-
-In witness whereof I hereunto set my hand and official seal.
-
-@line Signature of Notary Public: ______________________________________________
-
+@line County of ____________________________
+@line On this ______ day of __________________, 20____, before me, a Notary Public, appeared the within named {{name}}, to me personally well known (or satisfactorily proven to be such person), who stated and acknowledged that he/she/they had so signed, executed and delivered said foregoing instrument for the consideration, uses and purposes therein mentioned and set forth.
+@line IN TESTIMONY WHEREOF, I have hereunto set my hand and official seal this ______ day of __________________, 20____.
+@line ________________________________________
+@line Notary Public
+@line My Commission Expires: ____________________
 @line (Seal)
-
-@line My Commission expires: ______________________________
 
 [[end]]
 `;

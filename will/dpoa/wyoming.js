@@ -471,14 +471,11 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF WYOMING
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Statutory form, W.S. 3-9-301 (acknowledgment portion, verbatim)
+@line State of: Wyoming   County of: ____________________________
+@line This document was acknowledged before me on ____________________ (Date), by {{name}} (Name of Principal).
+@line (Seal, if any)
+@line Signature of Notary: ________________________________
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

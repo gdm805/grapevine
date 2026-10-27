@@ -616,16 +616,15 @@ I declare under penalty of perjury under the laws of Wyoming that the person who
 
 [[elif exec_route=NOTARY]]
 
-@sub ACKNOWLEDGMENT
+@sub Notary Acknowledgment
 
+// W.S. 35-22-403(b); Wyoming short form, W.S. 32-3-115(a)(i); § 32-3-114
 @line State of Wyoming
-
-@line County of {{county}}
-
-@line This instrument was acknowledged before me on __________ by {{name}}.
-
-@line Notarial Officer: ______________________________
-
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line (Stamp)  Signature of notarial officer
+@line Title (and Rank): ________________________________
 @line My commission expires: ____________________
 
 [[end]]

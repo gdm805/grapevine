@@ -630,21 +630,17 @@ We witnessed the Principal’s signing in the presence of each other and the Pri
 
 [[elif exec_route=NOTARY]]
 
-@sub ACKNOWLEDGMENT
+@sub Notary Acknowledgment
 
+// Iowa Code 144B.3(1)(b)(2); short form 9B.16(1)
 @line State of Iowa
-
-@line County of {{county}}
-
-@line This record was acknowledged before me on __________________ (Date) by {{name}}.
-
-@line Signature of notarial officer: ______________________________________________
-
-@line (Seal)
-
-@line Title of office: _________________________________________
-
-@line My commission expires: ______________________________
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[end]]
 `;

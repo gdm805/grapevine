@@ -467,15 +467,16 @@ The Principal signed or acknowledged this Power of Attorney in my presence, and 
 
 @line Printed Name: __________________________________
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF SOUTH CAROLINA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// South Carolina statutory short form, S.C. Code § 26-3-70(1); required by § 62-8-105(3) via § 30-5-30
+@line State of South Carolina
+@line County of ____________________________
+@line The foregoing instrument was acknowledged before me this ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line Notary Public for South Carolina
+@line Printed name: ____________________________
 @line My commission expires: ____________________
+@line (Seal)
 `;

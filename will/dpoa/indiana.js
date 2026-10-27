@@ -455,13 +455,16 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF INDIANA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Indiana, IC 33-42-9-12 (individual acknowledgment; certificate elements per 33-42-9-12(a)-(b))
+@line State of Indiana
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line Printed name: ____________________________
+@line Title of office: ________________________________
+@line Commission number: ____________________
 @line My commission expires: ____________________
+@line Indiana county of commission (or of employment, if a nonresident): ____________________
+@line (Seal)
 `;

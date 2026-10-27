@@ -471,14 +471,13 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF IDAHO
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Idaho short form, Idaho Code 51-116(1) (individual capacity)
+@line State of Idaho
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

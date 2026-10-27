@@ -471,14 +471,12 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF UTAH
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Statutory form, Utah Code § 75A-2-301 (acknowledgment portion, verbatim)
+@line State of Utah
+@line County of ____________________________
+@line This document was acknowledged before me on ____________________ (Date) by {{name}} (Name of Principal).
+@line ________________________________________ (Seal, if any)
+@line Signature of Notary
 @line My commission expires: ____________________
 
 [[if covered_facility]]

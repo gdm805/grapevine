@@ -471,14 +471,12 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF WEST VIRGINIA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Statutory form, W. Va. Code § 39B-3-101 (acknowledgment portion, verbatim)
+@line State of West Virginia
+@line County of ____________________________
+@line This document was acknowledged before me on ____________________ (Date) by {{name}} (Name of Principal).
+@line ________________________________________ (Seal, if any)
+@line Signature of Notary
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

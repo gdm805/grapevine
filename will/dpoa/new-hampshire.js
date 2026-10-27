@@ -461,16 +461,16 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF NEW HAMPSHIRE
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// New Hampshire short form, RSA 456-B:8, I (individual capacity); RSA 564-E:105(a)(1)
+@line State of New Hampshire
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Seal, if any)
+@line Title (and Rank): ________________________________
 @line My commission expires: ____________________
 
 @sub AGENT ACKNOWLEDGMENT

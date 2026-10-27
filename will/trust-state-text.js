@@ -19,24 +19,30 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line THE STATE OF ______________________________
-@line ____________________________ COUNTY
-@line I, ______________________________________________, a ______________________________________________, hereby certify that ______________________________________________, whose name is signed to the foregoing instrument, and who is known to me, acknowledged before me on this day that, being informed of the contents of the instrument, he or she executed the same voluntarily on the day the same bears date.
-@line Given under my hand this _____ day of ____________________, 20____.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+// Alabama, Ala. Code 35-4-29 (individual acknowledgment); seal per Ala. Code 36-20-72
+@line The State of Alabama
+@line ____________________________ County
+@line I, ____________________________, a Notary Public in and for said County in said State, hereby certify that ____________________________, whose name is signed to the foregoing instrument, and who is known to me, acknowledged before me on this day that, being informed of the contents of the instrument, he/she/they executed the same voluntarily on the day the same bears date.
+@line Given under my hand and official seal this ______ day of __________________, 20____.
+@line ________________________________________
+@line Notary Public
 @line My Commission Expires: ____________________
+@line (Seal)
 
 [[elif signing_state=ALASKA]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF ALASKA
-@line ____________________________ JUDICIAL DISTRICT
-@line The foregoing instrument was acknowledged before me this _____ day of ____________________, 20____, by ________________________________________________.
-@line ____________________________________________
-@line Notary Public in and for the State of Alaska
+// Alaska, AS 09.63.100(a)(1) (individual acknowledgment); seal and expiration per AS 09.63.100(b)
+@line State of Alaska
+@line ____________________________ Judicial District
+@line The foregoing instrument was acknowledged before me this ______ day of __________________, 20____, by ____________________________.
+@line ________________________________________
+@line Signature of Person Taking Acknowledgment
+@line Title or Rank: ____________________________
+@line Serial Number, if any: __________________
 @line My Commission Expires: ____________________
+@line (Seal)
 
 [[elif signing_state=ARIZONA]]
 
@@ -56,11 +62,12 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF ARKANSAS
-@line COUNTY OF _____________________________
-@line On this the _____ day of ____________________, 20____, before me, ______________________________________________, the undersigned Notary Public, personally appeared ______________________________________________, known to me (or satisfactorily proven) to be the person whose name is subscribed to the foregoing instrument and acknowledged that he or she executed the same for the purposes therein contained.
-@line In witness whereof I hereunto set my hand and official seal.
-@line ____________________________________________
+// Arkansas, Ark. Code 16-47-107(b) (individual acknowledgment); seal and expiration per Ark. Code 21-14-107, 21-14-108
+@line State of Arkansas
+@line County of ____________________________
+@line On this ______ day of __________________, 20____, before me, a Notary Public, appeared the within named ____________________________, to me personally well known (or satisfactorily proven to be such person), who stated and acknowledged that he/she/they had so signed, executed and delivered said foregoing instrument for the consideration, uses and purposes therein mentioned and set forth.
+@line IN TESTIMONY WHEREOF, I have hereunto set my hand and official seal this ______ day of __________________, 20____.
+@line ________________________________________
 @line Notary Public
 @line My Commission Expires: ____________________
 @line (Seal)
@@ -83,14 +90,15 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line County of ____________
-@line _______
-@line Signed and acknowledged before me on ____________________ (date) by ______________________________________________ (name(s) of individual(s) making statement).
-@line __________________________________________
-@line Signature of Notarial Officer
-@line Title of Office: __________________________
-@line My Commission Expires: ______________
-@line (Seal)
+// Colorado short form, C.R.S. 24-21-516(1)(a) (individual capacity)
+@line State of Colorado
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=CONNECTICUT]]
 
@@ -126,26 +134,28 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// Delaware short form, 29 Del. C. 4329 (individual capacity)
 @line State of Delaware
-@line County of ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Signature of Notarial Officer
-@line (Seal)
-@line Title of Office: _________________________
-@line My Commission Expires: __________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=DISTRICT_COLUMBIA]]
 
 @sub Notary Acknowledgment
 
+// District of Columbia short form, D.C. Code 1-1231.15 (individual capacity)
 @line District of Columbia
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
+@line This record was acknowledged before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Signature of Notarial Officer
+@line Signature of notarial officer
 @line (Seal)
-@line Title of Office: _________________________
-@line My Commission Expires: __________________
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=FLORIDA]]
 
@@ -193,27 +203,31 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF HAWAII
-@line COUNTY OF ____________________
-@line On this _____ day of ____________________, 20____, before me personally appeared ______________________________________, to me personally known, who, being by me duly sworn or affirmed, did say that the person executed the foregoing instrument as the person's free act and deed.
+// Hawaii, HRS 502-41 (form 6) and 502-42 (individual acknowledgment); certificate elements per HRS 456-21
+@line State of Hawaii
+@line City and County of / County of ____________________________
+@line On ____________________, before me personally appeared ____________________________, to me personally known or proved to me through satisfactory evidence of identity, who, being by me duly sworn or affirmed, did say that such person executed the foregoing instrument as the free act and deed of such person.
 @line ________________________________________
 @line Notary Public, State of Hawaii
-@line Printed Name: ___________________________
-@line My Commission Expires: _________________
+@line Printed Name: ____________________________
+@line ______________ Judicial Circuit
+@line My Commission Expires: ____________________
 @line (Seal)
+@line Doc. Date: __________________   # Pages: ______
+@line Document Description: Revocable Living Trust Agreement
 
 [[elif signing_state=IDAHO]]
 
 @sub Notary Acknowledgment
 
-@line State of State of Idaho
-@line County of ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
+// Idaho short form, Idaho Code 51-116(1) (individual capacity)
+@line State of Idaho
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Signature of Notary Public
-@line (Seal)
-@line Title of Office: _________________________
-@line My Commission Expires: __________________
+@line Signature of notary public
+@line (Stamp)
+@line My commission expires: ____________________
 
 [[elif signing_state=ILLINOIS]]
 
@@ -231,43 +245,46 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF INDIANA
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
+// Indiana, IC 33-42-9-12 (individual acknowledgment; certificate elements per 33-42-9-12(a)-(b))
+@line State of Indiana
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Signature of Notarial Officer
-@line Printed Name: ___________________________
-@line Title: __________________________________
-@line Commission Number: _____________________
-@line My Commission Expires: _________________
-@line County of Commission: __________________
+@line Signature of notarial officer
+@line Printed name: ____________________________
+@line Title of office: ________________________________
+@line Commission number: ____________________
+@line My commission expires: ____________________
+@line Indiana county of commission (or of employment, if a nonresident): ____________________
 @line (Seal)
 
 [[elif signing_state=IOWA]]
 
 @sub Notary Acknowledgment
 
-@line State of State of Iowa
-@line County of ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
+// Iowa short form, Iowa Code 9B.16(1) (individual capacity)
+@line State of Iowa
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Signature of Notarial Officer
-@line (Seal)
-@line Title of Office: _________________________
-@line My Commission Expires: __________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=KANSAS]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF KANSAS
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________________.
+// Kansas short form, K.A.R. 7-43-17(a)(1) (individual capacity) (verify against official code)
+@line State of Kansas
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Signature of Notarial Officer
-@line (Seal)
-@line Title of Office: _________________________
-@line My Commission Expires: _________________
+@line Signature of notarial officer
+@line (Official stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=KENTUCKY]]
 
@@ -299,58 +316,60 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF MAINE
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________.
-@line __________________________________
-@line Signature of Notarial Officer
-@line Printed Name: ____________________
-@line Title of Office: __________________
-@line My Commission Expires: __________
-@line (Seal)
-@line Authority: 4 M.R.S. § 1917(1)
+// Maine short form, 4 M.R.S. 1917(1) (individual capacity); printed name required by 1916(1)(F)
+@line State of Maine
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line Printed name: ________________________________
+@line (Stamp, if any)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=MARYLAND]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MARYLAND
-@line COUNTY OF ____________________
-@line I certify that the following person personally appeared before me this _____ day of ____________________, 20____: ______________________________, and acknowledged signing the foregoing record for the purposes stated therein.
-@line __________________________________
-@line Notary Public
-@line Printed Name: ____________________
-@line My Commission Expires: __________
-@line (Seal)
-@line Authority: Md. Code, State Gov't, Title 18 (RULONA)
+// Maryland short form, State Gov't 18-216(b) (individual capacity)
+@line State of Maryland
+@line County/City of ____________________________
+@line This record was acknowledged before me on the _____ day of ____________________, 20____ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line Title of office: ________________________________
+@line (Stamp)
+@line My commission expires: ____________________
 
 [[elif signing_state=MASSACHUSETTS]]
 
 @sub Notary Acknowledgment
 
-@line COMMONWEALTH OF MASSACHUSETTS
-@line COUNTY OF ____________________
-@line On this _____ day of ____________________, 20____, before me, the undersigned notary public, ______________________________ personally appeared, proved to me through satisfactory evidence of identification, which was ______________________________, to be the person whose name is signed on the preceding or attached document, and acknowledged to me that the person signed it voluntarily for its stated purpose.
-@line __________________________________
-@line Notary Public
-@line Printed Name: ____________________
-@line My Commission Expires: __________
+// M.G.L. c. 222, 15(b) acknowledgment; printed name and expiration per c. 222, 8(a)
+@line Commonwealth of Massachusetts
+@line County of ____________________________
+@line On this ______ day of ____________________, 20____, before me, the undersigned notary public, ____________________________ (name of document signer) personally appeared, proved to me through satisfactory evidence of identification, which were ____________________________, to be the person whose name is signed on the preceding or attached document, and acknowledged to me that (he) (she) signed it voluntarily for its stated purpose.
+@line ________________________________________
+@line Official signature and seal of notary public
+@line Printed name: ________________________________
+@line My commission expires: ____________________
 @line (Seal)
-@line Authority: M.G.L. c. 222, § 15(b)
 
 [[elif signing_state=MICHIGAN]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF MICHIGAN
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________.
-@line __________________________________
-@line Notary Public, State of Michigan
-@line County of Commission: ____________
-@line My Commission Expires: __________
-@line Acting in County of: ______________
-@line Authority: Michigan Law on Notarial Acts, MCL 55.287
+// Michigan Law on Notarial Acts; no statutory short form; MCL 55.287(2) statements
+@line State of Michigan
+@line County of ____________________________
+@line Acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notary public
+@line Printed name of notary public (exactly as on commission application): ________________________________
+@line Notary public, State of Michigan, County of ____________________.
+@line My commission expires ____________________.
+@line Acting in the County of ____________________.
+@line Date of notarial act: ____________________
 
 [[elif signing_state=MINNESOTA]]
 
@@ -397,52 +416,55 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF MONTANA
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________, 20____, by ______________________________.
-@line __________________________________
-@line Signature of Notarial Officer
-@line Printed Name: ____________________
-@line Title of Office: __________________
-@line My Commission Expires: __________
-@line (Seal)
-@line Authority: Montana RULONA short-form acknowledgment
+// Montana short form, MCA 1-5-610(1) (individual capacity)
+@line State of Montana
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Official stamp)
+@line Printed name and title of officer (if not shown in stamp): ________________________________
 
 [[elif signing_state=NEBRASKA]]
 
 @sub Notary Acknowledgment
 
+// Nebraska Statutory Short Form of Acknowledgment, Neb. Rev. Stat. 64-206(1)
 @line State of Nebraska
-@line County of ______________________________
-@line The foregoing instrument was acknowledged before me this _____ day of ____________________, 20____, by ________________________________________________.
-@line ____________________________________________
-@line Notary Public
-@line My commission expires: ____________________
+@line County of ____________________________
+@line The foregoing instrument was acknowledged before me this ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notary public
+@line Title or rank: ________________________________
 @line (Seal)
+@line My commission expires: ____________________
 
 [[elif signing_state=NEVADA]]
 
 @sub Notary Acknowledgment
 
+// Nevada short form, NRS 240.166 (individual capacity)
 @line State of Nevada
-@line County of ______________________________
-@line This instrument was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public
-@line My commission expires: ____________________
-@line (Seal)
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Seal, if any)
+@line Title and rank (optional): ________________________________
 
 [[elif signing_state=NEW_HAMPSHIRE]]
 
 @sub Notary Acknowledgment
 
+// New Hampshire short form, RSA 456-B:8, I (individual capacity)
 @line State of New Hampshire
-@line County of ______________________________
-@line This instrument was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Seal, if any)
+@line Title (and Rank): ________________________________
 @line My commission expires: ____________________
-@line (Seal)
 
 [[elif signing_state=NEW_JERSEY]]
 
@@ -460,25 +482,32 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// New Mexico short form, NMSA 1978 § 14-14A-15(A) (individual capacity); commission number required by § 14-14A-14(A)(5)
 @line State of New Mexico
-@line County of ______________________________
-@line This record was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line Commission number: ____________________
 @line My commission expires: ____________________
-@line (Seal)
 
 [[elif signing_state=NEW_YORK]]
 
 @sub Notary Acknowledgment
 
+// New York uniform form, Real Property Law § 309-a(1); Executive Law § 137 (verify against official code)
 @line State of New York
-@line County of ______________________________
-@line On the _____ day of ____________________, 20____, before me, the undersigned, personally appeared ________________________________________________, personally known to me or proved to me on the basis of satisfactory evidence to be the individual whose name is subscribed to the foregoing instrument and acknowledged to me that the individual executed the same in the individual’s capacity, and that by the individual’s signature on the instrument, the individual, or the person upon behalf of which the individual acted, executed the instrument.
-@line ____________________________________________
+@line County of ____________________________
+@line On the _____ day of ____________________ in the year 20____, before me, the undersigned, personally appeared ____________________________, personally known to me or proved to me on the basis of satisfactory evidence to be the individual(s) whose name(s) is (are) subscribed to the within instrument and acknowledged to me that he/she/they executed the same in his/her/their capacity(ies), and that by his/her/their signature(s) on the instrument, the individual(s), or the person upon behalf of which the individual(s) acted, executed the instrument.
+@line ________________________________________
 @line Notary Public
+@line Printed name: ____________________________
+@line Notary Public, State of New York
+@line Qualified in ____________________ County
+@line Registration No.: ____________________
 @line My commission expires: ____________________
-@line (Seal)
 
 [[elif signing_state=NORTH_CAROLINA]]
 
@@ -496,13 +525,15 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// North Dakota short form, N.D.C.C. § 44-06.1-19(1) (individual capacity)
 @line State of North Dakota
-@line County of ______________________________
-@line This record was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
-@line (Seal)
 
 [[elif signing_state=OHIO]]
 
@@ -520,37 +551,44 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// Oklahoma short form, 49 O.S. § 119(1) (individual capacity); seal, commission number and expiration, 49 O.S. § 5(A)
 @line State of Oklahoma
-@line County of ______________________________
-@line This instrument was acknowledged before me on this _____ day of ____________________, 20____, by ________________________________________________.
-@line ____________________________________________
-@line Notary Public
-@line My commission expires: ____________________
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
 @line (Seal)
+@line Title (and Rank): ________________________________
+@line Commission No.: ____________________
+@line My commission expires: ____________________
 
 [[elif signing_state=OREGON]]
 
 @sub Notary Acknowledgment
 
+// Oregon short form, ORS 194.285(1) (individual capacity)
 @line State of Oregon
-@line County of ______________________________
-@line This record was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
-@line (Seal)
 
 [[elif signing_state=PENNSYLVANIA]]
 
 @sub Notary Acknowledgment
 
-@line State of Pennsylvania
-@line County of ______________________________
-@line On this _____ day of ____________________, 20____, before me, the undersigned officer, personally appeared ________________________________________________, known to me or satisfactorily proven to be the person whose name is subscribed to the within instrument, and acknowledged that the person executed the same for the purposes therein contained.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+// Pennsylvania short form, 57 Pa.C.S. § 316(1) (individual capacity)
+@line Commonwealth of Pennsylvania
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
-@line (Seal)
 
 [[elif signing_state=RHODE_ISLAND]]
 
@@ -568,11 +606,14 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// South Carolina statutory short form, S.C. Code § 26-3-70(1); name, seal and expiration, §§ 26-1-60, 26-1-90(B)
 @line State of South Carolina
-@line County of ______________________________
-@line The foregoing instrument was acknowledged before me this _____ day of ____________________, 20____, by ________________________________________________.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+@line County of ____________________________
+@line The foregoing instrument was acknowledged before me this ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notary public
+@line Notary Public for South Carolina
+@line Printed name: ____________________________
 @line My commission expires: ____________________
 @line (Seal)
 
@@ -580,23 +621,29 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// South Dakota form, SDCL § 18-5-8 (individual); officer's name, seal, title and expiration, § 18-5-13
 @line State of South Dakota
-@line County of ______________________________
-@line This record was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
-@line My commission expires: ____________________
+@line County of ____________________________
+@line On this the _____ day of ____________________, 20____, before me, ____________________________, the undersigned officer, personally appeared ____________________________, known to me or satisfactorily proven to be the person(s) whose name(s) is (are) subscribed to the within instrument and acknowledged that he, she or they executed the same for the purposes therein contained.
+@line In witness whereof I hereunto set my hand and official seal.
+@line ________________________________________
+@line Signature of notary public
+@line Printed name: ____________________________
 @line (Seal)
+@line Title of officer: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=TENNESSEE]]
 
 @sub Notary Acknowledgment
 
+// Tennessee form, T.C.A. § 66-22-107 (natural person); § 66-22-114 (verify against official code)
 @line State of Tennessee
-@line County of ______________________________
-@line Personally appeared before me, ________________________________________________, with whom I am personally acquainted or proved to me on the basis of satisfactory evidence, and who acknowledged that the person executed the foregoing instrument for the purposes therein contained.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+@line County of ____________________________
+@line Personally appeared before me, ____________________________, a Notary Public of said County, ____________________________, with whom I am personally acquainted (or proved to me on the basis of satisfactory evidence), and who acknowledged that such person executed the within instrument for the purposes therein contained.
+@line Witness my hand, at office, this ______ day of __________________, 20____.
+@line ________________________________________
+@line Notary Public
 @line My commission expires: ____________________
 @line (Seal)
 
@@ -604,11 +651,13 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// Texas short form, Civ. Prac. & Rem. Code § 121.008(b)(1) (individual)
 @line State of Texas
-@line County of ______________________________
-@line This instrument was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Notary Public, State of Texas
+@line Notary's printed name: ________________________________
 @line My commission expires: ____________________
 @line (Seal)
 
@@ -616,35 +665,40 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
+// Utah form, Utah Code § 46-1-6.5(3) (acknowledgment)
 @line State of Utah
-@line County of ______________________________
-@line This record was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
-@line My commission expires: ____________________
-@line (Seal)
+@line County of ____________________________
+@line On this ______ day of ____________________, in the year ________, before me, ____________________________, a notary public, personally appeared ____________________________, proved on the basis of satisfactory evidence to be the person(s) whose name(s) (is/are) subscribed to in this document, and acknowledged (he/she/they) executed the same.
+@line ________________________________________
+@line Notary Signature
+@line (Notary's Official Seal)
 
 [[elif signing_state=VERMONT]]
 
 @sub Notary Acknowledgment
 
+// Vermont short form, 26 V.S.A. § 5368(1) (individual capacity); § 5367
 @line State of Vermont
-@line County of ______________________________
-@line This record was acknowledged before me on ____________________ by ________________________________________________.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
-@line (Seal)
+@line Printed name and commission number (if no stamp is affixed): ________________________________
 
 [[elif signing_state=VIRGINIA]]
 
 @sub Notary Acknowledgment
 
-@line State of Virginia
-@line County of ______________________________
-@line The foregoing instrument was acknowledged before me this _____ day of ____________________, 20____, by ________________________________________________.
-@line ____________________________________________
-@line Notary Public / Authorized Officer
+// Virginia short form, Va. Code § 55.1-621(1); § 47.1-16 (registration number per Notary Handbook)
+@line Commonwealth of Virginia
+@line City/County of ____________________________
+@line The foregoing instrument was acknowledged before me this ______ day of __________________, 20____, by ____________________________.
+@line ________________________________________
+@line Notary Public
+@line Notary registration number: ____________________
 @line My commission expires: ____________________
 @line (Seal)
 
@@ -666,40 +720,42 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF WEST VIRGINIA
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________ by ________________________________.
-@line __________________________________
-@line Notarial Officer
-@line Title of Office: ________________________________
-@line My Commission Expires: ____________________
-@line (Seal)
+// West Virginia short form, W. Va. Code § 39-4-16(1) (individual capacity); § 39-4-15
+@line State of West Virginia
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=WISCONSIN]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF WISCONSIN
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________ by ________________________________.
-@line __________________________________
-@line Notarial Officer
-@line Title of Office: ________________________________
-@line My Commission Expires: ____________________
-@line (Seal)
+// Wisconsin short form, Wis. Stat. § 140.16(1) (individual capacity); § 140.15
+@line State of Wisconsin
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=WYOMING]]
 
 @sub Notary Acknowledgment
 
-@line STATE OF WYOMING
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________ by ________________________________.
-@line __________________________________
-@line Notarial Officer
+// Wyoming short form, W.S. 32-3-115(a)(i) (individual capacity); § 32-3-114
+@line State of Wyoming
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line (Stamp)  Signature of notarial officer
 @line Title (and Rank): ________________________________
-@line My Commission Expires: ____________________
-@line (Seal)
+@line My commission expires: ____________________
 
 [[end]]
 `;

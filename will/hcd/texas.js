@@ -664,17 +664,16 @@ The Principal acknowledges having read and understood the disclosure statement a
 
 @sub SIGNATURE ACKNOWLEDGED BEFORE NOTARY
 
+// Statutory form, Tex. Health & Safety Code § 166.164 (verbatim) (verify against official code)
 @line State of Texas
-
-@line County of {{county}}
-
-@line This instrument was acknowledged before me on __________ by {{name}}.
-
-@line NOTARY PUBLIC, State of Texas: ______________________________
-
-@line Notary's printed name: ______________________________
-
-@line My commission expires: ____________________
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ (date) by {{name}} (name of person acknowledging).
+@line ________________________________________
+@line NOTARY PUBLIC, State of Texas
+@line Notary's printed name:
+@line ________________________________________
+@line My commission expires:
+@line ________________________________________
 
 [[elif exec_route=WITNESSES]]
 

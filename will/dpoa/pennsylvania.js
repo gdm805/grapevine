@@ -491,16 +491,16 @@ The Principal signed or acknowledged this Power of Attorney in my presence, and 
 
 @line Printed Name: __________________________________
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF PENNSYLVANIA
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Pennsylvania short form, 57 Pa.C.S. § 316(1); 20 Pa.C.S. § 5601(b)(3) (notary may not be the agent or a witness)
+@line Commonwealth of Pennsylvania
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 
 @sub ACKNOWLEDGMENT EXECUTED BY AGENT

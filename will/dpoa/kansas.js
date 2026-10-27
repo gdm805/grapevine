@@ -457,15 +457,15 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF KANSAS
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// K.S.A. 58-652(a)(3); short form K.A.R. 7-43-17(a)(1) (verify against official code)
+@line State of Kansas
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Official stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 `;

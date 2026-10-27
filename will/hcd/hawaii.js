@@ -664,15 +664,18 @@ I declare under penalty of false swearing pursuant to section 710-1062, Hawaii R
 
 @sub ACKNOWLEDGMENT BY NOTARY PUBLIC
 
+// Hawaii, HRS 502-41 (form 6) and 502-42 (individual acknowledgment); certificate elements per HRS 456-21
 @line State of Hawaii
-
-@line County of {{county}}
-
-@line On this __________ day of __________________, in the year ________, before me, ______________________________________________ (insert name of notary public) appeared {{name}}, personally known to me (or proved to me on the basis of satisfactory evidence) to be the person whose name is subscribed to this instrument, and acknowledged that he or she executed it.
-
+@line City and County of / County of ____________________________
+@line On ____________________, before me personally appeared {{name}}, to me personally known or proved to me through satisfactory evidence of identity, who, being by me duly sworn or affirmed, did say that such person executed the foregoing instrument as the free act and deed of such person.
+@line ________________________________________
+@line Notary Public, State of Hawaii
+@line Printed Name: ____________________________
+@line ______________ Judicial Circuit
+@line My Commission Expires: ____________________
 @line (Seal)
-
-@line Signature of Notary Public: ______________________________________________
+@line Doc. Date: __________________   # Pages: ______
+@line Document Description: Advance Health-Care Directive
 
 [[end]]
 `;

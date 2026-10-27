@@ -640,19 +640,15 @@ We declare that the principal is personally known to us, that the principal sign
 
 @sub NOTARIAL ACKNOWLEDGMENT
 
-@line State of Nebraska,
-
-) ss.
-
-@line County of {{county}}
-
-@line On this ____ day of __________________, 20____, before me, ______________________________, a notary public in and for __________________ County, personally came {{name}}, personally to me known to be the identical person whose name is affixed to the above power of attorney for health care as principal, and I declare that the Principal appears in sound mind and not under duress or undue influence, that the Principal acknowledges the execution of the same to be the Principal's voluntary act and deed, and that I am not the attorney in fact or successor attorney in fact designated by this power of attorney for health care.
-
+// Neb. Rev. Stat. 30-3408(1) statutory form (notary alternative); 30-3404
+@line State of Nebraska, )
+@line ) ss.
+@line County of ____________________________ )
+@line On this ____ day of __________________, 20____, before me, ______________________________, a notary public in and for __________________ County, personally came {{name}}, personally to me known to be the identical person whose name is affixed to the above power of attorney for health care as principal, and I declare that he or she appears in sound mind and not under duress or undue influence, that he or she acknowledges the execution of the same to be his or her voluntary act and deed, and that I am not the attorney in fact or successor attorney in fact designated by this power of attorney for health care.
 @line Witness my hand and notarial seal at ______________________________ in such county the day and year last above written.
-
-@line (Seal)
-
-@line Signature of Notary Public: ______________________________
+@line ________________________________________
+@line Seal
+@line Signature of Notary Public
 
 [[end]]
 `;

@@ -628,16 +628,15 @@ We witnessed the Principal sign or acknowledge this Advance Directive. Neither o
 
 [[elif exec_route=NOTARY]]
 
-@sub ACKNOWLEDGMENT
+@sub Notary
 
+// ORS 127.529 statutory form, "A. NOTARY" (signing witnessed by notary); certificate elements, ORS 194.280
 @line State of Oregon
-
-@line County of {{county}}
-
-@line This record was acknowledged before me on __________ by {{name}}.
-
-@line Notary Public: ______________________________
-
+@line County of ____________________________
+@line Signed or attested before me on ____________________, 20____, by {{name}}.
+@line ________________________________________
+@line Notary Public - State of Oregon
+@line (Stamp)
 @line My commission expires: ____________________
 
 [[end]]

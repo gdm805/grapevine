@@ -642,17 +642,16 @@ I declare under penalty of perjury that I am not related to the principal by blo
 
 [[elif exec_route=NOTARY]]
 
-@sub CERTIFICATE OF ACKNOWLEDGMENT OF NOTARY PUBLIC
+@sub Notary Acknowledgment
 
+// NRS 162A.790(2)(a); short form NRS 240.166
 @line State of Nevada
-
-@line County of {{county}}
-
-@line On this ____ day of __________________, in the year ________, before me, ______________________________ (here insert name of notary public) personally appeared {{name}}, personally known to me (or proved to me on the basis of satisfactory evidence) to be the person whose name is subscribed to this instrument, and acknowledged that the Principal executed it.
-
-@line (Seal)
-
-@line Signature of Notary Public: ______________________________
+@line County of ____________________________
+@line This instrument was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notarial officer
+@line (Seal, if any)
+@line Title and rank (optional): ________________________________
 
 [[end]]
 `;

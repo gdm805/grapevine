@@ -634,17 +634,15 @@ Each of us declares that we are at least eighteen (18) years of age; that we are
 
 @sub NOTARIAL ACKNOWLEDGMENT
 
-@line STATE OF ______________________________
-
-@line COUNTY OF {{county}}
-
-@line This instrument was acknowledged before me on __________________ by {{name}}.
-
-@line Signature of Notary Public: ______________________________
-
-(Seal)
-
-@line My appointment expires: ________________________________
+// K.S.A. 58-632 statutory form (notary alternative)
+@line STATE OF KANSAS )
+@line ) SS.
+@line COUNTY OF ____________________________ )
+@line This instrument was acknowledged before me on ____________________ by {{name}}.
+@line ________________________________________
+@line Signature of notary public
+@line (Seal, if any)
+@line My appointment expires: ____________________
 
 [[end]]
 `;

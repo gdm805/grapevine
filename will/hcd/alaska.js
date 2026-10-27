@@ -676,5 +676,8 @@ I swear under penalty of perjury under AS 11.56.200 that the principal is person
 
 @line Signature of Notary Public: ______________________________________________
 
+// Alaska, AS 09.63.100(b) (commission expiration date required)
+@line My Commission Expires: ____________________
+
 [[end]]
 `;

@@ -473,14 +473,12 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Acknowledgment
 
-@line STATE OF WISCONSIN
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Statutory form, Wis. Stat. § 244.61 (acknowledgment portion, verbatim)
+@line State of Wisconsin
+@line County of ____________________________
+@line This document was acknowledged before me on ____________________ (date), by {{name}} (name of principal).
+@line (Seal, if any)
+@line Signature of notary ________________________________________
 @line My commission expires: ____________________
 
 @sub IMPORTANT INFORMATION FOR AGENT

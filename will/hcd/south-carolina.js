@@ -672,7 +672,8 @@ No more than one witness is an employee of a health care facility in which the p
 
 @line STATE OF SOUTH CAROLINA
 
-@line COUNTY OF {{county}}
+// S.C. Code § 62-5-504 statutory notary block kept; venue county left blank (county where the notarization takes place)
+@line COUNTY OF ____________________
 
 @line The foregoing instrument was acknowledged before me by {{name}} on _______________, 20 _________.
 

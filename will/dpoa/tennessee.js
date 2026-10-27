@@ -453,15 +453,15 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sign {{name}}, Principal
 
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF TENNESSEE
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Tennessee form, T.C.A. § 66-22-107 (natural person); § 66-22-114 (verify against official code)
+@line State of Tennessee
+@line County of ____________________________
+@line Personally appeared before me, ____________________________, a Notary Public of said County, {{name}}, with whom I am personally acquainted (or proved to me on the basis of satisfactory evidence), and who acknowledged that such person executed the within instrument for the purposes therein contained.
+@line Witness my hand, at office, this ______ day of __________________, 20____.
+@line ________________________________________
+@line Notary Public
 @line My commission expires: ____________________
+@line (Seal)
 `;
