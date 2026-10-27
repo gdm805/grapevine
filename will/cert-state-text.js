@@ -861,14 +861,15 @@ RCW 11.98.075.
 
 @sub Notary Acknowledgment
 
+// Washington short form, RCW 42.45.140(2) (representative capacity)
 @line State of Washington
-@line County of ________________________________
-@line This instrument was acknowledged before me on __________________, 20____, by ____________________________, as Trustee of {{trust_name}}.
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________ as Trustee of {{trust_name}}.
 @line ________________________________________
-@line Notary Public / Notarial Officer
-@line Printed Name: ________________________________
-@line My Commission Expires: ________________________
-@line (Seal)
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 
 [[elif signing_state=WEST_VIRGINIA]]

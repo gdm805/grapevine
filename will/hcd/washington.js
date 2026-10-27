@@ -622,22 +622,16 @@ We declare that the Principal signed or acknowledged this directive in our prese
 
 [[elif exec_route=NOTARY]]
 
-@sub ACKNOWLEDGMENT
+@sub Notary Acknowledgment
 
+// Washington short form, RCW 42.45.140(1) (individual capacity)
 @line State of Washington
-
-@line County of {{county}}
-
-I certify that I know or have satisfactory evidence that {{name}} is the person who appeared before me, and said person acknowledged that the person signed this instrument and acknowledged it to be the person’s free and voluntary act for the uses and purposes mentioned in this instrument.
-
-@line Dated: ____________________
-
-@line Signature of Notary: ______________________________
-
-@line Print Name of Notary: ______________________________
-
-@line Notary Public for the State of Washington, residing at ____________________
-
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 
 [[end]]

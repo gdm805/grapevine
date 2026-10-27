@@ -487,16 +487,16 @@ The Principal signed or acknowledged this Power of Attorney in our presence and 
 
 @line Printed Name: __________________________________
 [[else]]
-@sub Acknowledgment
+@sub Notary Acknowledgment
 
-@line STATE OF WASHINGTON
-
-@line COUNTY OF ____________________
-
-The foregoing instrument was acknowledged before me by {{name}} on ____________________.
-
-@sign Notary Public / Authorized Officer
-
+// Washington short form, RCW 42.45.140(1) (individual capacity)
+@line State of Washington
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
 [[end]]
 `;

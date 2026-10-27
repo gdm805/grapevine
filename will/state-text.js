@@ -2591,15 +2591,16 @@ We, the undersigned attesting witnesses to the foregoing Last Will and Testament
 
 @sign Address
 
-Subscribed and sworn to before me by ____________________ and ____________________, attesting witnesses, on ____________________, 20____.
-
-@sign Notary Public in and for the State of Washington
-
-@line Residing at: ____________________
-
+@sub Verification on Oath or Affirmation
+// Washington short form, RCW 42.45.140(3)
+@line State of Washington
+@line County of ____________________________
+@line Signed and sworn to (or affirmed) before me on ____________________ by ____________________________ and ____________________________, attesting witnesses.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
 @line My commission expires: ____________________
-
-@line (Seal)
 
 
 === West Virginia

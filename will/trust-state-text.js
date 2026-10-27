@@ -652,14 +652,15 @@ window.TRUST_SHARED['trust_execution'] = String.raw`
 
 @sub Notary Acknowledgment
 
-@line STATE OF WASHINGTON
-@line COUNTY OF ____________________
-@line This record was acknowledged before me on ____________________ by ________________________________.
-@line __________________________________
-@line Notary Public
-@line Title of Office: ________________________________
-@line My Commission Expires: ____________________
-@line (Seal)
+// Washington short form, RCW 42.45.140(1) (individual capacity)
+@line State of Washington
+@line County of ____________________________
+@line This record was acknowledged before me on ____________________ by ____________________________.
+@line ________________________________________
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 [[elif signing_state=WEST_VIRGINIA]]
 

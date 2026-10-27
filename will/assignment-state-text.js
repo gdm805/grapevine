@@ -444,15 +444,15 @@ BE IT KNOWN that on __________________, 20____, before me, the undersigned Notar
 @line My Commission Expires: ____________________
 @line (Seal)
 [[elif signing_state=WASHINGTON]]
+// Washington short form, RCW 42.45.140(1) (individual capacity)
 @line State of Washington
 @line County of ____________________________
-@line This record was acknowledged before me on __________________, 20____, by ____________________________.
+@line This record was acknowledged before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Notary Public, State of Washington
-@line Printed Name: ____________________________
-@line Commission No.: ____________________
-@line My Commission Expires: ____________________
-@line (Seal)
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 [[elif signing_state=WEST_VIRGINIA]]
 @line State of West Virginia
 @line County of ____________________________

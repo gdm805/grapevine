@@ -698,14 +698,16 @@ window.AFFIDAVIT_SHARED['affidavit_execution'] = String.raw`
 @line Executed in {{signing_city}}, {{county}} County, Washington, on {{signing_date}}.
 @line ________________________________________
 @line {{affiant_name}}, {{affiant_capacity}} / Affiant
-@line STATE OF WASHINGTON
-@line COUNTY OF ____________________________
-@line Signed and sworn to (or affirmed) before me on ____________________________ by ____________________________.
+@sub Verification on Oath or Affirmation
+// Washington short form, RCW 42.45.140(3)
+@line State of Washington
+@line County of ____________________________
+@line Signed and sworn to (or affirmed) before me on ____________________ by ____________________________.
 @line ________________________________________
-@line Signature of Notary Public
-@line Printed Name: ________________  Commission No.: ________________
-@line Official Stamp / Title of Office: ____________________
-@line My Commission Expires: ____________________
+@line Signature of notary public
+@line (Stamp)
+@line Title of office: ________________________________
+@line My commission expires: ____________________
 
 
 [[elif signing_state=WEST_VIRGINIA]]
