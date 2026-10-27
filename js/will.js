@@ -3555,7 +3555,6 @@
     { id: 'affiant', label: 'About you' },
     { id: 'trustees', label: 'Current trustees' },
     { id: 'authority', label: 'Trustee authority', show: function (a) { return (a.trustees || []).filter(function (t) { return clean(t.name); }).length > 1; } },
-    { id: 'transaction', label: 'Transaction' },
     { id: 'signing', label: 'Signing' },
     { id: 'review', label: 'Review and sign' }
   ];
@@ -3591,9 +3590,11 @@
     var ownA = ownTrustRule(a); if (ownA) v.trustee_rule = ownA.rule;
     v.own_trust_rule = !!ownA;
     v.own_joint_spouses = ownJointSpouses(a);
-    v.has_transaction = a.hasTransaction === 'yes' && !!clean(a.transactionAuthority);
+    /* the pending-transaction and restriction questions were removed (27 Oct 2026, Greg): the Affidavit states
+       general status and authority only */
+    v.has_transaction = false;
     v.transaction_authority = clean(a.transactionAuthority);
-    v.has_restriction = a.hasRestriction === 'yes' && !!clean(a.transactionRestriction);
+    v.has_restriction = false;
     v.transaction_restriction = clean(a.transactionRestriction);
     v.state_note = st ? st.note : '';
     /* real-estate notes from the 19 Oct 2026 statute check: states whose own recordable instrument a title

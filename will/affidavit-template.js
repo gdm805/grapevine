@@ -18,7 +18,7 @@ window.AFFIDAVIT_TEMPLATE = String.raw`
 
 This Affidavit provides sworn evidence of the identity, status, and authority of a currently acting Trustee concerning the trust identified below. It is intended for use when a person, institution, or agency requests sworn confirmation of the Trustee's status and authority.
 
-This Affidavit does not amend, revoke, restate, or otherwise alter the Trust Agreement and does not disclose dispositive provisions except to the extent independently required by applicable law or the pending transaction.
+This Affidavit does not amend, revoke, restate, or otherwise alter the Trust Agreement and does not disclose dispositive provisions except to the extent independently required by applicable law.
 
 ## Trust Identification
 
@@ -90,11 +90,11 @@ Each person identified as a currently acting Trustee has accepted the office and
 
 [[if single_trustee]]
 
-Only one Trustee is currently acting. That Trustee may exercise the authority stated in this Affidavit subject to the Trust Agreement, applicable law, and any transaction-specific limitation.
+Only one Trustee is currently acting. That Trustee may exercise the authority stated in this Affidavit subject to the Trust Agreement and applicable law.
 
 [[else]]
 
-The authority of the currently acting Trustees to act with respect to the pending transaction is governed by the Trust Agreement and applicable law.
+The authority of the currently acting Trustees to act is governed by the Trust Agreement and applicable law.
 
 [[if trustee_rule=ANY_ONE]]
 
@@ -119,7 +119,7 @@ As provided in the Trust Agreement, while both Trustmakers are serving as co-Tru
 
 [[end]]
 
-The fact that this Affidavit is signed by fewer than all currently acting Trustees does not itself establish that fewer than all Trustees may complete the underlying transaction; the transaction-specific decision rule controls.
+The fact that this Affidavit is signed by fewer than all currently acting Trustees does not itself establish that fewer than all Trustees may act; the decision rule stated above and the Trust Agreement control.
 
 [[end]]
 
@@ -149,7 +149,7 @@ Both Trustmakers are living. The Trust remains revocable to the extent provided 
 
 [[elif joint_phase=FIRST_DECEASED]]
 
-One Trustmaker is deceased and the surviving Trustmaker is living. The Trust is in post-first-death administration. The Affiant shall not characterize the entire Trust as revocable or irrevocable without identifying the particular trust, share, or property involved in the pending transaction.
+One Trustmaker is deceased and the surviving Trustmaker is living. The Trust is in post-first-death administration. The Affiant shall not characterize the entire Trust as revocable or irrevocable without identifying the particular trust, share, or property involved.
 
 Applicable trust/share for this Affidavit: {{admin_share}}.
 
@@ -185,27 +185,13 @@ Except as stated in this Affidavit, the Trust has not been revoked, terminated, 
 
 Subject to the Trust Agreement and applicable law, the Trustee is authorized to possess, manage, protect, preserve, invest, sell, exchange, lease, transfer, convey, assign, mortgage, pledge, encumber, distribute, and otherwise administer Trust property and to execute, acknowledge, verify, certify, deliver, file, and record documents reasonably necessary or appropriate to exercise that authority.
 
-## Transaction-Specific Authority
+## Scope of This Affidavit
 
-[[if has_transaction]]
-
-For the transaction for which this Affidavit is furnished, the currently acting Trustee or Trustees are authorized to {{transaction_authority}}.
-
-[[if has_restriction]]
-
-The following restriction or limitation is material to the pending transaction: {{transaction_restriction}}.
-
-[[end]]
-
-[[else]]
-
-No particular transaction is identified. This Affidavit confirms only the Affiant's present status and general authority as Trustee and shall not be construed as a representation that a particular proposed transaction satisfies every trust, title, consent, recording, tax, contractual, or legal requirement.
-
-[[end]]
+This Affidavit confirms only the Affiant's present status and general authority as Trustee and shall not be construed as a representation that a particular proposed transaction satisfies every trust, title, consent, recording, tax, contractual, or legal requirement.
 
 ## No Expansion of Authority
 
-Nothing in this Affidavit expands the powers granted by the Trust Agreement or applicable law. If the Trust Agreement imposes a limitation material to the pending transaction, that limitation controls even if not restated here.
+Nothing in this Affidavit expands the powers granted by the Trust Agreement or applicable law. Any limitation in the Trust Agreement controls even if not restated here.
 
 # AFFIANT REPRESENTATIONS
 
@@ -221,11 +207,9 @@ The Affiant states under oath that:
 
 (d) the Trust remains in existence;
 
-(e) the current administrative phase and revocability statements in this Affidavit are accurate for the trust or share identified;
+(e) the current administrative phase and revocability statements in this Affidavit are accurate for the trust or share identified; and
 
-(f) the transaction-specific authority statement, if any, is accurate to the Affiant's knowledge; and
-
-(g) all statements contained in this Affidavit are true and correct as of the date signed.
+(f) all statements contained in this Affidavit are true and correct as of the date signed.
 
 ## Penalty of Perjury
 
@@ -239,13 +223,13 @@ This Affidavit may be furnished to a person or entity requesting sworn evidence 
 
 ## Relationship to Certification of Trust
 
-This Affidavit is not a substitute for a statutory Certification of Trust, Certificate of Trust, Extract of Trust, Memorandum of Trust, or other state-specific trust-authentication vehicle when applicable law or the pending transaction requires that vehicle.
+This Affidavit is not a substitute for a statutory Certification of Trust, Certificate of Trust, Extract of Trust, Memorandum of Trust, or other state-specific trust-authentication vehicle when applicable law or the person relying on it requires that vehicle.
 
 If the purpose of the request is merely to establish the existence of the Trust or the authority of the Trustee, a Certification of Trust may be more appropriate.
 
 ## No Dispositive Disclosure
 
-This Affidavit does not disclose dispositive provisions of the Trust except to the extent independently required by law or necessary to establish the Trustee's authority in the pending transaction.
+This Affidavit does not disclose dispositive provisions of the Trust except to the extent independently required by law or necessary to establish the Trustee's authority.
 
 ## Real Property and Recording
 
