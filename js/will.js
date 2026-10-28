@@ -1202,9 +1202,12 @@
           '<p class="hint" id="pct-total">Shares add up to ' + fmtShare(total) + '%. They need to add up to 100%.</p>' +
           '<p class="hint"><strong>Leaving a share to a charity?</strong> If the charity has merged or changed its name, its share goes to the organization that carries on its work. If it no longer exists, your personal representative gives the share to a charity with a similar purpose. To send it somewhere else instead, choose a person, another charity, or the others on this list.</p>';
       }
-      if (onlyNamed) return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Name each person or organization and the share each receives.') + table;
+      /* Washington: information about community property agreements for will customers (RCW 26.16.120; the
+         2010 AG-LegalZoom assurance, para 2.1(f), asked for this information for Washington will customers) */
+      var cpa = answers.state === 'Washington' ? '<p class="hint"><strong>Washington community property agreements.</strong> Washington law (RCW 26.16.120) lets spouses and registered domestic partners sign a separate agreement about their community property that can take effect when one of them dies. Property that passes under such an agreement does not pass under the will. Tovakin does not prepare these agreements. <a href="learn.html#washington-community-property-agreements" target="_blank" rel="noopener">Read about community property agreements</a></p>' : '';
+      if (onlyNamed) return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Name each person or organization and the share each receives.') + table + cpa;
       return stepHead('Who gets everything else?', 'This covers your home, money, and belongings, after any special gifts. Start with a choice below, then adjust it.') +
-        cards('residuary', opts) + table;
+        cards('residuary', opts) + table + cpa;
     },
     review: function () {
       var v = buildVars(answers, states, tpl.settings);

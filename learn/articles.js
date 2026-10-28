@@ -69,7 +69,7 @@ Both a will and a living trust let you decide who receives your property. They w
 
 ## The short answer
 
-Compared with administering a trust, settling an estate under a will is usually more costly, is a public affair, takes a lot more time, and can be very complicated. A will goes through probate, a court process with filings, deadlines and fees, and the court file is open to the public. A trust is administered privately by the trustee you chose, usually without going to court.
+Property that passes under a will generally goes through probate, a court process with filings, deadlines and fees, and the court file is generally open to the public. Property held in a funded living trust is generally administered by the trustee you chose without going to court. How long either takes, and what it costs, depends on the estate and on the state's law; some states have simpler procedures for small estates.
 
 ## The main differences
 
@@ -516,6 +516,38 @@ Life insurance, retirement accounts and other accounts pass to the people named 
 ## A list of important contacts
 
 A list of accounts, advisors and key contacts can save a family a great deal of searching. You can make one with [Important Contacts](contacts.html).
+
+=== washington-community-property-agreements
+title: Washington community property agreements
+category: Wills
+date: 2026-10-27
+summary: Washington lets spouses and registered domestic partners sign an agreement about their community property, including what happens to it when one of them dies. Here is what the law provides.
+---
+Washington is a community property state. In general, property that spouses or registered domestic partners acquire during the marriage or partnership is community property, and property owned before it, or received by gift or inheritance, is separate property.
+
+## What the agreement is
+
+Washington law (RCW 26.16.120) lets spouses and registered domestic partners make an agreement concerning "the status or disposition of the whole or any portion of the community property," whether owned now or acquired later, which can take effect when either of them dies. These are commonly called community property agreements.
+
+## How it is made
+
+Under RCW 26.16.120, the agreement is a written instrument signed by both spouses or partners and witnessed, acknowledged and certified in the same way as a deed to real estate. Any later change must be made the same way.
+
+## What it can do
+
+- **Say what is community property.** An agreement can address the status of some or all of a couple's community property, now and in the future.
+- **Pass property at death.** An agreement can provide that, when the first spouse or partner dies, the community property passes to the survivor.
+- **Creditors.** Under the statute, the agreement does not reduce the rights of creditors.
+
+## How it relates to a will or trust
+
+A community property agreement and a will are separate documents. Property that passes under the agreement does not pass under the will of the first spouse or partner to die. If the couple also has a living trust, property held in the trust passes under the trust's terms.
+
+## Changing or ending it
+
+A change to the agreement must be made with the same formalities as the original. The statute also preserves a court's power to set an agreement aside for fraud or other recognized grounds.
+
+Tovakin does not prepare community property agreements. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
 
 === why-a-living-trust
 title: Living trust or will: six differences to know
