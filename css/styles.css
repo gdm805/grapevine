@@ -569,3 +569,10 @@ details[id] { scroll-margin-top: 110px; }
 .legal-band p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink); max-width: 80ch; }
 .legal-band strong { color: var(--ink); }
 .buy-disclaimer { font-size: 14.5px; color: var(--ink); margin: 10px 0 0; }
+
+/* header tagline under the wordmark (28 Oct 2026): real text, lined up with the start of "tōvakin" in the logo
+   (the wordmark starts 32.8% across the logo image); tucked into the logo's empty bottom margin */
+.brand { position: relative; }
+.brand-tag { position: absolute; left: 32.8%; right: 3%; bottom: 9px; font: 600 10.5px/1 "DM Sans", system-ui, sans-serif; letter-spacing: 0.215em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
+@media (max-width: 720px) { .brand-tag { font-size: 8.5px; bottom: 7px; letter-spacing: 0.2em; } }
+@media (max-width: 480px) { .brand-tag { display: none; } }
