@@ -71,6 +71,7 @@
     action = '<div class="pkg-sum-pay"><h2>Download your documents</h2>' +
       '<p>Download all ' + n + ' at once as one PDF, then print from that file. Keep the file: your purchase is remembered only in this browser.</p>' +
       '<div class="pkg-sum-btns"><button type="button" class="btn btn-primary pay-btn" id="dl-all">Download all ' + n + ' (PDF)</button></div>' +
+      '<p class="buy-disclaimer"><strong>Tovakin is not a law firm.</strong> These documents are not a substitute for the advice of an attorney.</p>' +
       '<p class="pkg-status" id="pkg-status" role="status"></p><div class="pkg-save" id="pkg-save" hidden></div></div>';
   } else {
     var b = beta();

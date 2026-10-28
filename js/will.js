@@ -4640,6 +4640,9 @@
       }
       signingHelp();
       reviewBeforePay();
+      /* next to the Download button on every document's last screen (28 Oct 2026, Greg) */
+      var dlBtn = stepEl.querySelector('[data-pdf]'), dlRow = dlBtn && dlBtn.closest('.actions');
+      if (dlRow && !stepEl.querySelector('.buy-disclaimer')) dlRow.insertAdjacentHTML('afterend', '<p class="buy-disclaimer"><strong>Tovakin is not a law firm.</strong> This document is not a substitute for the advice of an attorney.</p>');
     }
     if (focusSel) { var f = stepEl.querySelector(focusSel); if (f) f.focus(); }
     renderDoc(); save();

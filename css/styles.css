@@ -201,7 +201,7 @@ a { color: var(--grape); }
 .band p { font-size: clamp(18px, 1.7vw, 21px); color: var(--lavender); max-width: 46ch; }
 
 .site-footer { background: var(--sand); padding-top: clamp(48px, 6vw, 72px); }
-.foot-grid { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.3fr); gap: 32px clamp(32px, 6vw, 88px); align-items: start; }
+.foot-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 32px clamp(32px, 6vw, 88px); align-items: start; }
 .foot-brand img { width: 300px; }
 .foot-nav { display: grid; gap: 10px; font-size: 15px; }
 .foot-nav a { color: var(--ink-soft); text-decoration: none; width: fit-content; }
@@ -563,3 +563,9 @@ details[id] { scroll-margin-top: 110px; }
 /* Terms: the arbitration notice under the date (26 Oct 2026) */
 .arb-notice { margin: 14px 0 22px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r-md); font-size: 14.5px; line-height: 1.5; }
 .arb-notice a { color: inherit; }
+
+/* legal notice band above the footer on every page (28 Oct 2026): body-size text, ink color, tinted band */
+.legal-band { background: var(--grape-tint); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 20px 0; }
+.legal-band p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--ink); max-width: 80ch; }
+.legal-band strong { color: var(--ink); }
+.buy-disclaimer { font-size: 14.5px; color: var(--ink); margin: 10px 0 0; }

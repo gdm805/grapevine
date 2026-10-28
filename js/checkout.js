@@ -159,6 +159,7 @@
             : '<a class="btn btn-primary btn-lg" href="' + payHref + '">' + (betaTester() ? 'Continue &mdash; your documents are free' : 'Continue to secure payment') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>')
           : '<div class="pay-off"><p><strong>Payments aren’t turned on yet.</strong> Add a Stripe Payment Link for the ' + esc(p.name) + ' plan (' + household + ') in <code>js/checkout.js</code>, or open <code>paid.html?plan=' + plan + '&household=' + household + '</code> to try the unlocked view.</p></div>') +
         '<p class="secure-note"><svg class="ico" aria-hidden="true"><use href="#i-lock"/></svg>Handled by Stripe on their own secure page. We never see or store your card details.</p>' +
+        '<p class="buy-disclaimer"><strong>Tovakin is not a law firm.</strong> These documents are not a substitute for the advice of an attorney.</p>' +
       '</div>' +
       '<p class="keep-drafting">Not ready to pay? <a href="' + window.GVUrl(validReturn || p.goesTo) + '">Go back to your documents</a> — your answers stay saved in this browser, and you can come back to pay whenever you like.' +
       (docLabel ? ' <a href="' + window.GVUrl('pricing.html') + '?household=' + household + '">Choose a different plan</a>' : '') + '</p>';
