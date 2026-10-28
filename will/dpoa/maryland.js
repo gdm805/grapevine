@@ -21,8 +21,8 @@ window.DPOA_STATES["Maryland"] = String.raw`
 
 @center **MARYLAND**
 
-@sub MARYLAND STATUTORY FORM
-
+// Not the Est. & Trusts 17-202 statutory form (its body differs), so it is not labeled one (27 Oct 2026, Greg).
+// Executed under Est. & Trusts 17-110: dated, signed, two adult witnesses, acknowledged before a notary.
 @sub PERSONAL FINANCIAL POWER OF ATTORNEY
 
 @sub IMPORTANT INFORMATION AND WARNING
@@ -31,7 +31,7 @@ You should be very careful in deciding whether or not to sign this document. The
 
 You should select someone you trust to serve as your agent. Unless you specify otherwise, generally the agent’s authority will continue until you die or revoke the power of attorney or the agent resigns or is unable to act for you.
 
-You need not grant all of the powers listed below. If you choose to grant less than all of the listed powers, you may instead use a Maryland Statutory Form Limited Power of Attorney and mark on that Maryland Statutory Form Limited Power of Attorney which powers you intend to delegate to your attorney–in–fact (the Agent) and which you do not want the Agent to exercise.
+You need not grant all of the powers listed below.
 
 You should understand that granting your agent the authority to take actions under this power of attorney may:
 
@@ -477,7 +477,7 @@ I declare that I understand the nature and purpose of this Power of Attorney, th
 
 @sub Witness Attestation
 
-The Principal signed or acknowledged this Power of Attorney in my presence, and I sign as a witness.
+The Principal signed this Power of Attorney in our presence. Each of us is an adult and signed as a witness in the presence of the Principal and of each other.
 
 @line Witness 1: ____________________________________
 
@@ -493,10 +493,10 @@ The Principal signed or acknowledged this Power of Attorney in my presence, and 
 
 @sub Notary Acknowledgment
 
-// Est. & Trusts 17-202 statutory form acknowledgment; closing per State Gov't 18-215, 18-216
-@line STATE OF MARYLAND
-@line (COUNTY) OF ____________________________
-@line This document was acknowledged before me on ____________________ (Date) by {{name}} (Name of Principal) to be his/her act.
+// Maryland short form, State Gov't 18-216(b) (individual capacity); acknowledgment required by Est. & Trusts 17-110
+@line State of Maryland
+@line County/City of ____________________________
+@line This record was acknowledged before me on the _____ day of ____________________, 20____ by {{name}}.
 @line ________________________________________
 @line Signature of notarial officer
 @line Title of office: ________________________________
