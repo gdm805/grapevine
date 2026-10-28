@@ -576,3 +576,9 @@ details[id] { scroll-margin-top: 110px; }
 .brand-tag { position: absolute; left: 32.8%; right: 3%; bottom: 9px; font: 600 10.5px/1 "DM Sans", system-ui, sans-serif; letter-spacing: 0.215em; text-transform: uppercase; color: var(--ink-soft); white-space: nowrap; }
 @media (max-width: 720px) { .brand-tag { font-size: 8.5px; bottom: 7px; letter-spacing: 0.2em; } }
 @media (max-width: 480px) { .brand-tag { display: none; } }
+
+/* footer social links (28 Oct 2026): Facebook facebook.com/tovakinwills, Instagram @tovakin.app */
+.foot-social { display: flex; gap: 18px; margin: 4px 0 10px; }
+.foot-social a { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-soft); text-decoration: none; font-weight: 600; }
+.foot-social a:hover { color: var(--grape); }
+.foot-social svg { width: 20px; height: 20px; fill: currentColor; }
