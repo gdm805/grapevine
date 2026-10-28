@@ -69,7 +69,9 @@ window.GV_CA_LDA = { registered: false, county: '', clerkAddress: '', clerkPhone
    (26 Oct 2026, Greg): La. R.S. 37:212 (drawing papers for a fee; civil law); R.I.G.L. 11-27-2(4) (drafting a will "for another
    person", criminal); Miss. Code 73-3-55 (writing a will for a fee). Georgia (26 Oct 2026, Greg): O.C.G.A.
    15-19-50/51/56/60 (broad; treble-damage consumer suits; HB 1433 felony bill died in committee 2026, may return 2027). Colorado (27 Oct 2026, Greg):
-   C.R.C.P. 232.2(c)(9) (interactive legal software) and OARC guidance of 8 Sep 2026 (nonlawyer trust documents and wills are UPL). Research: grapevine-private-notes/UPL-50-STATE-REVIEW-OCT-26-2026.txt; grapevine-private-notes/STATE-RULES-RESEARCH-OCT-2026.txt */
+   C.R.C.P. 232.2(c)(9) (interactive legal software) and OARC guidance of 8 Sep 2026 (nonlawyer trust documents and wills are UPL).
+   Pennsylvania, New Hampshire (28 Oct 2026, Greg): 42 Pa.C.S. 2524 incl. (c) UTPCPL treble damages, PBA UPL opinion;
+   RSA 311:11 ("no corporation shall ... draw wills"); will.com also excludes both. Research: grapevine-private-notes/UPL-50-STATE-REVIEW-OCT-26-2026.txt; grapevine-private-notes/STATE-RULES-RESEARCH-OCT-2026.txt */
 window.GV_CLOSED_STATES = {
   'California': 'Tovakin isn\u2019t available in California yet. We\u2019re confirming California\u2019s rules for online document services and hope to offer California documents soon.',
   'Arizona': 'Tovakin isn\u2019t available in Arizona yet. We\u2019re confirming Arizona\u2019s rules for online document services and hope to offer Arizona documents soon.',
@@ -86,7 +88,9 @@ window.GV_CLOSED_STATES = {
   'Rhode Island': 'Tovakin isn\u2019t available in Rhode Island yet. We\u2019re confirming Rhode Island\u2019s rules for online document services and hope to offer Rhode Island documents soon.',
   'Mississippi': 'Tovakin isn\u2019t available in Mississippi yet. We\u2019re confirming Mississippi\u2019s rules for online document services and hope to offer Mississippi documents soon.',
   'Georgia': 'Tovakin isn\u2019t available in Georgia yet. We\u2019re confirming Georgia\u2019s rules for online document services and hope to offer Georgia documents soon.',
-  'Colorado': 'Tovakin isn\u2019t available in Colorado yet. We\u2019re confirming Colorado\u2019s rules for online document services and hope to offer Colorado documents soon.'
+  'Colorado': 'Tovakin isn\u2019t available in Colorado yet. We\u2019re confirming Colorado\u2019s rules for online document services and hope to offer Colorado documents soon.',
+  'Pennsylvania': 'Tovakin isn\u2019t available in Pennsylvania yet. We\u2019re confirming Pennsylvania\u2019s rules for online document services and hope to offer Pennsylvania documents soon.',
+  'New Hampshire': 'Tovakin isn\u2019t available in New Hampshire yet. We\u2019re confirming New Hampshire\u2019s rules for online document services and hope to offer New Hampshire documents soon.'
 };
 window.GVClosedState = function (state) { return (window.GV_CLOSED_STATES || {})[state] || ''; };
 
