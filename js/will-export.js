@@ -44,6 +44,30 @@
     return runs(text).map(function (r) { return rXml(r.t, { b: r.b || (extra && extra.b), sz: extra && extra.sz }); }).join('');
   }
 
+  /* NOTARY BLOCKS (29 Oct 2026): inside a notary section (a sub heading naming a notary or an acknowledgment,
+     up to the next heading) the venue lines (STATE OF ..., COUNTY OF ...) print in capitals, single-spaced,
+     the rest of the certificate is 1.5-spaced, and the notary's signature, title of office and
+     commission-expiration blanks are half as long. "Signature: ____" blanks elsewhere are half as long too.
+     Marks: nv venue line, nb certificate body, nsig a bare signature blank, nvend last venue line, nend last line of the section. */
+  var VENUE = /^(state|county|commonwealth|district|parish|territory|city and county|city\/county|county\/city)( \(and\/or city\))? of\b/i;
+  function halveBlanks(t) { return t.replace(/_{12,}/g, function (u) { return u.slice(0, Math.ceil(u.length / 2)); }); }
+  function notaryMarks(blocks) {
+    var inN = false;
+    var out = blocks.map(function (b) {
+      if (b.k === 'sub') { inN = /notar|acknowledg/i.test(b.t || ''); return b; }
+      if (b.k !== 'line' && b.k !== '' && b.k !== 'sign') inN = false;
+      if (!inN) return b.k === 'line' && /^signature\b[^_]*_/i.test(b.t) ? Object.assign({}, b, { t: halveBlanks(b.t) }) : b;
+      if (b.k === 'sign') return b;
+      var t = b.t || '';
+      if (b.k === 'line' && VENUE.test(t)) return Object.assign({}, b, { t: t.toUpperCase(), nv: true });
+      var bare = /^_+$/.test(t.trim());
+      if (b.k === 'line' && (bare || /^(signature|title of office|my commission expires)/i.test(t))) t = halveBlanks(t);
+      return Object.assign({}, b, { t: t, nb: true, nsig: b.k === 'line' && bare });
+    });
+    out.forEach(function (b, i) { var n = out[i + 1]; if ((b.nv || b.nb) && !(n && (n.nv || n.nb))) b.nend = true; if (b.nv && !(n && n.nv)) b.nvend = true; });
+    return out;
+  }
+
   function blockXml(b, pb, prevWasCenter, nextIsSign, nextK) {
     var pbo = pb ? { pb: true } : {};
     function o(x) { return Object.assign({}, x, pbo); }
@@ -77,6 +101,8 @@
         return P(rXml(unbold(b.t), { sz: 21 }), o({ jc: 'left', keepLines: true, after: 200, bdr: '<w:pBdr>' + bs('top') + bs('left') + bs('bottom') + bs('right') + '</w:pBdr>' }));
       }
       case 'line':
+        if (b.nv) return P(rXml(unbold(b.t)), o({ jc: 'left', keepNext: true, after: b.nvend ? 160 : 0 }));
+        if (b.nb) return P(rXml(unbold(b.t)), o({ jc: 'left', line: 360, before: b.nsig ? 360 : 0, after: b.nend ? 160 : 0, keepNext: !b.nend }));
         return P(rXml(unbold(b.t)), o({ jc: 'left', after: nextK === 'sign' ? 0 : 20, keepNext: nextK === 'sign' || nextK === 'line' }));
       case 'item':
         return P(runsXml(b.t), o({ left: 720, right: 720 }));
@@ -90,6 +116,7 @@
           return P(rXml('•') + tabRun() + runsXml(it), Object.assign({ jc: /_{4}/.test(it) ? 'left' : 'both', left: 720, hang: 360, tabs: '<w:tab w:val="left" w:pos="720"/>' }, i === 0 ? pbo : {}));
         }).join('');
       default:
+        if (b.nb) return P(runsXml(b.t), o({ jc: /_{4}/.test(b.t) ? 'left' : 'both', line: 360, after: b.nend ? 160 : 0, keepNext: !b.nend }));
         return P(runsXml(b.t), o({ keepNext: nextK === 'sign' || nextK === 'line', keepLines: nextK === 'sign' || nextK === 'line' }));
     }
   }
@@ -122,7 +149,7 @@
 
   var NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"';
   function docx(blocks, o) {
-    blocks = blocks.filter(function (b) { return b.k !== 'cover' && b.k !== 'toc' && b.k !== 'frontend'; });
+    blocks = notaryMarks(blocks.filter(function (b) { return b.k !== 'cover' && b.k !== 'toc' && b.k !== 'frontend'; }));
     var body = '', pb = false, prevCenter = false;
     blocks.forEach(function (b, bi) {
       if (b.k === 'break') { pb = true; return; }
@@ -174,7 +201,7 @@
 
   function pdf(blocks, o) {
     /* the PDF font (Tinos) has no ballot-box character, so print "☐" as a drawn-looking "[  ]" */
-    blocks = blocks.map(function (b) { return b.t && b.t.indexOf('\u2610') > -1 ? Object.assign({}, b, { t: b.t.replace(/\u2610/g, '[  ]') }) : b; });
+    blocks = notaryMarks(blocks.map(function (b) { return b.t && b.t.indexOf('\u2610') > -1 ? Object.assign({}, b, { t: b.t.replace(/\u2610/g, '[  ]') }) : b; }));
     return loadLibs().then(function () {
       /* COVER PAGE AND TABLE OF CONTENTS (9 Oct 2026): {k:'cover'} starts a document's front pages, {k:'toc'} is
          its contents page, {k:'frontend'} ends them. Front pages are unnumbered: "Page 1 of N" starts with the
@@ -255,7 +282,7 @@
       function hangSplit(t) { var m = /^(\([a-z0-9]+\))\s+([\s\S]*)$/i.exec(t || ''); return m ? [m[1], m[2]] : ['', t || '']; }
       function para(text, opt) {
         opt = opt || {};
-        var size = opt.size || 12, lh = size * 1.34, left = opt.left || 0, first = opt.first || 0;
+        var size = opt.size || 12, lh = size * 1.34 * (opt.lead || 1), left = opt.left || 0, first = opt.first || 0;
         var right = opt.right || 0, keep = opt.keep || 0;
         var lines = layout(toWords(runs(text)), size, W - left - right - first, W - left - right), i = 0;
         if (keep && lines.length * lh + keep < BOTTOM - M && y + lines.length * lh + keep > BOTTOM) newPage();
@@ -403,6 +430,8 @@
           case 'line': {
             /* a line with a blank to write on (signature, date, notary) gets room above it to sign in;
                the caption lines under it stay close; a gap follows the whole signature block */
+            if (b.nv) { para(b.t, { justify: false, after: b.nvend ? 12 : 0 }); break; }
+            if (b.nb) { if (b.nsig) { y += 20; space(40); } para(b.t, { justify: false, lead: 1.5, after: b.nend ? 12 : 0 }); break; }
             var nk2 = blocks[bi + 1] && blocks[bi + 1].k;
             var writeOn = /_{6}/.test(b.t);
             if (writeOn) { y += 20; space(40); }
@@ -449,6 +478,7 @@
             newPage(); if (b.footer) { sections.push({ start: doc.getNumberOfPages(), front: doc.getNumberOfPages(), footer: b.footer }); } break;
           default: {
             var nk = blocks[bi + 1] && blocks[bi + 1].k;
+            if (b.nb) { para(b.t, { lead: 1.5, after: b.nend ? 12 : 0, justify: !/_{4}/.test(b.t) }); break; }
             para(b.t, { keep: (nk === 'sign' || nk === 'line') ? 80 : 0, justify: !/_{4}/.test(b.t) });
           }
         }
