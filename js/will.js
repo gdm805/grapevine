@@ -874,7 +874,7 @@
   /* ---------- what the person is asked ---------- */
   var EMPTY_WILL = {
     state: '', ageOk: false, freeOk: false,
-    name: '', county: '', marital: '', spouse: '', revokeSpouse: '',
+    name: '', county: '', signingCounty: '', marital: '', spouse: '', revokeSpouse: '',
     hasChildren: '', children: [{ name: '', minor: false }],
     guardian: '', altGuardian: '', gAlt2: '', guardianMode: 'same', eachGuardian: {},
     propFid: '', propFidName: '', propAlt1: '',
@@ -1161,6 +1161,7 @@
       return stepHead('About you', 'Use your name as it appears on your ID.') +
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
+        field('County where you’ll sign', countySelect('signingCounty'), 'This goes in the county line of the self-proving affidavit and notary section.') +
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married' ? field('Your spouse\u2019s or domestic partner\u2019s full legal name', text('spouse', '')) + revokeQ('will') : '');
     },
@@ -1294,6 +1295,7 @@
     } else if (id === 'about') {
       if (clean(a.name).length < 2) e.push('Enter your full legal name.');
       if (!clean(a.county)) e.push('Enter your county.');
+      if (!clean(a.signingCounty)) e.push('Choose the county where you’ll sign.');
       if (!a.marital) e.push('Tell us whether you are married or in a registered domestic partnership.');
       if (a.marital === 'married' && !clean(a.spouse)) e.push('Enter your spouse\u2019s or domestic partner\u2019s name.');
     } else if (id === 'children') {
@@ -1336,7 +1338,7 @@
   /* ================= POUR-OVER WILL (for use with a trust) ================= */
   var EMPTY_PO = {
     state: '', ageOk: false, freeOk: false, trustOk: false,
-    name: '', county: '', marital: '', spouse: '', revokeSpouse: '',
+    name: '', county: '', signingCounty: '', marital: '', spouse: '', revokeSpouse: '',
     hasChildren: '', children: [{ name: '', minor: false }],
     trustName: '', trustDate: '', jointTrust: '', otherTrustmaker: '',
     prMode: 'successive', executor: '', successors: [{ name: '' }], coPRs: [{ name: '' }, { name: '' }],
@@ -1663,6 +1665,7 @@
       return stepHead('About you', 'Use your name as it appears on your ID.') +
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
+        field('County where you’ll sign', countySelect('signingCounty'), 'This goes in the county line of the self-proving affidavit and notary section.') +
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married'
           ? field('Your spouse’s or domestic partner’s full legal name', text('spouse', '')) +
@@ -1736,6 +1739,7 @@
     } else if (id === 'about') {
       if (clean(a.name).length < 2) e.push('Enter your full legal name.');
       if (!clean(a.county)) e.push('Enter your county.');
+      if (!clean(a.signingCounty)) e.push('Choose the county where you’ll sign.');
       if (!a.marital) e.push('Tell us whether you are married or in a registered domestic partnership.');
       if (a.marital === 'married' && !clean(a.spouse)) e.push('Enter your spouse’s or domestic partner’s name.');
     } else if (id === 'children') {
