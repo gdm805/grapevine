@@ -58,6 +58,8 @@
     var inN = false;
     var out = blocks.map(function (b) {
       if (b.k === 'line' && SEAL.test((b.t || '').trim())) b = Object.assign({}, b, { nseal: true });
+      /* a "Date: ____" line is half as long too (30 Oct 2026) */
+      if (b.k === 'line' && /^date:\s*_{12,}\s*$/i.test(b.t || '')) b = Object.assign({}, b, { t: halveBlanks(b.t) });
       if (b.k === 'sub') { inN = /notar|acknowledg/i.test(b.t || ''); return b; }
       if (!/^(line|para|sign|)$/.test(b.k || '')) inN = false;
       if (!inN) return b.k === 'line' && /^signature\b[^_]*_/i.test(b.t) ? Object.assign({}, b, { t: halveBlanks(b.t) }) : b;
@@ -113,7 +115,7 @@
       case 'sub':
         return P(rXml(unbold(b.t), { b: true, caps: true, sp: 20, sz: 22 }), o({ jc: 'left', keepNext: true, before: 320, after: 120 }));
       case 'sign':
-        return P(tabRun(), o({ jc: 'left', keepNext: true, before: 640, after: 0, tabs: '<w:tab w:val="left" w:leader="underscore" w:pos="5400"/>' })) +
+        return P(tabRun(), o({ jc: 'left', keepNext: true, before: 640, after: 0, tabs: '<w:tab w:val="left" w:leader="underscore" w:pos="3600"/>' })) +
           P(rXml(unbold(b.t), { sz: 20, color: '555555' }), { jc: 'left', keepLines: true, keepNext: !!nextIsSign, after: 160 });
       case 'ul':
         return b.items.map(function (it, i) {
@@ -422,7 +424,9 @@
           case 'plain':
             y += 24; space(blocks[bi + 1] && blocks[bi + 1].k === 'sub' ? 60 + groupNeed(bi + 1) : 120); wrapCentered(plain(b.t), 13, true, 0.8); y += 10; break;
           case 'section': {
-            y += 12; space(64);
+            /* a section that holds a signature line starts on a new page rather than leave its heading behind */
+            var hasSign = false; for (var q2 = bi + 1; q2 < blocks.length && !/^(sub|article|plain|section|break|center)$/.test(blocks[q2].k); q2++) if (blocks[q2].k === 'sign') hasSign = true;
+            y += 12; space(hasSign ? Math.max(64, groupNeed(bi)) : 64);
             font(true, 12);
             var tl = doc.splitTextToSize(plain(b.t), W - 96), lh = 12 * 1.3;
             doc.setTextColor(60, 60, 60); font(true, 9); doc.text(b.n, M, base(12) - 1); doc.setTextColor(0, 0, 0);
@@ -470,7 +474,7 @@
           }
           case 'sign':
             y += 36; space(58);
-            doc.setLineWidth(0.7); doc.line(M, y, M + 270, y);
+            doc.setLineWidth(0.7); doc.line(M, y, M + 180, y);   /* 2.5 inches (30 Oct 2026) */
             font(false, 9.5); doc.setTextColor(85, 85, 85); doc.text(unbold(b.t), M, y + 12); doc.setTextColor(0, 0, 0);
             y += 22; break;
           case 'ul':

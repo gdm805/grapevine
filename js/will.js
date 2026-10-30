@@ -5246,7 +5246,7 @@
   function exportInfo() {
     var n = footerName();
     var who = (KIND.key === 'trustjoint' ? clean(answers.name1) : KIND.key === 'trust' ? clean(answers.name) : n).replace(/[^\w]+/g, '-').replace(/^-|-$/g, '');
-    return { base: KIND.file + (who ? '-' + who : ''), footer: KIND.footer(n || (KIND.key === 'dpoa' ? 'Principal' : 'Testator')) };
+    return { base: KIND.file + (who ? '-' + who : ''), footer: KIND.footer(n || (/^(dpoa|dementia|hcd|hipaa)$/.test(KIND.key) ? 'Principal' : 'Testator')) };
   }
   function status(msg, bad) {
     var el = document.getElementById('export-status');
