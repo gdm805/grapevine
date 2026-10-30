@@ -48,14 +48,18 @@
      up to the next heading) the venue lines (STATE OF ..., COUNTY OF ...) print in capitals, single-spaced,
      the rest of the certificate is 1.5-spaced, and the notary's signature, title of office and
      commission-expiration blanks are half as long. "Signature: ____" blanks elsewhere are half as long too.
-     Marks: nv venue line, nb certificate body, nsig a bare signature blank, nvend last venue line, nend last line of the section. */
+     Marks: nv venue line, nb certificate body, nsig a bare signature blank, nvend last venue line, nend last line of the section, nseal the stamp/seal label. */
   var VENUE = /^(state|county|commonwealth|district|parish|territory|city and county|city\/county|county\/city)( \(and\/or city\))? of\b/i;
   function halveBlanks(t) { return t.replace(/_{12,}/g, function (u) { return u.slice(0, Math.ceil(u.length / 2)); }); }
+  /* the notary's stamp/seal label sits 4.5 inches from the left edge of the page (3.5 inches into the text),
+     so the stamp itself goes directly above it, clear of the signature lines (30 Oct 2026) */
+  var SEAL = /^[(\[]?\s*(notary's\s+)?(official\s+)?(stamp|seal)(,\s*if any(,\s*of notary)?)?\s*[)\]]?$/i;
   function notaryMarks(blocks) {
     var inN = false;
     var out = blocks.map(function (b) {
+      if (b.k === 'line' && SEAL.test((b.t || '').trim())) b = Object.assign({}, b, { nseal: true });
       if (b.k === 'sub') { inN = /notar|acknowledg/i.test(b.t || ''); return b; }
-      if (b.k !== 'line' && b.k !== '' && b.k !== 'sign') inN = false;
+      if (!/^(line|para|sign|)$/.test(b.k || '')) inN = false;
       if (!inN) return b.k === 'line' && /^signature\b[^_]*_/i.test(b.t) ? Object.assign({}, b, { t: halveBlanks(b.t) }) : b;
       if (b.k === 'sign') return b;
       var t = b.t || '';
@@ -102,8 +106,8 @@
       }
       case 'line':
         if (b.nv) return P(rXml(unbold(b.t)), o({ jc: 'left', keepNext: true, after: b.nvend ? 160 : 0 }));
-        if (b.nb) return P(rXml(unbold(b.t)), o({ jc: 'left', line: 360, before: b.nsig ? 360 : 0, after: b.nend ? 160 : 0, keepNext: !b.nend }));
-        return P(rXml(unbold(b.t)), o({ jc: 'left', after: nextK === 'sign' ? 0 : 20, keepNext: nextK === 'sign' || nextK === 'line' }));
+        if (b.nb) return P(rXml(unbold(b.t)), o({ jc: 'left', left: b.nseal ? 5040 : 0, line: 360, before: b.nsig ? 360 : 0, after: b.nend ? 160 : 0, keepNext: !b.nend }));
+        return P(rXml(unbold(b.t)), o({ jc: 'left', left: b.nseal ? 5040 : 0, after: nextK === 'sign' ? 0 : 20, keepNext: nextK === 'sign' || nextK === 'line' }));
       case 'item':
         return P(runsXml(b.t), o({ left: 720, right: 720 }));
       case 'sub':
@@ -431,12 +435,12 @@
             /* a line with a blank to write on (signature, date, notary) gets room above it to sign in;
                the caption lines under it stay close; a gap follows the whole signature block */
             if (b.nv) { para(b.t, { justify: false, after: b.nvend ? 12 : 0 }); break; }
-            if (b.nb) { if (b.nsig) { y += 20; space(40); } para(b.t, { justify: false, lead: 1.5, after: b.nend ? 12 : 0 }); break; }
+            if (b.nb) { if (b.nsig) { y += 20; space(40); } para(b.t, { justify: false, lead: 1.5, left: b.nseal ? 252 : 0, after: b.nend ? 12 : 0 }); break; }
             var nk2 = blocks[bi + 1] && blocks[bi + 1].k;
             var writeOn = /_{6}/.test(b.t);
             if (writeOn) { y += 20; space(40); }
             if (nk2 === 'sign') space(80);
-            para(b.t, { justify: false, after: nk2 === 'line' ? 4 : 12 }); break;
+            para(b.t, { justify: false, left: b.nseal ? 252 : 0, after: nk2 === 'line' ? 4 : 12 }); break;
           }
           case 'item': para(b.t, { left: 36, right: 36 }); break;
           case 'box': {

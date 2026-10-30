@@ -739,8 +739,8 @@
         case 'sub': return '<p class="subh">' + inline(b.t) + '</p>';
         case 'box': return '<p class="ackbox">' + inline(b.t) + '</p>';
         case 'line':
-          if (b.nv || b.nb) return '<p class="ln ' + (b.nv ? 'nv' : 'nb') + (b.nvend ? ' nvend' : '') + (b.nsig ? ' nsig' : '') + (b.nend ? ' nend' : '') + '">' + inline(b.t) + '</p>';
-          return '<p class="ln' + (/_{6}/.test(b.t) ? ' ln-sign' : '') + '">' + inline(b.t) + '</p>';
+          if (b.nv || b.nb) return '<p class="ln ' + (b.nv ? 'nv' : 'nb') + (b.nvend ? ' nvend' : '') + (b.nsig ? ' nsig' : '') + (b.nend ? ' nend' : '') + (b.nseal ? ' nseal' : '') + '">' + inline(b.t) + '</p>';
+          return '<p class="ln' + (/_{6}/.test(b.t) ? ' ln-sign' : '') + (b.nseal ? ' nseal' : '') + '">' + inline(b.t) + '</p>';
         case 'item': return '<p class="item">' + inline(b.t) + '</p>';
         case 'row': return '<div class="row2"><span class="l">' + inline(b.l) + '</span>' + (b.r ? '<span class="dots"></span><span class="r">' + inline(b.r) + '</span>' : '') + '</div>';
         case 'sign': return '<div class="sig"><span class="sigline"></span><span class="siglabel">' + inline(b.t) + '</span></div>';
