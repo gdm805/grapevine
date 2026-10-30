@@ -54,7 +54,6 @@
         a.setAttribute('href', url.href);
       } catch (e) {}
     });
-    if (form) render();
   }
 
   document.querySelectorAll('[data-household]').forEach(function (btn) {
