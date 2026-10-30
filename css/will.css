@@ -291,6 +291,12 @@ textarea.input { min-height: 92px; padding: 12px 14px; line-height: 1.5; font-fa
 
 /* signature, date and notary lines: room above each blank to write on (screen and print) */
 .doc p.ln-sign { margin-top: 26px; }
+/* notary blocks (match the PDF): venue lines single-spaced, certificate body 1.5-spaced */
+.doc p.ln.nv { line-height: 1.4; margin: 0; }
+.doc p.ln.nvend { margin-bottom: 14px; }
+.doc p.nb { line-height: 2.1; margin: 0; }
+.doc p.ln.nsig { margin-top: 20px; }
+.doc p.nend { margin-bottom: 14px; }
 .doc p.ln + p:not(.ln) { margin-top: 14px; }
 
 /* About you (about-you.html) */

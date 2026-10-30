@@ -607,6 +607,6 @@
     return pdf(sheetBlocks(parts), { footer: SHEET_FOOTER, draftLabel: '', title: parts.length === 1 ? 'How to Sign Your Document' : 'How to Sign Your Documents' });
   }
 
-  window.GVExport = { docx: docx, pdf: pdf, runs: runs, printStart: printStart,
+  window.GVExport = { docx: docx, pdf: pdf, runs: runs, printStart: printStart, notaryMarks: notaryMarks,
     sheetBlocks: sheetBlocks, signingSheet: signingSheet, sheetFooter: SHEET_FOOTER };
 })();

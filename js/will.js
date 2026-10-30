@@ -719,6 +719,8 @@
       var h = esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
       return h.replace(//g, '<span class="fill">').replace(//g, '<span class="blank">').replace(//g, '</span>');
     }
+    /* notary blocks look the same on screen as in the PDF and Word file (js/will-export.js notaryMarks) */
+    if (window.GVExport && window.GVExport.notaryMarks) blocks = window.GVExport.notaryMarks(blocks);
     return blocks.map(function (b) {
       var h = one(b);
       return b.ans ? h.replace(/^<(\w+)/, '<$1 data-ans="1"') : h;
@@ -736,7 +738,9 @@
         case 'center': return '<p class="c">' + inline(b.t) + '</p>';
         case 'sub': return '<p class="subh">' + inline(b.t) + '</p>';
         case 'box': return '<p class="ackbox">' + inline(b.t) + '</p>';
-        case 'line': return '<p class="ln' + (/_{6}/.test(b.t) ? ' ln-sign' : '') + '">' + inline(b.t) + '</p>';
+        case 'line':
+          if (b.nv || b.nb) return '<p class="ln ' + (b.nv ? 'nv' : 'nb') + (b.nvend ? ' nvend' : '') + (b.nsig ? ' nsig' : '') + (b.nend ? ' nend' : '') + '">' + inline(b.t) + '</p>';
+          return '<p class="ln' + (/_{6}/.test(b.t) ? ' ln-sign' : '') + '">' + inline(b.t) + '</p>';
         case 'item': return '<p class="item">' + inline(b.t) + '</p>';
         case 'row': return '<div class="row2"><span class="l">' + inline(b.l) + '</span>' + (b.r ? '<span class="dots"></span><span class="r">' + inline(b.r) + '</span>' : '') + '</div>';
         case 'sign': return '<div class="sig"><span class="sigline"></span><span class="siglabel">' + inline(b.t) + '</span></div>';
@@ -745,7 +749,7 @@
           /* "(a)" in its own column, so every line of the text starts at the same place */
           var hm = /^(\([a-z0-9]+\))\s+([\s\S]*)$/i.exec(b.t);
           return hm ? '<p class="hang hang-split"><span class="hang-m">' + inline(hm[1]) + '</span><span class="hang-t">' + inline(hm[2]) + '</span></p>' : '<p class="hang">' + inline(b.t) + '</p>';
-        default: return '<p>' + inline(b.t) + '</p>';
+        default: return '<p' + (b.nb ? ' class="nb' + (b.nend ? ' nend' : '') + '"' : '') + '>' + inline(b.t) + '</p>';
       }
     }
   }
