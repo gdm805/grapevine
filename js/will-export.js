@@ -67,8 +67,8 @@
       case 'hang':
         var hm = /^(\([a-z0-9]+\))\s+([\s\S]*)$/i.exec(b.t || '');
         /* "(a)" then a tab to the text column, so every line of the text lines up */
-        return hm ? P(runsXml(hm[1]) + tabRun() + runsXml(hm[2]), o({ jc: 'left', left: 720, hang: 360, tabs: '<w:tab w:val="left" w:pos="720"/>' }))
-          : P(runsXml(b.t), o({ jc: 'left', left: 720, hang: 360 }));
+        return hm ? P(runsXml(hm[1]) + tabRun() + runsXml(hm[2]), o({ jc: /_{4}/.test(b.t) ? 'left' : 'both', left: 720, hang: 360, tabs: '<w:tab w:val="left" w:pos="720"/>' }))
+          : P(runsXml(b.t), o({ jc: /_{4}/.test(b.t) ? 'left' : 'both', left: 720, hang: 360 }));
       case 'row':
         return P(rXml(unbold(b.l)) + (b.r ? tabRun() + rXml(unbold(b.r), { b: true }) : ''),
           o({ jc: 'left', left: 360, after: 100, keepLines: true, tabs: b.r ? '<w:tab w:val="right" w:leader="dot" w:pos="9360"/>' : '' }));
@@ -87,7 +87,7 @@
           P(rXml(unbold(b.t), { sz: 20, color: '555555' }), { jc: 'left', keepLines: true, keepNext: !!nextIsSign, after: 160 });
       case 'ul':
         return b.items.map(function (it, i) {
-          return P(rXml('•') + tabRun() + runsXml(it), Object.assign({ jc: 'left', left: 720, hang: 360, tabs: '<w:tab w:val="left" w:pos="720"/>' }, i === 0 ? pbo : {}));
+          return P(rXml('•') + tabRun() + runsXml(it), Object.assign({ jc: /_{4}/.test(it) ? 'left' : 'both', left: 720, hang: 360, tabs: '<w:tab w:val="left" w:pos="720"/>' }, i === 0 ? pbo : {}));
         }).join('');
       default:
         return P(runsXml(b.t), o({ keepNext: nextK === 'sign' || nextK === 'line', keepLines: nextK === 'sign' || nextK === 'line' }));
@@ -399,7 +399,7 @@
             tl.forEach(function (l) { doc.text(l, M + 96, base(12)); y += lh; });
             y += 3; break;
           }
-          case 'hang': var hs = hangSplit(b.t); if (hs[0]) para(hs[1], { left: 36, marker: hs[0], markerLeft: 12, justify: false }); else para(b.t, { left: 36, first: -24, justify: false }); break;
+          case 'hang': var hs = hangSplit(b.t); if (hs[0]) para(hs[1], { left: 36, marker: hs[0], markerLeft: 12, justify: !/_{4}/.test(b.t) }); else para(b.t, { left: 36, first: -24, justify: !/_{4}/.test(b.t) }); break;
           case 'line': {
             /* a line with a blank to write on (signature, date, notary) gets room above it to sign in;
                the caption lines under it stay close; a gap follows the whole signature block */
@@ -441,7 +441,7 @@
             font(false, 9.5); doc.setTextColor(85, 85, 85); doc.text(unbold(b.t), M, y + 12); doc.setTextColor(0, 0, 0);
             y += 22; break;
           case 'ul':
-            b.items.forEach(function (it) { space(30); font(false, 12); doc.text('•', M + 12, base(12)); para(it, { left: 36, justify: false, after: 5 }); });
+            b.items.forEach(function (it) { space(30); font(false, 12); doc.text('•', M + 12, base(12)); para(it, { left: 36, justify: !/_{4}/.test(it), after: 5 }); });
             y += 3; break;
           case 'break':
             /* only a package's document boundary (a break that carries its own footer) restarts "Page X of Y";
