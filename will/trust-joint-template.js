@@ -809,7 +809,7 @@ After completing the administration required by this Article, the Trustee shall 
 
 [[each residuary]]
 
-[[if residuary_ongoing]]{{residuary_pct}}% to the Trustee, to be held in a separate Beneficiary Trust for {{residuary_name}} under [[ref art_beneficiary_trust]], with Distribution Ages of {{residuary_age1}}, {{residuary_age2}}, and {{residuary_age3}}.[[elif residuary_snt]]{{residuary_pct}}% to the trustee of {{residuary_name}}[[if residuary_snt_date]], dated {{residuary_snt_date}}[[end]], a special needs trust established for the benefit of {{residuary_snt_for}}.[[else]]{{residuary_pct}}% to {{residuary_name}}, outright.[[end]]
+[[if residuary_ongoing]]{{residuary_pct}}% to the Trustee, to be held in a separate Beneficiary Trust for {{residuary_name}} under [[ref art_beneficiary_trust]], with {{residuary_ages_phrase}}.[[elif residuary_snt]]{{residuary_pct}}% to the trustee of {{residuary_name}}[[if residuary_snt_date]], dated {{residuary_snt_date}}[[end]], a special needs trust established for the benefit of {{residuary_snt_for}}.[[else]]{{residuary_pct}}% to {{residuary_name}}, outright.[[end]]
 
 [[if residuary_person]]
 If {{residuary_name}} does not survive the surviving Trustmaker by the Required Survivorship Period, disclaims the share, or is otherwise ineligible to receive it, that share shall be distributed to that beneficiary's then-living descendants, by right of representation; or, if there are none, among the other beneficiaries named in this Section who receive their shares, in proportion to their shares; or, if there are none, as provided in the Failure of Distribution Section of this Article.
@@ -1045,7 +1045,7 @@ Upon completing the distribution of a trust or separate share, the Trustee shall
 
 ## Establishment
 
-Each share that the Final Distribution Section of [[ref art_second_death]] directs the Trustee to hold in a Beneficiary Trust for a beneficiary shall be held by the Trustee as a separate trust for that beneficiary (in this Article, the "Beneficiary"), and administered and distributed as provided in this Article. The Distribution Ages of a Beneficiary are the three ages stated for that Beneficiary in that Section.
+Each share that the Final Distribution Section of [[ref art_second_death]] directs the Trustee to hold in a Beneficiary Trust for a beneficiary shall be held by the Trustee as a separate trust for that beneficiary (in this Article, the "Beneficiary"), and administered and distributed as provided in this Article. The Distribution Ages of a Beneficiary are the one, two, or three ages stated for that Beneficiary in that Section.
 
 ## Trustee
 
@@ -1057,12 +1057,23 @@ Until a Beneficiary Trust is fully distributed, the Trustee may distribute to or
 
 ## Distributions at the Distribution Ages
 
-After the Beneficiary reaches the first Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-third (1/3) of the Beneficiary Trust, including accrued income, valued as of the date of the request.
+[[if bt_any1]]
+If one Distribution Age is stated for the Beneficiary, after the Beneficiary reaches that Distribution Age the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
+
+[[end]][[if bt_any2]]
+If two Distribution Ages are stated for the Beneficiary, after the Beneficiary reaches the first Distribution Age the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-half (1/2) of the Beneficiary Trust, including accrued income, valued as of the date of the request; and after the Beneficiary reaches the second Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire remaining balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
+
+[[end]][[if bt_any3]]
+[[if bt_mixed]]
+If three Distribution Ages are stated for the Beneficiary, the following three paragraphs apply.
+
+[[end]]After the Beneficiary reaches the first Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-third (1/3) of the Beneficiary Trust, including accrued income, valued as of the date of the request.
 
 After the Beneficiary reaches the second Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-half (1/2) of the Beneficiary Trust then remaining, including accrued income, valued as of the date of the request.
 
 After the Beneficiary reaches the third Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire remaining balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
 
+[[end]]
 A right to request a distribution under this Section that the Beneficiary does not exercise continues, and the Beneficiary may exercise it at any later time. If the Beneficiary has already reached one or more Distribution Ages when the Beneficiary Trust is established, the rights for those ages may be exercised at once, in order.
 
 While the Beneficiary is Incapacitated, the Trustee may decline a requested distribution and continue to hold the Beneficiary Trust, making distributions under the preceding Section.

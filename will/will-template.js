@@ -472,7 +472,7 @@ If a minor rounding or calculation discrepancy prevents the stated percentages f
 @row {{beneficiary}} | {{share}}%
 
 [[if is_ongoing]]
-This share shall be held in a separate Beneficiary Trust for {{beneficiary}} under [[ref art_beneficiary_trust]], with Distribution Ages of {{bt_age1}}, {{bt_age2}}, and {{bt_age3}}.
+This share shall be held in a separate Beneficiary Trust for {{beneficiary}} under [[ref art_beneficiary_trust]], with {{bt_ages_phrase}}.
 
 [[end]]
 [[if snt_for]]
@@ -522,7 +522,7 @@ After payment or reasonable provision for the lawful obligations of my estate an
 
 ## Establishment
 
-My Personal Representative shall distribute each share of my Residuary Estate that [[ref residuary]] directs to be held in a Beneficiary Trust to the trustee named in this Article, to be held as a separate trust for that beneficiary (in this Article, the "Beneficiary") and administered and distributed as provided in this Article. The Distribution Ages of a Beneficiary are the three ages stated for that Beneficiary in [[ref residuary]].
+My Personal Representative shall distribute each share of my Residuary Estate that [[ref residuary]] directs to be held in a Beneficiary Trust to the trustee named in this Article, to be held as a separate trust for that beneficiary (in this Article, the "Beneficiary") and administered and distributed as provided in this Article. The Distribution Ages of a Beneficiary are the one, two, or three ages stated for that Beneficiary in [[ref residuary]].
 
 ## Trustee
 
@@ -534,12 +534,23 @@ Until a Beneficiary Trust is fully distributed, the Trustee may distribute to or
 
 ## Distributions at the Distribution Ages
 
-After the Beneficiary reaches the first Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-third (1/3) of the Beneficiary Trust, including accrued income, valued as of the date of the request.
+[[if bt_any1]]
+If one Distribution Age is stated for the Beneficiary, after the Beneficiary reaches that Distribution Age the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
+
+[[end]][[if bt_any2]]
+If two Distribution Ages are stated for the Beneficiary, after the Beneficiary reaches the first Distribution Age the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-half (1/2) of the Beneficiary Trust, including accrued income, valued as of the date of the request; and after the Beneficiary reaches the second Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire remaining balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
+
+[[end]][[if bt_any3]]
+[[if bt_mixed]]
+If three Distribution Ages are stated for the Beneficiary, the following three paragraphs apply.
+
+[[end]]After the Beneficiary reaches the first Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-third (1/3) of the Beneficiary Trust, including accrued income, valued as of the date of the request.
 
 After the Beneficiary reaches the second Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary up to one-half (1/2) of the Beneficiary Trust then remaining, including accrued income, valued as of the date of the request.
 
 After the Beneficiary reaches the third Distribution Age, the Trustee shall, upon the Beneficiary's written request, distribute to the Beneficiary the entire remaining balance of the Beneficiary Trust, including accrued income, and the Beneficiary Trust shall then terminate.
 
+[[end]]
 A right to request a distribution under this Section that the Beneficiary does not exercise continues, and the Beneficiary may exercise it at any later time. If the Beneficiary has already reached one or more Distribution Ages when the Beneficiary Trust is established, the rights for those ages may be exercised at once, in order.
 
 While the Beneficiary is Incapacitated, the Trustee may decline a requested distribution and continue to hold the Beneficiary Trust, making distributions under the preceding Section.

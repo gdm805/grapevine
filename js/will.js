@@ -74,6 +74,37 @@
   var BT_AGES = [18, 21, 25, 30, 35, 40, 45, 50];
   var AGE_WORDS = { 18: 'eighteen', 21: 'twenty-one', 25: 'twenty-five', 30: 'thirty', 35: 'thirty-five', 40: 'forty', 45: 'forty-five', 50: 'fifty' };
   function ageWords(n) { n = parseInt(n, 10); return AGE_WORDS[n] ? AGE_WORDS[n] + ' (' + n + ')' : ''; }
+  /* an ongoing (Beneficiary) trust pays out in one, two or three parts, at ages the customer picks (29 Oct 2026, Greg).
+     Older saved answers have no "parts" and mean three. */
+  function btParts(r) { var n = parseInt(r && r.parts, 10); return n === 1 || n === 2 ? n : 3; }
+  function btAges(r) { return ['age1', 'age2', 'age3'].slice(0, btParts(r)).map(function (k) { return r[k]; }); }
+  function btAgesPhrase(r) {
+    var w = btAges(r).map(ageWords);
+    return w.length === 1 ? 'a Distribution Age of ' + w[0] : w.length === 2 ? 'Distribution Ages of ' + w[0] + ' and ' + w[1] : 'Distribution Ages of ' + w[0] + ', ' + w[1] + ', and ' + w[2];
+  }
+  /* the document flags for which payout patterns appear, so the Beneficiary Trusts article only states the ones used */
+  function btFlags(v, list, typeKey) {
+    var used = { 1: false, 2: false, 3: false };
+    list.forEach(function (r) { if (resType(r) === 'ONGOING' && clean(r.name)) used[btParts(r)] = true; });
+    v.bt_any1 = used[1]; v.bt_any2 = used[2]; v.bt_any3 = used[3];
+    v.bt_mixed = (used[1] ? 1 : 0) + (used[2] ? 1 : 0) + (used[3] ? 1 : 0) > 1;
+    /* the blank template shows every optional part, so all three payout patterns appear there */
+    if (BLANK) { v.bt_any1 = v.bt_any2 = v.bt_any3 = v.bt_mixed = true; }
+  }
+  /* the "how many parts" choice and its ages, under an ongoing-trust beneficiary (will and both trusts) */
+  function btAgesHtml(listKey, r, i, who) {
+    var n = btParts(r);
+    var ageOpts = function (cur) { return '<option value="">Age</option>' + BT_AGES.map(function (x) { return '<option value="' + x + '"' + (String(cur) === String(x) ? ' selected' : '') + '>' + x + '</option>'; }).join(''); };
+    var partsSel = '<select class="input bt-parts" data-list="' + listKey + '" data-i="' + i + '" data-f="parts" data-rerender aria-label="How many parts">' +
+      [[1, 'All at one age'], [2, 'In two parts'], [3, 'In three parts']].map(function (o) { return '<option value="' + o[0] + '"' + (n === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
+    var hint = n === 1 ? 'They can ask for their whole share at this age.'
+      : n === 2 ? 'Up to half at the first age, and the rest at the second.'
+      : 'Up to a third at the first age, half of what\u2019s left at the second, and the rest at the third.';
+    return '<div class="bt-ages"><span class="cont-l">They can ask for their share</span>' + partsSel +
+      '<span class="cont-l">' + (n === 1 ? 'At this age:' : 'At these ages:') + '</span><div class="bt-age-row">' +
+      ['age1', 'age2', 'age3'].slice(0, n).map(function (k, j) { return '<select class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + k + '" data-rerender aria-label="' + ['First', 'Second', 'Third'][j] + ' age">' + ageOpts(r[k]) + '</select>'; }).join('') + '</div>' +
+      '<span class="hint">' + hint + ' Until then, ' + who + ' can pay for their health, education and support, and their share is protected from their creditors.</span></div>';
+  }
   /* rows saved before the type question existed get a type from their name */
   function resType(r) {
     if (r && r.type) return r.type;
@@ -805,7 +836,7 @@
       if (tr && (c === 'descendants' || c === 'charityrule')) c = 'remote';
       if (ty === 'CHARITY' && c === 'descendants') c = 'charityrule';
       return { beneficiary: nm, share: clean(String(b.share || '').replace(/[^\d.]/g, '')), cont_name: clean(b.contName), is_trust: tr, is_snt: snt, res_type: ty,
-        is_ongoing: ty === 'ONGOING', bt_age1: ageWords(b.age1), bt_age2: ageWords(b.age2), bt_age3: ageWords(b.age3),
+        is_ongoing: ty === 'ONGOING', bt_age1: ageWords(b.age1), bt_age2: ageWords(b.age2), bt_age3: ageWords(b.age3), bt_ages_phrase: ty === 'ONGOING' ? btAgesPhrase(b) : '',
         snt_for: snt ? clean(b.sntFor) : '', snt_date: snt && b.sntDate ? longDate(b.sntDate) : '',
         cont_charity_rule: !snt && c === 'charityrule',
         cont_descendants: !snt && c === 'descendants', cont_named: !snt && c === 'named', cont_charity: !snt && c === 'charity', cont_others: !snt && c === 'others', cont_remote: !snt && c === 'remote' };
@@ -813,7 +844,8 @@
     trustGiftFlags(v, v.gifts.map(function (g) { return g.recipient; }).concat(v.beneficiaries.filter(function (b) { return b.is_trust; }).map(function (b) { return b.beneficiary; }), v.beneficiaries.map(function (b) { return b.cont_name; })));
     if (v.beneficiaries.some(function (b) { return b.is_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
     if (v.beneficiaries.some(function (b) { return b.is_trust; })) v.has_trust_gift = true;
-    v.has_beneficiary_trust = v.beneficiaries.some(function (b) { return b.is_ongoing; });
+    v.has_beneficiary_trust = BLANK || v.beneficiaries.some(function (b) { return b.is_ongoing; });
+    btFlags(v, a.beneficiaries || []);
     /* the "Gifts to Charitable Organizations" section prints only when something goes to a charity (Greg, 12 Oct 2026) */
     v.has_charity = v.gift_charity_any || v.beneficiaries.some(function (b) { return b.res_type === 'CHARITY' || b.cont_charity; });
     if (v.has_gifts && v.gifts.some(function (g) { return g.gift_to_trust; })) v.has_trust_gift = true;
@@ -2763,9 +2795,10 @@
       var ty = resType(r);
       return { residuary_name: clean(r.name), residuary_pct: clean(String(r.pct || '').replace(/[^\d.]/g, '')), residuary_type: ty,
         residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT', residuary_person: ty === 'PERSON' || ty === 'ONGOING' || ty === '',
-        residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
+        residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3), residuary_ages_phrase: ty === 'ONGOING' ? btAgesPhrase(r) : '', residuary_ages_list: btAges(r),
         residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
     }).filter(function (r) { return r.residuary_name; });
+    btFlags(v, a.residuary || []);
     trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.beneficiary; })
       .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }),
         v.residuary.filter(function (r) { return r.residuary_type === 'SNT' || r.residuary_type === 'TRUST'; }).map(function (r) { return r.residuary_name; })));
@@ -2776,7 +2809,7 @@
     /* a beneficiary typed as an existing special needs trust or another existing trust turns on those sections */
     if (v.residuary.some(function (r) { return r.residuary_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
     if (v.residuary.some(function (r) { return r.residuary_type === 'TRUST'; })) v.has_trust_gift = true;
-    v.has_beneficiary_trust = v.residuary.some(function (r) { return r.residuary_ongoing; });
+    v.has_beneficiary_trust = BLANK || v.residuary.some(function (r) { return r.residuary_ongoing; });
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_ownership: clean(p.ownership), real_property_county_state: clean(p.countyState), real_property_deed_reference: clean(p.deedReference) };
@@ -2811,9 +2844,7 @@
             '<option value="">Who is this?</option>' + RES_TYPES.map(function (o) { return '<option value="' + o[0] + '"' + (ty === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
           var extra = '';
           if (ty === 'ONGOING') {
-            extra = '<div class="bt-ages"><span class="cont-l">They can ask for their share in three parts, at these ages:</span><div class="bt-age-row">' +
-              ['age1', 'age2', 'age3'].map(function (k, j) { return '<select class="input" data-list="residuary" data-i="' + i + '" data-f="' + k + '" data-rerender aria-label="' + ['First', 'Second', 'Third'][j] + ' age">' + ageOpts(r[k]) + '</select>'; }).join('') + '</div>' +
-              '<span class="hint">Up to a third at the first age, half of what\u2019s left at the second, and the rest at the third. Until then, your trustee can pay for their health, education and support, and their share is protected from their creditors.</span></div>';
+            extra = btAgesHtml('residuary', r, i, 'your trustee');
           } else if (ty === 'SNT') {
             extra = '<div class="bt-ages"><span class="cont-l">Who the trust is for</span><input class="input" data-list="residuary" data-i="' + i + '" data-f="sntFor" value="' + val(r.sntFor) + '" placeholder="Full name" aria-label="Who the special needs trust is for">' +
               '<span class="cont-l">The trust\u2019s date <em>(optional)</em></span><input class="input" type="date" data-list="residuary" data-i="' + i + '" data-f="sntDate" value="' + val(r.sntDate) + '" aria-label="Date of the special needs trust">' +
@@ -2828,9 +2859,7 @@
   /* the extra lines under a beneficiary: three ages for an ongoing trust, or who/when for a special needs trust */
   function resExtra(listKey, r, i) {
     var ageOpts = function (cur) { return '<option value="">Age</option>' + BT_AGES.map(function (n) { return '<option value="' + n + '"' + (String(cur) === String(n) ? ' selected' : '') + '>' + n + '</option>'; }).join(''); };
-    if (r.type === 'ONGOING') return '<div class="bt-ages"><span class="cont-l">They can ask for their share in three parts, at these ages:</span><div class="bt-age-row">' +
-      ['age1', 'age2', 'age3'].map(function (k, j) { return '<select class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="' + k + '" data-rerender aria-label="' + ['First', 'Second', 'Third'][j] + ' age">' + ageOpts(r[k]) + '</select>'; }).join('') + '</div>' +
-      '<span class="hint">Up to a third at the first age, half of what\u2019s left at the second, and the rest at the third. Until then, ' + (listKey === 'beneficiaries' ? 'your personal representative, as trustee,' : 'your trustee') + ' can pay for their health, education and support, and their share is protected from their creditors.</span></div>';
+    if (r.type === 'ONGOING') return btAgesHtml(listKey, r, i, listKey === 'beneficiaries' ? 'your personal representative, as trustee,' : 'your trustee');
     if (r.type === 'SNT') return '<div class="bt-ages"><span class="cont-l">Who the trust is for</span><input class="input" data-list="' + listKey + '" data-i="' + i + '" data-f="sntFor" value="' + val(r.sntFor) + '" placeholder="Full name" aria-label="Who the special needs trust is for">' +
       '<span class="cont-l">The trust\u2019s date <em>(optional)</em></span><input class="input" type="date" data-list="' + listKey + '" data-i="' + i + '" data-f="sntDate" value="' + val(r.sntDate) + '" aria-label="Date of the special needs trust">' +
       '<span class="hint">If that trust no longer exists when the share is paid, it\u2019s held for the same person in a backup supplemental needs trust. The existing trust isn\u2019t changed.</span></div>';
@@ -2854,9 +2883,9 @@
       var who = clean(r.name);
       if (!r.type) e.push('Choose who or what ' + who + ' is (a person, an ongoing trust, a special needs trust, a charity or another trust).');
       if (r.type === 'ONGOING') {
-        var ages = [r.age1, r.age2, r.age3].map(function (x) { return parseInt(x, 10) || 0; });
-        if (ages.some(function (x) { return !x; })) e.push('Choose all three ages for ' + who + '.');
-        else if (!(ages[0] < ages[1] && ages[1] < ages[2])) e.push('For ' + who + ', each age must be later than the one before.');
+        var ages = btAges(r).map(function (x) { return parseInt(x, 10) || 0; });
+        if (ages.some(function (x) { return !x; })) e.push(ages.length === 1 ? 'Choose the age for ' + who + '.' : 'Choose all ' + (ages.length === 2 ? 'two' : 'three') + ' ages for ' + who + '.');
+        else if (ages.some(function (x, k) { return k > 0 && x <= ages[k - 1]; })) e.push('For ' + who + ', each age must be later than the one before.');
       }
       if (r.type === 'SNT' && !clean(r.sntFor)) e.push('Enter who the special needs trust ' + who + ' is for.');
     });
@@ -2965,7 +2994,7 @@
         row('Successor trustee', v.is_cotrustees ? 'Together' + (v.cotrustee_separate ? ' (each may act alone)' : '') + ': ' + v.cotrustees.map(function (c) { return esc(c.cotrustee); }).join(', ') + (v.has_backup_trustees ? '<br>Backup(s): ' + v.backup_trustees.map(function (b) { return esc(b.backup_trustee); }).join(', ') : '') : v.successors.map(function (s) { return esc(s.successor); }).join(', then '), 'trustee') +
         (v.has_gifts ? row('Specific gifts', v.gifts.map(function (g) { return esc(g.gift_description) + ' to ' + esc(g.gift_beneficiary); }).join('<br>'), 'gifts') : '') +
         row('Beneficiaries', v.residuary.map(function (r) {
-          var how = r.residuary_ongoing ? ', in an ongoing trust: ' + [r.residuary_age1, r.residuary_age2, r.residuary_age3].map(function (x) { return (x.match(/\((\d+)\)/) || [])[1] || '?'; }).join(', ')
+          var how = r.residuary_ongoing ? ', in an ongoing trust: ' + r.residuary_ages_list.map(function (x) { return x || '?'; }).join(', ')
             : r.residuary_snt ? ', special needs trust for ' + esc(r.residuary_snt_for) : '';
           return esc(r.residuary_name) + (r.residuary_pct ? ' (' + esc(r.residuary_pct) + '%' + how + ')' : '');
         }).join('<br>'), 'residuary') + '</div>' +
@@ -3111,9 +3140,10 @@
       var ty = resType(r);
       return { residuary_name: clean(r.name), residuary_pct: clean(String(r.pct || '').replace(/[^\d.]/g, '')), residuary_type: ty,
         residuary_ongoing: ty === 'ONGOING', residuary_snt: ty === 'SNT', residuary_person: ty === 'PERSON' || ty === 'ONGOING' || ty === '',
-        residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3),
+        residuary_age1: ageWords(r.age1), residuary_age2: ageWords(r.age2), residuary_age3: ageWords(r.age3), residuary_ages_phrase: ty === 'ONGOING' ? btAgesPhrase(r) : '', residuary_ages_list: btAges(r),
         residuary_snt_date: r.sntDate ? longDate(r.sntDate) : '', residuary_snt_for: clean(r.sntFor) };
     }).filter(function (r) { return r.residuary_name; });
+    btFlags(v, a.residuary || []);
     trustGiftFlags(v, (a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.beneficiary; })
       .concat((a.wantsGifts === 'no' ? [] : [].concat(a.gifts || [], jointGiftList(a))).map(function (g) { return g.contingentName; }),
         v.residuary.filter(function (r) { return r.residuary_type === 'SNT' || r.residuary_type === 'TRUST'; }).map(function (r) { return r.residuary_name; })));
@@ -3124,7 +3154,7 @@
     /* a beneficiary typed as an existing special needs trust or another existing trust turns on those sections */
     if (v.residuary.some(function (r) { return r.residuary_snt; })) { v.has_snt_gift = true; v.has_trust_gift = true; }
     if (v.residuary.some(function (r) { return r.residuary_type === 'TRUST'; })) v.has_trust_gift = true;
-    v.has_beneficiary_trust = v.residuary.some(function (r) { return r.residuary_ongoing; });
+    v.has_beneficiary_trust = BLANK || v.residuary.some(function (r) { return r.residuary_ongoing; });
     v.asset_real_property = a.assetRealProperty === 'yes';
     v.real_property = (a.realProperty || []).map(function (p) {
       return { real_property_address: clean(p.address), real_property_reference: clean(p.reference), real_property_ownership: clean(p.ownership) };
