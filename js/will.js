@@ -949,7 +949,17 @@
   }
 
   /* ---------- the document ---------- */
+  /* SIGNING COUNTY IN THE NOTARY BLOCK (30 Oct 2026): when the customer has said which county they'll sign in,
+     the notary venue line ("County of ____") and an "Executed in ____ County" line carry it instead of a blank.
+     A power of attorney governed by another state's law keeps the blank (the county list is the home state's). */
   function docText() {
+    var t = docTextRaw(), c = BLANK ? '' : clean(answers.signingCounty);
+    if (!c || (kindKey === 'dpoa' && dpGov(answers) !== answers.state)) return t;
+    var bare = c.replace(/\s+(county|parish)$/i, '');
+    return t.replace(/^(@line\s+)(county|parish)(\s+of)?(:?\s*)_{4,}/gim, function (m, at, lab, of, sep) { return at + lab + (of || '') + sep + (/[A-Z]{3}/.test(lab) ? bare.toUpperCase() : bare); })
+      .replace(/^(@line\s+Executed in )_{4,}(\s+(County|Parish)\b)/gim, function (m, at, rest) { return at + bare + rest; });
+  }
+  function docTextRaw() {
     if (kindKey === 'dpoa') {
       var gs = dpGov(answers);
       if (!gs) return '@center Choose your state and your power of attorney will appear here.';
@@ -1864,7 +1874,7 @@
 
   var EMPTY_DP = {
     state: '', govState: '', ageOk: false, freeOk: false,
-    name: '', county: '',
+    name: '', county: '', signingCounty: '',
     agent: '', successors: [{ name: '' }],
     agentMode: 'single', coAgents: [{ name: '' }],
     effective: '', determiner: '', facility: '', trustPowers: '', dpRoute: ''
@@ -1963,7 +1973,8 @@
     about: function () {
       return stepHead('About you', 'Use your name as it appears on your ID.') +
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
-        field('County where you live', countySelect('county'));
+        field('County where you live', countySelect('county')) +
+        field('County where you’ll sign', countySelect('signingCounty'), 'This goes in the notary section and the line that says where the document was signed.');
     },
     agent: function () {
       return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Your document calls this person your Agent.') + coupleRoleNote('Agent') +
@@ -2025,6 +2036,7 @@
     } else if (id === 'about') {
       if (clean(a.name).length < 2) e.push('Enter your full legal name.');
       if (!clean(a.county)) e.push('Enter your county.');
+      if (!clean(a.signingCounty)) e.push('Choose the county where you’ll sign.');
     } else if (id === 'agent') {
       if (planOf(a) !== 'trust' && !clean(a.agent)) e.push('Enter the name of your agent.');
       otherAgentErrors(a, e, false);
