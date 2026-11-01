@@ -5365,6 +5365,7 @@
 
   /* test hook: lets the page be checked without typing */
   window.GrapevineWill = {
+    state: function () { return answers.state || ''; },
     setAnswers: function (o) { Object.assign(answers, o); draw(); },
     load: function (name) { return new Promise(function (ok) { dpLoad(name, ok); }); },
     text: function () { var o = closedState(); return o ? o.note : docText(); }, html: function () { var o = closedState(); return toHtml(o ? o.note : docText()); }, blocks: docBlocks, exportOptions: exportOptions,

@@ -63,6 +63,8 @@
   var ANY = ['the American Bar Association\u2019s directory of lawyer referral services', 'https://www.americanbar.org/groups/lawyer_referral/resources/lawyer-referral-directory/'];
   var SENTENCE = 'seek a qualified attorney to assist you';
   function state() {
+    /* on a document page, the state chosen for that document comes first (a blank template can be any state) */
+    try { var w = window.GrapevineWill, s = w && w.state && w.state(); if (s) return s; } catch (e) { /* use the saved state */ }
     try { return (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || ''; } catch (e) { return ''; }
   }
   function decorate(root) {
@@ -81,10 +83,18 @@
     while ((n = walker.nextNode())) found.push(n);
     found.forEach(function (t) {
       var el = t.parentElement;
-      if (!el || el.closest('.doc, #will-doc, script, style, a, [data-no-lawyer-link]') || el.querySelector('.gv-lawyer-link')) return;
+      if (!el || el.closest('.doc, #will-doc, script, style, a, [data-no-lawyer-link]')) return;
+      /* already linked: keep it on the current state (the state can change on a document page) */
+      var ex = el.querySelector('.gv-lawyer-link'), intro = ' To find one in ' + (LINKS[st] ? st : 'your state') + ': ';
+      if (ex) {
+        var exA = ex.querySelector('a');
+        if (ex.firstChild.nodeValue !== intro) ex.firstChild.nodeValue = intro;
+        if (exA && exA.getAttribute('href') !== hit[1]) { exA.href = hit[1]; exA.textContent = hit[0]; }
+        return;
+      }
       var span = document.createElement('span');
       span.className = 'gv-lawyer-link';
-      span.appendChild(document.createTextNode(' To find one in ' + (LINKS[st] ? st : 'your state') + ': '));
+      span.appendChild(document.createTextNode(intro));
       var a = document.createElement('a');
       a.href = hit[1]; a.target = '_blank'; a.rel = 'noopener';
       a.textContent = hit[0];
