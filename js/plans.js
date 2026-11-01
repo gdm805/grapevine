@@ -91,6 +91,8 @@ window.GV_CLOSED_STATES = {
   'Colorado': 'Tovakin isn\u2019t available in Colorado yet. We\u2019re confirming Colorado\u2019s rules for online document services and hope to offer Colorado documents soon.',
   'Pennsylvania': 'Tovakin isn\u2019t available in Pennsylvania yet. We\u2019re confirming Pennsylvania\u2019s rules for online document services and hope to offer Pennsylvania documents soon.',
   'New Hampshire': 'Tovakin isn\u2019t available in New Hampshire yet. We\u2019re confirming New Hampshire\u2019s rules for online document services and hope to offer New Hampshire documents soon.',
+  /* off 31 Oct 2026 (Greg): Ala. Code 34-3-6(b)(2); Coffee County Abstract v. State, 445 So. 2d 852 (Ala. 1983) */
+  'Alabama': 'Tovakin isn\u2019t available in Alabama yet. We\u2019re confirming Alabama\u2019s rules for online document services and hope to offer Alabama documents soon.',
   /* off 31 Oct 2026 (Greg), pending the Washington attorney's advice on chapter 19.295 RCW */
   'Washington': 'Tovakin isn\u2019t available in Washington yet. We\u2019re confirming Washington\u2019s rules for online document services and hope to offer Washington documents soon.'
 };
