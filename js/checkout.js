@@ -222,7 +222,7 @@
   function caNotice(p, price, includes) {
     if (!isCA()) return '';
     var r = window.GV_CA_LDA || {};
-    var reg = r.registered ? '<p>Grapevine Docs, LLC is registered as a legal document assistant in ' + esc(r.county) + ' County. County clerk: ' + esc(r.clerkAddress) + (r.clerkPhone ? ', ' + esc(r.clerkPhone) : '') + (r.clerkWebsite ? ', ' + esc(r.clerkWebsite) : '') + '.</p>' +
+    var reg = r.registered ? '<p>Grapevine Docs LLC is registered as a legal document assistant in ' + esc(r.county) + ' County. County clerk: ' + esc(r.clerkAddress) + (r.clerkPhone ? ', ' + esc(r.clerkPhone) : '') + (r.clerkWebsite ? ', ' + esc(r.clerkWebsite) : '') + '.</p>' +
       '<p class="ca-bold">The county clerk has not evaluated or approved the registrant\u2019s knowledge or experience, or the quality of the registrant\u2019s services.</p>' : '';
     return '<div class="ca-notice" id="ca-notice"><h3>Notice to California customers</h3>' +
       '<p><strong>Services:</strong> software you use to prepare your own ' + esc(p.name) + ' documents (' + esc(includes.join(', ')) + '). <strong>Cost:</strong> ' + money(price) + ', one time.</p>' +
@@ -231,7 +231,7 @@
       '<p class="ca-bold">You may obtain information about free or low-cost representation through a local bar association or legal aid foundation. If you believe you have been a victim of fraud, the unauthorized practice of law, or any other injury, you may contact local law enforcement, a district attorney, or a legal aid foundation.</p>' +
       '<p class="ca-bold">Tovakin is not permitted to engage in the practice of law, including providing any kind of advice, explanation, opinion, or recommendation to you about possible legal rights, remedies, defenses, options, selection of forms, or strategies.</p>' +
       '<p>Under California Business and Professions Code section 6409.1, the venue for an action arising out of a dispute between you and Tovakin is the county where you have your primary residence.</p>' +
-      '<p class="ca-cancel"><strong>Your right to cancel:</strong> you may cancel this purchase within 24 hours by giving us any written statement that you are canceling, by email to <a href="mailto:support@tovakin.com">support@tovakin.com</a> or by mail to Grapevine Docs, LLC at the address in our Terms. A mailed cancellation is effective on its postmark date. We will then promptly return your payment, except fees for services actually, necessarily, and reasonably performed for you with your knowing and express written consent.</p>' +
+      '<p class="ca-cancel"><strong>Your right to cancel:</strong> you may cancel this purchase within 24 hours by giving us any written statement that you are canceling, by email to <a href="mailto:support@tovakin.com">support@tovakin.com</a> or by mail to Grapevine Docs LLC at the address in our Terms. A mailed cancellation is effective on its postmark date. We will then promptly return your payment, except fees for services actually, necessarily, and reasonably performed for you with your knowing and express written consent.</p>' +
       '<label class="check ca-ack"><input type="checkbox" id="ca-ack"' + (caAck ? ' checked' : '') + '><span>I have read the California notice above.</span></label></div>';
   }
   /* agreeing to the Terms is required before payment (Greg, 10 Oct 2026): the pay button stays switched off until
