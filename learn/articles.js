@@ -192,7 +192,7 @@ category: Wills
 date: 2026-09-19
 summary: Your executor carries out your will. Here is what the job involves.
 image: learn-executor
-alt: An older couple smiling at each other outdoors
+alt: A family playing soccer together in a sunny park
 ---
 Your executor is the person you name in your will to handle your estate after you die.
 
