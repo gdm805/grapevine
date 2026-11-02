@@ -236,9 +236,14 @@
       .catch(function () { job.cancel(); signStatus('We could not build the signing steps PDF. Please reload the page and try again.', true); });
   });
   if (location.hash === '#how-to-sign') { var hs = document.getElementById('how-to-sign'); if (hs) setTimeout(function () { hs.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 300); }
-  /* arriving from the payment page: bring the download box into view */
+  /* arriving from the payment page: bring the download box into view, and start the download if every document
+     is finished, so "Download your documents" on the payment page is one click (1 Nov 2026) */
   if (/[?&]download=all\b/.test(location.search)) {
     var box = root.querySelector('.pkg-sum-pay');
     if (box) setTimeout(function () { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
+    if (btn && !open.length) {
+      history.replaceState(null, '', location.pathname + location.search.replace(/([?&])download=all\b&?/, '$1').replace(/[?&]$/, '') + location.hash);
+      setTimeout(function () { btn.click(); }, 400);
+    }
   }
 })();

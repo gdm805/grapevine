@@ -5296,6 +5296,7 @@
       .then(function (msg) { status(msg); })
       .catch(function () { job.cancel(); status('', false); pageFallback(); });
   }
+  var autoDownload = false;   /* the download started by itself after payment (?download=all) */
   function runExport(kind) {
     if (closedState()) { status(closedState().note, true); return Promise.resolve(); }
     if (!window.GVExport) { status('The export tools did not load. Try Print instead.', true); return; }
@@ -5304,7 +5305,7 @@
     var work = kind === 'pdf' ? window.GVExport.pdf(blocks, opts) : Promise.resolve(window.GVExport.docx(blocks, opts));
     return work
       .then(function (blob) { return deliver(blob, opts.base + (kind === 'pdf' ? '.pdf' : '.docx')); })
-      .then(function () { status('Done. Your file has page numbers on every page.'); })
+      .then(function () { status(autoDownload ? 'Your download has started. If you don\u2019t see it in your Downloads folder, click Download PDF.' : 'Done. Your file has page numbers on every page.'); autoDownload = false; })
       .catch(function (e) {
         if (e && e.code === 'declined') status('Cancelled.');
         else status('We could not create the file. Please try Print instead.', true);
@@ -5403,13 +5404,22 @@
     location.replace(window.GVUrl('package.html') + '?download=all');
   } else if (/[?&]download=all\b/.test(location.search)) {
     /* one document (a single document or the Living Trust): open its last screen, where Download PDF and Print are,
-       and bring the Download button into view -- never leave the person at the top of the page (22 Oct 2026) */
+       bring the Download button into view, and start the download itself so "Download your document" on the payment
+       page is one click (1 Nov 2026). Only a paid, finished document starts by itself; otherwise the button waits. */
     if (stepId !== 'review' && KIND.steps.some(function (s) { return s.id === 'review'; })) go('review', { quiet: true });
     setTimeout(function () {
       var box = document.getElementById('pkg-complete');
       if (box) { box.scrollIntoView({ behavior: 'smooth', block: 'center' }); var b = box.querySelector('[data-pkg-pdf]'); if (b) b.focus(); return; }
-      var pdf = stepEl.querySelector('[data-pdf]');
-      if (pdf) { pdf.scrollIntoView({ behavior: 'smooth', block: 'center' }); pdf.focus(); status('Your document is unlocked. Click Download PDF to save it.'); }
+      var tries = 0;
+      (function startDownload() {
+        var pdf = stepEl.querySelector('[data-pdf]');
+        if (pdf && paidUp() && !missingSteps().length && !/^@center .*Loading the/.test(docText())) {
+          pdf.scrollIntoView({ behavior: 'smooth', block: 'center' }); pdf.focus();
+          autoDownload = true; history.replaceState(null, '', location.pathname + location.search.replace(/([?&])download=all\b&?/, '$1').replace(/[?&]$/, '') + location.hash);
+          pdf.click();
+        } else if (++tries < 40) setTimeout(startDownload, 250);
+        else if (pdf) { pdf.scrollIntoView({ behavior: 'smooth', block: 'center' }); pdf.focus(); status('Your document is unlocked. Click Download PDF to save it.'); }
+      })();
     }, 500);
   }
 })();
