@@ -588,5 +588,3 @@ details[id] { scroll-margin-top: 110px; }
 .includes-fold { margin: 0 0 14px; }
 .includes-fold > summary { cursor: pointer; font-weight: 600; }
 .includes-fold .includes { margin-top: 10px; }
-.state-known { margin: 0 0 14px; }
-.state-known .link-btn { background: none; border: 0; padding: 0; margin-left: 6px; font: inherit; color: var(--grape); text-decoration: underline; cursor: pointer; }

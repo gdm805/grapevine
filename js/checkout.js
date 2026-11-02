@@ -129,7 +129,7 @@
     if (link && betaTester()) payHref += '&prefilled_promo_code=' + encodeURIComponent(window.GV_BETA.code);
 
     /* arrived from a finished document: a short page (1 Nov 2026, Greg): no side panel, the household goes with the
-       price, a package's list folds away, and a known state shows as one line. The refund note and the Terms box stay. */
+       price, a package's list folds away, and a known state isn't asked again. The refund note and the Terms box stay. */
     var grid = root.closest && root.closest('.checkout-grid');
     if (grid) grid.classList.toggle('compact', !!docLabel);
     var whatIncludes = '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>';
@@ -249,15 +249,11 @@
   var STATE_NAMES = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
   function readProf() { try { return JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { return {}; } }
   function buyerState() { var s = readProf().state || ''; return STATE_NAMES.indexOf(s) > -1 ? s : ''; }
-  var changeState = false;
-  root.addEventListener('click', function (e) {
-    if (!e.target || !e.target.hasAttribute || !e.target.hasAttribute('data-change-state')) return;
-    changeState = true; render();
-    var sel = document.getElementById('buyer-state'); if (sel) sel.focus();
-  });
   function statePick(compact) {
     var cur = buyerState(), closed = window.GVClosedState ? window.GVClosedState(cur) : '';
-    if (compact && cur && !closed && !changeState) return '<p class="state-known">State where you live: <strong>' + esc(cur) + '</strong> <button type="button" class="link-btn" data-change-state>Change</button></p>';
+    /* arriving from a finished document, the state was given on the document's first screen: don't ask again.
+       The closed-state check still runs; the question appears only if the state is closed or wasn't saved. */
+    if (compact && cur && !closed) return '';
     return '<div class="state-pick"><label for="buyer-state">State where you live</label>' +
       '<select class="input" id="buyer-state"><option value="">Choose your state</option>' +
       STATE_NAMES.map(function (s) { return '<option' + (s === cur ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') + '</select>' +
@@ -265,7 +261,6 @@
   }
   root.addEventListener('change', function (e) {
     if (!e.target || e.target.id !== 'buyer-state') return;
-    changeState = false;
     try { var pr = readProf(); pr.state = e.target.value; localStorage.setItem('grapevine.profile.v1', JSON.stringify(pr)); } catch (x) { /* storage blocked */ }
     render();
   });
