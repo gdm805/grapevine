@@ -128,24 +128,29 @@
     /* beta testers: Stripe applies the 100%-off code for them (see GV_BETA in js/plans.js) */
     if (link && betaTester()) payHref += '&prefilled_promo_code=' + encodeURIComponent(window.GV_BETA.code);
 
+    /* arrived from a finished document: a short page (1 Nov 2026, Greg): no side panel, the household goes with the
+       price, a package's list folds away, and a known state shows as one line. The refund note and the Terms box stay. */
+    var grid = root.closest && root.closest('.checkout-grid');
+    if (grid) grid.classList.toggle('compact', !!docLabel);
+    var whatIncludes = '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>';
+
     root.innerHTML =
       '<p class="overline">Checkout</p>' +
       /* arrived from a finished document: the plan was chosen before the questions, so this page names what
          they're buying -- the whole package, or the one document -- and goes straight to paying */
       '<h1>' + (docLabel ? (plan === 'doc' ? 'Unlock ' + esc(docLabel) : 'Unlock your ' + esc(p.name) + ' package') : 'Choose your plan') + '</h1>' +
       (docLabel
-        ? '<p class="lead">Your answers are saved in this browser. ' + (plan === 'doc' ? 'Pay once, and this document unlocks for download.' : 'Pay once, and every document in your ' + esc(p.name) + ' package unlocks for download.') + '</p>'
+        ? '<p class="lead">' + (plan === 'doc' ? 'Pay once, and this document unlocks for download.' : 'Pay once, and every document in your ' + esc(p.name) + ' package unlocks for download.') + '</p>'
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
-      (docLabel
-        ? '<p class="household-label">' + (household === 'couple' ? 'Pricing for you and your spouse or partner' : 'Pricing for one person') + '</p>'
-        : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
+      (docLabel ? '' : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
       '<div class="order-card">' +
-        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : '') + '</span></p></div>' +
-        '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' +
-        '<ul class="includes">' + includes.map(function (x) { return '<li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>' + esc(x) + '</li>'; }).join('') + '</ul>' +
+        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : docLabel && linkPlan !== 'doc19' && linkPlan !== 'doc29' && !perTrust ? ', for one person' : '') + '</span></p></div>' +
+        (docLabel
+          ? (plan === 'doc' || includes.length < 2 ? '' : '<details class="includes-fold"><summary>What’s included</summary>' + whatIncludes + '</details>')
+          : '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' + whatIncludes) +
         (perTrust ? '<p class="per-trust">Priced per trust. One purchase covers one trust, including a married couple’s joint trust. If you and your spouse or partner each have your own separate trust, you’ll need one for each person.</p>' : '') +
         (link
-          ? statePick() + betaSurvey() + caNotice(p, price, includes) + termsFold() + (!buyerState()
+          ? statePick(!!docLabel) + betaSurvey() + caNotice(p, price, includes) + termsFold() + (!buyerState()
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Choose the state where you live above</button>'
             : window.GVClosedState && window.GVClosedState(buyerState())
             ? '<button class="btn btn-primary btn-lg" type="button" disabled>Not available in ' + esc(buyerState()) + ' yet</button>'
@@ -244,8 +249,15 @@
   var STATE_NAMES = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
   function readProf() { try { return JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}; } catch (e) { return {}; } }
   function buyerState() { var s = readProf().state || ''; return STATE_NAMES.indexOf(s) > -1 ? s : ''; }
-  function statePick() {
+  var changeState = false;
+  root.addEventListener('click', function (e) {
+    if (!e.target || !e.target.hasAttribute || !e.target.hasAttribute('data-change-state')) return;
+    changeState = true; render();
+    var sel = document.getElementById('buyer-state'); if (sel) sel.focus();
+  });
+  function statePick(compact) {
     var cur = buyerState(), closed = window.GVClosedState ? window.GVClosedState(cur) : '';
+    if (compact && cur && !closed && !changeState) return '<p class="state-known">State where you live: <strong>' + esc(cur) + '</strong> <button type="button" class="link-btn" data-change-state>Change</button></p>';
     return '<div class="state-pick"><label for="buyer-state">State where you live</label>' +
       '<select class="input" id="buyer-state"><option value="">Choose your state</option>' +
       STATE_NAMES.map(function (s) { return '<option' + (s === cur ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('') + '</select>' +
@@ -253,6 +265,7 @@
   }
   root.addEventListener('change', function (e) {
     if (!e.target || e.target.id !== 'buyer-state') return;
+    changeState = false;
     try { var pr = readProf(); pr.state = e.target.value; localStorage.setItem('grapevine.profile.v1', JSON.stringify(pr)); } catch (x) { /* storage blocked */ }
     render();
   });

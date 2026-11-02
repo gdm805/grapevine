@@ -582,3 +582,11 @@ details[id] { scroll-margin-top: 110px; }
 .foot-social a { display: inline-flex; align-items: center; gap: 7px; color: var(--ink-soft); text-decoration: none; font-weight: 600; }
 .foot-social a:hover { color: var(--grape); }
 .foot-social svg { width: 20px; height: 20px; fill: currentColor; }
+/* short checkout, arriving from a finished document (1 Nov 2026) */
+.checkout-grid.compact { grid-template-columns: minmax(0, 640px); justify-content: center; }
+.checkout-grid.compact .checkout-side { display: none; }
+.includes-fold { margin: 0 0 14px; }
+.includes-fold > summary { cursor: pointer; font-weight: 600; }
+.includes-fold .includes { margin-top: 10px; }
+.state-known { margin: 0 0 14px; }
+.state-known .link-btn { background: none; border: 0; padding: 0; margin-left: 6px; font: inherit; color: var(--grape); text-decoration: underline; cursor: pointer; }
