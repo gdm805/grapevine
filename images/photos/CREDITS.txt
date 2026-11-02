@@ -1,7 +1,7 @@
 Photos from Unsplash (unsplash.com), used under the Unsplash License (free for commercial use; credit not required, given here as a courtesy).
 Downloaded 23 Oct 2026; resized and compressed for the site.
 
-home-hero      Vitaly Gariev          https://unsplash.com/photos/elderly-couple-smiling-while-looking-at-laptop-together-XIdcEnBVHfI
+home-hero      Anna Fothergill        https://unsplash.com/photos/a-man-and-a-woman-sitting-at-a-table-with-wine-glasses-TpAx9NCrlEA   (replaced the older couple at a laptop, 1 Nov 2026; target audience is 30-55)
 home-signing   Cytonn Photography     https://unsplash.com/photos/person-writing-on-white-paper-GJao3ZTX9gU
 pricing-porch  Thomas Park            https://unsplash.com/photos/a-porch-with-a-flag-on-the-front-of-it-36gDXLRF1nE
 learn-pets     Wade Austin Ellis      https://unsplash.com/photos/woman-hugging-a-dog-FtuJIuBbUhI
