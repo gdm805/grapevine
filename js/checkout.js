@@ -29,25 +29,24 @@
      IMPORTANT: every link below must also be listed in PAYMENT_LINKS in cloudflare/payment-check.js, or
      payments through it can't be confirmed.
      ------------------------------------------------------------------ */
-  /* TEST-MODE links (Stripe sandbox): these take fake cards only, such as 4242 4242 4242 4242. When you
-     go live, replace each with the matching link from your live Stripe account. */
+  /* LIVE links (real money), created 1 Nov 2026 with Managed Payments on. */
   var PAYMENT_LINKS = {
-    will: { single: 'https://buy.stripe.com/test_9B6fZh6SW3gz4aB0AJ5EY00', couple: 'https://buy.stripe.com/test_00wbJ17X07wPbD36Z75EY01' },
-    essentials: { single: 'https://buy.stripe.com/test_5kQ3cv4KO3gzePfcjr5EY02', couple: 'https://buy.stripe.com/test_5kQ8wPa582cvcH7dnv5EY03' },
-    complete: { single: 'https://buy.stripe.com/test_3cI3cv7X0eZhcH7cjr5EY04', couple: 'https://buy.stripe.com/test_6oUaEX9149EXcH783b5EY05' },
+    will: { single: 'https://buy.stripe.com/bJe3cv3zl3On3U69kP2oE00', couple: 'https://buy.stripe.com/8x2cN5gm798H8am54z2oE01' },
+    essentials: { single: 'https://buy.stripe.com/7sY6oHfi370zbmydB52oE02', couple: 'https://buy.stripe.com/8x28wPb1Net1fCOeF92oE03' },
+    complete: { single: 'https://buy.stripe.com/4gMeVdedZ70z4Ya1Sn2oE04', couple: 'https://buy.stripe.com/00wfZhd9Vfx52Q20Oj2oE05' },
     /* the smaller offers from "Need a smaller package?" -- paste each Stripe link between the quotes.
        "doc" is used for every single document (they all cost the same); the checkout page remembers which
        document was chosen and paid.html unlocks that one. Until a link is filled in, the checkout page
        shows the "Payments aren't turned on yet" notice for that offer. */
-    doc: { single: 'https://buy.stripe.com/test_28E9ATelo4kD36x0AJ5EY06', couple: 'https://buy.stripe.com/test_dRm14n5OS3gzcH76Z75EY07' },
+    doc: { single: 'https://buy.stripe.com/fZu7sL1rd4Sr9eq7cH2oE06', couple: 'https://buy.stripe.com/dRm5kD7PB4Sr9eq7cH2oE07' },
     /* the lower-priced single documents (GV_PLANS.docTier in js/plans.js): $19 = Important Contacts and Schedule A
        and $29 = Dementia Care Preferences (each one link, one price for everyone). Paste each Stripe link between the quotes. */
-    doc19: { single: 'https://buy.stripe.com/test_aFa8wP6SWdVd5eF2IR5EY0e', couple: 'https://buy.stripe.com/test_aFa8wP6SWdVd5eF2IR5EY0e' },
-    doc29: { single: 'https://buy.stripe.com/test_bJefZhelo8ATdLb0AJ5EY0f', couple: 'https://buy.stripe.com/test_bJefZhelo8ATdLb0AJ5EY0f' },
-    health: { single: 'https://buy.stripe.com/test_fZu8wPelo7wP0Yp3MV5EY08', couple: 'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09' },
-    trustpaper: { single: 'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a', couple: 'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b' },
+    doc19: { single: 'https://buy.stripe.com/00w6oHc5RgB9eyKcx12oE08', couple: 'https://buy.stripe.com/00w6oHc5RgB9eyKcx12oE08' },
+    doc29: { single: 'https://buy.stripe.com/8x214nedZ5WvfCO8gL2oE09', couple: 'https://buy.stripe.com/8x214nedZ5WvfCO8gL2oE09' },
+    health: { single: 'https://buy.stripe.com/dRm8wP0n94Sr62e9kP2oE0a', couple: 'https://buy.stripe.com/3cIfZhgm72Kj9eqcx12oE0b' },
+    trustpaper: { single: 'https://buy.stripe.com/fZu00j2vhckT76iaoT2oE0d', couple: 'https://buy.stripe.com/28EdR9d9VdoXfCOaoT2oE0c' },
     /* Living Trust on its own ($349 one person / $429 a couple's joint trust) */
-    trustonly: { single: 'https://buy.stripe.com/test_3cIbJ1a58g3lcH75V35EY0g', couple: 'https://buy.stripe.com/test_00wbJ1cdg6sL22tbfn5EY0h' }
+    trustonly: { single: 'https://buy.stripe.com/4gMcN5fi384D0HU7cH2oE0e', couple: 'https://buy.stripe.com/cNi8wP1rdgB962eeF92oE0f' }
   };
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
@@ -215,7 +214,7 @@
      California. The bold statements are the ones 6410(b) requires in 12-point bold; (b)(3) and (b)(5) -- the
      county clerk's details -- appear only once GV_CA_LDA.registered is true (js/plans.js). */
   var caAck = false;
-  var TERMS_VERSION = 'October 26, 2026';   /* the "Last updated" date on terms.html */
+  var TERMS_VERSION = 'November 1, 2026';   /* the "Last updated" date on terms.html */
   function isCA() {
     try { return ((JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || '') === 'California'; } catch (e) { return false; }
   }

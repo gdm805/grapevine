@@ -15,24 +15,24 @@
    too (you can leave the test ones in), then click Deploy again in Cloudflare. */
 
 var PAYMENT_LINKS = {
-  /* TEST-MODE links (fake cards only) */
-  'https://buy.stripe.com/test_9B6fZh6SW3gz4aB0AJ5EY00': { plan: 'will', household: 'single' },
-  'https://buy.stripe.com/test_00wbJ17X07wPbD36Z75EY01': { plan: 'will', household: 'couple' },
-  'https://buy.stripe.com/test_5kQ3cv4KO3gzePfcjr5EY02': { plan: 'essentials', household: 'single' },
-  'https://buy.stripe.com/test_5kQ8wPa582cvcH7dnv5EY03': { plan: 'essentials', household: 'couple' },
-  'https://buy.stripe.com/test_3cI3cv7X0eZhcH7cjr5EY04': { plan: 'complete', household: 'single' },
-  'https://buy.stripe.com/test_6oUaEX9149EXcH783b5EY05': { plan: 'complete', household: 'couple' },
-  'https://buy.stripe.com/test_28E9ATelo4kD36x0AJ5EY06': { plan: 'doc', household: 'single' },
-  'https://buy.stripe.com/test_dRm14n5OS3gzcH76Z75EY07': { plan: 'doc', household: 'couple' },
-  'https://buy.stripe.com/test_fZu8wPelo7wP0Yp3MV5EY08': { plan: 'health', household: 'single' },
-  'https://buy.stripe.com/test_eVq9AT5OS04n6iJ0AJ5EY09': { plan: 'health', household: 'couple' },
-  'https://buy.stripe.com/test_bJefZh0uycR9fTj83b5EY0a': { plan: 'trustpaper', household: 'single' },
-  'https://buy.stripe.com/test_28EdR9cdgeZh9uV97f5EY0b': { plan: 'trustpaper', household: 'couple' },
-  'https://buy.stripe.com/test_3cIbJ1a58g3lcH75V35EY0g': { plan: 'trustonly', household: 'single' },
-  'https://buy.stripe.com/test_00wbJ1cdg6sL22tbfn5EY0h': { plan: 'trustonly', household: 'couple' }
+  /* LIVE links (real money), created 1 Nov 2026 */
+  'https://buy.stripe.com/bJe3cv3zl3On3U69kP2oE00': { plan: 'will', household: 'single' },
+  'https://buy.stripe.com/8x2cN5gm798H8am54z2oE01': { plan: 'will', household: 'couple' },
+  'https://buy.stripe.com/7sY6oHfi370zbmydB52oE02': { plan: 'essentials', household: 'single' },
+  'https://buy.stripe.com/8x28wPb1Net1fCOeF92oE03': { plan: 'essentials', household: 'couple' },
+  'https://buy.stripe.com/4gMeVdedZ70z4Ya1Sn2oE04': { plan: 'complete', household: 'single' },
+  'https://buy.stripe.com/00wfZhd9Vfx52Q20Oj2oE05': { plan: 'complete', household: 'couple' },
+  'https://buy.stripe.com/fZu7sL1rd4Sr9eq7cH2oE06': { plan: 'doc', household: 'single' },
+  'https://buy.stripe.com/dRm5kD7PB4Sr9eq7cH2oE07': { plan: 'doc', household: 'couple' },
+  'https://buy.stripe.com/dRm8wP0n94Sr62e9kP2oE0a': { plan: 'health', household: 'single' },
+  'https://buy.stripe.com/3cIfZhgm72Kj9eqcx12oE0b': { plan: 'health', household: 'couple' },
+  'https://buy.stripe.com/fZu00j2vhckT76iaoT2oE0d': { plan: 'trustpaper', household: 'single' },
+  'https://buy.stripe.com/28EdR9d9VdoXfCOaoT2oE0c': { plan: 'trustpaper', household: 'couple' },
+  'https://buy.stripe.com/4gMcN5fi384D0HU7cH2oE0e': { plan: 'trustonly', household: 'single' },
+  'https://buy.stripe.com/cNi8wP1rdgB962eeF92oE0f': { plan: 'trustonly', household: 'couple' }
   /* the lower-priced single documents (9 Oct 2026). tier says which documents a link may unlock (see DOC_TIER) */
-  , 'https://buy.stripe.com/test_aFa8wP6SWdVd5eF2IR5EY0e': { plan: 'doc', household: 'single', tier: 19 }
-  , 'https://buy.stripe.com/test_bJefZhelo8ATdLb0AJ5EY0f': { plan: 'doc', household: 'single', tier: 29 }
+  , 'https://buy.stripe.com/00w6oHc5RgB9eyKcx12oE08': { plan: 'doc', household: 'single', tier: 19 }
+  , 'https://buy.stripe.com/8x214nedZ5WvfCO8gL2oE09': { plan: 'doc', household: 'single', tier: 29 }
 
   /* LIVE links go here when you go live, one per line, same pattern, for example:
   , 'https://buy.stripe.com/abc123': { plan: 'will', household: 'single' } */
@@ -45,9 +45,8 @@ var ALLOWED_SITES = ['https://www.tovakin.com', 'https://tovakin.com', 'https://
 /* true = only unlock payments where the customer ticked Stripe's "I agree to the Terms of Service" box. That box
    appears only on Payment Links with "Require customers to accept your terms of service" switched on, so switch
    it on for EVERY link before setting this to true, or payments through a link without it won't unlock.
-   Off for now: the Stripe SANDBOX can't hold a Terms of service URL (Settings > Public details needs an
-   activated account). Turn it on when setting up the LIVE links (LAUNCH-CHECKLIST.txt, step 3). */
-var REQUIRE_TERMS = false;
+   On since the live links (1 Nov 2026): every live link has the box switched on. */
+var REQUIRE_TERMS = true;
 
 /* the documents that can be bought one at a time (must match "singles" in js/plans.js) */
 var SINGLE_DOCS = ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment'];
