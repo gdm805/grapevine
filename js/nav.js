@@ -98,6 +98,29 @@
      on   false = the chat shows only in TEST MODE: in a browser that has opened any page with ?chat=1 at the end
           of its address (?chat=0 turns test mode off again). true = everyone sees it. Before setting true:
           the Privacy Policy must mention the chat (launch checklist 11d). */
+/* OWNER MODE (js/plans.js): on this computer only, ?owner=1 turns it on and ?owner=0 off, from any page; a small
+   label in the corner shows while it's on. Never on www.tovakin.com (the address check fails there). */
+(function () {
+  if (!/^(127\.0\.0\.1|localhost|\[::1\])$/.test(location.hostname)) return;
+  var on = false;
+  try {
+    var q = new URLSearchParams(location.search).get('owner');
+    if (q === '1') localStorage.setItem('grapevine.owner', '1');
+    if (q === '0') localStorage.removeItem('grapevine.owner');
+    on = localStorage.getItem('grapevine.owner') === '1';
+  } catch (e) { on = false; }
+  if (!on) return;
+  function badge() {
+    if (document.getElementById('gv-owner-badge')) return;
+    var b = document.createElement('div');
+    b.id = 'gv-owner-badge';
+    b.textContent = 'Owner mode (this computer only) \u00b7 turn off: add ?owner=0';
+    b.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:99999;background:#17181c;color:#fff;font:600 12px/1.3 system-ui,sans-serif;padding:7px 11px;border-radius:8px;opacity:.9;pointer-events:none';
+    document.body.appendChild(b);
+  }
+  if (document.body) badge(); else document.addEventListener('DOMContentLoaded', badge);
+})();
+
 var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true };
 (function () {
   'use strict';

@@ -42,6 +42,7 @@ window.GVPay = (function () {
 
   /* doc is one of the builder kinds: 'will', 'pourover', 'dpoa' */
   function hasPaid(doc) {
+    if (window.GVOwner && window.GVOwner()) return true;   /* owner mode, local only (js/plans.js) */
     var plans = paidPlans();
     for (var i = 0; i < plans.length; i++) { if (unlocksFor(plans[i]).indexOf(doc) > -1) return true; }
     return false;

@@ -96,7 +96,21 @@ window.GV_CLOSED_STATES = {
   /* off 31 Oct 2026 (Greg), pending the Washington attorney's advice on chapter 19.295 RCW */
   'Washington': 'Tovakin isn\u2019t available in Washington yet. We\u2019re confirming Washington\u2019s rules for online document services and hope to offer Washington documents soon.'
 };
-window.GVClosedState = function (state) { return (window.GV_CLOSED_STATES || {})[state] || ''; };
+/* OWNER MODE (3 Nov 2026): on Greg's own computer only (the site running at 127.0.0.1 or localhost), every document
+   unlocks without paying, with no preview watermark, and closed states open, so documents can be worked on and
+   downloaded freely. Turn it on by opening any local page with ?owner=1 at the end of the address, off with ?owner=0.
+   It can never switch on at www.tovakin.com: the address check below fails there. */
+window.GVOwner = (function () {
+  var local = /^(127\.0\.0\.1|localhost|\[::1\])$/.test(location.hostname);
+  if (!local) return function () { return false; };
+  try {
+    var q = new URLSearchParams(location.search).get('owner');
+    if (q === '1') localStorage.setItem('grapevine.owner', '1');
+    if (q === '0') localStorage.removeItem('grapevine.owner');
+  } catch (e) { /* storage blocked: owner mode stays off */ }
+  return function () { try { return localStorage.getItem('grapevine.owner') === '1'; } catch (e) { return false; } };
+})();
+window.GVClosedState = function (state) { return window.GVOwner() ? '' : (window.GV_CLOSED_STATES || {})[state] || ''; };
 
 window.GV_BETA = { on: false, code: 'BETANOV', survey: '445AKO' };   /* beta testing ended Oct 25, 2026 (on: false turns off the free beta checkout and survey) */
 (function () {
