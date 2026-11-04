@@ -63,6 +63,9 @@
   var ANY = ['the American Bar Association\u2019s directory of lawyer referral services', 'https://www.americanbar.org/groups/lawyer_referral/resources/lawyer-referral-directory/'];
   var SENTENCE = 'seek a qualified attorney to assist you';
   function state() {
+    /* Learn articles are general and often about one state (such as Washington community property): always the ABA
+       directory there, never the reader's saved state (data-lawyer-any on the page's <body>, 3 Nov 2026) */
+    if (document.body && document.body.hasAttribute('data-lawyer-any')) return '';
     /* on a document page, the state chosen for that document comes first (a blank template can be any state) */
     try { var w = window.GrapevineWill, s = w && w.state && w.state(); if (s) return s; } catch (e) { /* use the saved state */ }
     try { return (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || ''; } catch (e) { return ''; }
