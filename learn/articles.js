@@ -517,6 +517,64 @@ Life insurance, retirement accounts and other accounts pass to the people named 
 
 A list of accounts, advisors and key contacts can save a family a great deal of searching. You can make one with [Important Contacts](contacts.html).
 
+=== community-property-states
+title: Community property states: what it means for your will or trust
+category: Wills
+date: 2026-11-03
+summary: Nine states treat most property a married couple acquires as owned equally by both. Several others let couples opt in. Here is what community property is, where it applies, and how each state handles property passing to the surviving spouse.
+---
+In most states, property belongs to whichever spouse owns it, often shown by whose name is on the title. A few states follow a different system called community property.
+
+## What community property is
+
+In a community property state, property that spouses acquire during the marriage is generally owned equally by both, no matter whose name is on it or who earned it. Property owned before the marriage, and property received by one spouse as a gift or inheritance, is generally that spouse's separate property. Each state has its own rules for what counts as which.
+
+Because each spouse generally owns half of the community property, a will can generally leave only the will-maker's own half of it, along with that spouse's separate property.
+
+## The community property states
+
+Under IRS Publication 555, nine states are community property states:
+
+- Arizona
+- California
+- Idaho
+- Louisiana
+- Nevada
+- New Mexico
+- Texas
+- Washington
+- Wisconsin (where it is called "marital property")
+
+The law of the state where a couple lives generally decides whether they have community property.
+
+## States where couples can opt in
+
+Several other states let married couples choose community property treatment, usually by placing property in a special trust that meets that state's law. These include Alaska, Tennessee, South Dakota, Kentucky, Florida and, since July 1, 2026, Kansas. The requirements differ from state to state.
+
+## Passing community property to the surviving spouse
+
+Each community property state has its own ways for property to pass to the surviving spouse when the first spouse dies. They are not the same, and a tool that works in one state may not exist in another. For example:
+
+- **Washington** lets spouses and registered domestic partners sign a community property agreement (RCW 26.16.120) that can pass community property to the survivor. See [Washington community property agreements](learn.html#washington-community-property-agreements).
+- **Arizona, California, Idaho and Nevada** let spouses hold property as "community property with right of survivorship," a form of ownership written into a deed or other document (Arizona: A.R.S. 33-431; California: Civil Code 682.1; Idaho: Idaho Code 15-6-401 and following; Nevada: NRS 111.064).
+- **Texas** lets spouses sign a written community property survivorship agreement (Texas Estates Code, chapter 112).
+- **Wisconsin** lets spouses sign a marital property agreement (Wis. Stat. 766.58), which can say how property passes at death.
+- **Louisiana and New Mexico** have their own rules. Louisiana's property and inheritance law comes from the civil law tradition and differs from every other state's.
+
+Each of these has its own requirements, such as exact wording, signatures, witnesses or recording, and each can be changed or ended in its own way.
+
+## How it relates to a will or trust
+
+- **A will** generally controls only the will-maker's half of the community property and that spouse's separate property.
+- **Property that passes another way,** such as under a survivorship form of ownership or agreement, generally does not pass under the will.
+- **A living trust** controls the property placed in it. A couple's joint trust often keeps track of which trust property is community property and which is separate.
+
+## Taxes
+
+Federal tax law treats community property differently from other property when a spouse dies, including how its tax basis is figured. Whether that applies to particular property depends on how it is owned. A tax professional can explain how it applies to you.
+
+Community property rules vary by state and change over time. Tovakin does not prepare community property agreements or deeds. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
+
 === washington-community-property-agreements
 title: Washington community property agreements
 category: Wills
