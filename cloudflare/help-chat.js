@@ -125,7 +125,7 @@ export default {
     if (count >= MESSAGES_PER_HOUR) return reply({ ok: true, limited: true, reply: 'You’ve sent a lot of messages in the last hour. Please try again later, or email ' + EMAIL + '.' });
     await env.CHAT_KV.put(hourKey, String(count + 1), { expirationTtl: 3700 });
 
-    var answer = FALLBACK, usage = null;
+    var answer = FALLBACK, usage = null, apiStatus = 0;
     try {
       var res = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -139,6 +139,9 @@ export default {
           messages: messages
         })
       });
+      apiStatus = res.status;
+      /* a failed call is logged with Anthropic's own error type (never the key), so a bad or expired key shows up in the logs */
+      if (!res.ok) { try { var errBody = await res.json(); console.log('anthropic_error', res.status, errBody && errBody.error && errBody.error.type); } catch (x) { console.log('anthropic_error', res.status); } }
       if (res.ok) {
         var data = await res.json();
         usage = data.usage || null;
@@ -159,7 +162,8 @@ export default {
     var transcript = messages.concat([{ role: 'assistant', content: answer }]).map(function (m) { return { role: m.role, content: redact(m.content) }; });
     await env.CHAT_KV.put('t:' + convo, JSON.stringify({ updated: new Date().toISOString(), messages: transcript }), { expirationTtl: 60 * 60 * 24 * TRANSCRIPT_DAYS });
 
-    return reply({ ok: true, id: convo, reply: answer });
+    /* api = Anthropic's status code when the call failed (for troubleshooting; the page ignores it) */
+    return reply(apiStatus && apiStatus !== 200 ? { ok: true, id: convo, reply: answer, api: apiStatus } : { ok: true, id: convo, reply: answer });
   }
 };
 
