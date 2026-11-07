@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /checkout.html
+Disallow: /paid.html
+Disallow: /package.html
+Disallow: /about-you.html
+
+Sitemap: https://www.tovakin.com/sitemap.xml
