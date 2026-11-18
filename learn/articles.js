@@ -5,6 +5,12 @@ window.LEARN_ARTICLES = String.raw`
 //  To add an article, copy one of the blocks below, paste it at the bottom
 //  (above the closing line), and change the words. Save and refresh the Learn page.
 //
+//  Each article also gets its own page (learn/<short-web-address>.html) so Google can
+//  find it. After adding or changing an article, rebuild those pages by running
+//      python3 tools/build_learn.py
+//  from the site folder (Claude does this when committing). Run it again on the date a
+//  scheduled article goes live, so the article joins the sitemap.
+//
 //  Each article looks like this:
 //
 //      === short-web-address-with-dashes

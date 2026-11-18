@@ -84,8 +84,12 @@
   var metaDesc = document.querySelector('meta[name="description"]');
   var baseDesc = metaDesc ? metaDesc.getAttribute('content') : '';
 
+  /* ARTICLE PAGES (18 Nov 2026): each article also has its own page, learn/<address>.html, made by
+     tools/build_learn.py so search engines can find it. The list links there; ?preview=1 keeps the old
+     in-page view so scheduled articles can be read before their page is live. */
+  function link(a) { return preview ? '#' + a.slug : 'learn/' + a.slug + '.html'; }
   function row(a) {
-    return '<li><a href="#' + esc(a.slug) + '"><span class="post-main"><span class="post-cat">' + esc(a.category) + '</span><strong>' + esc(a.title) + '</strong><span>' + esc(a.summary) + '</span>' +
+    return '<li><a href="' + esc(link(a)) + '"><span class="post-main"><span class="post-cat">' + esc(a.category) + '</span><strong>' + esc(a.title) + '</strong><span>' + esc(a.summary) + '</span>' +
       '<span class="post-meta">' + esc(fmtDate(a.date)) + ' &middot; ' + a.minutes + ' min read</span></span>' +
       '<svg class="doc-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>';
   }
@@ -100,7 +104,7 @@
       '<div class="filters" role="group" aria-label="Filter by topic">' + cats.map(function (c) {
         return '<button type="button" class="chip" data-filter="' + esc(c) + '" aria-pressed="' + (c === filter ? 'true' : 'false') + '">' + esc(c) + '</button>';
       }).join('') + '</div>' +
-      (feat ? '<a class="feat' + (feat.image ? ' feat-photo' : '') + '" href="#' + esc(feat.slug) + '">' + photo(feat, '(min-width: 900px) 420px, 94vw') + '<span class="feat-text"><span class="post-cat">' + esc(feat.category) + '</span><h2>' + esc(feat.title) + '</h2><p>' + esc(feat.summary) + '</p>' +
+      (feat ? '<a class="feat' + (feat.image ? ' feat-photo' : '') + '" href="' + esc(link(feat)) + '">' + photo(feat, '(min-width: 900px) 420px, 94vw') + '<span class="feat-text"><span class="post-cat">' + esc(feat.category) + '</span><h2>' + esc(feat.title) + '</h2><p>' + esc(feat.summary) + '</p>' +
         '<span class="post-meta">' + esc(fmtDate(feat.date)) + ' &middot; ' + feat.minutes + ' min read</span><span class="feat-go">Read the article <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></span></a>' : '<p>No articles yet.</p>') +
       (rest.length ? '<ul class="post-list">' + rest.map(row).join('') + '</ul>' : '') +
       '</div></section>';
@@ -133,6 +137,7 @@
   function route() {
     var slug = decodeURIComponent(location.hash.replace(/^#\/?/, ''));
     var a = articles.filter(function (x) { return x.slug === slug; })[0];
+    if (a && !preview) { location.replace('learn/' + a.slug + '.html'); return; }   /* old learn.html#address links */
     if (a) {
       app.innerHTML = articleView(a);
       document.title = a.title + ' | Tovakin';
