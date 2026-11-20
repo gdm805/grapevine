@@ -4659,7 +4659,7 @@
      signed writing, with fixed kinds of change only. A trust made on this site fills in its own name, date and
      Trustmakers (applyTrustFacts). Signed like the living trust (trust_execution). $49 per trust. */
   var EMPTY_TRUSTAMEND = {
-    state: '', county: '', signingDate: '', ageOk: false, freeOk: false, amendOk: false,
+    state: '', county: '', signingDate: '', ageOk: false, freeOk: false, ageOkBoth: false, freeOkBoth: false, amendOk: false,
     origin: '', bothLiving: '', trustType: '', name1: '', name2: '',
     trustName: '', origTrustDate: '', trustRestated: '', restatementDate: '',
     hasPrior: '', priorAmendments: [{ date: '' }],
@@ -4691,6 +4691,9 @@
     fill('trustRestated', f.restated ? 'yes' : 'no'); if (f.restated) fill('restatementDate', f.restatementDate);
     fill('name1', f.name1); if (f.joint) fill('name2', f.name2);
   }
+  /* the age and free-will boxes: one person's own (ageOk/freeOk), or for a joint trust both people's together (ageOkBoth/
+     freeOkBoth, worded "We are both..."). Skipped only when About you already confirmed them for everyone signing. */
+  function amendAboutOk(joint) { if (BLANK) return false; var p = readProfile(); return joint ? !!(p.ageOk && p.freeOk && p.ageOk2 && p.freeOk2) : !!(p.ageOk && p.freeOk); }
   function amendPrior(a) { return a.hasPrior === 'yes' ? (a.priorAmendments || []).filter(function (p) { return !!p.date; }) : []; }
   function amendShareTotal(a) { return (a.beneficiaries || []).reduce(function (t, b) { return t + (parseFloat(b.share) || 0); }, 0); }
   function buildVarsTrustAmend(a, states) {
@@ -4755,9 +4758,12 @@
         (answers.trustType === 'JOINT' ? field('Are both of you living?', pills('bothLiving', [['yes', 'Yes'], ['no', 'No']], true)) : '') +
         (answers.trustType === 'JOINT' && answers.bothLiving === 'no' ? '<p class="hint">After one trustmaker dies, part of a joint trust usually can’t be changed any more, and the rest can be changed only by the survivor as the trust allows. This amendment is for a joint trust while both trustmakers are living. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '') +
         '<div class="checks">' +
-        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
-        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this amendment of my own free will.</span></label>') +
-        (answers.origin === 'OTHER' ? '<label class="check"><input type="checkbox" data-k="amendOk"' + (answers.amendOk ? ' checked' : '') + '><span>My trust is revocable, and its terms let ' + (answers.trustType === 'JOINT' ? 'us' : 'me') + ' change it by a signed writing.</span></label>' : '') +
+        (answers.trustType === 'JOINT' ?
+          (amendAboutOk(true) ? '' : '<label class="check"><input type="checkbox" data-k="ageOkBoth"' + (answers.ageOkBoth ? ' checked' : '') + '><span>We are both 18 or older.</span></label>' +
+          '<label class="check"><input type="checkbox" data-k="freeOkBoth"' + (answers.freeOkBoth ? ' checked' : '') + '><span>We are making this amendment of our own free will.</span></label>') :
+          (amendAboutOk(false) ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+          '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this amendment of my own free will.</span></label>')) +
+        (answers.origin === 'OTHER' ? '<label class="check"><input type="checkbox" data-k="amendOk"' + (answers.amendOk ? ' checked' : '') + '><span>' + (answers.trustType === 'JOINT' ? 'Our trust is revocable, and its terms let us' : 'My trust is revocable, and its terms let me') + ' change it by a signed writing.</span></label>' : '') +
         '</div>';
     },
     trust: function () {
@@ -4845,8 +4851,13 @@
       if (!a.trustType) e.push('Choose whether this is a trust for one person or a joint trust.');
       if (a.trustType === 'JOINT' && !a.bothLiving) e.push('Answer whether both of you are living.');
       if (a.trustType === 'JOINT' && a.bothLiving === 'no') e.push('This amendment is for a joint trust while both trustmakers are living.');
-      if (!a.ageOk) e.push('Confirm that you are 18 or older.');
-      if (!a.freeOk) e.push('Confirm that you are making this amendment of your own free will.');
+      if (a.trustType === 'JOINT' && !amendAboutOk(true)) {
+        if (!a.ageOkBoth) e.push('Confirm that you are both 18 or older.');
+        if (!a.freeOkBoth) e.push('Confirm that you are both making this amendment of your own free will.');
+      } else if (a.trustType !== 'JOINT' && !amendAboutOk(false)) {
+        if (!a.ageOk) e.push('Confirm that you are 18 or older.');
+        if (!a.freeOk) e.push('Confirm that you are making this amendment of your own free will.');
+      }
       if (a.origin === 'OTHER' && !a.amendOk) e.push('Confirm that your trust is revocable and can be changed by a signed writing. If it can’t, this amendment isn’t the right document.');
       if (!e.length && a.origin === 'TOVAKIN') { a.amendOk = true; amendFillFromTovakin(a); }
     } else if (id === 'trust') {

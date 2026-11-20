@@ -21,6 +21,14 @@ This {{ordinal}} Amendment (the "Amendment") is made by {{trustmakers}} (the "{{
 
 # RECITALS
 
+## Declaration of Capacity
+
+[[if is_joint]]
+The Trustmakers execute this Amendment freely and voluntarily. Each Trustmaker declares that the Trustmaker is at least eighteen (18) years of age, possesses the legal capacity to amend the Trust Agreement, understands the nature and effect of this Amendment, and intends that it be legally effective according to its terms.
+[[else]]
+The Trustmaker executes this Amendment freely and voluntarily and declares that the Trustmaker is at least eighteen (18) years of age, possesses the legal capacity to amend the Trust Agreement, understands the nature and effect of this Amendment, and intends that it be legally effective according to its terms.
+[[end]]
+
 ## Right to Amend
 
 The Trust Agreement reserves to the {{tm_word}} the right to amend it by a signed writing. The {{tm_word}} {{are}} living and {{are}} not Incapacitated, and [[if is_joint]]together exercise[[else]]exercises[[end]] that right by signing this Amendment.
