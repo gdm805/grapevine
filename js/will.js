@@ -154,7 +154,8 @@
     assignment: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     finalwishes: { name: 'name', state: 'state' },
     schedulea: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
-    contacts: { name: 'name' }
+    contacts: { name: 'name' },
+    petrust: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' }
   };
   function readProfile() {
     try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}') || {}; } catch (e) { return {}; }
@@ -920,11 +921,11 @@
   var root = document.getElementById('will-app');
   if (!root) return;
 
-  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts', schedulea: 'schedulea' }[root.getAttribute('data-kind')] || 'will';
+  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts', schedulea: 'schedulea', petrust: 'petrust' }[root.getAttribute('data-kind')] || 'will';
   var SPOUSE2 = false;
   try { SPOUSE2 = new URLSearchParams(location.search).get('spouse') === '2' && ['will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'].indexOf(kindKey) > -1; } catch (e) { /* first-person copy */ }
   var docId = kindKey + (SPOUSE2 ? ':2' : '');
-  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'], schedulea: ['WILL_STATES', 'SCHEDULEA_TEMPLATE', 'SCHEDULEA_SIGNING'] }[kindKey];
+  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'], schedulea: ['WILL_STATES', 'SCHEDULEA_TEMPLATE', 'SCHEDULEA_SIGNING'], petrust: ['WILL_STATES', 'PETRUST_TEMPLATE', 'PETRUST_SIGNING'] }[kindKey];
   var states = parseStates(window[GLOBALS[0]]);
   var tpl = parseTemplate(window[GLOBALS[1]]);
   var sign = parseTemplate(window[GLOBALS[2]]);
@@ -4400,6 +4401,253 @@
      footer of every page */
   function laPageSign() { return answers && answers.state === 'Louisiana' ? 'Testator\u2019s signature: ____________________   ' : ''; }
 
+  /* ---------- COMPANION ANIMAL TRUST (pet trust, 20 Nov 2026) ---------- */
+  /* A revocable trust for the care of the person's animals (petrust.html, will/petrust-template.js). It signs like the
+     living trust (trust_execution in will/trust-state-text.js). PET_TRUST_LAW holds, for each state where it is offered,
+     that state's statute on trusts for the care of animals: cite = the citation printed in the trust;
+     cap = a time limit, printed after "the death of the last surviving Covered Animal" (for example ", or, if earlier,
+     twenty-one (21) years after the Trustmaker's death"). A state missing from this list isn't offered. */
+  /* Research of 20 Nov 2026 (grapevine-private-notes/PET-TRUST-STATES-NOV-2026.md). Idaho is left out: it has no pet
+     trust statute, only a general purpose-trust statute (Idaho Code 15-7-601) that doesn't mention animals. Arkansas,
+     Indiana, New Mexico, Tennessee and West Virginia were read only on animallaw.info, not the official code: confirm
+     them, Tennessee's 90-year cap above all. sepEnforcer = the enforcer and trustee must be different people;
+     needsRemainder = the trust must name who receives what's left; enforcerNote = an extra sentence for that state. */
+  var PET_TRUST_LAW = {
+    'Alaska': { cite: 'Alaska Statutes section 13.12.907' },
+    'Arkansas': { cite: 'Arkansas Code section 28-73-408' },
+    'Delaware': { cite: 'section 3555 of Title 12 of the Delaware Code' },
+    'District of Columbia': { cite: 'D.C. Code section 19-1304.08' },
+    'Hawaii': { cite: 'Hawaii Revised Statutes section 554D-408' },
+    'Indiana': { cite: 'Indiana Code section 30-4-2-18' },
+    'Iowa': { cite: 'Iowa Code section 633A.2105' },
+    'Kansas': { cite: 'K.S.A. 58a-408' },
+    'Maine': { cite: 'section 408 of Title 18-B of the Maine Revised Statutes' },
+    'Maryland': { cite: 'section 14.5-407 of the Estates and Trusts Article of the Maryland Code' },
+    'Massachusetts': { cite: 'section 408 of chapter 203E of the Massachusetts General Laws' },
+    'Michigan': { cite: 'MCL 700.7408' },
+    'Montana': { cite: 'Montana Code Annotated section 72-38-408' },
+    'Nebraska': { cite: 'Neb. Rev. Stat. section 30-3834' },
+    'Nevada': { cite: 'NRS 163.0075' },
+    'New Mexico': { cite: 'NMSA 1978, section 46A-4-408' },
+    'New York': { cite: 'section 7-8.1 of the New York Estates, Powers and Trusts Law' },
+    'North Dakota': { cite: 'N.D.C.C. section 59-12-08' },
+    'Oklahoma': { cite: 'section 199 of Title 60 of the Oklahoma Statutes', sepEnforcer: true, needsRemainder: true },
+    'Oregon': { cite: 'ORS 130.185' },
+    'South Carolina': { cite: 'S.C. Code section 62-7-408' },
+    'South Dakota': { cite: 'SDCL 55-1-21 through 55-1-21.10', sepEnforcer: true },
+    'Tennessee': { cite: 'Tenn. Code Ann. section 35-15-408', cap: ', or, if earlier, ninety (90) years after this Trust is created' },
+    'Texas': { cite: 'section 112.037 of the Texas Property Code' },
+    'Utah': { cite: 'Utah Code section 75-2-1001' },
+    'Vermont': { cite: 'section 408 of Title 14A of the Vermont Statutes' },
+    'Virginia': { cite: 'Va. Code section 64.2-726' },
+    'West Virginia': { cite: 'W. Va. Code section 44D-4-408' },
+    'Wisconsin': { cite: 'Wis. Stat. section 701.0408', enforcerNote: 'The Enforcer is the animal protector of this Trust under Wis. Stat. section 701.0408.' },
+    'Wyoming': { cite: 'Wyo. Stat. section 4-10-409' }
+  };
+  var EMPTY_PETTRUST = {
+    state: '', county: '', signingDate: '', ageOk: false, freeOk: false,
+    name: '', trustName: '',
+    animals: [{ name: '', kind: '', description: '' }],
+    caregiver: '', hasAltCaregiver: '', altCaregiver: '',
+    trustee: '', hasAltTrustee: '', altTrustee: '', trusteePaid: '',
+    enforcer: '', hasAltEnforcer: '', altEnforcer: '',
+    hasCare: '', careInstructions: '', hasVet: '', vet: '',
+    hasCaregiverPay: '', caregiverPay: '', hasIntended: '', intendedAmount: '',
+    finalCare: '', remainder: '', remainderName: ''
+  };
+  var ROWS_PETTRUST = { animals: { name: '', kind: '', description: '' } };
+  var STEPS_PETTRUST = [
+    { id: 'start', label: 'Where you live' },
+    { id: 'about', label: 'About you' },
+    { id: 'animals', label: 'Your animals' },
+    { id: 'caregiver', label: 'Caregiver' },
+    { id: 'trustee', label: 'Trustee' },
+    { id: 'enforcer', label: 'Enforcer' },
+    { id: 'care', label: 'Care instructions' },
+    { id: 'money', label: 'Money for their care' },
+    { id: 'ending', label: 'When the trust ends' },
+    { id: 'signing', label: 'Signing' },
+    { id: 'review', label: 'Review and sign' }
+  ];
+  function petLaw(state) { return PET_TRUST_LAW[state] || null; }
+  function petTrustName(a) { var n = clean(a.trustName); return n || (clean(a.name) ? 'The ' + clean(a.name) + ' Pet Trust' : ''); }
+  function buildVarsPetTrust(a, states) {
+    var v = {}, st = states.map[a.state] || null, law = petLaw(a.state) || {};
+    v.state = st ? st.name : '';
+    v.signing_state = v.state ? trustSlug(v.state) : '';
+    v.county = clean(a.county).replace(/\s+county$/i, '');
+    v.county_state = [v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ');
+    v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
+    v.name = clean(a.name);
+    v.trust_name = petTrustName(a);
+    v.trust_starts_with_the = /^the\s/i.test(v.trust_name) ? 'YES' : 'NO';
+    v.pet_statute = law.cite || 'the law of ' + (v.state || 'the Trustmaker’s state') + ' governing trusts for the care of animals';
+    v.enforcer_note = law.enforcerNote || ''; v.has_enforcer_note = !!v.enforcer_note;
+    v.duration_limit = law.cap || ''; v.has_duration_limit = !!v.duration_limit;
+    v.initial_funding = 'ten dollars ($10.00)';
+    v.animals = (a.animals || []).map(function (r) {
+      var nm = clean(r.name), kind = clean(r.kind), d = clean(r.description);
+      return { animal_line: nm + (kind ? ', ' + kind : '') + (d ? ' (' + d + ')' : '') + '.' };
+    }).filter(function (r) { return r.animal_line.length > 1; });
+    v.caregiver = clean(a.caregiver);
+    v.alt_caregiver = clean(a.altCaregiver); v.has_alt_caregiver = a.hasAltCaregiver === 'yes' && !!v.alt_caregiver;
+    v.trustee = clean(a.trustee);
+    v.alt_trustee = clean(a.altTrustee); v.has_alt_trustee = a.hasAltTrustee === 'yes' && !!v.alt_trustee;
+    v.trustee_paid = a.trusteePaid === 'yes';
+    v.enforcer = clean(a.enforcer);
+    v.alt_enforcer = clean(a.altEnforcer); v.has_alt_enforcer = a.hasAltEnforcer === 'yes' && !!v.alt_enforcer;
+    v.care_instructions = clean(a.careInstructions); v.has_care_instructions = a.hasCare === 'yes' && !!v.care_instructions;
+    v.vet = clean(a.vet); v.has_vet = a.hasVet === 'yes' && !!v.vet;
+    v.caregiver_pay = money(a.caregiverPay); v.has_caregiver_pay = a.hasCaregiverPay === 'yes' && !!v.caregiver_pay;
+    v.intended_amount = money(a.intendedAmount); v.has_intended_amount = a.hasIntended === 'yes' && !!v.intended_amount;
+    v.final = a.finalCare || 'CAREGIVER';
+    v.remainder = a.remainder || 'ESTATE';
+    v.remainder_name = clean(a.remainderName);
+    v.has_witness = !!TRUST_WITNESS_STATES[v.state];
+    v.is_joint = false;
+    return v;
+  }
+  function personAndBackup(k, label, hint, altK, hasAltK, altLabel) {
+    return field(label, text(k, 'Full name'), hint) +
+      field(altLabel, pills(hasAltK, [['yes', 'Yes'], ['no', 'No']], true)) +
+      (answers[hasAltK] === 'yes' ? field('Backup’s full name', text(altK, 'Full name')) : '');
+  }
+  var RENDER_PETTRUST = {
+    start: function () {
+      var law = petLaw(answers.state);
+      var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
+        var ok = (s.supported || s.closed) && (!!petLaw(s.name) || !!s.closed);
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (ok ? '' : ' disabled') + '>' + esc(s.name) + (ok ? '' : ' (not available yet)') + '</option>';
+      }).join('');
+      return stepHead('First, where do you live?', 'Your state’s law on trusts for the care of animals governs this trust.' + (answers.state && law ? ' In ' + answers.state + ', you’ll sign it in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.') : '')) +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
+        (answers.state && !law && !(states.map[answers.state] || {}).closed ? '<p class="hint">We can’t offer a pet trust in ' + esc(answers.state) + ' yet.</p>' : '') +
+        '<div class="checks">' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am creating this trust of my own free will.</span></label>') +
+        '</div>';
+    },
+    about: function () {
+      return stepHead('About you', 'You’re the Trustmaker, the person creating the trust. You also serve as its first trustee while you’re able to.') +
+        field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
+        field('County where you live', countySelect('county')) +
+        field('Name of the trust <em>(optional)</em>', text('trustName', clean(answers.name) ? 'The ' + clean(answers.name) + ' Pet Trust' : 'For example, The Maria Elena Alvarez Pet Trust'), 'Leave blank to use “The [your name] Pet Trust.”');
+    },
+    animals: function () {
+      var rows = '<div class="rowset">' + answers.animals.map(function (r, i) {
+        return '<div class="rowitem stack">' +
+          '<input class="input" data-list="animals" data-i="' + i + '" data-f="name" value="' + val(r.name) + '" placeholder="Name, for example Max" aria-label="Animal ' + (i + 1) + ' name">' +
+          '<input class="input" data-list="animals" data-i="' + i + '" data-f="kind" value="' + val(r.kind) + '" placeholder="Kind, for example a dog" aria-label="Animal ' + (i + 1) + ' kind">' +
+          '<input class="input" data-list="animals" data-i="' + i + '" data-f="description" value="' + val(r.description) + '" placeholder="Description (optional)" aria-label="Animal ' + (i + 1) + ' description">' +
+          rm('animals', i, 'animal ' + (i + 1), answers.animals.length > 1) + '</div>';
+      }).join('') + '</div>';
+      return stepHead('Your animals', 'List each animal the trust is for. A description, such as breed or markings, helps identify them.') +
+        field('Animals', rows + addBtn('animals', '+ Add another animal')) +
+        '<p class="hint">The trust also covers other animals you own when it takes effect, as ' + esc(answers.state || 'your state') + '’s law allows.</p>';
+    },
+    caregiver: function () {
+      return stepHead('Who will care for your animals?', 'The caregiver takes your animals into their home. The trustee pays for their care from the trust.') +
+        personAndBackup('caregiver', 'Caregiver’s full name', '', 'altCaregiver', 'hasAltCaregiver', 'Name a backup caregiver?');
+    },
+    trustee: function () {
+      return stepHead('Who will manage the trust’s money?', 'The successor trustee takes over from you at your death or if you can’t manage your affairs, and pays for your animals’ care. The trustee and the caregiver can be the same person or different people.') +
+        personAndBackup('trustee', 'Successor trustee’s full name', '', 'altTrustee', 'hasAltTrustee', 'Name a backup trustee?') +
+        field('Should the trustee be paid for this work?', pills('trusteePaid', [['yes', 'Yes, reasonable pay'], ['no', 'No, expenses only']], true));
+    },
+    enforcer: function () {
+      return stepHead('Who will make sure the trust is followed?', 'The enforcer receives the trustee’s yearly reports and can go to court if the money isn’t used for your animals. State pet trust laws provide for a person in this role.') +
+        personAndBackup('enforcer', 'Enforcer’s full name', ((petLaw(answers.state) || {}).sepEnforcer ? 'In ' + esc(answers.state) + ', the enforcer and the trustee must be different people.' : 'The enforcer and the trustee can be the same person or different people.'), 'altEnforcer', 'hasAltEnforcer', 'Name a backup enforcer?');
+    },
+    care: function () {
+      return stepHead('How should your animals be cared for?', 'Optional. Your instructions guide the caregiver and the trustee.') +
+        field('Add care instructions?', pills('hasCare', [['yes', 'Yes'], ['no', 'No']], true)) +
+        (answers.hasCare === 'yes' ? field('Instructions', textarea('careInstructions', 'For example, diet, daily routine, medications, and whether to keep them together')) : '') +
+        field('Name their veterinarian?', pills('hasVet', [['yes', 'Yes'], ['no', 'No']], true)) +
+        (answers.hasVet === 'yes' ? field('Veterinarian', text('vet', 'Name and clinic')) : '');
+    },
+    money: function () {
+      var amt = function (k) { return '<span class="money"><b>$</b><input class="input" data-k="' + k + '" value="' + val(answers[k]) + '" placeholder="0" inputmode="decimal" autocomplete="off" aria-label="Amount in dollars"></span>'; };
+      return stepHead('Money for their care', 'The trust always pays the reasonable costs of care, such as food, grooming, boarding and veterinary bills.') +
+        field('Pay the caregiver a monthly amount for their time, too?', pills('hasCaregiverPay', [['yes', 'Yes'], ['no', 'No, costs of care only']], true)) +
+        (answers.hasCaregiverPay === 'yes' ? field('Monthly amount', amt('caregiverPay')) : '') +
+        field('State about how much you intend the trust to hold? <em>(optional)</em>', pills('hasIntended', [['yes', 'Yes'], ['no', 'No']], true),
+          'This records your intent only. The trust holds what you actually put in it, or leave to it in your will or by beneficiary designation.') +
+        (answers.hasIntended === 'yes' ? field('Amount', amt('intendedAmount')) : '');
+    },
+    ending: function () {
+      return stepHead('When the trust ends', 'The trust ends when the last of your animals dies' + ((petLaw(answers.state) || {}).cap ? ', or earlier if ' + esc(answers.state) + '’s time limit is reached' : '') + '.') +
+        field('Who receives any money left over?', pills('remainder', [['PERSON', 'A person'], ['CHARITY', 'A charity']].concat((petLaw(answers.state) || {}).needsRemainder ? [] : [['ESTATE', 'My estate']]), true), (petLaw(answers.state) || {}).needsRemainder ? esc(answers.state) + '’s law requires the trust to name who receives what’s left.' : '') +
+        (answers.remainder === 'PERSON' || answers.remainder === 'CHARITY' ? field(answers.remainder === 'CHARITY' ? 'Charity’s name' : 'Their full name', text('remainderName', answers.remainder === 'CHARITY' ? 'For example, Springfield Humane Society' : 'Full name')) : '') +
+        field('After an animal dies', pills('finalCare', [['BURIAL', 'Burial'], ['CREMATION', 'Cremation'], ['CAREGIVER', 'The caregiver decides']], true));
+    },
+    signing: function () {
+      return stepHead('Signing', 'You sign in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses' : '') + '.') + signDateField();
+    },
+    review: function () {
+      var v = buildVarsPetTrust(answers, states);
+      var instr = toHtml(renderNodes(sign.nodes, v), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>');
+      function row(label, value, goto) {
+        return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
+      }
+      return stepHead('Your pet trust is ready to review', 'Read every word, then follow the signing steps below for your state.') +
+        '<div class="sum">' +
+        row('Trust', esc(v.trust_name), 'about') +
+        row('Lives in', esc(v.county_state), 'start') +
+        row('Animals', esc(v.animals.map(function (x) { return x.animal_line.replace(/\.$/, ''); }).join('; ')), 'animals') +
+        row('Caregiver', esc(v.caregiver), 'caregiver') +
+        row('Successor trustee', esc(v.trustee), 'trustee') +
+        row('Enforcer', esc(v.enforcer), 'enforcer') + '</div>' +
+        '<div class="actions">' +
+        '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
+        '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
+        '<div class="instr">' + instr + '</div>' +
+        '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
+    }
+  };
+  function validatePetTrust(id) {
+    var a = answers, e = [], st = states.map[a.state];
+    if (id === 'start') {
+      if (!st) e.push('Choose your state.');
+      else if (!st.supported || !petLaw(a.state)) e.push(st.note || 'We can’t offer a pet trust in that state yet.');
+      if (!a.ageOk) e.push('Confirm that you are 18 or older.');
+      if (!a.freeOk) e.push('Confirm that you are creating this trust of your own free will.');
+    } else if (id === 'about') {
+      if (clean(a.name).length < 2) e.push('Enter your full legal name.');
+      if (!clean(a.county)) e.push('Choose the county where you live.');
+    } else if (id === 'animals') {
+      if (!(a.animals || []).some(function (r) { return clean(r.name) || clean(r.kind); })) e.push('List at least one animal.');
+    } else if (id === 'caregiver') {
+      if (!clean(a.caregiver)) e.push('Enter the caregiver’s name.');
+      if (!a.hasAltCaregiver) e.push('Answer whether to name a backup caregiver.');
+      if (a.hasAltCaregiver === 'yes' && !clean(a.altCaregiver)) e.push('Enter the backup caregiver’s name, or answer No.');
+    } else if (id === 'trustee') {
+      if (!clean(a.trustee)) e.push('Enter the successor trustee’s name.');
+      if (!a.hasAltTrustee) e.push('Answer whether to name a backup trustee.');
+      if (a.hasAltTrustee === 'yes' && !clean(a.altTrustee)) e.push('Enter the backup trustee’s name, or answer No.');
+      if (!a.trusteePaid) e.push('Answer whether the trustee should be paid.');
+    } else if (id === 'enforcer') {
+      if (!clean(a.enforcer)) e.push('Enter the enforcer’s name.');
+      if ((petLaw(a.state) || {}).sepEnforcer && clean(a.enforcer) && clean(a.enforcer).toLowerCase() === clean(a.trustee).toLowerCase()) e.push('In ' + a.state + ', the enforcer and the trustee must be different people.');
+      if (!a.hasAltEnforcer) e.push('Answer whether to name a backup enforcer.');
+      if (a.hasAltEnforcer === 'yes' && !clean(a.altEnforcer)) e.push('Enter the backup enforcer’s name, or answer No.');
+    } else if (id === 'care') {
+      if (a.hasCare === 'yes' && !clean(a.careInstructions)) e.push('Enter your care instructions, or answer No.');
+      if (a.hasVet === 'yes' && !clean(a.vet)) e.push('Enter the veterinarian, or answer No.');
+    } else if (id === 'money') {
+      if (!a.hasCaregiverPay) e.push('Answer whether to pay the caregiver a monthly amount.');
+      if (a.hasCaregiverPay === 'yes' && !money(a.caregiverPay)) e.push('Enter the monthly amount as a number, or answer No.');
+      if (a.hasIntended === 'yes' && !money(a.intendedAmount)) e.push('Enter the amount as a number, or answer No.');
+    } else if (id === 'ending') {
+      if (!a.remainder) e.push('Choose who receives any money left over.');
+      if (a.remainder === 'ESTATE' && (petLaw(a.state) || {}).needsRemainder) e.push('In ' + a.state + ', name a person or a charity to receive any money left over.');
+      if ((a.remainder === 'PERSON' || a.remainder === 'CHARITY') && !clean(a.remainderName)) e.push(a.remainder === 'CHARITY' ? 'Enter the charity’s name.' : 'Enter the person’s name.');
+      if (!a.finalCare) e.push('Choose what happens after an animal dies.');
+    }
+    return e;
+  }
+
   /* ---------- put the chosen kind together ---------- */
   /* PETS (will, single trust, joint trust): an optional caretaker for the person's pets, a backup, and an
      optional sum of money given to whoever takes them -- with a request, not a requirement, that it be used
@@ -4466,7 +4714,9 @@
     schedulea: { key: 'schedulea', ls: 'grapevine.schedulea.v1', file: 'Schedule-A-Trust-Property', footer: function (n) { return 'Schedule A to ' + trustFooter(n); },
       empty: EMPTY_SCHEDA, rows: ROWS_SCHEDA, steps: STEPS_SCHEDA, render: RENDER_SCHEDA, validate: validateScheduleA, buildVars: buildVarsScheduleA },
     contacts: { key: 'contacts', ls: 'grapevine.contacts.v1', file: 'Important-Contacts', footer: function (n) { return 'Important Contacts for ' + n; },
-      empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts }
+      empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts },
+    petrust: { key: 'petrust', ls: 'grapevine.petrust.v1', file: 'Companion-Animal-Trust', footer: function () { return 'Companion Animal Trust Agreement for ' + petTrustName(answers); },
+      empty: EMPTY_PETTRUST, rows: ROWS_PETTRUST, steps: STEPS_PETTRUST, render: RENDER_PETTRUST, validate: validatePetTrust, buildVars: buildVarsPetTrust }
   };
   KIND = KINDS[kindKey];
   buildVars = KIND.buildVars; LS_KEY = KIND.ls + (SPOUSE2 ? '.s2' : '');

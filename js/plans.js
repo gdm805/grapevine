@@ -136,6 +136,8 @@ window.GV_PLANS = {
        Each price has its own Stripe Payment Link in js/checkout.js and cloudflare/payment-check.js. */
     doc19: { single: 19, couple: 19 },
     doc29: { single: 29, couple: 29 },
+    /* the Companion Animal Trust (pet trust, 20 Nov 2026, Greg): $79, one price for everyone */
+    doc79: { single: 79, couple: 79 },
     health: { single: 129, couple: 199 },
     trustpaper: { single: 129, couple: 129 },
     /* just a living trust, new or a restatement (21 Oct 2026, Greg): one person's trust, or a couple's joint trust */
@@ -147,12 +149,12 @@ window.GV_PLANS = {
   extra: ['doc', 'health', 'trustpaper', 'trustonly'],
   /* the documents that can be bought one at a time, in the order the pricing page lists them */
   trustSide: ['schedulea', 'cert', 'affidavit', 'assignment'],
-  singles: ['dpoa', 'hcd', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment'],
+  singles: ['dpoa', 'hcd', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment', 'petrust'],
   /* a document that is NOT sold on its own goes to this package from its own page (19 Oct 2026, Greg: Dementia Care
      Preferences belong with the health care directive, so they come only with Essentials, Complete or Health Care) */
   docPlan: { dementia: 'health', trust: 'trustonly', trustjoint: 'trustonly' },
-  /* which price a single document is sold at: 'doc' ($49 / $79), 'doctrust' ($49 per trust), 'doc19', 'doc29' */
-  docTier: { contacts: 'doc19', schedulea: 'doc19' },
+  /* which price a single document is sold at: 'doc' ($49 / $79), 'doctrust' ($49 per trust), 'doc19', 'doc29', 'doc79' */
+  docTier: { contacts: 'doc19', schedulea: 'doc19', petrust: 'doc79' },
   docPriceKey: function (docKey) { return this.docTier[docKey] || ((this.trustSide || []).indexOf(docKey) > -1 ? 'doctrust' : 'doc'); },
   /* the price of one single document for this household */
   docPrice: function (docKey, household) { return this.priceFor(this.docPriceKey(docKey), household); },
@@ -172,7 +174,7 @@ window.GV_PLANS = {
       cta: 'Start your will',
       why: 'Start here if you mainly want to name a guardian for your children and say who receives what you own.',
       /* which builders this plan unlocks for download and print, by their data-kind:
-         will | pourover | dpoa | dementia | hcd | hipaa | trust | trustjoint | cert | affidavit | assignment | finalwishes | contacts */
+         will | pourover | dpoa | dementia | hcd | hipaa | trust | trustjoint | cert | affidavit | assignment | finalwishes | contacts | petrust */
       unlocks: ['will', 'contacts'],
       goesTo: 'will.html'
     },

@@ -43,6 +43,8 @@
        and $29 = Dementia Care Preferences (each one link, one price for everyone). Paste each Stripe link between the quotes. */
     doc19: { single: 'https://buy.stripe.com/00w6oHc5RgB9eyKcx12oE08', couple: 'https://buy.stripe.com/00w6oHc5RgB9eyKcx12oE08' },
     doc29: { single: 'https://buy.stripe.com/8x214nedZ5WvfCO8gL2oE09', couple: 'https://buy.stripe.com/8x214nedZ5WvfCO8gL2oE09' },
+    /* $79 = the Companion Animal Trust (pet trust), live link created 20 Nov 2026 (also in cloudflare/payment-check.js, tier 79) */
+    doc79: { single: 'https://buy.stripe.com/aFa6oH5Htet1bmy7cH2oE0g', couple: 'https://buy.stripe.com/aFa6oH5Htet1bmy7cH2oE0g' },
     health: { single: 'https://buy.stripe.com/dRm8wP0n94Sr62e9kP2oE0a', couple: 'https://buy.stripe.com/3cIfZhgm72Kj9eqcx12oE0b' },
     trustpaper: { single: 'https://buy.stripe.com/fZu00j2vhckT76iaoT2oE0d', couple: 'https://buy.stripe.com/28EdR9d9VdoXfCOaoT2oE0c' },
     /* Living Trust on its own ($349 one person / $429 a couple's joint trust) */
@@ -54,8 +56,8 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   var GV = window.GV_PLANS || { order: [], prices: {}, plans: {} };
-  var RETURN_LABELS = { 'package.html': 'your package summary', 'will.html': 'your will', 'pour-over.html': 'your pour-over will', 'dpoa.html': 'your power of attorney', 'dementia.html': 'your care preferences', 'hcd.html': 'your health care directive', 'hipaa.html': 'your HIPAA authorization', 'trust.html': 'your living trust', 'trust-joint.html': 'your joint living trust', 'cert.html': 'your certification of trust', 'affidavit.html': 'your affidavit of trustee', 'assignment.html': 'your assignment of personal property', 'finalwishes.html': 'your final wishes', 'contacts.html': 'your important contacts', 'schedulea.html': 'your Schedule A' };
-  var RETURN_DOC = { 'will.html': 'will', 'pour-over.html': 'pourover', 'dpoa.html': 'dpoa', 'dementia.html': 'dementia', 'hcd.html': 'hcd', 'hipaa.html': 'hipaa', 'trust.html': 'trust', 'trust-joint.html': 'trustjoint', 'cert.html': 'cert', 'affidavit.html': 'affidavit', 'assignment.html': 'assignment', 'finalwishes.html': 'finalwishes', 'contacts.html': 'contacts', 'schedulea.html': 'schedulea' };
+  var RETURN_LABELS = { 'package.html': 'your package summary', 'will.html': 'your will', 'pour-over.html': 'your pour-over will', 'dpoa.html': 'your power of attorney', 'dementia.html': 'your care preferences', 'hcd.html': 'your health care directive', 'hipaa.html': 'your HIPAA authorization', 'trust.html': 'your living trust', 'trust-joint.html': 'your joint living trust', 'cert.html': 'your certification of trust', 'affidavit.html': 'your affidavit of trustee', 'assignment.html': 'your assignment of personal property', 'finalwishes.html': 'your final wishes', 'contacts.html': 'your important contacts', 'schedulea.html': 'your Schedule A', 'petrust.html': 'your pet trust' };
+  var RETURN_DOC = { 'will.html': 'will', 'pour-over.html': 'pourover', 'dpoa.html': 'dpoa', 'dementia.html': 'dementia', 'hcd.html': 'hcd', 'hipaa.html': 'hipaa', 'trust.html': 'trust', 'trust-joint.html': 'trustjoint', 'cert.html': 'cert', 'affidavit.html': 'affidavit', 'assignment.html': 'assignment', 'finalwishes.html': 'finalwishes', 'contacts.html': 'contacts', 'schedulea.html': 'schedulea', 'petrust.html': 'petrust' };
 
   var root = document.getElementById('checkout');
   if (!root) return;
@@ -98,7 +100,7 @@
     var p = GV.plans[plan], price = plan === 'doc' && docKey ? GV.docPrice(docKey, payHousehold) : GV.priceFor(plan, payHousehold);
     /* a single document's Stripe link depends on its price (doc, doc19 or doc29); doc19 and doc29 are one price for everyone */
     var linkPlan = plan === 'doc' && docKey && GV.docTier[docKey] ? GV.docTier[docKey] : plan;
-    if (linkPlan === 'doc19' || linkPlan === 'doc29') payHousehold = 'single';
+    if (linkPlan === 'doc19' || linkPlan === 'doc29' || linkPlan === 'doc79') payHousehold = 'single';
     /* trust documents are priced per TRUST: the same price covers a couple's joint trust, but a couple with two
        separate trusts buys once for each trust */
     var perTrust = plan === 'trustpaper' || (plan === 'doc' && docKey && (GV.trustSide || []).indexOf(docKey) > -1);
@@ -144,7 +146,7 @@
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
       (docLabel ? '' : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
       '<div class="order-card">' +
-        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : docLabel && linkPlan !== 'doc19' && linkPlan !== 'doc29' && !perTrust ? ', for one person' : '') + '</span></p></div>' +
+        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : docLabel && linkPlan !== 'doc19' && linkPlan !== 'doc29' && linkPlan !== 'doc79' && !perTrust ? ', for one person' : '') + '</span></p></div>' +
         (docLabel
           ? (plan === 'doc' || includes.length < 2 ? '' : '<details class="includes-fold"><summary>What’s included</summary>' + whatIncludes + '</details>')
           : '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' + whatIncludes) +
