@@ -51,6 +51,8 @@ Whenever this Trust Agreement refers to the "purposes of this Trust," it refers 
 
 This Trust is established, and this Trust Agreement becomes effective, when the Trustmaker signs this Trust Agreement and property is transferred to or otherwise held by the Trustee as Trust property.
 
+The provisions for the care of the Covered Animals by a Caregiver and successor Trustee take effect upon the Trustmaker's death or Incapacity.
+
 ## Trust Property
 
 The Trust Estate consists of {{initial_funding}}, which the Trustmaker transfers to the Trustee when signing this Trust Agreement, and all property later transferred to or acquired by the Trust.
