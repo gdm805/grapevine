@@ -57,10 +57,10 @@ Any person named as a successor Trustee in the Trust Agreement before this Amend
 Upon the death of {{death_ref}}, and before the distribution of the remaining Trust Estate, the Trustee shall distribute the following gifts:
 
 [[each add_gifts]]
-- {{gift_item}} to {{gift_recipient}}, if {{gift_recipient}} survives {{death_ref}}.
+- {{gift_item}} to {{gift_recipient}}.
 [[end]]
 
-A gift under this Section to a person who does not survive {{death_ref}} lapses and passes as part of the remaining Trust Estate.
+A gift under this Section to a person who does not survive {{death_ref}}, or to an organization that is not in existence at the death of {{death_ref}}, lapses and passes as part of the remaining Trust Estate.
 [[end]]
 
 [[if do_remove_gifts]]

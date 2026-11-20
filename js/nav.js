@@ -64,7 +64,7 @@
   if (!f || !f.docs || !f.docs.length) return;
   var PAGES = { will: 'will.html', pourover: 'pour-over.html', dpoa: 'dpoa.html', hcd: 'hcd.html', dementia: 'dementia.html', hipaa: 'hipaa.html',
     trust: 'trust.html', trustjoint: 'trust-joint.html', cert: 'cert.html', affidavit: 'affidavit.html', assignment: 'assignment.html',
-    finalwishes: 'finalwishes.html', contacts: 'contacts.html', schedulea: 'schedulea.html', petrust: 'petrust.html', trustamend: 'trust-amendment.html' };
+    finalwishes: 'finalwishes.html', contacts: 'contacts.html', schedulea: 'schedulea.html', petrust: 'petrust.html', trustamend: 'trust-amendment.html', codicil: 'codicil.html' };
   var NAMES = { will: 'Will', essentials: 'Essentials', complete: 'Complete', health: 'Health Care', trustpaper: 'Trust Paperwork', trustonly: 'Living Trust' };
   var done = f.done || [];
   var nextId = f.docs.filter(function (k) { return done.indexOf(k) === -1; })[0];

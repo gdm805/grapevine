@@ -156,7 +156,8 @@
     schedulea: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     contacts: { name: 'name' },
     petrust: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
-    trustamend: { name: 'name1', name2: 'name2', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' }
+    trustamend: { name: 'name1', name2: 'name2', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    codicil: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' }
   };
   function readProfile() {
     try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}') || {}; } catch (e) { return {}; }
@@ -922,11 +923,11 @@
   var root = document.getElementById('will-app');
   if (!root) return;
 
-  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts', schedulea: 'schedulea', petrust: 'petrust', trustamend: 'trustamend' }[root.getAttribute('data-kind')] || 'will';
+  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts', schedulea: 'schedulea', petrust: 'petrust', trustamend: 'trustamend', codicil: 'codicil' }[root.getAttribute('data-kind')] || 'will';
   var SPOUSE2 = false;
   try { SPOUSE2 = new URLSearchParams(location.search).get('spouse') === '2' && ['will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'].indexOf(kindKey) > -1; } catch (e) { /* first-person copy */ }
   var docId = kindKey + (SPOUSE2 ? ':2' : '');
-  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'], schedulea: ['WILL_STATES', 'SCHEDULEA_TEMPLATE', 'SCHEDULEA_SIGNING'], petrust: ['WILL_STATES', 'PETRUST_TEMPLATE', 'PETRUST_SIGNING'], trustamend: ['WILL_STATES', 'TRUSTAMEND_TEMPLATE', 'TRUSTAMEND_SIGNING'] }[kindKey];
+  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'], schedulea: ['WILL_STATES', 'SCHEDULEA_TEMPLATE', 'SCHEDULEA_SIGNING'], petrust: ['WILL_STATES', 'PETRUST_TEMPLATE', 'PETRUST_SIGNING'], trustamend: ['WILL_STATES', 'TRUSTAMEND_TEMPLATE', 'TRUSTAMEND_SIGNING'], codicil: ['WILL_STATES', 'CODICIL_TEMPLATE', 'CODICIL_SIGNING'] }[kindKey];
   var states = parseStates(window[GLOBALS[0]]);
   var tpl = parseTemplate(window[GLOBALS[1]]);
   var sign = parseTemplate(window[GLOBALS[2]]);
@@ -4893,6 +4894,226 @@
     return e;
   }
 
+  /* ---------- CODICIL TO A WILL (20 Nov 2026) ---------- */
+  /* codicil.html, will/codicil-template.js. Changes a signed will (made on Tovakin or elsewhere) with fixed kinds of
+     change only. Signed like a will: its signing pages are the will's state pages (will/state-text.js), with the
+     Testator's own execution paragraph reworded for a codicil by codicilTailText(); the statutory attestation and
+     self-proving wording is left as it is. $49 per person. */
+  var EMPTY_CODICIL = {
+    state: '', county: '', signingDate: '', ageOk: false, freeOk: false, willOk: false,
+    origin: '', willType: '', name: '', willDate: '',
+    hasPrior: '', priorCodicils: [{ date: '' }],
+    doExecutor: false, doGuardian: false, doAddGifts: false, doRemoveGifts: false, doResidue: false,
+    newExecutor: '', hasAltExecutor: '', altExecutor: '', keepPrior: '',
+    newGuardian: '', hasAltGuardian: '', altGuardian: '',
+    beneficiaries: [{ name: '', share: '' }], lapse: '',
+    addGifts: [{ item: '', recipient: '' }], removeGifts: [{ item: '', recipient: '' }]
+  };
+  var ROWS_CODICIL = { priorCodicils: { date: '' }, beneficiaries: { name: '', share: '' }, addGifts: { item: '', recipient: '' }, removeGifts: { item: '', recipient: '' } };
+  var STEPS_CODICIL = [
+    { id: 'start', label: 'Where you live' },
+    { id: 'will', label: 'Your will' },
+    { id: 'changes', label: 'What you’re changing' },
+    { id: 'executor', label: 'Personal representative', show: function (a) { return !!a.doExecutor; } },
+    { id: 'guardian', label: 'Guardian', show: function (a) { return !!a.doGuardian; } },
+    { id: 'residue', label: 'Who receives what’s left', show: function (a) { return !!a.doResidue && a.willType !== 'POUROVER'; } },
+    { id: 'gifts', label: 'Specific gifts', show: function (a) { return !!(a.doAddGifts || a.doRemoveGifts); } },
+    { id: 'signing', label: 'Signing' },
+    { id: 'review', label: 'Review and sign' }
+  ];
+  /* the will's state signing pages, with the Testator's own execution paragraph reworded for a codicil */
+  var CODICIL_STATE_TEXT = null;
+  function codicilTailText() {
+    if (!CODICIL_STATE_TEXT) CODICIL_STATE_TEXT = parseStateText(String(window.WILL_STATE_TEXT || '')
+      .replace(/I execute this Will on /g, 'I execute this Codicil on ')
+      .replace(/I declare that I have read this Will, /g, 'I declare that I have read this Codicil, ')
+      .replace(/freely and voluntarily as my Last Will and Testament\./g, 'freely and voluntarily as a Codicil to my Last Will and Testament.'));
+    return CODICIL_STATE_TEXT;
+  }
+  /* "Made on Tovakin": the will or pour-over will saved in this browser fills in the name, county and signing date */
+  function codicilTovakinWill(type) {
+    var keys = type === 'POUROVER' ? ['grapevine.pourover.v1'] : type === 'REGULAR' ? ['grapevine.will.v2'] : ['grapevine.will.v2', 'grapevine.pourover.v1'];
+    for (var i = 0; i < keys.length; i++) {
+      try { var s = JSON.parse(localStorage.getItem(keys[i]) || 'null'); if (s && s.answers && clean(s.answers.name)) return { type: keys[i] === 'grapevine.pourover.v1' ? 'POUROVER' : 'REGULAR', a: s.answers }; } catch (e) { /* ignore */ }
+    }
+    return null;
+  }
+  function codicilFillFromTovakin(a) {
+    var w = codicilTovakinWill(a.willType); if (!w) return;
+    function fill(k, v) { if (v && (a[k] === '' || a[k] === undefined)) a[k] = v; }
+    fill('willType', w.type); fill('name', clean(w.a.name)); fill('county', w.a.county); fill('willDate', w.a.signingDate);
+  }
+  function codicilPrior(a) { return a.hasPrior === 'yes' ? (a.priorCodicils || []).filter(function (p) { return !!p.date; }) : []; }
+  function buildVarsCodicil(a, states) {
+    var v = {}, st = states.map[a.state] || null;
+    v.state = st ? st.name : '';
+    v.name = clean(a.name); v.name_caps = v.name.toUpperCase();
+    v.county = clean(a.county).replace(/\s+county$/i, '');
+    v.county_state = [v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ');
+    v.will_title = 'Last Will and Testament'; v.will_title_caps = 'LAST WILL AND TESTAMENT';
+    v.will_date = longDate(a.willDate) || '____________________';
+    var prior = codicilPrior(a);
+    var pl = prior.map(function (p, i) { return 'my ' + (ORDINALS[i] || (i + 1) + 'th') + ' Codicil dated ' + longDate(p.date); });
+    v.has_prior = pl.length > 0;
+    v.prior_list = pl.length < 3 ? pl.join(' and ') : pl.slice(0, -1).join('; ') + '; and ' + pl[pl.length - 1];
+    v.ordinal = ORDINALS[prior.length] || (prior.length + 1) + 'th'; v.ordinal_caps = v.ordinal.toUpperCase();
+    v.do_executor = !!a.doExecutor;
+    v.new_executor = clean(a.newExecutor);
+    v.alt_executor = clean(a.altExecutor); v.has_alt_executor = a.hasAltExecutor === 'yes' && !!v.alt_executor;
+    v.keep_prior_executors = a.keepPrior === 'yes';
+    v.do_guardian = !!a.doGuardian;
+    v.new_guardian = clean(a.newGuardian);
+    v.alt_guardian = clean(a.altGuardian); v.has_alt_guardian = a.hasAltGuardian === 'yes' && !!v.alt_guardian;
+    v.do_residue = !!a.doResidue && a.willType !== 'POUROVER';
+    v.beneficiaries = (a.beneficiaries || []).filter(function (b) { return clean(b.name); }).map(function (b) { return { ben_name: clean(b.name), ben_share: fmtShare(parseFloat(b.share) || 0) }; });
+    v.lapse = a.lapse || 'OTHERS';
+    function gifts(list) { return (list || []).filter(function (g) { return clean(g.item) && clean(g.recipient); }).map(function (g) { var it = clean(g.item); return { gift_item: it.charAt(0).toUpperCase() + it.slice(1), gift_recipient: clean(g.recipient) }; }); }
+    v.add_gifts = gifts(a.addGifts); v.do_add_gifts = !!a.doAddGifts && v.add_gifts.length > 0;
+    v.remove_gifts = gifts(a.removeGifts); v.do_remove_gifts = !!a.doRemoveGifts && v.remove_gifts.length > 0;
+    var w = st ? st.witnesses : 2;
+    v.witness_count = numWord(w); v.two_witnesses = w === 2;
+    v.self_proving = st ? st.selfProving : false;
+    v.state_note = st ? st.note : '';
+    var sx = codicilTailText()[a.state] || null;
+    v.__tail = sx ? (sx.tailWill || sx.tail) : [];
+    return v;
+  }
+  var RENDER_CODICIL = {
+    start: function () {
+      var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
+      }).join('');
+      var st = states.map[answers.state], w = st ? numWord(st.witnesses) : '';
+      var tw = answers.origin === 'TOVAKIN' ? codicilTovakinWill('') : null;
+      return stepHead('First, where do you live?', 'A codicil is signed the same way as a will.' + (st ? ' In ' + esc(answers.state) + ', that means ' + w + ' witnesses' + (st.selfProving ? ' and a notary.' : '.') : '')) +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
+        field('Was the will you’re changing made on Tovakin?', pills('origin', [['TOVAKIN', 'Yes, made on Tovakin'], ['OTHER', 'No, made elsewhere']], true)) +
+        (answers.origin === 'TOVAKIN' ? (tw ? '<p class="hint">We found the will for <strong>' + esc(clean(tw.a.name)) + '</strong> in this browser. Its details fill in on the next screen.</p>' : '<p class="hint">Your will isn’t saved in this browser, so you’ll type its details on the next screen, exactly as they appear in your signed will.</p>') : '') +
+        field('Does your will leave what’s left to a living trust?', pills('willType', [['REGULAR', 'No, a regular will'], ['POUROVER', 'Yes, a pour-over will']], true), 'A pour-over will sends what’s left to your trust. To change who receives that, amend your trust instead.') +
+        '<div class="checks">' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this codicil of my own free will.</span></label>') +
+        '<label class="check"><input type="checkbox" data-k="willOk"' + (answers.willOk ? ' checked' : '') + '><span>My will is signed, and I haven’t revoked it.</span></label>' +
+        '</div>';
+    },
+    will: function () {
+      var prior = '<div class="rowset">' + answers.priorCodicils.map(function (p, i) {
+        return '<div class="rowitem"><input class="input" type="date" data-list="priorCodicils" data-i="' + i + '" data-f="date" value="' + val(p.date) + '" aria-label="Codicil ' + (i + 1) + ' date">' + rm('priorCodicils', i, 'codicil ' + (i + 1), answers.priorCodicils.length > 1) + '</div>';
+      }).join('') + '</div>';
+      var tv = answers.origin === 'TOVAKIN' && codicilTovakinWill(answers.willType);
+      return stepHead('Your will', tv ? 'Filled in from the will you made on Tovakin. Check them against your signed will, including the date you wrote in when you signed.' : 'Type these exactly as they appear in your signed will.') +
+        field('Your full legal name', text('name', 'As it appears in your will', { auto: 'off' })) +
+        field('County where you live', countySelect('county')) +
+        field('Date you signed your will', '<input class="input" type="date" data-k="willDate" value="' + val(answers.willDate) + '">') +
+        field('Have you signed a codicil to this will before?', pills('hasPrior', [['yes', 'Yes'], ['no', 'No']], true), 'This sets the codicil’s number, such as “Second Codicil.”') +
+        (answers.hasPrior === 'yes' ? field('Dates of the earlier codicils, oldest first', prior + addBtn('priorCodicils', '+ Add another date')) : '');
+    },
+    changes: function () {
+      return stepHead('What do you want to change?', 'Choose one or more. Anything you don’t change stays as your will says.') +
+        '<div class="checks">' +
+        amendCheck('doExecutor', 'Who serves as personal representative (executor)') +
+        amendCheck('doGuardian', 'Who would raise my minor children (guardian)') +
+        amendCheck('doAddGifts', 'Add a gift of a specific item or amount') +
+        amendCheck('doRemoveGifts', 'Cancel a specific gift in my will') +
+        (answers.willType === 'POUROVER' ? '' : amendCheck('doResidue', 'Who receives what’s left, and in what shares')) +
+        '</div>' +
+        (answers.willType === 'POUROVER' ? '<p class="hint">Your pour-over will leaves what’s left to your trust. To change who receives it, <a href="trust-amendment.html">amend your trust</a>.</p>' : '');
+    },
+    executor: function () {
+      return stepHead('Personal representative', 'The personal representative (called the executor in some states) carries out your will.') +
+        field('New personal representative’s full name', text('newExecutor', 'Full name')) +
+        field('Name a backup?', pills('hasAltExecutor', [['yes', 'Yes'], ['no', 'No']], true)) +
+        (answers.hasAltExecutor === 'yes' ? field('Backup’s full name', text('altExecutor', 'Full name')) : '') +
+        field('The personal representatives named in your will now:', pills('keepPrior', [['yes', 'Keep them as later backups'], ['no', 'Remove them']], true));
+    },
+    guardian: function () {
+      return stepHead('Guardian of your minor children', 'This replaces the guardian named in your will.') +
+        field('New guardian’s full name', text('newGuardian', 'Full name')) +
+        field('Name a backup?', pills('hasAltGuardian', [['yes', 'Yes'], ['no', 'No']], true)) +
+        (answers.hasAltGuardian === 'yes' ? field('Backup’s full name', text('altGuardian', 'Full name')) : '');
+    },
+    residue: function () {
+      var rows = '<div class="rowset">' + answers.beneficiaries.map(function (b, i) {
+        return '<div class="rowitem"><input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Full name, or a charity" aria-label="Beneficiary ' + (i + 1) + '">' +
+          '<input class="input" style="max-width:110px" data-list="beneficiaries" data-i="' + i + '" data-f="share" value="' + val(b.share) + '" placeholder="%" inputmode="decimal" aria-label="Beneficiary ' + (i + 1) + ' share in percent">' +
+          rm('beneficiaries', i, 'beneficiary ' + (i + 1), answers.beneficiaries.length > 1) + '</div>';
+      }).join('') + '</div>';
+      return stepHead('Who receives what’s left?', 'This replaces your will’s list of who receives everything not given away by a specific gift. Any part of your will that holds a share for a young or disabled beneficiary still applies.') +
+        field('Beneficiaries and shares (percent)', rows + addBtn('beneficiaries', '+ Add another'), 'Shares must add up to 100. Now: ' + fmtShare(amendShareTotal(answers)) + '.') +
+        field('If a beneficiary dies before you, their share goes', pills('lapse', [['DESCENDANTS', 'To their children and other descendants'], ['OTHERS', 'To the other beneficiaries']], true));
+    },
+    gifts: function () {
+      return stepHead('Specific gifts', '') +
+        (answers.doAddGifts ? field('Gifts to add', giftRows('addGifts', 'What, for example my grandmother’s ring, or $5,000') + addBtn('addGifts', '+ Add another gift')) : '') +
+        (answers.doRemoveGifts ? field('Gifts in your will to cancel', giftRows('removeGifts', 'The gift as your will describes it') + addBtn('removeGifts', '+ Add another'), 'A cancelled gift becomes part of what’s left.') : '');
+    },
+    signing: function () {
+      var st = states.map[answers.state];
+      return stepHead('Signing', st ? 'You sign in front of ' + numWord(st.witnesses) + ' witnesses' + (st.selfProving ? ' and a notary' : '') + ', like your will.' : '') + signDateField();
+    },
+    review: function () {
+      var v = buildVarsCodicil(answers, states);
+      var instr = toHtml(renderNodes(sign.nodes, v), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>');
+      function row(label, value, goto) {
+        return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
+      }
+      var ch = [v.do_executor ? 'Personal representative' : '', v.do_guardian ? 'Guardian' : '', v.do_residue ? 'Who receives what’s left' : '', v.do_add_gifts ? 'Gifts added' : '', v.do_remove_gifts ? 'Gifts cancelled' : ''].filter(Boolean).join(', ');
+      return stepHead('Your codicil is ready to review', 'Read every word, then follow the signing steps below for your state.') +
+        '<div class="sum">' +
+        row('Codicil', esc(v.ordinal + ' Codicil to the will of ' + v.name), 'will') +
+        row('Will dated', esc(v.will_date), 'will') +
+        row('Changes', esc(ch), 'changes') + '</div>' +
+        '<div class="actions">' +
+        '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
+        '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
+        '<div class="instr">' + instr + '</div>' +
+        '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
+    }
+  };
+  function validateCodicil(id) {
+    var a = answers, e = [], st = states.map[a.state];
+    if (id === 'start') {
+      if (!st) e.push('Choose your state.');
+      else if (!st.supported) e.push(st.note || 'We can’t offer this in that state yet.');
+      if (!a.origin) e.push('Answer whether your will was made on Tovakin.');
+      if (!a.willType) e.push('Answer whether your will leaves what’s left to a living trust.');
+      if (!a.ageOk) e.push('Confirm that you are 18 or older.');
+      if (!a.freeOk) e.push('Confirm that you are making this codicil of your own free will.');
+      if (!a.willOk) e.push('Confirm that your will is signed and you haven’t revoked it.');
+      if (!e.length && a.origin === 'TOVAKIN') codicilFillFromTovakin(a);
+    } else if (id === 'will') {
+      if (clean(a.name).length < 2) e.push('Enter your full legal name.');
+      if (!clean(a.county)) e.push('Choose the county where you live.');
+      if (!a.willDate) e.push('Enter the date you signed your will.');
+      if (!a.hasPrior) e.push('Answer whether you have signed a codicil to this will before.');
+      if (a.hasPrior === 'yes' && !codicilPrior(a).length) e.push('Enter the date of each earlier codicil, or answer No.');
+    } else if (id === 'changes') {
+      if (!(a.doExecutor || a.doGuardian || a.doAddGifts || a.doRemoveGifts || (a.doResidue && a.willType !== 'POUROVER'))) e.push('Choose at least one change.');
+    } else if (id === 'executor') {
+      if (!clean(a.newExecutor)) e.push('Enter the new personal representative’s name.');
+      if (!a.hasAltExecutor) e.push('Answer whether to name a backup.');
+      if (a.hasAltExecutor === 'yes' && !clean(a.altExecutor)) e.push('Enter the backup’s name, or answer No.');
+      if (!a.keepPrior) e.push('Choose whether to keep or remove the personal representatives named in your will now.');
+    } else if (id === 'guardian') {
+      if (!clean(a.newGuardian)) e.push('Enter the new guardian’s name.');
+      if (!a.hasAltGuardian) e.push('Answer whether to name a backup.');
+      if (a.hasAltGuardian === 'yes' && !clean(a.altGuardian)) e.push('Enter the backup’s name, or answer No.');
+    } else if (id === 'residue') {
+      var named = (a.beneficiaries || []).filter(function (b) { return clean(b.name); });
+      if (!named.length) e.push('Enter at least one beneficiary.');
+      if (named.some(function (b) { return !(parseFloat(b.share) > 0); })) e.push('Enter a share for each beneficiary.');
+      if (Math.abs(amendShareTotal(a) - 100) > 0.01) e.push('The shares must add up to 100. They now add up to ' + fmtShare(amendShareTotal(a)) + '.');
+      if (!a.lapse) e.push('Choose what happens to the share of a beneficiary who dies first.');
+    } else if (id === 'gifts') {
+      var full = function (g) { return clean(g.item) && clean(g.recipient); };
+      if (a.doAddGifts && !(a.addGifts || []).some(full)) e.push('Enter at least one gift to add, with who receives it.');
+      if (a.doRemoveGifts && !(a.removeGifts || []).some(full)) e.push('Enter at least one gift to cancel, with who it was to.');
+    }
+    return e;
+  }
+
   /* ---------- put the chosen kind together ---------- */
   /* PETS (will, single trust, joint trust): an optional caretaker for the person's pets, a backup, and an
      optional sum of money given to whoever takes them -- with a request, not a requirement, that it be used
@@ -4963,7 +5184,9 @@
     petrust: { key: 'petrust', ls: 'grapevine.petrust.v1', file: 'Pet-Trust', footer: function () { return trustFooter(petTrustName(answers)); },
       empty: EMPTY_PETTRUST, rows: ROWS_PETTRUST, steps: STEPS_PETTRUST, render: RENDER_PETTRUST, validate: validatePetTrust, buildVars: buildVarsPetTrust },
     trustamend: { key: 'trustamend', ls: 'grapevine.trustamend.v1', file: 'Trust-Amendment', footer: function () { var v = buildVarsTrustAmend(answers, states); return v.ordinal + ' Amendment to ' + (v.trust_name || 'Trust'); },
-      empty: EMPTY_TRUSTAMEND, rows: ROWS_TRUSTAMEND, steps: STEPS_TRUSTAMEND, render: RENDER_TRUSTAMEND, validate: validateTrustAmend, buildVars: buildVarsTrustAmend }
+      empty: EMPTY_TRUSTAMEND, rows: ROWS_TRUSTAMEND, steps: STEPS_TRUSTAMEND, render: RENDER_TRUSTAMEND, validate: validateTrustAmend, buildVars: buildVarsTrustAmend },
+    codicil: { key: 'codicil', ls: 'grapevine.codicil.v1', file: 'Codicil', footer: function (n) { var v = buildVarsCodicil(answers, states); return v.ordinal + ' Codicil to the Last Will and Testament of ' + (v.name || n || ''); },
+      empty: EMPTY_CODICIL, rows: ROWS_CODICIL, steps: STEPS_CODICIL, render: RENDER_CODICIL, validate: validateCodicil, buildVars: buildVarsCodicil }
   };
   KIND = KINDS[kindKey];
   buildVars = KIND.buildVars; LS_KEY = KIND.ls + (SPOUSE2 ? '.s2' : '');
