@@ -4576,7 +4576,7 @@
     },
     ending: function () {
       return stepHead('When the trust ends', 'The trust ends when the last of your animals dies' + ((petLaw(answers.state) || {}).cap ? ', or earlier if ' + esc(answers.state) + '’s time limit is reached' : '') + '.') +
-        field('Who receives any money left over?', pills('remainder', [['PERSON', 'A person'], ['CHARITY', 'A charity']].concat((petLaw(answers.state) || {}).needsRemainder ? [] : [['ESTATE', 'My estate']]), true), (petLaw(answers.state) || {}).needsRemainder ? esc(answers.state) + '’s law requires the trust to name who receives what’s left.' : '') +
+        field('Who receives any money left over?', pills('remainder', [['PERSON', 'A person'], ['CHARITY', 'A charity']].concat((petLaw(answers.state) || {}).needsRemainder ? [] : [['ESTATE', 'My living trust or estate']]), true), (petLaw(answers.state) || {}).needsRemainder ? esc(answers.state) + '’s law requires the trust to name who receives what’s left.' : 'With “My living trust or estate,” it goes to your revocable living trust if you have one, otherwise under your will, and if you have no will, to your heirs under state law. That same order applies if a person you name has died.') +
         (answers.remainder === 'PERSON' || answers.remainder === 'CHARITY' ? field(answers.remainder === 'CHARITY' ? 'Charity’s name' : 'Their full name', text('remainderName', answers.remainder === 'CHARITY' ? 'For example, Springfield Humane Society' : 'Full name')) : '') +
         field('After an animal dies', pills('finalCare', [['BURIAL', 'Burial'], ['CREMATION', 'Cremation'], ['CAREGIVER', 'The caregiver decides']], true));
     },
