@@ -82,12 +82,62 @@ The property that was the subject of each revoked gift becomes part of my residu
 I amend my Will to provide that I give my residuary estate (all property I own at my death that is not otherwise effectively disposed of by my Will) to the following beneficiaries, in the shares stated:
 
 [[each beneficiaries]]
-- {{ben_name}}: {{ben_share}} percent ({{ben_share}}%)
+- {{ben_name}}: {{ben_share}} percent ({{ben_share}}%)[[if ben_has_backup]]; if {{ben_name}} does not survive me, to {{ben_backup}}, if {{ben_backup}} survives me[[end]]
 [[end]]
 
-If a beneficiary named in this Section does not survive me, that beneficiary's share shall pass [[if lapse=DESCENDANTS]]to that beneficiary's descendants who survive me, per stirpes, and if there are none, to the other beneficiaries named in this Section who survive me, in proportion to their shares[[else]]to the other beneficiaries named in this Section who survive me, in proportion to their shares[[end]]. If no beneficiary named in this Section, and no one who would take a beneficiary's share under this paragraph, survives me, my residuary estate shall pass as my Will provided before this Codicil.
+If a beneficiary named in this Section does not survive me[[if any_ben_backup]] and no backup named for that beneficiary survives me[[end]], that beneficiary's share shall pass [[if lapse=DESCENDANTS]]to that beneficiary's descendants who survive me, per stirpes, and if there are none, to the other beneficiaries named in this Section who survive me, in proportion to their shares[[else]]to the other beneficiaries named in this Section who survive me, in proportion to their shares[[end]]. If no beneficiary named in this Section, and no one who would take a beneficiary's share under this paragraph, survives me, my residuary estate shall pass as my Will provided before this Codicil.
 
+[[if do_young]]
+[[ref young]] applies to a share distributable under this Section to a beneficiary who has not reached the age stated there. Any provision of my Will for holding or managing a share for a beneficiary with a disability continues to apply to a share distributable under this Section.
+[[else]]
 Any provision of my Will for holding a beneficiary's share in trust, or for a custodian or other fiduciary to manage it, because of the beneficiary's age or disability continues to apply to a share distributable under this Section.
+[[end]]
+[[end]]
+
+[[if do_backups]]
+## Backup Beneficiaries
+
+I amend my Will to provide that if a beneficiary named below does not survive me, any share of my residuary estate that beneficiary would have received under my Will shall instead pass to the backup named for that beneficiary, if the backup survives me:
+
+[[each backups]]
+- If {{bk_ben}} does not survive me, to {{bk_backup}}.
+[[end]]
+
+If neither a beneficiary named in this Section nor that beneficiary's backup survives me, that beneficiary's share shall pass as my Will provided before this Codicil.
+[[end]]
+
+[[if do_young]]
+## Property for Young Beneficiaries {#young}
+
+I amend my Will to provide that any property distributable under my Will to a beneficiary, other than a charitable organization, who has not reached age {{young_age_words}} shall instead be distributed to {{young_trustee}}[[if has_alt_young_trustee]], or if {{young_trustee}} is unwilling, unable, or ineligible to serve or ceases to serve, to {{alt_young_trustee}},[[end]] as trustee, to be held as a separate trust for that beneficiary.
+
+Until the beneficiary reaches age {{young_age_words}}, the trustee may distribute to or for the benefit of the beneficiary as much of the net income and principal as the trustee considers advisable for the beneficiary's health, education, maintenance, and support, taking into account other resources known to the trustee to be available to the beneficiary. Net income not distributed shall be added to principal. When the beneficiary reaches age {{young_age_words}}, the trustee shall distribute the balance of the trust to the beneficiary. If the beneficiary dies before reaching that age, the trustee shall distribute the balance to the beneficiary's descendants who survive the beneficiary, per stirpes, or if there are none, to the beneficiary's estate.
+
+The trustee shall serve without bond to the extent permitted by law and shall have all powers given to trustees by applicable law. This Section replaces any provision of my Will for holding or managing property for a beneficiary because of the beneficiary's age, but not any provision for a beneficiary with a disability.
+[[end]]
+
+[[if do_pets]]
+## Care of My Pets
+
+I amend my Will to provide that I give any pets I own at my death[[if has_pet_description]], including {{pet_description}},[[end]] to {{pet_caretaker}}, if {{pet_caretaker}} survives me and is willing to accept them.[[if has_pet_alt]] If not, I give them to {{pet_alt_caretaker}}, if {{pet_alt_caretaker}} survives me and is willing to accept them.[[end]]
+
+[[if has_pet_gift]]
+I give {{pet_gift}} to the person who accepts my pets under this Section. I request, but do not require, that this gift be used for the care of my pets. This request creates no trust and no legally enforceable obligation, and the gift belongs to that person outright.
+
+[[end]]
+If no person named in this Section accepts my pets, my Personal Representative may place them with a person or organization my Personal Representative believes will give them a good home, and may pay the reasonable costs of doing so from my estate. This Section replaces every provision of my Will about the care of my pets.
+[[end]]
+
+[[if do_exclude]]
+## Persons Who Receive Nothing
+
+I intentionally make no provision in my Will for the following persons, and each of them shall receive nothing under my Will:
+
+[[each excluded]]
+- {{ex_name}}[[if ex_has_rel]] ({{ex_rel}})[[end]]
+[[end]]
+
+This Section does not change any gift to any other person, including a descendant of a person named in this Section, unless my Will provides otherwise.
 [[end]]
 
 # REPUBLICATION
