@@ -14,9 +14,9 @@ window.PETRUST_TEMPLATE = String.raw`
 @set draft_label = Preview - Not for Signing
 
 [[if trust_starts_with_the=YES]]
-@center **COMPANION ANIMAL TRUST AGREEMENT FOR**
+@center **TRUST AGREEMENT FOR**
 [[else]]
-@center **COMPANION ANIMAL TRUST AGREEMENT FOR THE**
+@center **TRUST AGREEMENT FOR THE**
 [[end]]
 
 @center **{{trust_name}}**

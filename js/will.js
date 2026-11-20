@@ -4715,7 +4715,7 @@
       empty: EMPTY_SCHEDA, rows: ROWS_SCHEDA, steps: STEPS_SCHEDA, render: RENDER_SCHEDA, validate: validateScheduleA, buildVars: buildVarsScheduleA },
     contacts: { key: 'contacts', ls: 'grapevine.contacts.v1', file: 'Important-Contacts', footer: function (n) { return 'Important Contacts for ' + n; },
       empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts },
-    petrust: { key: 'petrust', ls: 'grapevine.petrust.v1', file: 'Companion-Animal-Trust', footer: function () { return 'Companion Animal Trust Agreement for ' + petTrustName(answers); },
+    petrust: { key: 'petrust', ls: 'grapevine.petrust.v1', file: 'Companion-Animal-Trust', footer: function () { return trustFooter(petTrustName(answers)); },
       empty: EMPTY_PETTRUST, rows: ROWS_PETTRUST, steps: STEPS_PETTRUST, render: RENDER_PETTRUST, validate: validatePetTrust, buildVars: buildVarsPetTrust }
   };
   KIND = KINDS[kindKey];
