@@ -155,7 +155,8 @@
     finalwishes: { name: 'name', state: 'state' },
     schedulea: { name: 'tm1Name', name2: 'tm2Name', state: 'state' },
     contacts: { name: 'name' },
-    petrust: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' }
+    petrust: { name: 'name', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' },
+    trustamend: { name: 'name1', name2: 'name2', county: 'county', state: 'state', ageOk: 'ageOk', freeOk: 'freeOk' }
   };
   function readProfile() {
     try { return JSON.parse(localStorage.getItem(PROFILE_KEY) || '{}') || {}; } catch (e) { return {}; }
@@ -921,11 +922,11 @@
   var root = document.getElementById('will-app');
   if (!root) return;
 
-  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts', schedulea: 'schedulea', petrust: 'petrust' }[root.getAttribute('data-kind')] || 'will';
+  var kindKey = { pourover: 'pourover', dpoa: 'dpoa', dementia: 'dementia', hcd: 'hcd', hipaa: 'hipaa', trust: 'trust', trustjoint: 'trustjoint', cert: 'cert', affidavit: 'affidavit', assignment: 'assignment', finalwishes: 'finalwishes', contacts: 'contacts', schedulea: 'schedulea', petrust: 'petrust', trustamend: 'trustamend' }[root.getAttribute('data-kind')] || 'will';
   var SPOUSE2 = false;
   try { SPOUSE2 = new URLSearchParams(location.search).get('spouse') === '2' && ['will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'].indexOf(kindKey) > -1; } catch (e) { /* first-person copy */ }
   var docId = kindKey + (SPOUSE2 ? ':2' : '');
-  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'], schedulea: ['WILL_STATES', 'SCHEDULEA_TEMPLATE', 'SCHEDULEA_SIGNING'], petrust: ['WILL_STATES', 'PETRUST_TEMPLATE', 'PETRUST_SIGNING'] }[kindKey];
+  var GLOBALS = { will: ['WILL_STATES', 'WILL_TEMPLATE', 'WILL_SIGNING'], pourover: ['WILL_STATES', 'WILL_POUR_OVER_TEMPLATE', 'WILL_POUR_OVER_SIGNING'], dpoa: ['WILL_STATES', 'DPOA_TEMPLATE', 'DPOA_SIGNING'], dementia: ['WILL_STATES', 'DEMENTIA_TEMPLATE', 'DEMENTIA_SIGNING'], hcd: ['WILL_STATES', 'HCD_TEMPLATE', 'HCD_SIGNING'], hipaa: ['WILL_STATES', 'HIPAA_TEMPLATE', 'HIPAA_SIGNING'], trust: ['WILL_STATES', 'TRUST_TEMPLATE', 'TRUST_SIGNING'], trustjoint: ['WILL_STATES', 'TRUST_JOINT_TEMPLATE', 'TRUST_SIGNING'], cert: ['WILL_STATES', 'CERT_TEMPLATE', 'CERT_SIGNING'], affidavit: ['WILL_STATES', 'AFFIDAVIT_TEMPLATE', 'AFFIDAVIT_SIGNING'], assignment: ['WILL_STATES', 'ASSIGNMENT_TEMPLATE', 'ASSIGNMENT_SIGNING'], finalwishes: ['WILL_STATES', 'FINALWISHES_TEMPLATE', 'FINALWISHES_SIGNING'], contacts: ['WILL_STATES', 'CONTACTS_TEMPLATE', 'CONTACTS_SIGNING'], schedulea: ['WILL_STATES', 'SCHEDULEA_TEMPLATE', 'SCHEDULEA_SIGNING'], petrust: ['WILL_STATES', 'PETRUST_TEMPLATE', 'PETRUST_SIGNING'], trustamend: ['WILL_STATES', 'TRUSTAMEND_TEMPLATE', 'TRUSTAMEND_SIGNING'] }[kindKey];
   var states = parseStates(window[GLOBALS[0]]);
   var tpl = parseTemplate(window[GLOBALS[1]]);
   var sign = parseTemplate(window[GLOBALS[2]]);
@@ -4653,6 +4654,234 @@
     return e;
   }
 
+  /* ---------- AMENDMENT TO A REVOCABLE TRUST (20 Nov 2026) ---------- */
+  /* trust-amendment.html, will/trustamend-template.js. Amends any revocable trust the Trustmaker(s) may amend by a
+     signed writing, with fixed kinds of change only. A trust made on this site fills in its own name, date and
+     Trustmakers (applyTrustFacts). Signed like the living trust (trust_execution). $49 per trust. */
+  var EMPTY_TRUSTAMEND = {
+    state: '', county: '', signingDate: '', ageOk: false, freeOk: false, amendOk: false,
+    origin: '', bothLiving: '', trustType: '', name1: '', name2: '',
+    trustName: '', origTrustDate: '', trustRestated: '', restatementDate: '',
+    hasPrior: '', priorAmendments: [{ date: '' }],
+    tmIsTrustee: '', currentTrustee: '',
+    doTrustee: false, doResidue: false, doAddGifts: false, doRemoveGifts: false,
+    newTrustee: '', hasAltTrustee: '', altTrustee: '', keepPrior: '',
+    beneficiaries: [{ name: '', share: '' }], lapse: '',
+    addGifts: [{ item: '', recipient: '' }], removeGifts: [{ item: '', recipient: '' }]
+  };
+  var ROWS_TRUSTAMEND = { priorAmendments: { date: '' }, beneficiaries: { name: '', share: '' }, addGifts: { item: '', recipient: '' }, removeGifts: { item: '', recipient: '' } };
+  var STEPS_TRUSTAMEND = [
+    { id: 'start', label: 'Where you live' },
+    { id: 'trust', label: 'Your trust' },
+    { id: 'changes', label: 'What you’re changing' },
+    { id: 'trustee', label: 'Successor trustee', show: function (a) { return !!a.doTrustee; } },
+    { id: 'residue', label: 'Who receives what’s left', show: function (a) { return !!a.doResidue; } },
+    { id: 'gifts', label: 'Specific gifts', show: function (a) { return !!(a.doAddGifts || a.doRemoveGifts); } },
+    { id: 'signing', label: 'Signing' },
+    { id: 'review', label: 'Review and sign' }
+  ];
+  var ORDINALS = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth', 'Eleventh', 'Twelfth'];
+  /* "Made on Tovakin": the trust saved in this browser fills in what's still empty (name, dates, who made it). Tovakin's trust
+     lets the Trustmaker(s) amend it by a signed writing delivered to the Trustee, and signing as Trustee is delivery. */
+  function amendTovakinFacts() { var f = readTrustFacts(); return f && f.trustName ? f : null; }
+  function amendFillFromTovakin(a) {
+    var f = amendTovakinFacts(); if (!f) return;
+    function fill(k, v) { if (v && (a[k] === '' || a[k] === undefined)) a[k] = v; }
+    fill('trustName', f.trustName); fill('origTrustDate', f.origDate);
+    fill('trustRestated', f.restated ? 'yes' : 'no'); if (f.restated) fill('restatementDate', f.restatementDate);
+    fill('name1', f.name1); if (f.joint) fill('name2', f.name2);
+  }
+  function amendPrior(a) { return a.hasPrior === 'yes' ? (a.priorAmendments || []).filter(function (p) { return !!p.date; }) : []; }
+  function amendShareTotal(a) { return (a.beneficiaries || []).reduce(function (t, b) { return t + (parseFloat(b.share) || 0); }, 0); }
+  function buildVarsTrustAmend(a, states) {
+    var v = {}, st = states.map[a.state] || null, joint = a.trustType === 'JOINT';
+    v.state = st ? st.name : '';
+    v.signing_state = v.state ? trustSlug(v.state) : '';
+    v.county = clean(a.county).replace(/\s+county$/i, '');
+    v.county_state = [v.county ? v.county + ' County' : '', v.state].filter(Boolean).join(', ');
+    v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
+    v.is_joint = joint;
+    v.name1 = clean(a.name1); v.name2 = clean(a.name2);
+    v.name = v.name1;
+    v.trustmakers = joint ? v.name1 + ' and ' + v.name2 : v.name1;
+    v.tm_word = joint ? 'Trustmakers' : 'Trustmaker';
+    v.are = joint ? 'are' : 'is';
+    v.all_tm = joint ? 'both Trustmakers' : 'the Trustmaker';
+    v.death_ref = joint ? 'the surviving Trustmaker' : 'the Trustmaker';
+    v.tm_is_trustee = a.tmIsTrustee !== 'no';
+    v.tm_title = v.tm_is_trustee ? 'Trustmaker and Trustee' : 'Trustmaker';
+    v.current_trustee = clean(a.currentTrustee);
+    v.trust_name = clean(a.trustName);
+    v.orig_date = longDate(a.origTrustDate) || '____________________';
+    v.is_restated = a.trustRestated === 'yes';
+    v.restatement_date = longDate(a.restatementDate) || '____________________';
+    var prior = amendPrior(a);
+    v.has_prior = prior.length > 0;
+    var pl = prior.map(function (p, i) { return 'the ' + (ORDINALS[i] || (i + 1) + 'th') + ' Amendment dated ' + longDate(p.date); });
+    v.prior_list = pl.length < 3 ? pl.join(' and ') : pl.slice(0, -1).join('; ') + '; and ' + pl[pl.length - 1];
+    v.ordinal = ORDINALS[prior.length] || (prior.length + 1) + 'th';
+    v.ordinal_caps = v.ordinal.toUpperCase();
+    v.do_trustee = !!a.doTrustee;
+    v.new_trustee = clean(a.newTrustee);
+    v.alt_trustee = clean(a.altTrustee); v.has_alt_trustee = a.hasAltTrustee === 'yes' && !!v.alt_trustee;
+    v.keep_prior_trustees = a.keepPrior === 'yes';
+    v.do_residue = !!a.doResidue;
+    v.beneficiaries = (a.beneficiaries || []).filter(function (b) { return clean(b.name); }).map(function (b) { return { ben_name: clean(b.name), ben_share: fmtShare(parseFloat(b.share) || 0) }; });
+    v.lapse = a.lapse || 'OTHERS';
+    function gifts(list) { return (list || []).filter(function (g) { return clean(g.item) && clean(g.recipient); }).map(function (g) { var it = clean(g.item); return { gift_item: it.charAt(0).toUpperCase() + it.slice(1), gift_recipient: clean(g.recipient) }; }); }
+    v.add_gifts = gifts(a.addGifts); v.do_add_gifts = !!a.doAddGifts && v.add_gifts.length > 0;
+    v.remove_gifts = gifts(a.removeGifts); v.do_remove_gifts = !!a.doRemoveGifts && v.remove_gifts.length > 0;
+    v.has_witness = !!TRUST_WITNESS_STATES[v.state];
+    return v;
+  }
+  function amendCheck(k, label) { return '<label class="check"><input type="checkbox" data-k="' + k + '" data-rerender' + (answers[k] ? ' checked' : '') + '><span>' + label + '</span></label>'; }
+  function giftRows(list, ph) {
+    return '<div class="rowset">' + answers[list].map(function (g, i) {
+      return '<div class="rowitem stack"><input class="input" data-list="' + list + '" data-i="' + i + '" data-f="item" value="' + val(g.item) + '" placeholder="' + esc(ph) + '" aria-label="Gift ' + (i + 1) + '">' +
+        '<input class="input" data-list="' + list + '" data-i="' + i + '" data-f="recipient" value="' + val(g.recipient) + '" placeholder="To whom (full name)" aria-label="Gift ' + (i + 1) + ' recipient">' +
+        rm(list, i, 'gift ' + (i + 1), answers[list].length > 1) + '</div>';
+    }).join('') + '</div>';
+  }
+  var RENDER_TRUSTAMEND = {
+    start: function () {
+      var opts = '<option value="">Choose your state</option>' + states.list.map(function (s) {
+        return '<option value="' + esc(s.name) + '"' + (answers.state === s.name ? ' selected' : '') + (s.supported || s.closed ? '' : ' disabled') + '>' + esc(s.name) + (s.supported || s.closed ? '' : ' (not available yet)') + '</option>';
+      }).join('');
+      return stepHead('First, where do you live?', 'You’ll sign the amendment in your state, in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses.' : '.')) +
+        field('State', '<select class="input" data-k="state" autocomplete="off" data-rerender>' + opts + '</select>') +
+        field('Was this trust made on Tovakin?', pills('origin', [['TOVAKIN', 'Yes, made on Tovakin'], ['OTHER', 'No, made elsewhere']], true)) +
+        (answers.origin === 'TOVAKIN' ? (amendTovakinFacts() ? '<p class="hint">We found <strong>' + esc(amendTovakinFacts().trustName) + '</strong> in this browser. Its details fill in on the next screen.</p>' : '<p class="hint">Your trust isn’t saved in this browser, so you’ll type its details on the next screen, exactly as they appear in your signed trust.</p>') : '') +
+        field('Is this a trust for one person, or a joint trust for a couple?', pills('trustType', [['SINGLE', 'One person'], ['JOINT', 'A joint trust']], true)) +
+        (answers.trustType === 'JOINT' ? field('Are both of you living?', pills('bothLiving', [['yes', 'Yes'], ['no', 'No']], true)) : '') +
+        (answers.trustType === 'JOINT' && answers.bothLiving === 'no' ? '<p class="hint">After one trustmaker dies, part of a joint trust usually can’t be changed any more, and the rest can be changed only by the survivor as the trust allows. This amendment is for a joint trust while both trustmakers are living. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.</p>' : '') +
+        '<div class="checks">' +
+        (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
+        '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am making this amendment of my own free will.</span></label>') +
+        (answers.origin === 'OTHER' ? '<label class="check"><input type="checkbox" data-k="amendOk"' + (answers.amendOk ? ' checked' : '') + '><span>My trust is revocable, and its terms let ' + (answers.trustType === 'JOINT' ? 'us' : 'me') + ' change it by a signed writing.</span></label>' : '') +
+        '</div>';
+    },
+    trust: function () {
+      var joint = answers.trustType === 'JOINT';
+      var prior = '<div class="rowset">' + answers.priorAmendments.map(function (p, i) {
+        return '<div class="rowitem"><input class="input" type="date" data-list="priorAmendments" data-i="' + i + '" data-f="date" value="' + val(p.date) + '" aria-label="Amendment ' + (i + 1) + ' date">' + rm('priorAmendments', i, 'amendment ' + (i + 1), answers.priorAmendments.length > 1) + '</div>';
+      }).join('') + '</div>';
+      var tv = answers.origin === 'TOVAKIN';
+      return stepHead('Your trust', tv && amendTovakinFacts() ? 'Filled in from the trust you made on Tovakin. Check them against your signed trust, including the date you wrote in when you signed.' : 'Type these exactly as they appear in your signed trust.') +
+        field(joint ? 'First trustmaker’s full legal name' : 'Your full legal name', '<input class="input" type="text" data-k="name1" value="' + val(answers.name1) + '" autocomplete="off">') +
+        (joint ? field('Second trustmaker’s full legal name', '<input class="input" type="text" data-k="name2" value="' + val(answers.name2) + '" autocomplete="off">') : '') +
+        field('County where you live', countySelect('county')) +
+        field('Name of your trust', text('trustName', 'For example, The Maria Elena Alvarez Living Trust'), 'Include “The” if your trust’s name starts with it.') +
+        field('Date the trust was first signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') +
+        field('Has the trust been restated?', pills('trustRestated', [['yes', 'Yes'], ['no', 'No']], true)) +
+        (answers.trustRestated === 'yes' ? field('Date of the restatement', '<input class="input" type="date" data-k="restatementDate" value="' + val(answers.restatementDate) + '">') : '') +
+        field('Has it been amended before' + (answers.trustRestated === 'yes' ? ' since the restatement' : '') + '?', pills('hasPrior', [['yes', 'Yes'], ['no', 'No']], true), 'This sets the amendment’s number, such as “Second Amendment.”') +
+        (answers.hasPrior === 'yes' ? field('Dates of the earlier amendments, oldest first', prior + addBtn('priorAmendments', '+ Add another date')) : '') +
+        field(joint ? 'Are you both currently the trustees of your trust?' : 'Are you currently the trustee of your trust?', pills('tmIsTrustee', [['yes', 'Yes'], ['no', 'No']], true), tv ? 'A Tovakin trust names ' + (joint ? 'you both' : 'you') + ' as the first trustee' + (joint ? 's' : '') + '. Answer No only if someone else has taken over.' : '') +
+        (answers.tmIsTrustee === 'no' ? field('Current trustee’s full name', text('currentTrustee', 'Full name'), 'The trustee signs an acknowledgment that they received the amendment.') : '');
+    },
+    changes: function () {
+      return stepHead('What do you want to change?', 'Choose one or more. Anything you don’t change stays as your trust says.') +
+        '<div class="checks">' +
+        amendCheck('doTrustee', 'Who serves as successor trustee') +
+        amendCheck('doResidue', 'Who receives what’s left, and in what shares') +
+        amendCheck('doAddGifts', 'Add a gift of a specific item or amount') +
+        amendCheck('doRemoveGifts', 'Cancel a specific gift in the trust') +
+        '</div>';
+    },
+    trustee: function () {
+      return stepHead('Successor trustee', 'The successor trustee takes over when ' + (answers.trustType === 'JOINT' ? 'neither of you can serve' : 'you can no longer serve') + ', as your trust provides.') +
+        (answers.origin === 'TOVAKIN' && trustPeople() && clean(answers.trustName) === (amendTovakinFacts() || {}).trustName ? '<p class="hint">Your Tovakin trust now names: ' + esc(trustPeopleText(trustPeople())) + '.</p>' : '') +
+        field('New successor trustee’s full name', text('newTrustee', 'Full name')) +
+        field('Name a backup?', pills('hasAltTrustee', [['yes', 'Yes'], ['no', 'No']], true)) +
+        (answers.hasAltTrustee === 'yes' ? field('Backup’s full name', text('altTrustee', 'Full name')) : '') +
+        field('The successor trustees named in your trust now:', pills('keepPrior', [['yes', 'Keep them as later backups'], ['no', 'Remove them']], true));
+    },
+    residue: function () {
+      var rows = '<div class="rowset">' + answers.beneficiaries.map(function (b, i) {
+        return '<div class="rowitem"><input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Full name, or a charity" aria-label="Beneficiary ' + (i + 1) + '">' +
+          '<input class="input" style="max-width:110px" data-list="beneficiaries" data-i="' + i + '" data-f="share" value="' + val(b.share) + '" placeholder="%" inputmode="decimal" aria-label="Beneficiary ' + (i + 1) + ' share in percent">' +
+          rm('beneficiaries', i, 'beneficiary ' + (i + 1), answers.beneficiaries.length > 1) + '</div>';
+      }).join('') + '</div>';
+      var tot = amendShareTotal(answers);
+      return stepHead('Who receives what’s left?', 'This replaces your trust’s list of who receives the remaining trust property after ' + (answers.trustType === 'JOINT' ? 'both of you have died' : 'your death') + '. Any part of your trust that holds a share for a young or disabled beneficiary still applies.') +
+        field('Beneficiaries and shares (percent)', rows + addBtn('beneficiaries', '+ Add another'), 'Shares must add up to 100. Now: ' + fmtShare(tot) + '.') +
+        field('If a beneficiary dies before ' + (answers.trustType === 'JOINT' ? 'the surviving trustmaker' : 'you') + ', their share goes', pills('lapse', [['DESCENDANTS', 'To their children and other descendants'], ['OTHERS', 'To the other beneficiaries']], true));
+    },
+    gifts: function () {
+      return stepHead('Specific gifts', '') +
+        (answers.doAddGifts ? field('Gifts to add', giftRows('addGifts', 'What, for example my grandmother’s ring, or $5,000') + addBtn('addGifts', '+ Add another gift')) : '') +
+        (answers.doRemoveGifts ? field('Gifts in your trust to cancel', giftRows('removeGifts', 'The gift as your trust describes it') + addBtn('removeGifts', '+ Add another'), 'A cancelled gift becomes part of what’s left.') : '');
+    },
+    signing: function () {
+      return stepHead('Signing', 'You sign in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses' : '') + '.') + signDateField();
+    },
+    review: function () {
+      var v = buildVarsTrustAmend(answers, states);
+      var instr = toHtml(renderNodes(sign.nodes, v), 'signing').replace(/<span class="(?:fill|blank)">/g, '<span>');
+      function row(label, value, goto) {
+        return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
+      }
+      var ch = [v.do_trustee ? 'Successor trustee' : '', v.do_residue ? 'Who receives what’s left' : '', v.do_add_gifts ? 'Gifts added' : '', v.do_remove_gifts ? 'Gifts cancelled' : ''].filter(Boolean).join(', ');
+      return stepHead('Your amendment is ready to review', 'Read every word, then follow the signing steps below.') +
+        '<div class="sum">' +
+        row('Amendment', esc(v.ordinal + ' Amendment to ' + v.trust_name), 'trust') +
+        row('Trustmaker' + (v.is_joint ? 's' : ''), esc(v.trustmakers), 'trust') +
+        row('Changes', esc(ch), 'changes') + '</div>' +
+        '<div class="actions">' +
+        '<button type="button" class="btn btn-primary" data-pdf>Download PDF</button>' +
+        '<button type="button" class="btn btn-secondary see-doc" data-pane="p">View your document</button></div>' +
+        '<p class="hint export-status" id="export-status" role="status"></p>' +
+        (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
+        '<div class="instr">' + instr + '</div>' +
+        '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
+    }
+  };
+  function validateTrustAmend(id) {
+    var a = answers, e = [], st = states.map[a.state];
+    if (id === 'start') {
+      if (!st) e.push('Choose your state.');
+      else if (!st.supported) e.push(st.note || 'We can’t offer this in that state yet.');
+      if (!a.origin) e.push('Answer whether this trust was made on Tovakin.');
+      if (!a.trustType) e.push('Choose whether this is a trust for one person or a joint trust.');
+      if (a.trustType === 'JOINT' && !a.bothLiving) e.push('Answer whether both of you are living.');
+      if (a.trustType === 'JOINT' && a.bothLiving === 'no') e.push('This amendment is for a joint trust while both trustmakers are living.');
+      if (!a.ageOk) e.push('Confirm that you are 18 or older.');
+      if (!a.freeOk) e.push('Confirm that you are making this amendment of your own free will.');
+      if (a.origin === 'OTHER' && !a.amendOk) e.push('Confirm that your trust is revocable and can be changed by a signed writing. If it can’t, this amendment isn’t the right document.');
+      if (!e.length && a.origin === 'TOVAKIN') { a.amendOk = true; amendFillFromTovakin(a); }
+    } else if (id === 'trust') {
+      if (clean(a.name1).length < 2) e.push(a.trustType === 'JOINT' ? 'Enter the first trustmaker’s name.' : 'Enter your full legal name.');
+      if (a.trustType === 'JOINT' && clean(a.name2).length < 2) e.push('Enter the second trustmaker’s name.');
+      if (!clean(a.county)) e.push('Choose the county where you live.');
+      if (!clean(a.trustName)) e.push('Enter the name of your trust.');
+      if (!a.origTrustDate) e.push('Enter the date the trust was first signed.');
+      if (!a.trustRestated) e.push('Answer whether the trust has been restated.');
+      if (a.trustRestated === 'yes' && !a.restatementDate) e.push('Enter the date of the restatement.');
+      if (!a.hasPrior) e.push('Answer whether the trust has been amended before.');
+      if (a.hasPrior === 'yes' && !amendPrior(a).length) e.push('Enter the date of each earlier amendment, or answer No.');
+      if (!a.tmIsTrustee) e.push('Answer whether you are currently the trustee.');
+      if (a.tmIsTrustee === 'no' && !clean(a.currentTrustee)) e.push('Enter the current trustee’s name.');
+    } else if (id === 'changes') {
+      if (!(a.doTrustee || a.doResidue || a.doAddGifts || a.doRemoveGifts)) e.push('Choose at least one change.');
+    } else if (id === 'trustee') {
+      if (!clean(a.newTrustee)) e.push('Enter the new successor trustee’s name.');
+      if (!a.hasAltTrustee) e.push('Answer whether to name a backup.');
+      if (a.hasAltTrustee === 'yes' && !clean(a.altTrustee)) e.push('Enter the backup’s name, or answer No.');
+      if (!a.keepPrior) e.push('Choose whether to keep or remove the successor trustees named in your trust now.');
+    } else if (id === 'residue') {
+      var named = (a.beneficiaries || []).filter(function (b) { return clean(b.name); });
+      if (!named.length) e.push('Enter at least one beneficiary.');
+      if (named.some(function (b) { return !(parseFloat(b.share) > 0); })) e.push('Enter a share for each beneficiary.');
+      if (Math.abs(amendShareTotal(a) - 100) > 0.01) e.push('The shares must add up to 100. They now add up to ' + fmtShare(amendShareTotal(a)) + '.');
+      if (!a.lapse) e.push('Choose what happens to the share of a beneficiary who dies first.');
+    } else if (id === 'gifts') {
+      var full = function (g) { return clean(g.item) && clean(g.recipient); };
+      if (a.doAddGifts && !(a.addGifts || []).some(full)) e.push('Enter at least one gift to add, with who receives it.');
+      if (a.doRemoveGifts && !(a.removeGifts || []).some(full)) e.push('Enter at least one gift to cancel, with who it was to.');
+    }
+    return e;
+  }
+
   /* ---------- put the chosen kind together ---------- */
   /* PETS (will, single trust, joint trust): an optional caretaker for the person's pets, a backup, and an
      optional sum of money given to whoever takes them -- with a request, not a requirement, that it be used
@@ -4721,7 +4950,9 @@
     contacts: { key: 'contacts', ls: 'grapevine.contacts.v1', file: 'Important-Contacts', footer: function (n) { return 'Important Contacts for ' + n; },
       empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts },
     petrust: { key: 'petrust', ls: 'grapevine.petrust.v1', file: 'Pet-Trust', footer: function () { return trustFooter(petTrustName(answers)); },
-      empty: EMPTY_PETTRUST, rows: ROWS_PETTRUST, steps: STEPS_PETTRUST, render: RENDER_PETTRUST, validate: validatePetTrust, buildVars: buildVarsPetTrust }
+      empty: EMPTY_PETTRUST, rows: ROWS_PETTRUST, steps: STEPS_PETTRUST, render: RENDER_PETTRUST, validate: validatePetTrust, buildVars: buildVarsPetTrust },
+    trustamend: { key: 'trustamend', ls: 'grapevine.trustamend.v1', file: 'Trust-Amendment', footer: function () { var v = buildVarsTrustAmend(answers, states); return v.ordinal + ' Amendment to ' + (v.trust_name || 'Trust'); },
+      empty: EMPTY_TRUSTAMEND, rows: ROWS_TRUSTAMEND, steps: STEPS_TRUSTAMEND, render: RENDER_TRUSTAMEND, validate: validateTrustAmend, buildVars: buildVarsTrustAmend }
   };
   KIND = KINDS[kindKey];
   buildVars = KIND.buildVars; LS_KEY = KIND.ls + (SPOUSE2 ? '.s2' : '');

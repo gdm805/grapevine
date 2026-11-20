@@ -15,7 +15,7 @@
   if (!root) return;
 
   var GV = window.GV_PLANS || { plans: {} };
-  var KNOWN_PAGES = ['package.html', 'will.html', 'pour-over.html', 'dpoa.html', 'dementia.html', 'hcd.html', 'hipaa.html', 'trust.html', 'trust-joint.html', 'cert.html', 'affidavit.html', 'assignment.html', 'finalwishes.html', 'contacts.html', 'schedulea.html', 'petrust.html'];
+  var KNOWN_PAGES = ['package.html', 'will.html', 'pour-over.html', 'dpoa.html', 'dementia.html', 'hcd.html', 'hipaa.html', 'trust.html', 'trust-joint.html', 'cert.html', 'affidavit.html', 'assignment.html', 'finalwishes.html', 'contacts.html', 'schedulea.html', 'petrust.html', 'trust-amendment.html'];
   var plan = qs('plan');
   var session = qs('session_id') || '';
   var ret = qs('return');
@@ -119,7 +119,7 @@
     /* the Living Trust is one document (one person's trust, or a couple's joint trust), like a single document */
     var one = plan === 'doc' || plan === 'trustonly';
     var goTo = (fl && fl.plan === plan && !one) ? 'package.html' : (ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : plan === 'trustonly' ? (household === 'couple' ? 'trust-joint.html' : 'trust.html') : p.goesTo));
-    var unlockedNames = { will: 'your will', pourover: 'your pour-over will', dpoa: 'your power of attorney', dementia: 'your care preferences', hcd: 'your health care directive', hipaa: 'your HIPAA authorization', trust: 'your living trust', trustjoint: 'your joint living trust', cert: 'your certification of trust', affidavit: 'your affidavit of trustee', assignment: 'your assignment of personal property', finalwishes: 'your final wishes', contacts: 'your important contacts', schedulea: 'your Schedule A', petrust: 'your pet trust' };
+    var unlockedNames = { will: 'your will', pourover: 'your pour-over will', dpoa: 'your power of attorney', dementia: 'your care preferences', hcd: 'your health care directive', hipaa: 'your HIPAA authorization', trust: 'your living trust', trustjoint: 'your joint living trust', cert: 'your certification of trust', affidavit: 'your affidavit of trustee', assignment: 'your assignment of personal property', finalwishes: 'your final wishes', contacts: 'your important contacts', schedulea: 'your Schedule A', petrust: 'your pet trust', trustamend: 'your trust amendment' };
     var unlocked = (plan === 'doc' ? [docKey] : (p.unlocks || [])).map(function (k) { return unlockedNames[k] || k; });
 
     /* back to the finished documents, with the download box brought into view (js/will.js reads ?download=all) */

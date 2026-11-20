@@ -148,8 +148,8 @@ window.GV_PLANS = {
      `order`, which is the list the checkout page offers as "choose a different plan". */
   extra: ['doc', 'health', 'trustpaper', 'trustonly'],
   /* the documents that can be bought one at a time, in the order the pricing page lists them */
-  trustSide: ['schedulea', 'cert', 'affidavit', 'assignment'],
-  singles: ['dpoa', 'hcd', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment', 'petrust'],
+  trustSide: ['schedulea', 'cert', 'affidavit', 'assignment', 'trustamend'],
+  singles: ['dpoa', 'hcd', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment', 'petrust', 'trustamend'],
   /* a document that is NOT sold on its own goes to this package from its own page (19 Oct 2026, Greg: Dementia Care
      Preferences belong with the health care directive, so they come only with Essentials, Complete or Health Care) */
   docPlan: { dementia: 'health', trust: 'trustonly', trustjoint: 'trustonly' },
@@ -174,7 +174,7 @@ window.GV_PLANS = {
       cta: 'Start your will',
       why: 'Start here if you mainly want to name a guardian for your children and say who receives what you own.',
       /* which builders this plan unlocks for download and print, by their data-kind:
-         will | pourover | dpoa | dementia | hcd | hipaa | trust | trustjoint | cert | affidavit | assignment | finalwishes | contacts | petrust */
+         will | pourover | dpoa | dementia | hcd | hipaa | trust | trustjoint | cert | affidavit | assignment | finalwishes | contacts | petrust | trustamend */
       unlocks: ['will', 'contacts'],
       goesTo: 'will.html'
     },
