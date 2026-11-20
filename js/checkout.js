@@ -43,7 +43,7 @@
        and $29 = Dementia Care Preferences (each one link, one price for everyone). Paste each Stripe link between the quotes. */
     doc19: { single: 'https://buy.stripe.com/00w6oHc5RgB9eyKcx12oE08', couple: 'https://buy.stripe.com/00w6oHc5RgB9eyKcx12oE08' },
     doc29: { single: 'https://buy.stripe.com/8x214nedZ5WvfCO8gL2oE09', couple: 'https://buy.stripe.com/8x214nedZ5WvfCO8gL2oE09' },
-    /* $79 = the Companion Animal Trust (pet trust), live link created 20 Nov 2026 (also in cloudflare/payment-check.js, tier 79) */
+    /* $79 = the Pet Trust, live link created 20 Nov 2026 (also in cloudflare/payment-check.js, tier 79) */
     doc79: { single: 'https://buy.stripe.com/aFa6oH5Htet1bmy7cH2oE0g', couple: 'https://buy.stripe.com/aFa6oH5Htet1bmy7cH2oE0g' },
     health: { single: 'https://buy.stripe.com/dRm8wP0n94Sr62e9kP2oE0a', couple: 'https://buy.stripe.com/3cIfZhgm72Kj9eqcx12oE0b' },
     trustpaper: { single: 'https://buy.stripe.com/fZu00j2vhckT76iaoT2oE0d', couple: 'https://buy.stripe.com/28EdR9d9VdoXfCOaoT2oE0c' },

@@ -32,7 +32,7 @@ window.GVFlow = (function () {
   var LABELS = {
     will: 'Will', pourover: 'Pour-Over Will', dpoa: 'Power of Attorney', hcd: 'Health Care Directive', dementia: 'Dementia Care Preferences', hipaa: 'HIPAA Authorization',
     trust: 'Living Trust', trustjoint: 'Living Trust', cert: 'Certification of Trust', affidavit: 'Affidavit of Trustee', assignment: 'Assignment of Property',
-    finalwishes: 'Final Wishes', contacts: 'Important Contacts', schedulea: 'Schedule A (Trust Property)', petrust: 'Companion Animal Trust (Pet Trust)'
+    finalwishes: 'Final Wishes', contacts: 'Important Contacts', schedulea: 'Schedule A (Trust Property)', petrust: 'Pet Trust'
   };
 
   /* Documents each person signs for themselves. For a couple, each of these is answered TWICE in a row

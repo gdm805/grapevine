@@ -136,7 +136,7 @@ window.GV_PLANS = {
        Each price has its own Stripe Payment Link in js/checkout.js and cloudflare/payment-check.js. */
     doc19: { single: 19, couple: 19 },
     doc29: { single: 29, couple: 29 },
-    /* the Companion Animal Trust (pet trust, 20 Nov 2026, Greg): $79, one price for everyone */
+    /* the Pet Trust (20 Nov 2026, Greg): $79, one price for everyone */
     doc79: { single: 79, couple: 79 },
     health: { single: 129, couple: 199 },
     trustpaper: { single: 129, couple: 129 },

@@ -1,11 +1,11 @@
 window.PETRUST_SIGNING = String.raw`
 // ==========================================================================
-//  TOVAKIN  |  SIGNING INSTRUCTIONS for the Companion Animal Trust (pet trust).
+//  TOVAKIN  |  SIGNING INSTRUCTIONS for the Pet Trust.
 //  Same rules as will-template.js (see the notes at the top of that file). It signs the way the
 //  Revocable Living Trust signs (will/trust-signing.js): a notary in every state, plus two witnesses
 //  in Delaware (TRUST_WITNESS_STATES in js/will.js).
 // ==========================================================================
-#! HOW TO SIGN YOUR COMPANION ANIMAL TRUST
+#! HOW TO SIGN YOUR PET TRUST
 
 **Who must be there:** a notary public[[if has_witness]] and two adult witnesses (not people who receive anything under your trust, or their spouses)[[end]]. Bring photo ID.
 

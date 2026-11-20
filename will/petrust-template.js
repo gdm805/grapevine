@@ -1,6 +1,6 @@
 window.PETRUST_TEMPLATE = String.raw`
 // ==========================================================================
-//  TOVAKIN  |  COMPANION ANIMAL TRUST (pet trust): a revocable trust for the care of the Trustmaker's animals
+//  TOVAKIN  |  PET TRUST (also called a companion animal trust): a revocable trust for the care of the Trustmaker's animals
 //  Made 20 Nov 2026 to match the Revocable Living Trust (will/trust-template.js): same title block, same
 //  defined terms (Trust Agreement, Trustmaker, Trustee, Trust Estate, Incapacity), same governing-law and
 //  execution sections, and the living trust's own state signing page ([[include trust_execution]]).
@@ -21,7 +21,7 @@ window.PETRUST_TEMPLATE = String.raw`
 
 @center **{{trust_name}}**
 
-This Companion Animal Trust Agreement (the "Trust Agreement") is made by {{name}} (the "Trustmaker").
+This Pet Trust Agreement (the "Trust Agreement") is made by {{name}} (the "Trustmaker").
 
 The Trustmaker creates this trust for the care of the Trustmaker's animals. The trust created by this Trust Agreement shall be known as {{trust_name}} (the "Trust").
 
@@ -246,7 +246,7 @@ Unless the context clearly requires otherwise, words used in the singular includ
 
 ## Execution
 
-The Trustmaker executes this Trust Agreement as of the date stated below, in {{county_state}}, as Trustmaker and as initial Trustee, and declares that this instrument constitutes the Trustmaker's Companion Animal Trust.
+The Trustmaker executes this Trust Agreement as of the date stated below, in {{county_state}}, as Trustmaker and as initial Trustee, and declares that this instrument constitutes the Trustmaker's Pet Trust.
 
 The Trustmaker acknowledges having read this Trust Agreement, or having had it read and explained to the Trustmaker, and declares that it accurately reflects the Trustmaker's intentions.
 

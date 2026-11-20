@@ -4401,7 +4401,7 @@
      footer of every page */
   function laPageSign() { return answers && answers.state === 'Louisiana' ? 'Testator\u2019s signature: ____________________   ' : ''; }
 
-  /* ---------- COMPANION ANIMAL TRUST (pet trust, 20 Nov 2026) ---------- */
+  /* ---------- PET TRUST (20 Nov 2026) ---------- */
   /* A revocable trust for the care of the person's animals (petrust.html, will/petrust-template.js). It signs like the
      living trust (trust_execution in will/trust-state-text.js). PET_TRUST_LAW holds, for each state where it is offered,
      that state's statute on trusts for the care of animals: cite = the citation printed in the trust;
@@ -4715,7 +4715,7 @@
       empty: EMPTY_SCHEDA, rows: ROWS_SCHEDA, steps: STEPS_SCHEDA, render: RENDER_SCHEDA, validate: validateScheduleA, buildVars: buildVarsScheduleA },
     contacts: { key: 'contacts', ls: 'grapevine.contacts.v1', file: 'Important-Contacts', footer: function (n) { return 'Important Contacts for ' + n; },
       empty: EMPTY_CONTACTS, rows: ROWS_CONTACTS, steps: STEPS_CONTACTS, render: RENDER_CONTACTS, validate: validateContacts, buildVars: buildVarsContacts },
-    petrust: { key: 'petrust', ls: 'grapevine.petrust.v1', file: 'Companion-Animal-Trust', footer: function () { return trustFooter(petTrustName(answers)); },
+    petrust: { key: 'petrust', ls: 'grapevine.petrust.v1', file: 'Pet-Trust', footer: function () { return trustFooter(petTrustName(answers)); },
       empty: EMPTY_PETTRUST, rows: ROWS_PETTRUST, steps: STEPS_PETTRUST, render: RENDER_PETTRUST, validate: validatePetTrust, buildVars: buildVarsPetTrust }
   };
   KIND = KINDS[kindKey];
