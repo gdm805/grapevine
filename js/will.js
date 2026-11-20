@@ -4453,7 +4453,7 @@
     enforcer: '', hasAltEnforcer: '', altEnforcer: '',
     hasCare: '', careInstructions: '', hasVet: '', vet: '',
     hasCaregiverPay: '', caregiverPay: '', hasIntended: '', intendedAmount: '',
-    finalCare: '', remainder: '', remainderName: ''
+    finalCare: '', remainder: '', remainderName: '', hasAltRemainder: '', altRemainderName: ''
   };
   var ROWS_PETTRUST = { animals: { name: '', kind: '', description: '' } };
   var STEPS_PETTRUST = [
@@ -4503,6 +4503,7 @@
     v.final = a.finalCare || 'CAREGIVER';
     v.remainder = a.remainder || 'ESTATE';
     v.remainder_name = clean(a.remainderName);
+    v.alt_remainder_name = clean(a.altRemainderName); v.has_alt_remainder = v.remainder === 'PERSON' && a.hasAltRemainder === 'yes' && !!v.alt_remainder_name;
     v.has_witness = !!TRUST_WITNESS_STATES[v.state];
     v.is_joint = false;
     return v;
@@ -4576,8 +4577,10 @@
     },
     ending: function () {
       return stepHead('When the trust ends', 'The trust ends when the last of your animals dies' + ((petLaw(answers.state) || {}).cap ? ', or earlier if ' + esc(answers.state) + '’s time limit is reached' : '') + '.') +
-        field('Who receives any money left over?', pills('remainder', [['PERSON', 'A person'], ['CHARITY', 'A charity']].concat((petLaw(answers.state) || {}).needsRemainder ? [] : [['ESTATE', 'My living trust or estate']]), true), (petLaw(answers.state) || {}).needsRemainder ? esc(answers.state) + '’s law requires the trust to name who receives what’s left.' : 'With “My living trust or estate,” it goes to your revocable living trust if you have one, otherwise under your will, and if you have no will, to your heirs under state law. That same order applies if a person you name has died.') +
+        field('Who receives any money left over?', pills('remainder', [['PERSON', 'A person'], ['CHARITY', 'A charity']].concat((petLaw(answers.state) || {}).needsRemainder ? [] : [['ESTATE', 'My living trust or estate']]), true), (petLaw(answers.state) || {}).needsRemainder ? esc(answers.state) + '’s law requires the trust to name who receives what’s left.' : 'With “My living trust or estate,” it goes to your revocable living trust if you have one, otherwise under your will, and if you have no will, to your heirs under state law. That same order applies if no person you name is living when the trust ends.') +
         (answers.remainder === 'PERSON' || answers.remainder === 'CHARITY' ? field(answers.remainder === 'CHARITY' ? 'Charity’s name' : 'Their full name', text('remainderName', answers.remainder === 'CHARITY' ? 'For example, Springfield Humane Society' : 'Full name')) : '') +
+        (answers.remainder === 'PERSON' ? field('Name a backup, in case that person isn’t living?', pills('hasAltRemainder', [['yes', 'Yes'], ['no', 'No']], true)) : '') +
+        (answers.remainder === 'PERSON' && answers.hasAltRemainder === 'yes' ? field('Backup’s full name', text('altRemainderName', 'Full name')) : '') +
         field('After an animal dies', pills('finalCare', [['BURIAL', 'Burial'], ['CREMATION', 'Cremation'], ['CAREGIVER', 'The caregiver decides']], true));
     },
     signing: function () {
@@ -4643,6 +4646,8 @@
       if (!a.remainder) e.push('Choose who receives any money left over.');
       if (a.remainder === 'ESTATE' && (petLaw(a.state) || {}).needsRemainder) e.push('In ' + a.state + ', name a person or a charity to receive any money left over.');
       if ((a.remainder === 'PERSON' || a.remainder === 'CHARITY') && !clean(a.remainderName)) e.push(a.remainder === 'CHARITY' ? 'Enter the charity’s name.' : 'Enter the person’s name.');
+      if (a.remainder === 'PERSON' && !a.hasAltRemainder) e.push('Answer whether to name a backup.');
+      if (a.remainder === 'PERSON' && a.hasAltRemainder === 'yes' && !clean(a.altRemainderName)) e.push('Enter the backup’s name, or answer No.');
       if (!a.finalCare) e.push('Choose what happens after an animal dies.');
     }
     return e;

@@ -215,7 +215,7 @@ A Covered Animal shall not be euthanized except on the written recommendation of
 
 When this Trust ends, the Trustee shall distribute any remaining Trust Estate, after paying the final expenses of the Trust,
 [[if remainder=PERSON]]
-to {{remainder_name}}, if then living, and if not, to the trustee of any revocable living trust created by the Trustmaker that is then in existence, to be added to and administered as part of that trust; if there is no such trust, to the Trustmaker's estate, to pass under the Trustmaker's will; and if the Trustmaker left no will, to the persons who would be the Trustmaker's heirs under the laws of {{state}}, determined as though the Trustmaker had died on the date this Trust ends.
+to {{remainder_name}}, if then living[[if has_alt_remainder]]; if not, to {{alt_remainder_name}}, if then living; and if neither is then living,[[else]], and if not,[[end]] to the trustee of any revocable living trust created by the Trustmaker that is then in existence, to be added to and administered as part of that trust; if there is no such trust, to the Trustmaker's estate, to pass under the Trustmaker's will; and if the Trustmaker left no will, to the persons who would be the Trustmaker's heirs under the laws of {{state}}, determined as though the Trustmaker had died on the date this Trust ends.
 [[elif remainder=CHARITY]]
 to {{remainder_name}}, or if that organization is not then in existence or is not then a charitable organization, to a charitable organization with similar purposes selected by the Trustee.
 [[else]]
