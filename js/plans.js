@@ -125,7 +125,7 @@ window.GV_BETA = { on: false, code: 'BETANOV', survey: '445AKO' };   /* beta tes
    Stripe takes the 20% off. The code must exist in Stripe (Product catalog > Coupons: 20% off, once, expires Dec 31)
    with this exact name. The same dates are in js/nav.js (the strip), keep them matching. After Dec 31 it all turns
    itself off. To try it before Nov 27 on this computer only: add ?sale=1 to a page address on 127.0.0.1 (?sale=0 off). */
-window.GV_SALE = { code: 'HOLIDAY20', percent: 20, start: '2026-11-27', end: '2026-12-31', name: 'Holiday sale' };
+window.GV_SALE = { code: 'HOLIDAY26', percent: 20, start: '2026-11-27', end: '2026-12-31', name: 'Holiday sale' };
 window.GV_SALE.on = (function (s) {
   try {
     if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname)) {
