@@ -4915,7 +4915,7 @@
   };
   var ROWS_CODICIL = { priorCodicils: { date: '' }, beneficiaries: { name: '', share: '', backup: '' }, addGifts: { item: '', recipient: '' }, removeGifts: { item: '', recipient: '' },
     backups: { beneficiary: '', backup: '' }, excluded: { name: '', rel: '' } };
-  var AGE_WORDS = { 18: 'eighteen', 19: 'nineteen', 20: 'twenty', 21: 'twenty-one', 22: 'twenty-two', 23: 'twenty-three', 24: 'twenty-four', 25: 'twenty-five', 26: 'twenty-six', 27: 'twenty-seven', 28: 'twenty-eight', 29: 'twenty-nine', 30: 'thirty', 31: 'thirty-one', 32: 'thirty-two', 33: 'thirty-three', 34: 'thirty-four', 35: 'thirty-five' };
+  var YOUNG_AGE_WORDS = { 18: 'eighteen', 19: 'nineteen', 20: 'twenty', 21: 'twenty-one', 22: 'twenty-two', 23: 'twenty-three', 24: 'twenty-four', 25: 'twenty-five', 26: 'twenty-six', 27: 'twenty-seven', 28: 'twenty-eight', 29: 'twenty-nine', 30: 'thirty', 31: 'thirty-one', 32: 'thirty-two', 33: 'thirty-three', 34: 'thirty-four', 35: 'thirty-five' };
   function codicilBackupsOk(a) { return a.willType !== 'POUROVER' && !a.doResidue; }
   var STEPS_CODICIL = [
     { id: 'start', label: 'Where you live' },
@@ -4985,7 +4985,7 @@
     v.backups = (a.backups || []).filter(function (b) { return clean(b.beneficiary) && clean(b.backup); }).map(function (b) { return { bk_ben: clean(b.beneficiary), bk_backup: clean(b.backup) }; });
     v.do_backups = !!a.doBackups && codicilBackupsOk(a) && v.backups.length > 0;
     var age = parseInt(a.youngAge, 10);
-    v.young_age_words = AGE_WORDS[age] ? AGE_WORDS[age] + ' (' + age + ')' : '';
+    v.young_age_words = YOUNG_AGE_WORDS[age] ? YOUNG_AGE_WORDS[age] + ' (' + age + ')' : '';
     v.young_trustee = clean(a.youngTrustee);
     v.alt_young_trustee = clean(a.altYoungTrustee); v.has_alt_young_trustee = a.hasAltYoungTrustee === 'yes' && !!v.alt_young_trustee;
     v.do_young = !!a.doYoung && !!v.young_age_words && !!v.young_trustee;
@@ -5083,7 +5083,7 @@
         field('Beneficiaries and their backups', rows + addBtn('backups', '+ Add another'));
     },
     young: function () {
-      var opts = '<option value="">Choose an age</option>' + Object.keys(AGE_WORDS).map(function (n) { return '<option value="' + n + '"' + (String(answers.youngAge) === n ? ' selected' : '') + '>' + n + '</option>'; }).join('');
+      var opts = '<option value="">Choose an age</option>' + Object.keys(YOUNG_AGE_WORDS).map(function (n) { return '<option value="' + n + '"' + (String(answers.youngAge) === n ? ' selected' : '') + '>' + n + '</option>'; }).join('');
       return stepHead('Young beneficiaries', 'A beneficiary under this age doesn’t receive their share directly. The trustee you name holds it for them, can pay for their health, education and support, and gives them the rest at this age.') +
         field('Age they receive their share', '<select class="input" data-k="youngAge">' + opts + '</select>') +
         field('Who manages it until then (trustee)', text('youngTrustee', 'Full name')) +
@@ -5180,7 +5180,7 @@
       if (!(a.backups || []).some(function (b) { return clean(b.beneficiary) && clean(b.backup); })) e.push('Enter at least one beneficiary and their backup.');
       if ((a.backups || []).some(function (b) { return !clean(b.beneficiary) !== !clean(b.backup); })) e.push('Enter both a beneficiary and a backup on each line, or remove the line.');
     } else if (id === 'young') {
-      if (!AGE_WORDS[parseInt(a.youngAge, 10)]) e.push('Choose the age young beneficiaries receive their share.');
+      if (!YOUNG_AGE_WORDS[parseInt(a.youngAge, 10)]) e.push('Choose the age young beneficiaries receive their share.');
       if (!clean(a.youngTrustee)) e.push('Enter who manages it until then.');
       if (!a.hasAltYoungTrustee) e.push('Answer whether to name a backup.');
       if (a.hasAltYoungTrustee === 'yes' && !clean(a.altYoungTrustee)) e.push('Enter the backup’s name, or answer No.');
