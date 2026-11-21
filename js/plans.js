@@ -165,7 +165,8 @@ window.GV_PLANS = {
   },
   plans: {
     will: {
-      name: 'Will',
+      /* 21 Nov 2026 (Greg): now sold as the stand-alone will in Single documents */
+      name: 'Last Will',
       tag: 'The one document almost everyone needs.',
       lead: 'Just your will',
       /* the full list of what this plan unlocks, always -- no trailing "and more". Keep this list and
@@ -179,7 +180,8 @@ window.GV_PLANS = {
       goesTo: 'will.html'
     },
     essentials: {
-      name: 'Essentials',
+      /* 21 Nov 2026 (Greg): sold as the "Will Package" (the will with the powers of attorney and health care documents) */
+      name: 'Will',
       tag: 'Your will, plus the documents that let someone act for you.',
       lead: 'Everything in Will, plus these additional documents:',
       includes: ['Last Will and Testament', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],

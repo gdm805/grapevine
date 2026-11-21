@@ -5718,7 +5718,7 @@
     if (sw) sw.hidden = true;
   }
   function pkgName(f) {
-    var short = { health: 'Powers of Attorney and Health Care', trustpaper: 'Trust Paperwork', trustonly: 'Trust', doc: 'Document' };
+    var short = { will: 'Last Will', essentials: 'Will', health: 'Powers of Attorney and Health Care', trustpaper: 'Trust Paperwork', trustonly: 'Trust', doc: 'Document' };
     return short[f.plan] || (f.plan.charAt(0).toUpperCase() + f.plan.slice(1));
   }
   function renderPkgTrack(f, idx) {
