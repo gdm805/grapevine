@@ -23,8 +23,9 @@ window.GVFlow = (function () {
     /* the two short packages sold from "Need a smaller package?" on the pricing page */
     health: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'],
     trustpaper: ['schedulea', 'cert', 'affidavit', 'assignment'],
-    /* the Trust Package (21 Nov 2026): the trust (Schedule A is inside it), then its paperwork */
-    trustonly: ['trust', 'cert', 'affidavit', 'assignment']
+    /* the Trust Package (21 Nov 2026): the trust, then its paperwork. Schedule A is printed inside the trust and is
+       also its own step here, a list that can be updated later without reprinting the trust (Greg) */
+    trustonly: ['trust', 'schedulea', 'cert', 'affidavit', 'assignment']
   };
   var PAGES = {
     will: 'will.html', pourover: 'pour-over.html', dpoa: 'dpoa.html', hcd: 'hcd.html', dementia: 'dementia.html', hipaa: 'hipaa.html',
