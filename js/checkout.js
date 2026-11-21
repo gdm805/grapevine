@@ -32,7 +32,9 @@
   /* LIVE links (real money), created 1 Nov 2026 with Managed Payments on. */
   var PAYMENT_LINKS = {
     will: { single: 'https://buy.stripe.com/bJe3cv3zl3On3U69kP2oE00', couple: 'https://buy.stripe.com/8x2cN5gm798H8am54z2oE01' },
-    essentials: { single: 'https://buy.stripe.com/7sY6oHfi370zbmydB52oE02', couple: 'https://buy.stripe.com/8x28wPb1Net1fCOeF92oE03' },
+    /* the Will Package at $199 / $329, live links created 21 Nov 2026 (the old $249 / $399 links stay in
+       cloudflare/payment-check.js so earlier payments still unlock) */
+    essentials: { single: 'https://buy.stripe.com/7sYcN5edZ70zfCOcx12oE0h', couple: 'https://buy.stripe.com/eVqdR95HtdoXfCO54z2oE0i' },
     complete: { single: 'https://buy.stripe.com/4gMeVdedZ70z4Ya1Sn2oE04', couple: 'https://buy.stripe.com/00wfZhd9Vfx52Q20Oj2oE05' },
     /* the smaller offers from "Need a smaller package?" -- paste each Stripe link between the quotes.
        "doc" is used for every single document (they all cost the same); the checkout page remembers which

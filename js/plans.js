@@ -123,7 +123,9 @@ window.GV_PLANS = {
   order: ['will', 'essentials', 'complete'],
   prices: {
     will: { single: 119, couple: 199 },
-    essentials: { single: 249, couple: 399 },
+    /* the Will Package (21 Nov 2026, Greg): $199 / $329, down from $249 / $399, so it costs less than the stand-alone
+       will plus the Powers of Attorney and Health Care package ($248 / $398) */
+    essentials: { single: 199, couple: 329 },
     complete: { single: 429, couple: 549 },
     /* the smaller offers: any one document, and two short packages (see also `extra` below) */
     doc: { single: 49, couple: 79 },
