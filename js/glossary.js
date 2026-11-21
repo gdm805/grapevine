@@ -926,58 +926,6 @@ window.GV_GLOSSARY = [
   "varies": true,
   "see": [],
   "learn": []
- },
- {
-  "id": "notarial-testament",
-  "term": "Notarial Testament",
-  "aka": [],
-  "topic": "Louisiana",
-  "def": "The formal Louisiana will, signed before a notary and two witnesses with a specific attestation, and signed by the testator on each separate page.",
-  "varies": false,
-  "see": [],
-  "learn": []
- },
- {
-  "id": "forced-heirship",
-  "term": "Forced Heirship",
-  "aka": [
-   "Legitime"
-  ],
-  "topic": "Louisiana",
-  "def": "A Louisiana rule that reserves a portion of an estate for certain children, generally those 23 or younger or with certain disabilities. The reserved portion is called the legitime.",
-  "varies": false,
-  "see": [],
-  "learn": []
- },
- {
-  "id": "usufruct",
-  "term": "Usufruct / Naked Ownership",
-  "aka": [],
-  "topic": "Louisiana",
-  "def": "In Louisiana, usufruct is the right to use property and receive its income for a time, often given to a surviving spouse; naked ownership is ownership of the property subject to that usufruct.",
-  "varies": false,
-  "see": [],
-  "learn": []
- },
- {
-  "id": "tutor",
-  "term": "Tutor / Tutorship",
-  "aka": [],
-  "topic": "Louisiana",
-  "def": "The Louisiana term for the person responsible for a minor child, similar to a guardian in other states.",
-  "varies": false,
-  "see": [],
-  "learn": []
- },
- {
-  "id": "succession",
-  "term": "Succession",
-  "aka": [],
-  "topic": "Louisiana",
-  "def": "The Louisiana term for an estate and the process of settling it, similar to probate elsewhere.",
-  "varies": false,
-  "see": [],
-  "learn": []
  }
 ];
 
@@ -1043,12 +991,6 @@ window.GV_GLOSSARY_INLINE = {
  "witnesses": "witness",
  "notary": "notary-public",
  "notarized": "notary-public",
- "forced heir": "forced-heirship",
- "forced heirs": "forced-heirship",
- "legitime": "forced-heirship",
- "usufruct": "usufruct",
- "tutor": "tutor",
- "notarial testament": "notarial-testament",
  "funding": "funding-a-trust",
  "fund your trust": "funding-a-trust",
  "intestate": "intestate",
