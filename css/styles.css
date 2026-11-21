@@ -619,3 +619,10 @@ details[id] { scroll-margin-top: 110px; }
 .one-list li.one-group:first-child { padding-top: 8px; }
 .alt-plan { margin: 14px 0; padding: 12px 14px; border-radius: 12px; background: var(--grape-tint, #efe8f7); font-size: 15px; line-height: 1.5; }
 .alt-plan a { font-weight: 700; white-space: nowrap; }
+/* the holiday sale (js/plans.js GV_SALE): the top strip, the crossed-out regular price, the checkout note */
+.sale-bar { background: #b3261e; color: #fff; font-size: 14.5px; line-height: 1.4; padding: 8px 0; text-align: center; }
+.sale-bar a { color: #fff; font-weight: 700; text-decoration: underline; white-space: nowrap; }
+s.was { color: var(--ink-mute, #6b6b75); font-weight: 400; font-size: 0.6em; text-decoration-thickness: 2px; margin-right: 4px; vertical-align: middle; }
+.sale-note { margin: 12px 0; padding: 10px 14px; border-radius: 12px; background: #fdecea; color: #7a1c16; font-size: 15px; line-height: 1.45; }
+.price-tabs s.was { font-size: 0.95em; vertical-align: baseline; }
+.price-tabs a.on s.was { color: rgba(255,255,255,0.75); }

@@ -52,6 +52,25 @@
   header.parentNode.insertBefore(bar, header);
 })();
 
+/* HOLIDAY SALE STRIP: a line at the top of every page while the sale runs. The dates and percent are set in
+   js/plans.js (GV_SALE); this copy is for pages that don't load js/plans.js -- keep them matching. */
+(function () {
+  'use strict';
+  var s = window.GV_SALE || { percent: 20, start: '2026-11-27', end: '2026-12-31', name: 'Holiday sale' };
+  var on = s.on;
+  if (on === undefined) {
+    var d = new Date(), t = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    on = t >= s.start && t <= s.end;
+    try { if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname) && localStorage.getItem('grapevine.salepreview') === '1') on = true; } catch (e) { /* ignore */ }
+  }
+  var header = document.querySelector('.site-header');
+  if (!on || !header) return;
+  var bar = document.createElement('div');
+  bar.className = 'sale-bar';
+  bar.innerHTML = '<div class="container"><strong>' + s.name + ': ' + s.percent + '% off every document</strong> through December 31. <a href="' + (window.GVUrl ? window.GVUrl('pricing.html') : 'pricing.html') + '">See prices</a></div>';
+  header.parentNode.insertBefore(bar, header);
+})();
+
 /* WELCOME BACK: someone who closed the site in the middle of a package sees a strip at the top of the home,
    pricing and other pages that takes them straight back to the next unfinished document (or, when every
    document is answered, to the package summary). Answers are saved in this browser as they go. Not shown

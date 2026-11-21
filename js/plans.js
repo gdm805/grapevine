@@ -119,6 +119,26 @@ window.GV_BETA = { on: false, code: 'BETANOV', survey: '445AKO' };   /* beta tes
   } catch (e) { /* storage blocked: not a beta tester in this browser */ }
 })();
 
+/* THE HOLIDAY SALE (21 Nov 2026, Greg): 20% off every document from Black Friday, Nov 27, through Dec 31, 2026.
+   While it runs (by the visitor's own date), every price on the site shows 20% off with the regular price crossed out,
+   a strip at the top of every page says so, and checkout sends the Stripe promotion code below with the payment, so
+   Stripe takes the 20% off. The code must exist in Stripe (Product catalog > Coupons: 20% off, once, expires Dec 31)
+   with this exact name. The same dates are in js/nav.js (the strip), keep them matching. After Dec 31 it all turns
+   itself off. To try it before Nov 27 on this computer only: add ?sale=1 to a page address on 127.0.0.1 (?sale=0 off). */
+window.GV_SALE = { code: 'HOLIDAY20', percent: 20, start: '2026-11-27', end: '2026-12-31', name: 'Holiday sale' };
+window.GV_SALE.on = (function (s) {
+  try {
+    if (/^(127\.0\.0\.1|localhost)$/.test(location.hostname)) {
+      var q = new URLSearchParams(location.search).get('sale');
+      if (q === '1') localStorage.setItem('grapevine.salepreview', '1');
+      if (q === '0') localStorage.removeItem('grapevine.salepreview');
+      if (localStorage.getItem('grapevine.salepreview') === '1') return true;
+    }
+  } catch (e) { /* ignore */ }
+  var d = new Date(), t = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  return t >= s.start && t <= s.end;
+})(window.GV_SALE);
+
 window.GV_PLANS = {
   order: ['will', 'essentials', 'complete'],
   prices: {
@@ -162,11 +182,23 @@ window.GV_PLANS = {
   docPriceKey: function (docKey) { return this.docTier[docKey] || ((this.trustSide || []).indexOf(docKey) > -1 ? 'doctrust' : 'doc'); },
   /* the price of one single document for this household */
   docPrice: function (docKey, household) { return this.priceFor(this.docPriceKey(docKey), household); },
+  /* the price to pay: the regular price, or during the sale (window.GV_SALE above) that price less the sale percent,
+     to the cent, exactly as Stripe's percent-off code works it out */
   priceFor: function (planKey, household) {
+    var r = this.regularFor(planKey, household), s = window.GV_SALE;
+    return s && s.on && r ? Math.round(r * (100 - s.percent)) / 100 : r;
+  },
+  regularFor: function (planKey, household) {
     var p = this.prices[planKey];
     if (!p) return 0;
     return p[household === 'couple' ? 'couple' : 'single'];
   },
+  docRegular: function (docKey, household) { return this.regularFor(this.docPriceKey(docKey), household); },
+  saleOn: function () { return !!(window.GV_SALE && window.GV_SALE.on); },
+  /* "$119", or "$95.20" when there are cents */
+  money: function (n) { return '$' + Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); },
+  /* a price as HTML: during the sale, the regular price crossed out before it */
+  priceHtml: function (now, regular) { return (this.saleOn() && regular && regular !== now ? '<s class="was">' + this.money(regular) + '</s> ' : '') + this.money(now); },
   plans: {
     will: {
       /* 21 Nov 2026 (Greg): now sold as the stand-alone will in Single documents */

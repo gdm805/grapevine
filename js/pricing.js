@@ -6,7 +6,7 @@
   var GV = window.GV_PLANS;
   var PLANS = GV.plans;
 
-  function money(n) { return '$' + n.toLocaleString('en-US'); }
+  function money(n) { return window.GV_PLANS && window.GV_PLANS.money ? window.GV_PLANS.money(n) : '$' + n.toLocaleString('en-US'); }
 
   /* Single vs. couple: one toggle controls every price on the page. Defaults to "single"; remembered
      in this browser (sessionStorage) so it survives normal navigation but resets in a new tab. */
@@ -27,9 +27,9 @@
   function paint() {
     /* every price on the page, whichever plan it belongs to, plus the "one-time" label right after it */
     Object.keys(GV.prices).forEach(function (k) {
-      var amt = money(GV.priceFor(k, household));
+      var amt = GV.priceHtml ? GV.priceHtml(GV.priceFor(k, household), GV.regularFor(k, household)) : money(GV.priceFor(k, household));
       document.querySelectorAll('[data-price="' + k + '"]').forEach(function (el) {
-        el.textContent = amt;
+        el.innerHTML = amt;
         var per = el.parentElement && el.parentElement.querySelector('.per');
         if (per) per.textContent = (household === 'couple' && GV.prices[k].single !== GV.prices[k].couple) ? 'one-time, for a couple' : 'one-time';
       });

@@ -9,7 +9,7 @@
      nothing. Only while GV_PAYMENT_CHECK_URL is empty does it trust the link, as it used to. */
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function money(n) { return '$' + n.toLocaleString('en-US'); }
+  function money(n) { return window.GV_PLANS && window.GV_PLANS.money ? window.GV_PLANS.money(n) : '$' + n.toLocaleString('en-US'); }
 
   var root = document.getElementById('paid');
   if (!root) return;

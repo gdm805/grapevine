@@ -5825,7 +5825,7 @@
     var price = GV ? (plan === 'doc' && GV.docPrice ? GV.docPrice(kindKey, hh) : GV.priceFor(plan, hh)) : 0;
     var beta = false;
     try { beta = !!(window.GV_BETA && window.GV_BETA.on && localStorage.getItem('grapevine.beta') === '1' && localStorage.getItem('grapevine.beta.used') !== '1'); } catch (e) {}
-    return { price: price, priceText: price ? '$' + price : '', beta: beta };
+    return { price: price, priceText: price ? (GV && GV.money ? GV.money(price) : '$' + price) : '', beta: beta };
   }
   function payButton(o) {
     return '<a class="btn btn-primary pay-btn" href="' + checkoutHref() + '">' +

@@ -76,10 +76,10 @@
   } else {
     var b = beta();
     action = '<div class="pkg-sum-pay"><h2>' + (open.length ? 'When they\u2019re all answered' : 'Three steps left') + '</h2>' +
-      '<ol class="pkg-paysteps"><li>' + (b ? 'Answer a short survey (about 5 minutes) and submit it. Beta testers pay nothing.' : 'Pay ' + (price ? '$' + price : '') + ' once for all ' + n + ' documents.') + '</li>' +
+      '<ol class="pkg-paysteps"><li>' + (b ? 'Answer a short survey (about 5 minutes) and submit it. Beta testers pay nothing.' : 'Pay ' + (price ? (GV && GV.money ? GV.money(price) : '$' + price) : '') + ' once for all ' + n + ' documents.') + '</li>' +
       '<li>Download them, then print the PDF.</li>' +
       '<li>Sign each one, following its signing steps (on this page).</li></ol>' +
-      '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Take the survey' : 'Pay ' + (price ? '$' + price : '') + ' and download') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
+      '<a class="btn btn-primary pay-btn" href="' + esc(checkoutHref) + '">' + (b ? 'Take the survey' : 'Pay ' + (price ? (GV && GV.money ? GV.money(price) : '$' + price) : '') + ' and download') + ' <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>' +
       '<p class="pkg-free">Checking and changing your answers stays free, before and after you pay.</p></div>';
   }
 

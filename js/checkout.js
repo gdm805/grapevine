@@ -56,7 +56,7 @@
   };
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
-  function money(n) { return '$' + n.toLocaleString('en-US'); }
+  function money(n) { return window.GV_PLANS && window.GV_PLANS.money ? window.GV_PLANS.money(n) : '$' + n.toLocaleString('en-US'); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
   var GV = window.GV_PLANS || { order: [], prices: {}, plans: {} };
@@ -102,6 +102,8 @@
     /* one document per trust: a couple pays the same $49 as one person for these, using the single link */
     var payHousehold = (plan === 'doc' && docKey && (GV.trustSide || []).indexOf(docKey) > -1) ? 'single' : household;
     var p = GV.plans[plan], price = plan === 'doc' && docKey ? GV.docPrice(docKey, payHousehold) : GV.priceFor(plan, payHousehold);
+    var regular = GV.regularFor ? (plan === 'doc' && docKey ? GV.docRegular(docKey, payHousehold) : GV.regularFor(plan, payHousehold)) : price;
+    var sale = GV.saleOn && GV.saleOn() && window.GV_SALE;
     /* a single document's Stripe link depends on its price (doc, doc19 or doc29); doc19 and doc29 are one price for everyone */
     var linkPlan = plan === 'doc' && docKey && GV.docTier[docKey] ? GV.docTier[docKey] : plan;
     if (linkPlan === 'doc19' || linkPlan === 'doc29' || linkPlan === 'doc79') payHousehold = 'single';
@@ -133,6 +135,8 @@
     if (link) { payHref = link + (link.indexOf('?') > -1 ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(plan + '_' + payHousehold + (plan === 'doc' && docKey ? '_' + docKey : (adTag ? '_x' : '')) + adTag); }
     /* beta testers: Stripe applies the 100%-off code for them (see GV_BETA in js/plans.js) */
     if (link && betaTester()) payHref += '&prefilled_promo_code=' + encodeURIComponent(window.GV_BETA.code);
+    /* the holiday sale: Stripe applies the sale's promotion code for everyone (js/plans.js GV_SALE) */
+    else if (link && sale) payHref += '&prefilled_promo_code=' + encodeURIComponent(sale.code);
 
     /* arrived from a finished document: a short page (1 Nov 2026, Greg): no side panel, the household goes with the
        price, a package's list folds away, and a known state isn't asked again. The refund note and the Terms box stay. */
@@ -150,11 +154,12 @@
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
       (docLabel ? '' : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
       '<div class="order-card">' +
-        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + money(price) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : docLabel && linkPlan !== 'doc19' && linkPlan !== 'doc29' && linkPlan !== 'doc79' && !perTrust ? ', for one person' : '') + '</span></p></div>' +
+        '<div class="order-head"><h2>' + esc(p.name) + '</h2><p class="price"><span class="amt">' + (GV.priceHtml ? GV.priceHtml(price, regular) : money(price)) + '</span><span class="per">one-time' + (payHousehold === 'couple' ? ', for a couple' : docLabel && linkPlan !== 'doc19' && linkPlan !== 'doc29' && linkPlan !== 'doc79' && !perTrust ? ', for one person' : '') + '</span></p></div>' +
         (docLabel
           ? (plan === 'doc' || includes.length < 2 ? '' : '<details class="includes-fold"><summary>What’s included</summary>' + whatIncludes + '</details>')
           : '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' + whatIncludes) +
         /* the living trust on its own: the Trust Package, side by side, as the other choice (21 Nov 2026, Greg) */
+        (sale ? '<p class="sale-note"><strong>' + esc(sale.name) + ': ' + sale.percent + '% off</strong> through December 31. The payment page shows the discount before you pay.</p>' : '') +
         (plan === 'trustdoc' && GV.plans.trustonly ? '<p class="alt-plan">Or the <strong>Trust Package</strong>, ' + money(GV.priceFor('trustonly', household)) + ': this trust with its paperwork (Schedule A, Certification of Trust, Affidavit of Trustee, Assignment), a pour-over will, powers of attorney, health care documents, Final Wishes and Important Contacts. <a href="' + switchLink('trustonly') + '">Choose the Trust Package</a></p>' : '') +
         (perTrust ? '<p class="per-trust">Priced per trust. One purchase covers one trust, including a married couple’s joint trust. If you and your spouse or partner each have your own separate trust, you’ll need one for each person.</p>' : '') +
         (link
