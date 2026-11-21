@@ -144,7 +144,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
   wrap.id = 'gv-help';
   wrap.className = 'gv-help';
   wrap.innerHTML =
-    '<button type="button" class="gv-help-btn" aria-expanded="false" aria-controls="gv-help-panel">Need help?</button>' +
+    '<button type="button" class="gv-help-btn" aria-label="Need help?" aria-expanded="false" aria-controls="gv-help-panel"><span class="gv-help-q" aria-hidden="true">Help</span><span class="gv-help-txt">Need help?</span></button>' +
     '<div class="gv-help-panel" id="gv-help-panel" role="dialog" aria-label="Help" hidden>' +
       '<button type="button" class="gv-help-x" aria-label="Close">&times;</button>' +
       '<p class="gv-help-h">How can we help?</p>' +
@@ -158,9 +158,20 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
       '<a class="gv-help-link" href="mailto:support@tovakin.com?subject=Tovakin%20help">Email support@tovakin.com &rarr;</a>' +
       '<p class="gv-help-note">We help with using Tovakin, such as finding your documents, downloading and printing. We can’t give legal advice about your situation.</p>' +
     '</div>';
-  function mount() { document.body.appendChild(wrap); }
-  if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
   var btn = wrap.querySelector('.gv-help-btn'), panel = wrap.querySelector('.gv-help-panel');
+  /* the button sits in the top bar, next to "Get started" ("Help" on phones), so it never covers anything on the
+     page (21 Nov 2026, Greg: the floating button sat on top of wording); the panel opens under the top bar.
+     A page without the top bar keeps the floating button in the bottom corner. */
+  function mount() {
+    var bar = document.querySelector('.site-header .bar');
+    if (bar) {
+      wrap.classList.add('gv-help--top');
+      btn.classList.add('gv-help-btn--bar');
+      bar.insertBefore(btn, bar.querySelector('.menu-btn'));
+    }
+    document.body.appendChild(wrap);
+  }
+  if (document.body) mount(); else document.addEventListener('DOMContentLoaded', mount);
   function set(open) { panel.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); if (open) { var l = panel.querySelector('#gv-chat-in') || panel.querySelector('a'); if (l) l.focus(); } }
   btn.addEventListener('click', function () { set(panel.hidden); });
   if (chatOn) {
@@ -171,35 +182,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
   }
   wrap.querySelector('.gv-help-x').addEventListener('click', function () { set(false); btn.focus(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
-  document.addEventListener('click', function (e) { if (!panel.hidden && !wrap.contains(e.target)) set(false); });
-  /* the button never sits on top of another button (Back / Continue, a pay button...): while one is under it,
-     it fades out of the way, and comes back once that button scrolls past (21 Nov 2026 -- on phones it covered
-     part of Continue) */
-  var dodgeQ = 0;
-  function dodge() {
-    dodgeQ = 0;
-    var away = false;
-    if (panel.hidden && wrap.parentNode) {
-      var b = btn.getBoundingClientRect();
-      if (b.width) {
-        var els = document.querySelectorAll('button, .btn, [role="button"], input, select, textarea');
-        for (var i = 0; i < els.length && !away; i++) {
-          var el = els[i];
-          if (wrap.contains(el)) continue;
-          var r = el.getBoundingClientRect();
-          if (r.width && r.height && r.left < b.right + 6 && r.right > b.left - 6 && r.top < b.bottom + 6 && r.bottom > b.top - 6) away = true;
-        }
-      }
-    }
-    wrap.classList.toggle('gv-help--away', away);
-  }
-  function queueDodge() { if (!dodgeQ) dodgeQ = (window.requestAnimationFrame || setTimeout)(dodge); }
-  window.addEventListener('scroll', queueDodge, { passive: true });
-  window.addEventListener('resize', queueDodge);
-  document.addEventListener('click', function () { setTimeout(queueDodge, 60); });
-  document.addEventListener('input', function () { setTimeout(queueDodge, 60); });
-  window.addEventListener('load', queueDodge);
-  setTimeout(queueDodge, 300);
+  document.addEventListener('click', function (e) { if (!panel.hidden && !wrap.contains(e.target) && !btn.contains(e.target)) set(false); });
 
   /* THE HELP CHAT: the conversation is kept for this browser tab only (sessionStorage), so it follows the person
      from page to page and is gone when the tab closes. Each question goes to the Cloudflare program, which

@@ -1186,7 +1186,7 @@
       return stepHead('About you', 'Use your name as it appears on your ID.') +
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
-        field('County where you’ll sign', countySelect('signingCounty'), 'This goes in the county line of the self-proving affidavit and notary section.') +
+        signCountyField('This goes in the county line of the self-proving affidavit and notary section.') +
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married' ? field('Your spouse\u2019s or domestic partner\u2019s full legal name', text('spouse', '')) + revokeQ('will') : '');
     },
@@ -1690,7 +1690,7 @@
       return stepHead('About you', 'Use your name as it appears on your ID.') +
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
-        field('County where you’ll sign', countySelect('signingCounty'), 'This goes in the county line of the self-proving affidavit and notary section.') +
+        signCountyField('This goes in the county line of the self-proving affidavit and notary section.') +
         field('Are you married or in a registered domestic partnership?', pills('marital', [['unmarried', 'No'], ['married', 'Yes']], true)) +
         (answers.marital === 'married'
           ? field('Your spouse’s or domestic partner’s full legal name', text('spouse', '')) +
@@ -2003,7 +2003,7 @@
       return stepHead('About you', 'Use your name as it appears on your ID.') +
         field('Your full legal name', text('name', 'For example, Maria Elena Alvarez', { auto: 'off' })) +
         field('County where you live', countySelect('county')) +
-        field('County where you’ll sign', countySelect('signingCounty'), 'This goes in the notary section and the line that says where the document was signed.');
+        signCountyField('This goes in the notary section and the line that says where the document was signed.');
     },
     agent: function () {
       return stepHead('Who should act for you?', 'Your agent is the person who can handle your money and property for you, such as paying bills and dealing with your bank. Your document calls this person your Agent.') + coupleRoleNote('Agent') +
@@ -2308,6 +2308,23 @@
     { id: 'review', label: 'Review and sign' }
   ];
   function countyKey(x) { return clean(x).toLowerCase().replace(/\s+(county|parish|borough|census area|municipality)$/, ''); }
+  /* "County where you'll sign": once the county someone lives in is known, it is the signing county too, shown
+     as plain text with a box to tick for a different county (21 Nov 2026, Greg: the questions seemed to ask for
+     the county twice). Ticked, or carried in as a different county from another document, the list shows. */
+  function signCountyField(hint) {
+    var home = clean(answers.county);
+    var other = '<label class="check"><input type="checkbox" data-k="signCountyOther"' + (answers.signCountyOther ? ' checked' : '') + ' data-rerender><span>I\u2019ll sign in a different county</span></label>';
+    if (!home) return field('County where you\u2019ll sign', countySelect('signingCounty'), hint);
+    if (!answers.signCountyOther) return field('County where you\u2019ll sign', '<p class="sign-county">' + esc(home) + '</p>' + other);
+    return field('County where you\u2019ll sign', countySelect('signingCounty'), hint) + other;
+  }
+  /* keeps the signing county the same as the home county (and following it if that changes) unless someone
+     chose a different one; a different county carried in from another document counts as chosen */
+  function syncSignCounty(a) {
+    if (!('signingCounty' in a) || !clean(a.county) || a.signCountyOther) return;
+    if (!a.signingCounty || a.signingCounty === a.signCountyFrom || countyKey(a.signingCounty) === countyKey(a.county)) { a.signingCounty = a.county; a.signCountyFrom = a.county; }
+    else a.signCountyOther = true;
+  }
   function countySelect(k, disabledHint) {
     var abbr = (window.HCD_STATE_ABBR || {})[answers.state];
     var list = (window.HCD_COUNTY_DATA || {})[abbr] || [];
@@ -2449,7 +2466,7 @@
     },
     signing: function () {
       var h = stepHead('Signing', 'This fills in the county on your document’s notary or witness section.') +
-        field('County where you’ll sign', countySelect('signingCounty')) +
+        signCountyField('') +
         signDateField();
       if (hcdSet(answers, 'exec_choice') === 'yes') {
         var routes = (hcdSet(answers, 'exec_routes') || '').split(',').filter(Boolean);
@@ -3022,7 +3039,7 @@
     },
     signing: function () {
       return stepHead('Signing', '') +
-        field('County where you’ll sign', countySelect('signingCounty')) +
+        signCountyField('') +
         signDateField('If you do know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, write the same date by hand on all of them when you sign.');
     },
     review: function () {
@@ -3323,7 +3340,7 @@
     },
     signing: function () {
       return stepHead('Signing', '') +
-        field('County where you’ll sign', countySelect('signingCounty')) +
+        signCountyField('') +
         signDateField('If you do know the date you\u2019ll sign in front of the notary, enter it and sign on that date. It becomes your trust\u2019s date, and your Certification of Trust, Assignment, Schedule A and pour-over will use it too. If you leave it blank, write the same date by hand on all of them when you sign.');
     },
     review: function () {
@@ -3558,7 +3575,7 @@
     },
     signing: function () {
       return stepHead('Signing', '') +
-        field('County where you’ll sign', countySelect('signingCounty')) +
+        signCountyField('') +
         signDateField();
     },
     review: function () {
@@ -3754,7 +3771,7 @@
     signing: function () {
       return stepHead('Signing', '') +
         field('City where you’ll sign', text('signingCity', '')) +
-        field('County where you’ll sign', countySelect('signingCounty')) +
+        signCountyField('') +
         signDateField();
     },
     review: function () {
@@ -3917,7 +3934,7 @@
     },
     signing: function () {
       return stepHead('Signing', '') +
-        field('County where you’ll sign', countySelect('signingCounty')) +
+        signCountyField('') +
         signDateField();
     },
     review: function () {
@@ -5423,6 +5440,7 @@
   function save() {
     if (BLANK) return;
     if ((KIND.key === 'trust' || KIND.key === 'trustjoint') && answers.county && !answers.signingCounty) answers.signingCounty = answers.county;
+    syncSignCounty(answers);
     autoTrustName(answers, KIND);
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
@@ -6044,12 +6062,17 @@
     }
     if (t.type === 'checkbox') {
       if (t.hasAttribute('data-k')) answers[t.getAttribute('data-k')] = t.checked;
+      if (t.getAttribute('data-k') === 'signCountyOther' && !t.checked) { answers.signingCounty = answers.county; answers.signCountyFrom = answers.county; }
       else if (t.hasAttribute('data-list')) answers[t.getAttribute('data-list')][+t.getAttribute('data-i')][t.getAttribute('data-f')] = t.checked;
     } else if (t.type === 'radio' || t.tagName === 'SELECT') {
       if (t.hasAttribute('data-k')) answers[t.getAttribute('data-k')] = t.value;
       else if (t.hasAttribute('data-list')) answers[t.getAttribute('data-list')][+t.getAttribute('data-i')][t.getAttribute('data-f')] = t.value;
       else if (t.hasAttribute('data-path')) setPath(answers, t.getAttribute('data-path'), t.value);
       if (KIND.key === 'will' && t.name === 'residuary') applyPreset(t.value);
+    }
+    /* the home county and the signing county on one screen: redraw so the signing county follows it at once */
+    if (t.getAttribute('data-k') === 'county' && document.querySelector('[data-k="signCountyOther"], select[data-k="signingCounty"]')) {
+      save(); draw('[data-k="county"]'); schedulePreview(); return;
     }
     if (t.hasAttribute('data-rerender')) {
       errors = [];
