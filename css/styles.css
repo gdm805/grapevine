@@ -600,3 +600,17 @@ details[id] { scroll-margin-top: 110px; }
 
 /* the signing county, when it is the county someone lives in (js/will.js signCountyField) */
 .sign-county { margin: 2px 0 8px; font-weight: 600; font-size: 17px; }
+
+/* Pricing: the four boxes at the top are tabs; the chosen one is filled in, and only its package shows below */
+.price-tabs a { cursor: pointer; }
+.price-tabs a.on { background: var(--grape); color: #fff; }
+.price-tabs a.on span { color: rgba(255, 255, 255, 0.85); }
+.price-tabs a.on:hover, .price-tabs a.on:focus-visible { background: var(--grape-deep, #3f2566); }
+.price-tabs { scroll-margin-top: calc(var(--header-h) + 8px); }
+.tab-panel { margin-top: 28px; }
+.tab-panel[hidden] { display: none; }
+.panel-head { text-align: center; margin: 0 auto 22px; max-width: 640px; }
+.panel-head h2 { margin: 0 0 6px; }
+.panel-head .sub { margin: 0; color: var(--ink-soft); }
+.plans.plans-one { grid-template-columns: minmax(0, 460px); justify-content: center; }
+#packages .photo-wide { margin-top: 48px; }
