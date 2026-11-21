@@ -212,14 +212,15 @@ window.GV_PLANS = {
       goesTo: 'hcd.html'
     },
     health: {
-      name: 'Health Care Package',
-      tag: 'The documents for medical decisions and final wishes.',
-      lead: 'Everything for your health care wishes',
-      includes: ['Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes'],
-      cta: 'Start the Health Care Package',
-      why: 'For someone who needs their medical decisions and final wishes in writing.',
-      unlocks: ['hcd', 'dementia', 'hipaa', 'finalwishes'],
-      goesTo: 'hcd.html'
+      /* 21 Nov 2026 (Greg): the Durable Power of Attorney added, same price; renamed from "Health Care Package" */
+      name: 'Powers of Attorney and Health Care',
+      tag: 'The documents that name who acts for you, for money and for medical care.',
+      lead: 'Your powers of attorney and health care documents',
+      includes: ['Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes'],
+      cta: 'Start this package',
+      why: 'For someone who needs their money and medical decisions covered, and their final wishes in writing.',
+      unlocks: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'],
+      goesTo: 'dpoa.html'
     },
     trustpaper: {
       name: 'Trust Paperwork',
@@ -232,15 +233,18 @@ window.GV_PLANS = {
       goesTo: 'schedulea.html'
     },
     trustonly: {
-      name: 'Living Trust',
-      tag: 'Just a living trust, new or a restatement.',
-      lead: 'Your living trust',
-      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'A new trust, or a restatement of a trust you already have', 'Schedule A (Trust Property), inside the trust'],
-      cta: 'Start your living trust',
-      why: 'For someone who wants a living trust on its own, without the other documents.',
-      /* a single person writes trust.html; a couple writes the joint trust (trust-joint.html). Bought from either
-         page directly (GV_PLANS.docPlan), not as a package flow. */
-      unlocks: ['trust', 'trustjoint'],
+      /* 21 Nov 2026 (Greg): the Trust Paperwork documents added, same price; renamed "Trust Package". The separate
+         Trust Paperwork Package ($129) is no longer offered on the pricing page (its plan stays here for anyone
+         who bought it). */
+      name: 'Trust',
+      tag: 'A living trust and the paperwork that goes with it.',
+      lead: 'Your living trust and its paperwork',
+      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'A new trust, or a restatement of a trust you already have', 'Schedule A (Trust Property)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust'],
+      cta: 'Start the Trust Package',
+      why: 'For someone who wants a living trust and its paperwork, without the other documents.',
+      /* a single person writes trust.html; a couple writes the joint trust (trust-joint.html). Started from the
+         pricing page it is a package flow (js/flow.js); bought from the trust page directly, GV_PLANS.docPlan. */
+      unlocks: ['trust', 'trustjoint', 'schedulea', 'cert', 'affidavit', 'assignment'],
       goesTo: 'trust.html'
     }
   }

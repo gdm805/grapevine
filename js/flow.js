@@ -21,8 +21,10 @@ window.GVFlow = (function () {
        its paperwork) come before the pour-over will; then the personal documents. (Changed 25 Sep 2026; it used to start with the pour-over will.) */
     complete: ['trust', 'cert', 'affidavit', 'assignment', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
     /* the two short packages sold from "Need a smaller package?" on the pricing page */
-    health: ['hcd', 'dementia', 'hipaa', 'finalwishes'],
-    trustpaper: ['schedulea', 'cert', 'affidavit', 'assignment']
+    health: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'],
+    trustpaper: ['schedulea', 'cert', 'affidavit', 'assignment'],
+    /* the Trust Package (21 Nov 2026): the trust (Schedule A is inside it), then its paperwork */
+    trustonly: ['trust', 'cert', 'affidavit', 'assignment']
   };
   var PAGES = {
     will: 'will.html', pourover: 'pour-over.html', dpoa: 'dpoa.html', hcd: 'hcd.html', dementia: 'dementia.html', hipaa: 'hipaa.html',
@@ -65,7 +67,7 @@ window.GVFlow = (function () {
   function start(plan, oneDoc) {
     var docs = plan === 'doc' && PAGES[oneDoc] ? [oneDoc] : FLOWS[plan];
     if (!docs) { clear(); return null; }
-    if (plan === 'complete' && household() === 'couple') {
+    if ((plan === 'complete' || plan === 'trustonly') && household() === 'couple') {
       docs = docs.map(function (k) { return k === 'trust' ? 'trustjoint' : k; });
     }
     var couple = plan !== null && household() === 'couple';

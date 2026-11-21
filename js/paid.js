@@ -126,7 +126,7 @@
     var downloadHref = window.GVUrl(goTo) + (goTo.indexOf('?') > -1 ? '&' : '?') + 'download=all';
     /* and straight to the signing steps: a package's are all on its summary; a single document's are on its own page */
     var signHref = one ? window.GVUrl(goTo) + '#how-to-sign' : window.GVUrl('questions.html') + '#how-to-sign';
-    var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : plan === 'trustonly' ? 'Your living trust' : 'Your ' + esc(p.name) + ' package';
+    var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : 'Your ' + esc(p.name) + ' package';
     var amount = wasFree ? '$0 (beta tester)' : money(plan === 'doc' && GV.docPrice ? GV.docPrice(docKey, (GV.trustSide || []).indexOf(docKey) > -1 ? 'single' : household) : GV.priceFor(plan, household)) + ', one-time';
     root.innerHTML =
       '<div class="paid-card">' +
