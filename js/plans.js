@@ -216,10 +216,10 @@ window.GV_PLANS = {
       name: 'Powers of Attorney and Health Care',
       tag: 'The documents that name who acts for you, for money and for medical care.',
       lead: 'Your powers of attorney and health care documents',
-      includes: ['Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes'],
+      includes: ['Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
       cta: 'Start this package',
       why: 'For someone who needs their money and medical decisions covered, and their final wishes in writing.',
-      unlocks: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'],
+      unlocks: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
       goesTo: 'dpoa.html'
     },
     trustpaper: {
@@ -237,14 +237,16 @@ window.GV_PLANS = {
          Trust Paperwork Package ($129) is no longer offered on the pricing page (its plan stays here for anyone
          who bought it). */
       name: 'Trust',
-      tag: 'A living trust and the paperwork that goes with it.',
-      lead: 'Your living trust and its paperwork',
-      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'A new trust, or a restatement of a trust you already have', 'Schedule A (Trust Property)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust'],
+      /* 21 Nov 2026 (Greg): every document, like Complete: the trust and its paperwork, a pour-over will (and the
+         plain will), the powers of attorney and health care documents, Final Wishes and Important Contacts */
+      tag: 'A living trust and its paperwork, with your will, powers of attorney and health care documents.',
+      lead: 'Every document',
+      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'A new trust, or a restatement of a trust you already have', 'Schedule A (Trust Property)', 'Certification of Trust', 'Affidavit of Trustee', 'General Assignment of Personal Property to Trust', 'Pour-Over Will (works with your trust)', 'Durable Power of Attorney', 'Health Care Directive', 'Dementia Care Preferences', 'HIPAA Authorization', 'Final Wishes', 'Important Contacts'],
       cta: 'Start the Trust Package',
       why: 'For someone who wants a living trust and its paperwork, without the other documents.',
       /* a single person writes trust.html; a couple writes the joint trust (trust-joint.html). Started from the
          pricing page it is a package flow (js/flow.js); bought from the trust page directly, GV_PLANS.docPlan. */
-      unlocks: ['trust', 'trustjoint', 'schedulea', 'cert', 'affidavit', 'assignment'],
+      unlocks: ['trust', 'trustjoint', 'schedulea', 'cert', 'affidavit', 'assignment', 'will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
       goesTo: 'trust.html'
     }
   }

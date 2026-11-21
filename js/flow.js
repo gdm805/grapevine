@@ -21,11 +21,12 @@ window.GVFlow = (function () {
        its paperwork) come before the pour-over will; then the personal documents. (Changed 25 Sep 2026; it used to start with the pour-over will.) */
     complete: ['trust', 'cert', 'affidavit', 'assignment', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
     /* the two short packages sold from "Need a smaller package?" on the pricing page */
-    health: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes'],
+    health: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
     trustpaper: ['schedulea', 'cert', 'affidavit', 'assignment'],
-    /* the Trust Package (21 Nov 2026): the trust, then its paperwork. Schedule A is printed inside the trust and is
-       also its own step here, a list that can be updated later without reprinting the trust (Greg) */
-    trustonly: ['trust', 'schedulea', 'cert', 'affidavit', 'assignment']
+    /* the Trust Package (21 Nov 2026, Greg): every document -- the trust, then its paperwork (Schedule A is printed
+       inside the trust and is also its own step, a list that can be updated later), then the pour-over will and the
+       personal documents, in Complete's order */
+    trustonly: ['trust', 'schedulea', 'cert', 'affidavit', 'assignment', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts']
   };
   var PAGES = {
     will: 'will.html', pourover: 'pour-over.html', dpoa: 'dpoa.html', hcd: 'hcd.html', dementia: 'dementia.html', hipaa: 'hipaa.html',
