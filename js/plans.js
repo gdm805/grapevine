@@ -143,18 +143,20 @@ window.GV_PLANS = {
     health: { single: 129, couple: 199 },
     trustpaper: { single: 129, couple: 129 },
     /* just a living trust, new or a restatement (21 Oct 2026, Greg): one person's trust, or a couple's joint trust */
-    trustonly: { single: 349, couple: 429 }
+    trustonly: { single: 349, couple: 429 },
+    /* the living trust on its own (21 Nov 2026, Greg): one person's trust, or a couple's joint trust */
+    trustdoc: { single: 249, couple: 299 }
   },
   /* plans that are sold from the "Need a smaller package?" part of the pricing page rather than as one of
      the three main plans. They are looked up like any plan (prices, checkout, unlocking) but stay out of
      `order`, which is the list the checkout page offers as "choose a different plan". */
-  extra: ['doc', 'health', 'trustpaper', 'trustonly'],
+  extra: ['doc', 'health', 'trustpaper', 'trustonly', 'trustdoc'],
   /* the documents that can be bought one at a time, in the order the pricing page lists them */
   trustSide: ['schedulea', 'cert', 'affidavit', 'assignment', 'trustamend'],
   singles: ['dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts', 'schedulea', 'cert', 'affidavit', 'assignment', 'petrust', 'trustamend', 'codicil'],
   /* a document that is NOT sold on its own goes to this package from its own page. (Dementia Care Preferences
      were package-only from 19 Oct 2026; sold on their own again at $29 from 21 Nov 2026, Greg.) */
-  docPlan: { trust: 'trustonly', trustjoint: 'trustonly' },
+  docPlan: { trust: 'trustdoc', trustjoint: 'trustdoc' },
   /* which price a single document is sold at: 'doc' ($49 / $79), 'doctrust' ($49 per trust), 'doc19', 'doc29', 'doc79' */
   docTier: { contacts: 'doc19', schedulea: 'doc19', dementia: 'doc29', petrust: 'doc79' },
   docPriceKey: function (docKey) { return this.docTier[docKey] || ((this.trustSide || []).indexOf(docKey) > -1 ? 'doctrust' : 'doc'); },
@@ -251,6 +253,17 @@ window.GV_PLANS = {
       /* a single person writes trust.html; a couple writes the joint trust (trust-joint.html). Started from the
          pricing page it is a package flow (js/flow.js); bought from the trust page directly, GV_PLANS.docPlan. */
       unlocks: ['trust', 'trustjoint', 'schedulea', 'cert', 'affidavit', 'assignment', 'will', 'pourover', 'dpoa', 'hcd', 'dementia', 'hipaa', 'finalwishes', 'contacts'],
+      goesTo: 'trust.html'
+    },
+    /* the living trust on its own (21 Nov 2026, Greg): the trust page sells this; checkout offers the Trust Package beside it */
+    trustdoc: {
+      name: 'Living Trust',
+      tag: 'Just a living trust, new or a restatement.',
+      lead: 'Your living trust',
+      includes: ['Revocable Living Trust (or a Joint Trust, for couples)', 'A new trust, or a restatement of a trust you already have', 'Schedule A (Trust Property), inside the trust'],
+      cta: 'Start your living trust',
+      why: 'For someone who wants a living trust on its own.',
+      unlocks: ['trust', 'trustjoint'],
       goesTo: 'trust.html'
     }
   }

@@ -50,7 +50,9 @@
     health: { single: 'https://buy.stripe.com/dRm8wP0n94Sr62e9kP2oE0a', couple: 'https://buy.stripe.com/3cIfZhgm72Kj9eqcx12oE0b' },
     trustpaper: { single: 'https://buy.stripe.com/fZu00j2vhckT76iaoT2oE0d', couple: 'https://buy.stripe.com/28EdR9d9VdoXfCOaoT2oE0c' },
     /* Living Trust on its own ($349 one person / $429 a couple's joint trust) */
-    trustonly: { single: 'https://buy.stripe.com/4gMcN5fi384D0HU7cH2oE0e', couple: 'https://buy.stripe.com/cNi8wP1rdgB962eeF92oE0f' }
+    trustonly: { single: 'https://buy.stripe.com/4gMcN5fi384D0HU7cH2oE0e', couple: 'https://buy.stripe.com/cNi8wP1rdgB962eeF92oE0f' },
+    /* the living trust on its own ($249 one person / $299 a couple's joint trust), 21 Nov 2026 */
+    trustdoc: { single: 'https://buy.stripe.com/aFafZh2vhacLgGSdB52oE0j', couple: 'https://buy.stripe.com/4gM9AT7PBfx51LYcx12oE0k' }
   };
 
   function qs(name) { try { return new URLSearchParams(location.search).get(name); } catch (e) { return null; } }
@@ -142,9 +144,9 @@
       '<p class="overline">Checkout</p>' +
       /* arrived from a finished document: the plan was chosen before the questions, so this page names what
          they're buying -- the whole package, or the one document -- and goes straight to paying */
-      '<h1>' + (docLabel ? (plan === 'doc' ? 'Unlock ' + esc(docLabel) : 'Unlock your ' + esc(p.name) + ' package') : 'Choose your plan') + '</h1>' +
+      '<h1>' + (docLabel ? (plan === 'doc' || plan === 'trustdoc' ? 'Unlock ' + esc(docLabel) : 'Unlock your ' + esc(p.name) + ' package') : 'Choose your plan') + '</h1>' +
       (docLabel
-        ? '<p class="lead">' + (plan === 'doc' ? 'Pay once, and this document unlocks for download.' : 'Pay once, and every document in your ' + esc(p.name) + ' package unlocks for download.') + '</p>'
+        ? '<p class="lead">' + (plan === 'doc' || plan === 'trustdoc' ? 'Pay once, and this document unlocks for download.' : 'Pay once, and every document in your ' + esc(p.name) + ' package unlocks for download.') + '</p>'
         : '<p class="lead">Every price is one-time. Pick the plan that fits, then continue to secure payment.</p>') +
       (docLabel ? '' : '<p class="household-label">Pricing for</p>' + householdToggle() + switcher()) +
       '<div class="order-card">' +
@@ -152,6 +154,8 @@
         (docLabel
           ? (plan === 'doc' || includes.length < 2 ? '' : '<details class="includes-fold"><summary>What’s included</summary>' + whatIncludes + '</details>')
           : '<p class="plan-lead">' + esc(p.lead === 'Just your will' ? p.lead : 'Includes') + '</p>' + whatIncludes) +
+        /* the living trust on its own: the Trust Package, side by side, as the other choice (21 Nov 2026, Greg) */
+        (plan === 'trustdoc' && GV.plans.trustonly ? '<p class="alt-plan">Or the <strong>Trust Package</strong>, ' + money(GV.priceFor('trustonly', household)) + ': this trust with its paperwork (Schedule A, Certification of Trust, Affidavit of Trustee, Assignment), a pour-over will, powers of attorney, health care documents, Final Wishes and Important Contacts. <a href="' + switchLink('trustonly') + '">Choose the Trust Package</a></p>' : '') +
         (perTrust ? '<p class="per-trust">Priced per trust. One purchase covers one trust, including a married couple’s joint trust. If you and your spouse or partner each have your own separate trust, you’ll need one for each person.</p>' : '') +
         (link
           ? statePick(!!docLabel) + betaSurvey() + caNotice(p, price, includes) + termsFold() + (!buyerState()

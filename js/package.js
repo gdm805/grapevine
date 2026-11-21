@@ -40,7 +40,7 @@
     return;
   }
 
-  var names = { will: 'Last Will', essentials: 'Will', complete: 'Complete', health: 'Powers of Attorney and Health Care', trustpaper: 'Trust Paperwork', trustonly: 'Trust', doc: 'Document' };
+  var names = { will: 'Last Will', essentials: 'Will', complete: 'Complete', health: 'Powers of Attorney and Health Care', trustpaper: 'Trust Paperwork', trustonly: 'Trust', trustdoc: 'Living Trust', doc: 'Document' };
   var pkg = names[f.plan] || f.plan;
   var household = f.couple ? 'couple' : 'single';
   var paid = window.GVPay ? f.docs.every(function (k) { return window.GVPay.hasPaid(F.baseOf(k)); }) : true;

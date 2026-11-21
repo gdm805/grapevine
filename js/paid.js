@@ -117,8 +117,8 @@
       fl = window.GVFlow.rebuild(plan, household) || fl;
     }
     /* the Living Trust is one document (one person's trust, or a couple's joint trust), like a single document */
-    var one = plan === 'doc' || plan === 'trustonly';
-    var goTo = (fl && fl.plan === plan && !one) ? 'package.html' : (ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : plan === 'trustonly' ? (household === 'couple' ? 'trust-joint.html' : 'trust.html') : p.goesTo));
+    var one = plan === 'doc' || plan === 'trustdoc';
+    var goTo = (fl && fl.plan === plan && !one) ? 'package.html' : (ret || (plan === 'doc' && window.GVFlow ? window.GVFlow.pageFor(docKey) : plan === 'trustonly' || plan === 'trustdoc' ? (household === 'couple' ? 'trust-joint.html' : 'trust.html') : p.goesTo));
     var unlockedNames = { will: 'your will', pourover: 'your pour-over will', dpoa: 'your power of attorney', dementia: 'your care preferences', hcd: 'your health care directive', hipaa: 'your HIPAA authorization', trust: 'your living trust', trustjoint: 'your joint living trust', cert: 'your certification of trust', affidavit: 'your affidavit of trustee', assignment: 'your assignment of personal property', finalwishes: 'your final wishes', contacts: 'your important contacts', schedulea: 'your Schedule A', petrust: 'your pet trust', trustamend: 'your trust amendment', codicil: 'your codicil' };
     var unlocked = (plan === 'doc' ? [docKey] : (p.unlocks || [])).map(function (k) { return unlockedNames[k] || k; });
 
@@ -126,7 +126,7 @@
     var downloadHref = window.GVUrl(goTo) + (goTo.indexOf('?') > -1 ? '&' : '?') + 'download=all';
     /* and straight to the signing steps: a package's are all on its summary; a single document's are on its own page */
     var signHref = one ? window.GVUrl(goTo) + '#how-to-sign' : window.GVUrl('questions.html') + '#how-to-sign';
-    var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : 'Your ' + esc(p.name) + ' package';
+    var what = plan === 'doc' ? esc(window.GVFlow ? window.GVFlow.baseLabel(docKey) : 'Your document') : plan === 'trustdoc' ? 'Your living trust' : 'Your ' + esc(p.name) + ' package';
     var amount = wasFree ? '$0 (beta tester)' : money(plan === 'doc' && GV.docPrice ? GV.docPrice(docKey, (GV.trustSide || []).indexOf(docKey) > -1 ? 'single' : household) : GV.priceFor(plan, household)) + ', one-time';
     root.innerHTML =
       '<div class="paid-card">' +

@@ -617,3 +617,5 @@ details[id] { scroll-margin-top: 110px; }
 #compare { scroll-margin-top: calc(var(--header-h) + 8px); }
 .one-list li.one-group { display: block; padding: 22px 0 8px; font: 700 12px/1.2 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; color: var(--leaf-deep, #4d6b2e); }
 .one-list li.one-group:first-child { padding-top: 8px; }
+.alt-plan { margin: 14px 0; padding: 12px 14px; border-radius: 12px; background: var(--grape-tint, #efe8f7); font-size: 15px; line-height: 1.5; }
+.alt-plan a { font-weight: 700; white-space: nowrap; }
