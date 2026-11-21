@@ -4667,10 +4667,15 @@
     tmIsTrustee: '', currentTrustee: '',
     doTrustee: false, doResidue: false, doAddGifts: false, doRemoveGifts: false,
     newTrustee: '', hasAltTrustee: '', altTrustee: '', keepPrior: '',
-    beneficiaries: [{ name: '', share: '' }], lapse: '',
-    addGifts: [{ item: '', recipient: '' }], removeGifts: [{ item: '', recipient: '' }]
+    beneficiaries: [{ name: '', share: '', backup: '' }], lapse: '',
+    addGifts: [{ item: '', recipient: '' }], removeGifts: [{ item: '', recipient: '' }],
+    doBackups: false, backups: [{ beneficiary: '', backup: '' }],
+    doYoung: false, youngAge: '', youngTrustee: '', hasAltYoungTrustee: '', altYoungTrustee: '',
+    doPets: false, petDescription: '', petCaretaker: '', hasPetAlt: '', petAltCaretaker: '', petGiftYes: '', petGift: '',
+    doExclude: false, excluded: [{ name: '', rel: '' }]
   };
-  var ROWS_TRUSTAMEND = { priorAmendments: { date: '' }, beneficiaries: { name: '', share: '' }, addGifts: { item: '', recipient: '' }, removeGifts: { item: '', recipient: '' } };
+  var ROWS_TRUSTAMEND = { priorAmendments: { date: '' }, beneficiaries: { name: '', share: '', backup: '' }, addGifts: { item: '', recipient: '' }, removeGifts: { item: '', recipient: '' },
+    backups: { beneficiary: '', backup: '' }, excluded: { name: '', rel: '' } };
   var STEPS_TRUSTAMEND = [
     { id: 'start', label: 'Where you live' },
     { id: 'trust', label: 'Your trust' },
@@ -4678,9 +4683,31 @@
     { id: 'trustee', label: 'Successor trustee', show: function (a) { return !!a.doTrustee; } },
     { id: 'residue', label: 'Who receives what’s left', show: function (a) { return !!a.doResidue; } },
     { id: 'gifts', label: 'Specific gifts', show: function (a) { return !!(a.doAddGifts || a.doRemoveGifts); } },
+    { id: 'backups', label: 'Backup beneficiaries', show: function (a) { return !!a.doBackups && !a.doResidue; } },
+    { id: 'young', label: 'Young beneficiaries', show: function (a) { return !!a.doYoung; } },
+    { id: 'pets', label: 'Your pets', show: function (a) { return !!a.doPets; } },
+    { id: 'exclude', label: 'People who receive nothing', show: function (a) { return !!a.doExclude; } },
     { id: 'signing', label: 'Signing' },
     { id: 'review', label: 'Review and sign' }
   ];
+  /* the trust amendment's backups, young beneficiaries, pets and people who receive nothing: the same answers and
+     wording as the codicil's (20 Nov 2026), in trust terms */
+  function amendChangeVars(a, v) {
+    v.backups = (a.backups || []).filter(function (b) { return clean(b.beneficiary) && clean(b.backup); }).map(function (b) { return { bk_ben: clean(b.beneficiary), bk_backup: clean(b.backup) }; });
+    v.do_backups = !!a.doBackups && !a.doResidue && v.backups.length > 0;
+    var age = parseInt(a.youngAge, 10);
+    v.young_age_words = YOUNG_AGE_WORDS[age] ? YOUNG_AGE_WORDS[age] + ' (' + age + ')' : '';
+    v.young_trustee = clean(a.youngTrustee);
+    v.alt_young_trustee = clean(a.altYoungTrustee); v.has_alt_young_trustee = a.hasAltYoungTrustee === 'yes' && !!v.alt_young_trustee;
+    v.do_young = !!a.doYoung && !!v.young_age_words && !!v.young_trustee;
+    v.pet_caretaker = clean(a.petCaretaker);
+    v.pet_description = clean(a.petDescription); v.has_pet_description = !!v.pet_description;
+    v.pet_alt_caretaker = clean(a.petAltCaretaker); v.has_pet_alt = a.hasPetAlt === 'yes' && !!v.pet_alt_caretaker;
+    v.pet_gift = money(a.petGift); v.has_pet_gift = a.petGiftYes === 'yes' && !!v.pet_gift;
+    v.do_pets = !!a.doPets && !!v.pet_caretaker;
+    v.excluded = (a.excluded || []).filter(function (x) { return clean(x.name); }).map(function (x) { return { ex_name: clean(x.name), ex_rel: clean(x.rel), ex_has_rel: !!clean(x.rel) }; });
+    v.do_exclude = !!a.doExclude && v.excluded.length > 0;
+  }
   var ORDINALS = ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth', 'Seventh', 'Eighth', 'Ninth', 'Tenth', 'Eleventh', 'Twelfth'];
   /* "Made on Tovakin": the trust saved in this browser fills in what's still empty (name, dates, who made it). Tovakin's trust
      lets the Trustmaker(s) amend it by a signed writing delivered to the Trustee, and signing as Trustee is delivery. */
@@ -4730,8 +4757,12 @@
     v.alt_trustee = clean(a.altTrustee); v.has_alt_trustee = a.hasAltTrustee === 'yes' && !!v.alt_trustee;
     v.keep_prior_trustees = a.keepPrior === 'yes';
     v.do_residue = !!a.doResidue;
-    v.beneficiaries = (a.beneficiaries || []).filter(function (b) { return clean(b.name); }).map(function (b) { return { ben_name: clean(b.name), ben_share: fmtShare(parseFloat(b.share) || 0) }; });
+    v.beneficiaries = (a.beneficiaries || []).filter(function (b) { return clean(b.name); }).map(function (b) { return { ben_name: clean(b.name), ben_share: fmtShare(parseFloat(b.share) || 0), ben_backup: clean(b.backup), ben_has_backup: !!clean(b.backup) }; });
+    v.any_ben_backup = v.beneficiaries.some(function (b) { return b.ben_has_backup; });
     v.lapse = a.lapse || 'OTHERS';
+    amendChangeVars(a, v);
+    v.pet_owner = joint ? 'either Trustmaker' : 'the Trustmaker';
+    v.tm_request = joint ? 'The Trustmakers request, but do not require,' : 'The Trustmaker requests, but does not require,';
     function gifts(list) { return (list || []).filter(function (g) { return clean(g.item) && clean(g.recipient); }).map(function (g) { var it = clean(g.item); return { gift_item: it.charAt(0).toUpperCase() + it.slice(1), gift_recipient: clean(g.recipient) }; }); }
     v.add_gifts = gifts(a.addGifts); v.do_add_gifts = !!a.doAddGifts && v.add_gifts.length > 0;
     v.remove_gifts = gifts(a.removeGifts); v.do_remove_gifts = !!a.doRemoveGifts && v.remove_gifts.length > 0;
@@ -4793,6 +4824,10 @@
         amendCheck('doResidue', 'Who receives what’s left, and in what shares') +
         amendCheck('doAddGifts', 'Add a gift of a specific item or amount') +
         amendCheck('doRemoveGifts', 'Cancel a specific gift in the trust') +
+        (answers.doResidue ? '' : amendCheck('doBackups', 'Name backups for the beneficiaries in the trust')) +
+        amendCheck('doYoung', 'The age young beneficiaries receive their share, and who manages it until then') +
+        amendCheck('doPets', 'Who takes the pets') +
+        amendCheck('doExclude', 'State that a person receives nothing') +
         '</div>';
     },
     trustee: function () {
@@ -4807,6 +4842,7 @@
       var rows = '<div class="rowset">' + answers.beneficiaries.map(function (b, i) {
         return '<div class="rowitem"><input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="name" value="' + val(b.name) + '" placeholder="Full name, or a charity" aria-label="Beneficiary ' + (i + 1) + '">' +
           '<input class="input" style="max-width:110px" data-list="beneficiaries" data-i="' + i + '" data-f="share" value="' + val(b.share) + '" placeholder="%" inputmode="decimal" aria-label="Beneficiary ' + (i + 1) + ' share in percent">' +
+          '<input class="input" data-list="beneficiaries" data-i="' + i + '" data-f="backup" value="' + val(b.backup) + '" placeholder="Backup (optional)" aria-label="Beneficiary ' + (i + 1) + ' backup">' +
           rm('beneficiaries', i, 'beneficiary ' + (i + 1), answers.beneficiaries.length > 1) + '</div>';
       }).join('') + '</div>';
       var tot = amendShareTotal(answers);
@@ -4819,6 +4855,10 @@
         (answers.doAddGifts ? field('Gifts to add', giftRows('addGifts', 'What, for example my grandmother’s ring, or $5,000') + addBtn('addGifts', '+ Add another gift')) : '') +
         (answers.doRemoveGifts ? field('Gifts in your trust to cancel', giftRows('removeGifts', 'The gift as your trust describes it') + addBtn('removeGifts', '+ Add another'), 'A cancelled gift becomes part of what’s left.') : '');
     },
+    backups: function () { return amendTrustWording(RENDER_CODICIL.backups()); },
+    young: function () { return RENDER_CODICIL.young(); },
+    pets: function () { return amendTrustWording(RENDER_CODICIL.pets()); },
+    exclude: function () { return amendTrustWording(RENDER_CODICIL.exclude()); },
     signing: function () {
       return stepHead('Signing', 'You sign in front of a notary' + (TRUST_WITNESS_STATES[answers.state] ? ' and two witnesses' : '') + '.') + signDateField();
     },
@@ -4828,7 +4868,7 @@
       function row(label, value, goto) {
         return '<div class="sum-row"><div><span class="sum-l">' + label + '</span><span class="sum-v">' + (value || '<em>Not answered</em>') + '</span></div><button type="button" class="link" data-goto="' + goto + '">Change</button></div>';
       }
-      var ch = [v.do_trustee ? 'Successor trustee' : '', v.do_residue ? 'Who receives what’s left' : '', v.do_add_gifts ? 'Gifts added' : '', v.do_remove_gifts ? 'Gifts cancelled' : ''].filter(Boolean).join(', ');
+      var ch = [v.do_trustee ? 'Successor trustee' : '', v.do_residue ? 'Who receives what’s left' : '', v.do_add_gifts ? 'Gifts added' : '', v.do_remove_gifts ? 'Gifts cancelled' : '', v.do_backups ? 'Backup beneficiaries' : '', v.do_young ? 'Young beneficiaries' : '', v.do_pets ? 'Pets' : '', v.do_exclude ? 'People who receive nothing' : ''].filter(Boolean).join(', ');
       return stepHead('Your amendment is ready to review', 'Read every word, then follow the signing steps below.') +
         '<div class="sum">' +
         row('Amendment', esc(v.ordinal + ' Amendment to ' + v.trust_name), 'trust') +
@@ -4843,6 +4883,8 @@
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
   };
+  /* the codicil's screens say "your will"; on the trust amendment they say "your trust" */
+  function amendTrustWording(h) { return h.replace(/Your codicil/g, 'Your amendment').replace(/your will/g, 'your trust').replace(/a will can/g, 'a trust can').replace(/dies before you/g, 'dies first'); }
   function validateTrustAmend(id) {
     var a = answers, e = [], st = states.map[a.state];
     if (id === 'start') {
@@ -4874,7 +4916,7 @@
       if (!a.tmIsTrustee) e.push('Answer whether you are currently the trustee.');
       if (a.tmIsTrustee === 'no' && !clean(a.currentTrustee)) e.push('Enter the current trustee’s name.');
     } else if (id === 'changes') {
-      if (!(a.doTrustee || a.doResidue || a.doAddGifts || a.doRemoveGifts)) e.push('Choose at least one change.');
+      if (!(a.doTrustee || a.doResidue || a.doAddGifts || a.doRemoveGifts || (a.doBackups && !a.doResidue) || a.doYoung || a.doPets || a.doExclude)) e.push('Choose at least one change.');
     } else if (id === 'trustee') {
       if (!clean(a.newTrustee)) e.push('Enter the new successor trustee’s name.');
       if (!a.hasAltTrustee) e.push('Answer whether to name a backup.');
@@ -4890,6 +4932,8 @@
       var full = function (g) { return clean(g.item) && clean(g.recipient); };
       if (a.doAddGifts && !(a.addGifts || []).some(full)) e.push('Enter at least one gift to add, with who receives it.');
       if (a.doRemoveGifts && !(a.removeGifts || []).some(full)) e.push('Enter at least one gift to cancel, with who it was to.');
+    } else if (['backups', 'young', 'pets', 'exclude'].indexOf(id) > -1) {
+      return validateCodicil(id);
     }
     return e;
   }
