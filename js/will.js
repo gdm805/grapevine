@@ -229,6 +229,28 @@
      Trust"), so a sentence like "part of the {{trust_name}}" would read "part of the The Alvarez Family Trust" */
   /* a trust's name always starts with a capital "The" when it has one, wherever it's printed (Greg, 10 Oct 2026) */
   function capThe(n) { return String(n || '').replace(/^the\s+/i, 'The '); }
+  /* a NEW trust left unnamed on the first screen is named after its trustmaker(s) once their names are in
+     ("The Maria Elena Alvarez Living Trust"; a couple with one last name: "The Maria and John Alvarez Living
+     Trust"). trustNameAuto marks a name filled in this way, so it follows the names as they're typed and
+     stops the moment someone types a name of their own. A restatement always uses the name typed in. */
+  function defaultTrustName(a, key) {
+    if (key === 'trustjoint') {
+      var n1 = clean(a.name1), n2 = clean(a.name2);
+      if (!n1 || !n2) return '';
+      var p1 = n1.split(' '), p2 = n2.split(' ');
+      if (p1.length > 1 && p2.length > 1 && p1[p1.length - 1].toLowerCase() === p2[p2.length - 1].toLowerCase())
+        return 'The ' + p1.slice(0, -1).join(' ') + ' and ' + n2 + ' Living Trust';
+      return 'The ' + n1 + ' and ' + n2 + ' Living Trust';
+    }
+    return clean(a.name) ? 'The ' + clean(a.name) + ' Living Trust' : '';
+  }
+  function autoTrustName(a, kind) {
+    if (kind.key !== 'trust' && kind.key !== 'trustjoint') return;
+    if (a.trustType === 'RESTATEMENT') { if (a.trustNameAuto) { a.trustName = ''; a.trustNameAuto = false; } return; }
+    if (clean(a.trustName) && !a.trustNameAuto) return;
+    var d = defaultTrustName(a, kind.key);
+    a.trustName = d; a.trustNameAuto = !!d;
+  }
   function theTrust(n) { return !n ? '' : (/^the\s/i.test(n) ? capThe(n) : 'The ' + n); }
   /* How property is titled in the trust's name -- the exact wording to give a bank, brokerage or title company:
      "[Name(s)], as (Co-)Trustee(s) of [Trust Name], dated ___, and any amendments made to it" */
@@ -2726,7 +2748,7 @@
   /* ---------- REVOCABLE LIVING TRUST (single trustmaker) ---------- */
   var EMPTY_TRUST = {
     state: '', county: '', ageOk: false, freeOk: false,
-    trustName: '', trustType: 'NEW', origTrustName: '', origTrustDate: '',
+    trustName: '', trustNameAuto: false, trustType: 'NEW', origTrustName: '', origTrustDate: '',
     name: '',
     maritalStatus: '', spouse: '', partner: '', revokeSpouse: '',
     children: [{ name: '' }],
@@ -2775,7 +2797,7 @@
     v.county = clean(a.signingCounty).replace(/\s+(county|parish)$/i, '');
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.signing_state = v.state ? trustSlug(v.state) : '';
-    v.trust_name = capThe(clean(a.trustName)) || (v.name ? v.name + ' Living Trust' : '');
+    v.trust_name = capThe(clean(a.trustName)) || (a.trustType === 'RESTATEMENT' ? '' : defaultTrustName(a, 'trust'));
     /* the title line already says "TRUST AGREEMENT FOR" -- add "THE" only when the name someone
        typed doesn't already start with it themselves (e.g. "The Smith Family Trust"), so the title
        never reads "...FOR THE THE Smith..." and never reads "...FOR Smith..." either */
@@ -2925,7 +2947,7 @@
         /* a restatement keeps the original trust's name: that is the only name asked for */
         (answers.trustType === 'RESTATEMENT' ?
           field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if your trust\u2019s name begins that way.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
-          field('Name your trust', text('trustName', 'For example, The Maria Elena Alvarez Living Trust'), 'Start the name with \u201cThe,\u201d for example \u201cThe Maria Elena Alvarez Living Trust.\u201d You can change this later.')) +
+          field('Name your trust (optional)', text('trustName', 'For example, The Maria Elena Alvarez Living Trust'), 'Leave this blank and your trust is named after you, for example \u201cThe Maria Elena Alvarez Living Trust.\u201d You can change it anytime.')) +
         '<div class="checks">' +
         (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>I am 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>I am creating this trust of my own free will.</span></label>') +
@@ -3035,7 +3057,7 @@
     if (id === 'start') {
       if (!st) e.push('Choose your state.');
       else if (!st.supported) e.push(st.note || 'We can’t offer a trust in that state yet.');
-      if (!clean(a.trustName)) e.push(a.trustType === 'RESTATEMENT' ? 'Enter the name of your original trust.' : 'Name your trust.');
+      if (a.trustType === 'RESTATEMENT' && !clean(a.trustName)) e.push('Enter the name of your original trust.');
       if (a.trustType === 'RESTATEMENT') {
         if (!a.origTrustDate) e.push('Enter the date your original trust was signed.');
       }
@@ -3073,7 +3095,7 @@
   /* ---------- REVOCABLE LIVING TRUST (joint -- married couple or domestic partners) ---------- */
   var EMPTY_TRUST_JOINT = {
     state: '', county: '', ageOk: false, freeOk: false,
-    trustName: '', trustType: 'NEW', origTrustName: '', origTrustDate: '',
+    trustName: '', trustNameAuto: false, trustType: 'NEW', origTrustName: '', origTrustDate: '',
     name1: '', name2: '',
     maritalStatus: '',
     children: [{ name: '' }],
@@ -3124,7 +3146,7 @@
     v.signing_date = a.signingDate ? longDate(a.signingDate) : '';
     v.signing_state = v.state ? trustSlug(v.state) : '';
     v.is_joint = true;
-    v.trust_name = capThe(clean(a.trustName)) || ((v.name1 && v.name2) ? v.name1 + ' and ' + v.name2 + ' Living Trust' : '');
+    v.trust_name = capThe(clean(a.trustName)) || (a.trustType === 'RESTATEMENT' ? '' : defaultTrustName(a, 'trustjoint'));
     /* the title line already says "TRUST AGREEMENT FOR" -- add "THE" only when the name someone
        typed doesn't already start with it themselves (e.g. "The Smith Family Trust"), so the title
        never reads "...FOR THE THE Smith..." and never reads "...FOR Smith..." either */
@@ -3212,7 +3234,7 @@
         /* a restatement keeps the original trust's name: that is the only name asked for */
         (answers.trustType === 'RESTATEMENT' ?
           field('Name of your original trust', text('trustName', ''), 'Type it exactly as it appears on your trust, starting with \u201cThe\u201d (for example, \u201cThe Alvarez Family Trust\u201d) if your trust\u2019s name begins that way.') + field('Date your original trust was signed', '<input class="input" type="date" data-k="origTrustDate" value="' + val(answers.origTrustDate) + '">') :
-          field('Name your trust', text('trustName', 'For example, The Alvarez Family Trust'), 'Start the name with \u201cThe,\u201d for example \u201cThe Alvarez Family Trust.\u201d You can change this later.')) +
+          field('Name your trust (optional)', text('trustName', 'For example, The Alvarez Family Trust'), 'Leave this blank and your trust is named after you both, for example \u201cThe Maria and John Alvarez Living Trust.\u201d You can change it anytime.')) +
         '<div class="checks">' +
         (ABOUT_OK ? '' : '<label class="check"><input type="checkbox" data-k="ageOk"' + (answers.ageOk ? ' checked' : '') + '><span>We are both 18 or older.</span></label>' +
         '<label class="check"><input type="checkbox" data-k="freeOk"' + (answers.freeOk ? ' checked' : '') + '><span>We are creating this trust of our own free will.</span></label>') +
@@ -3335,7 +3357,7 @@
     if (id === 'start') {
       if (!st) e.push('Choose your state.');
       else if (!st.supported) e.push(st.note || 'We can’t offer a trust in that state yet.');
-      if (!clean(a.trustName)) e.push(a.trustType === 'RESTATEMENT' ? 'Enter the name of your original trust.' : 'Name your trust.');
+      if (a.trustType === 'RESTATEMENT' && !clean(a.trustName)) e.push('Enter the name of your original trust.');
       if (a.trustType === 'RESTATEMENT') {
         if (!a.origTrustDate) e.push('Enter the date your original trust was signed.');
       }
@@ -5401,6 +5423,7 @@
   function save() {
     if (BLANK) return;
     if ((KIND.key === 'trust' || KIND.key === 'trustjoint') && answers.county && !answers.signingCounty) answers.signingCounty = answers.county;
+    autoTrustName(answers, KIND);
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
     saveProfile(answers, KIND);
     saveTrustFacts(answers, KIND);
@@ -6003,6 +6026,7 @@
       if (t.hasAttribute('data-path')) setPath(answers, t.getAttribute('data-path'), t.value);
       else if (t.hasAttribute('data-k')) answers[t.getAttribute('data-k')] = t.value;
       else if (t.hasAttribute('data-list')) answers[t.getAttribute('data-list')][+t.getAttribute('data-i')][t.getAttribute('data-f')] = t.value;
+      if (t.getAttribute('data-k') === 'trustName') answers.trustNameAuto = false;
       if (t.getAttribute('data-f') === 'share') {
         var tot = answers.beneficiaries.reduce(function (s, b) { return s + (parseFloat(b.share) || 0); }, 0), p = document.getElementById('pct-total');
         if (p) p.textContent = 'Shares add up to ' + fmtShare(tot) + '%. They need to add up to 100%.';
