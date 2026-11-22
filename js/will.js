@@ -3066,6 +3066,7 @@
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
+        deedBox() +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
   };
@@ -3366,6 +3367,7 @@
         '<p class="hint export-status" id="export-status" role="status"></p>' +
         (draft ? '<p class="draft-inline">This is a preview. Your final copy, without the preview mark, downloads after checkout.</p>' : '') +
         '<div class="instr">' + instr + '</div>' +
+        deedBox() +
         '<p class="reset"><button type="button" class="link" data-reset>Start over</button></p>';
     }
   };
@@ -5577,6 +5579,7 @@
           : 'Read it over. When your package is finished, you\u2019ll pay once, then download everything.';
       }
       signingHelp();
+      deedHelp();
       reviewBeforePay();
       /* next to the Download button on every document's last screen (28 Oct 2026, Greg) */
       var dlBtn = stepEl.querySelector('[data-pdf]'), dlRow = dlBtn && dlBtn.closest('.actions');
@@ -5760,6 +5763,71 @@
      Download and Print that jumps to the steps (inside a package, to the package summary, where every document's
      steps are), plus "Download / Print signing steps", which make a separate PDF of just the steps
      (js/will-export.js signingSheet) -- never part of the document itself. */
+  /* DEED WORKSHEET (22 Nov 2026): a living trust's review screen offers a one- or two-page PDF that gathers what a
+     deed preparer, title company, attorney or county recorder asks for when a home is moved into the trust: the
+     exact new-owner wording, the property from the trust's own Schedule A answers, blanks to copy from the current
+     deed, and what to ask the county. Instructions only, never a deed (deed rules differ by state and county).
+     Facts only: it names who can prepare a deed, it doesn't choose one. */
+  function deedBox() {
+    return '<div class="deed-ws"><h3>Moving your home into your trust</h3>' +
+      '<p>A home goes into a trust by a new deed, recorded with the county. Deed forms and recording rules differ by state and county, so Tovakin doesn’t prepare deeds. This worksheet gathers what a deed preparer, title company, attorney or county recorder will ask for, with your trust’s exact wording filled in.</p>' +
+      '<div class="instr-btns"><button type="button" class="btn btn-secondary btn-sm" data-deed-ws>Download deed worksheet (PDF)</button></div>' +
+      '<p class="hint deed-ws-note" role="status"></p></div>';
+  }
+  function deedBlocks() {
+    var v = buildVars(answers, states, tpl.settings), joint = kindKey === 'trustjoint';
+    var owners = joint ? [v.name1, v.name2].filter(Boolean).join(' and ') : v.name;
+    var B = '________________________________________';
+    var homes = (answers.realProperty || []).filter(function (h) { return clean(h.address); });
+    if (!homes.length) homes = [{}];
+    var bl = [{ k: 'center', t: 'Deed Worksheet: Moving Your Home Into Your Trust' },
+      { k: 'p', t: 'This is a worksheet, not a deed. It is not signed or recorded. Bring it to whoever prepares your deed: a title company, an attorney, an online deed service, or the county recorder’s office, which can tell you the forms and fees it uses.' },
+      { k: 'plain', t: 'The new owner' },
+      { k: 'p', t: 'On the new deed, the owner receiving the property (the grantee) is the trust’s trustee' + (joint ? 's' : '') + ', named like this:' },
+      { k: 'p', t: '**' + v.title_line + '**' },
+      { k: 'p', t: v.trust_type === 'RESTATEMENT' ? 'The date shown is the date of the original trust.' : 'The trust\u2019s date is the date you sign it in front of the notary.' + (v.signing_date ? '' : ' Fill it in above once it is signed.') }];
+    homes.forEach(function (h, i) {
+      bl.push({ k: 'plain', t: homes.length > 1 ? 'Property ' + (i + 1) : 'The property' });
+      bl.push({ k: 'line', t: 'Property address: ' + (clean(h.address) || B) });
+      bl.push({ k: 'line', t: 'County and state: ' + (clean(h.countyState) || B) });
+      bl.push({ k: 'line', t: 'Owner(s) on the current deed, exactly as written there: ' + B });
+      bl.push({ k: 'line', t: 'How title is held now (for example sole owner, joint tenants, community property): ' + (clean(h.ownership) || B) });
+      bl.push({ k: 'line', t: 'Parcel number (APN), from the property tax bill: ' + B });
+      bl.push({ k: 'line', t: 'Current deed’s recording number or book and page, and date: ' + B });
+      bl.push({ k: 'p', t: '**Legal description.** Copy it word for word from the current deed. The street address alone is not enough.' });
+      bl.push({ k: 'line', t: B + B });
+      bl.push({ k: 'line', t: B + B });
+      bl.push({ k: 'line', t: B + B });
+    });
+    bl.push({ k: 'plain', t: 'Who signs the new deed' });
+    bl.push({ k: 'p', t: 'The current owner' + (joint ? 's' : '') + ' on the deed (the grantor' + (joint ? 's' : '') + '), here ' + owners + ', usually before a notary. In some states a spouse who is not on the deed must also sign, for example because of homestead or community property rules.' });
+    bl.push({ k: 'plain', t: 'What to ask the county recorder or your deed preparer' });
+    bl.push({ k: 'ul', items: [
+      'Which deed form is used for a transfer to your own trust in this state (often a quitclaim, grant or warranty deed).',
+      'The recording fee and the page rules: margins, paper size, and the blank space the county needs at the top.',
+      'Whether a transfer tax applies, and the exemption form for a transfer into your own revocable trust.',
+      'Any property tax, homestead or change-of-ownership form that must be filed with the deed.',
+      'Whether the deed must say who prepared it, and whether it can be recorded electronically.'] });
+    bl.push({ k: 'plain', t: 'After it is recorded' });
+    bl.push({ k: 'ul', items: [
+      'Keep the recorded deed (or a copy) with your trust, and list the property on your Schedule A.',
+      'Tell your home insurer about the transfer. Insurers often add the trust to the policy.',
+      'If there is a mortgage: federal law (the Garn-St Germain Act) generally keeps a lender from calling a home loan due because the borrower moved the home into the borrower’s own revocable trust and still lives there. Many lenders still ask to be told.',
+      'If you have a homestead or senior property tax exemption, check whether it carries over or must be filed again.'] });
+    return bl;
+  }
+  function deedHelp() {
+    var btn = stepEl.querySelector('[data-deed-ws]'); if (!btn || !window.GVExport) return;
+    var msg = stepEl.querySelector('.deed-ws-note');
+    btn.addEventListener('click', function () {
+      window.GVExport.pdf(deedBlocks(), { footer: 'Deed worksheet (instructions only, not a deed)', draftLabel: '', title: 'Deed Worksheet' }).then(function (blob) {
+        var a = document.createElement('a'), u = URL.createObjectURL(blob);
+        a.href = u; a.download = 'Tovakin-Deed-Worksheet.pdf'; document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(u); a.remove(); }, 1500);
+        msg.textContent = 'Your deed worksheet is downloading to your Downloads folder.';
+      }).catch(function () { msg.textContent = 'We could not build the deed worksheet. Please reload the page and try again.'; });
+    });
+  }
   function signingHelp() {
     if (kindKey === 'contacts') return;   /* nothing to sign: its note says so, no "How to sign" buttons */
     var box = stepEl.querySelector('.instr'), note = stepEl.querySelector('.pkg-sign-note');
