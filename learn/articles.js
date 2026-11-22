@@ -707,4 +707,46 @@ A living trust plan usually also includes a [pour-over will](learn.html#what-is-
 ## Summary
 
 A will says who receives your property and can name guardians for children. A funded revocable living trust can also avoid probate for trust assets, keep them out of public court records, provide for management during incapacity, and set the timing of distributions. Which fits a particular person depends on their circumstances. If you have any legal questions about your particular circumstances we recommend that you seek a qualified attorney to assist you.
+
+=== beneficiary-designations
+title: Beneficiary designations: accounts that pass outside your will
+category: Wills
+date: 2026-11-27
+summary: Life insurance, retirement accounts and some bank accounts go to the people named on the account's own form, not to the people named in a will or trust.
+---
+Some property doesn't follow your will at all. Life insurance, retirement accounts and certain bank and investment accounts pass to whoever is named on the account's beneficiary form. This is called a beneficiary designation, and it generally controls even if your will or trust says something different.
+
+## Property that usually passes this way
+
+- **Life insurance.** The policy pays the beneficiaries named with the insurance company.
+- **Retirement accounts.** IRAs, 401(k)s, 403(b)s and similar plans pass to the beneficiaries named with the plan or account custodian.
+- **Payable-on-death (POD) bank accounts.** A bank account with a POD beneficiary passes to that person at death.
+- **Transfer-on-death (TOD) accounts.** Brokerage accounts can name a TOD beneficiary in the same way.
+- **Transfer-on-death deeds and vehicle titles.** Some states allow a home or a vehicle to name a beneficiary. Whether this is available depends on the state.
+
+## Why it matters
+
+Because these accounts skip the will, property can end up somewhere the will didn't intend. If a form still names a former spouse, a person who has died, or no one at all, the result can differ from what the rest of the plan says.
+
+- **No beneficiary, or none still living.** The account usually goes to your estate under the account's rules. It may then pass under your will and may have to go through probate. See [what probate is](learn.html#what-is-probate).
+- **A former spouse.** In many states a divorce automatically cancels a former spouse's designation, but not in every state, and the rule may not apply to some employer retirement plans.
+- **A minor child.** An account left directly to a child under 18 may need a court-appointed manager. See [leaving money to children](learn.html#leaving-money-to-children).
+
+## Primary and contingent beneficiaries
+
+Most forms ask for a primary beneficiary, who receives the account first, and a contingent beneficiary, who receives it if no primary beneficiary is living. Many forms also let you divide an account in percentages among several people.
+
+## Beneficiary designations and a living trust
+
+A living trust can be named as the beneficiary of a life insurance policy or an account. Retirement accounts are usually not retitled to a trust, because changing the owner of a retirement account can have tax consequences; naming beneficiaries is the usual approach instead. See [how to fund a living trust](learn.html#how-to-fund-a-living-trust).
+
+## Spouses and retirement plans
+
+For many employer plans, such as a 401(k), federal law generally gives a spouse the right to the account unless the spouse signs a written consent to naming someone else.
+
+## Where to find and change them
+
+Beneficiary designations are made and changed on each company's own form, usually through its website or by request. A will or trust does not change them. Your [Important Contacts](contacts.html) document is one place to list each account and who holds it.
+
+You can [write your will](will.html) or [your living trust](trust.html) here.
 `;
