@@ -224,7 +224,9 @@ def main():
             extra += ('<script>(function(){var d=new Date(),t=d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);'
                       'if(t<"%s"&&!/[?&]preview=1\\b/.test(location.search))location.replace("../learn.html");})();</script>\n' % a['date'])
         page = page.replace('</head>', extra + '</head>', 1)
-        page = page.replace('{{ARTICLE}}', article_html(a, published, inline, version))
+        # a scheduled article may link to any article that is live by its own date (it is never seen before then)
+        own = inline if a['date'] <= today else make_inline({x['slug'] for x in articles if not x['date'] or x['date'] <= a['date']})
+        page = page.replace('{{ARTICLE}}', article_html(a, published, own, version))
         page = page.replace('<!doctype html>\n', '<!doctype html>\n<!-- Made by tools/build_learn.py from learn/articles.js. Edit the article there, then run the tool again. -->\n', 1)
         write('learn/%s.html' % a['slug'], page)
         written.append(a['slug'])
