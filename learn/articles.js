@@ -445,7 +445,7 @@ You can [write your will](will.html) or [your living trust](trust.html) here.
 
 === planning-for-your-pets
 title: Planning for your pets
-category: Wills
+category: Pets
 date: 2026-11-30
 summary: Pets can't inherit, but you can name who will care for them and leave money for their care. Here's how.
 image: learn-pets
@@ -461,7 +461,7 @@ Your will can leave your pets to a specific person, and can name a backup if tha
 
 A will can leave money to the person who takes your pets with a request that it be used for their care. A request like this is not legally binding; the caretaker owns the money outright. Many states also allow a **pet trust**, which holds money for an animal's care and names someone to see that it is spent that way.
 
-You can name a caretaker for your pets when you [write your will](will.html).
+You can name a caretaker for your pets when you [write your will](will.html), or prepare a [Companion Animal Trust](petrust.html) here.
 
 === update-your-will-or-trust
 title: Life events and your will or trust
