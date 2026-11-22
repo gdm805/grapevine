@@ -446,7 +446,7 @@ You can [write your will](will.html) or [your living trust](trust.html) here.
 === planning-for-your-pets
 title: Planning for your pets
 category: Pets
-date: 2026-11-30
+date: 2026-11-22
 summary: Pets can't inherit, but you can name who will care for them and leave money for their care. Here's how.
 image: learn-pets
 alt: A woman hugging her dog outdoors
