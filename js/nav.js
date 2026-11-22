@@ -212,9 +212,6 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
   btn.addEventListener('click', function () { set(panel.hidden); });
   if (chatOn) {
     chat(wrap);
-    /* the chat's "seek a qualified attorney" sentence gets the person's state bar link (js/lawyer-links.js),
-       which some pages don't load on their own */
-    if (!window.GVLawyerLinks && navSrc) { var ll = document.createElement('script'); ll.src = navSrc.replace(/nav\.js/, 'lawyer-links.js'); document.head.appendChild(ll); }
   }
   wrap.querySelector('.gv-help-x').addEventListener('click', function () { set(false); btn.focus(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
@@ -336,7 +333,7 @@ var GV_CHAT = { url: 'https://grapevine-help-chat.gdm805.workers.dev', on: true 
 
 /* POP-UP LINKS (23 Oct 2026): links from the help chat and from the definition boxes in the document questions open
    in a separate pop-up window on top of the page, so nobody loses their place. A blocked pop-up falls back to a new
-   tab. (The state bar links do the same, in js/lawyer-links.js.) */
+   tab. */
 (function () {
   var SEL = '.gv-chat-log a[href^="http"]:not([data-gl-id]), .gv-chat-def a[href^="http"], .gl-pop a[href]';
   window.GVPopup = function (url, name) {

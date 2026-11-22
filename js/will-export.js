@@ -577,7 +577,6 @@
   var SHEET_FOOTER = 'How to sign (instructions only, not part of any document)';
   function inlineText(el) {
     var c = el.cloneNode(true);
-    Array.prototype.forEach.call(c.querySelectorAll('.gv-lawyer-link'), function (s) { s.remove(); });
     Array.prototype.forEach.call(c.querySelectorAll('strong, b'), function (s) { s.textContent = '**' + s.textContent + '**'; });
     return c.textContent.replace(/\s+/g, ' ').replace(/\*\*\s*\*\*/g, '').trim();
   }
@@ -605,10 +604,6 @@
       })(box);
     });
     blocks.push({ k: 'p', t: ATTY });
-    var L = window.GVLawyerLinks, st = '';
-    try { st = (JSON.parse(localStorage.getItem('grapevine.profile.v1') || '{}') || {}).state || ''; } catch (e) { st = ''; }
-    var hit = L && L.links && L.links[st] ? L.links[st] : (L && L.any);
-    if (hit) blocks.push({ k: 'p', t: 'To find one in ' + (L.links[st] ? st : 'your state') + ': ' + hit[0] + ', ' + hit[1] });
     return blocks;
   }
   function signingSheet(parts) {
