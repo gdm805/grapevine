@@ -80,7 +80,7 @@
   if (document.querySelector("[data-kind]") || /(package|about-you)\.html$/.test(location.pathname)) return;
   var f = null;
   try { f = JSON.parse(localStorage.getItem('grapevine.flow.v1') || 'null'); } catch (e) { f = null; }
-  if (!f || !f.docs || !f.docs.length) return;
+  if (!f || !f.docs || !f.docs.length) { oneDoc(); return; }
   var PAGES = { will: 'will.html', pourover: 'pour-over.html', dpoa: 'dpoa.html', hcd: 'hcd.html', dementia: 'dementia.html', hipaa: 'hipaa.html',
     trust: 'trust.html', trustjoint: 'trust-joint.html', cert: 'cert.html', affidavit: 'affidavit.html', assignment: 'assignment.html',
     finalwishes: 'finalwishes.html', contacts: 'contacts.html', schedulea: 'schedulea.html', petrust: 'petrust.html', trustamend: 'trust-amendment.html', codicil: 'codicil.html' };
@@ -106,6 +106,23 @@
   bar.innerHTML = '<div class="container"><span>Welcome back. Your answers are saved in this browser (' + done.length + ' of ' + f.docs.length + ' documents answered).</span> ' +
     '<a href="' + href + '">' + (nextId ? 'Continue ' + what : 'Review ' + what) + ' &rarr;</a></div>';
   header.parentNode.insertBefore(bar, header);
+
+  /* one document started on its own (saved by js/will.js saveLastDoc): back to it, if its answers are still here */
+  function oneDoc() {
+    var d = null, s = null;
+    try { d = JSON.parse(localStorage.getItem('grapevine.lastdoc.v1') || 'null'); } catch (e) { d = null; }
+    if (!d || !d.ls || !/^[\w-]+\.html$/.test(d.page || '')) return;
+    try { s = JSON.parse(localStorage.getItem(d.ls) || 'null'); } catch (e) { s = null; }
+    if (!s || !s.answers || !s.step || s.step === 'start') return;
+    var hdr = document.querySelector('.site-header');
+    if (!hdr) return;
+    var name = d.label || 'document';
+    var div = document.createElement('div');
+    div.className = 'resume-bar';
+    div.innerHTML = '<div class="container"><span>Welcome back. Your answers are saved in this browser.</span> ' +
+      '<a href="' + (window.GVUrl ? window.GVUrl(d.page) : d.page) + '">' + (d.paid ? 'Go to your ' : 'Continue your ') + name.replace(/[<>&"]/g, '') + ' &rarr;</a></div>';
+    hdr.parentNode.insertBefore(div, hdr);
+  }
 })();
 
 /* "Need help?" button, bottom-right of every page: opens a small panel with the signing steps, the Questions page

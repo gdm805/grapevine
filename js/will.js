@@ -5443,6 +5443,7 @@
     syncSignCounty(answers);
     autoTrustName(answers, KIND);
     try { localStorage.setItem(LS_KEY, JSON.stringify({ answers: answers, step: stepId })); } catch (e) { /* ignore */ }
+    saveLastDoc();
     saveProfile(answers, KIND);
     saveTrustFacts(answers, KIND);
     savePaper(answers, KIND);
@@ -5805,6 +5806,17 @@
     if (sub) sub.textContent = msg;
     var anchor = sub || title;
     if (anchor && !stepEl.querySelector('.blank-btn')) anchor.insertAdjacentHTML('afterend', '<p class="blank-btn-row"><a class="btn btn-secondary blank-btn" href="' + esc(blankHref()) + '" target="_blank" rel="noopener">Read the full blank template</a></p>');
+  }
+  /* WELCOME BACK FOR ONE DOCUMENT (22 Nov 2026): a document started on its own (not in a package) is remembered
+     here, so the other pages of the site can show "Welcome back. Continue your Living Trust" (js/nav.js). A package
+     has its own strip, from grapevine.flow.v1. */
+  function saveLastDoc() {
+    try {
+      if (SPOUSE2 || inFlowNow()) return;
+      var page = location.pathname.split('/').pop() || '';
+      if (!/\.html$/.test(page)) return;
+      localStorage.setItem('grapevine.lastdoc.v1', JSON.stringify({ ls: LS_KEY, page: page, label: window.GVFlow ? window.GVFlow.baseLabel(kindKey) : '', paid: paidUp() }));
+    } catch (e) { /* ignore */ }
   }
   function inFlowNow() {
     var fl = window.GVFlow && window.GVFlow.current();
