@@ -5782,17 +5782,24 @@
     if (!homes.length) homes = [{}];
     var bl = [{ k: 'center', t: 'Deed Worksheet: Moving Your Home Into Your Trust' },
       { k: 'p', t: 'This is a worksheet, not a deed. It is not signed or recorded. Bring it to whoever prepares your deed: a title company, an attorney, an online deed service, or the county recorder’s office, which can tell you the forms and fees it uses.' },
+      { k: 'plain', t: 'First: get a copy of your current deed' },
+      { k: 'p', t: 'Request a copy of the current deed for the property from the county recorder’s office in the county where the property is. Many counties provide copies online, by mail or in person, often for a small fee. Most of the information on the new deed can be copied from the current deed: the owners’ names, the legal description, the parcel number and the recording information.' },
       { k: 'plain', t: 'The new owner' },
       { k: 'p', t: 'On the new deed, the owner receiving the property (the grantee) is the trust’s trustee' + (joint ? 's' : '') + ', named like this:' },
       { k: 'p', t: '**' + v.title_line + '**' },
       { k: 'p', t: v.trust_type === 'RESTATEMENT' ? 'The date shown is the date of the original trust.' : 'The trust\u2019s date is the date you sign it in front of the notary.' + (v.signing_date ? '' : ' Fill it in above once it is signed.') }];
+    if (!joint) {
+      bl.push({ k: 'p', t: '**Example** (one person’s trust, with that person as the only trustee). The exact wording of your deed form depends on your state:' });
+      bl.push({ k: 'p', t: 'Grantor (from): ' + (v.name || 'Jane Smith') + ', [your name and status as they appear on the current deed, for example “an unmarried person”]' });
+      bl.push({ k: 'p', t: 'Grantee (to): ' + (v.name || 'Jane Smith') + ', as Trustee of ' + (theTrust(v.trust_name) || 'The Jane Smith Living Trust') + ', dated [the date you signed the trust], and any amendments made to it' });
+    }
     homes.forEach(function (h, i) {
       bl.push({ k: 'plain', t: homes.length > 1 ? 'Property ' + (i + 1) : 'The property' });
       bl.push({ k: 'line', t: 'Property address: ' + (clean(h.address) || B) });
       bl.push({ k: 'line', t: 'County and state: ' + (clean(h.countyState) || B) });
       bl.push({ k: 'line', t: 'Owner(s) on the current deed, exactly as written there: ' + B });
       bl.push({ k: 'line', t: 'How title is held now (for example sole owner, joint tenants, community property): ' + (clean(h.ownership) || B) });
-      bl.push({ k: 'line', t: 'Parcel number (APN), from the property tax bill: ' + B });
+      bl.push({ k: 'line', t: 'Parcel number (APN), often on the current deed or the property tax bill: ' + B });
       bl.push({ k: 'line', t: 'Current deed’s recording number or book and page, and date: ' + B });
       bl.push({ k: 'p', t: '**Legal description.** Copy it word for word from the current deed. The street address alone is not enough.' });
       bl.push({ k: 'line', t: B + B });
