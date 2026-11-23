@@ -351,7 +351,7 @@ Property acquired later, such as a new home or account, is in the trust only if 
 
 ## Deed worksheet
 
-A living trust made on Tovakin comes with a free deed worksheet for moving a home into the trust. It is a PDF filled in with the trust's exact new-owner wording and each home listed in the trust, with what to copy from the current deed and what to ask the county recorder. It downloads from the trust's review screen, below the signing steps. Tovakin doesn't prepare deeds, because deed forms and recording rules differ by state and county; a title company, an attorney, an online deed service or the county recorder's office can prepare or explain the deed itself.
+A living trust made on Tovakin comes with a free [deed worksheet](samples/deed-worksheet-sample.pdf) for moving a home into the trust (the link opens a sample). It is a PDF filled in with the trust's exact new-owner wording and each home listed in the trust, with what to copy from the current deed and what to ask the county recorder. It downloads from the trust's review screen, below the signing steps. Tovakin doesn't prepare deeds, because deed forms and recording rules differ by state and county; a title company, an attorney, an online deed service or the county recorder's office can prepare or explain the deed itself.
 
 You can prepare a [General Assignment of Personal Property](assignment.html) and a [Schedule A](schedulea.html) here.
 
