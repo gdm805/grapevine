@@ -127,7 +127,7 @@ def body(text, inline):
             flush()
         m = re.match(r'^##\s+(.*)$', line)
         if m:
-            flush(); out.append('<h2>' + inline(m.group(1)) + '</h2>')
+            flush(); out.append('<h2 id="%s">' % re.sub(r'[^a-z0-9]+', '-', m.group(1).lower()).strip('-') + inline(m.group(1)) + '</h2>')
         else:
             m = re.match(r'^-\s+(.*)$', line)
             if m:
